@@ -21,7 +21,7 @@ export default async function EscolaDashboard() {
     .single();
 
   const schoolId = membership?.school_id;
-  const schoolName = membership?.schools?.name || 'Sua Escola';
+  const schoolName = Array.isArray(membership?.schools) ? (membership?.schools[0] as any)?.name : (membership?.schools as any)?.name || 'Sua Escola';
 
   if (!schoolId) redirect('/login');
 

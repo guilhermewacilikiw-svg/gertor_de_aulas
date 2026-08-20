@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Grid3X3, List } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Grid3X3, List, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface CalendarEvent {

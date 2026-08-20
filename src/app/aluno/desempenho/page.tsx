@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { PerformanceDashboard, PerformanceData } from '@/components/student/PerformanceDashboard';
+import { redirect } from 'next/navigation';
 
 export default async function AlunoDesempenhoPage() {
   const supabase = await createClient();

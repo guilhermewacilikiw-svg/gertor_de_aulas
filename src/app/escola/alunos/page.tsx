@@ -104,7 +104,7 @@ export default async function AlunosPage() {
       {/* STUDENTS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {students && students.length > 0 ? (
-          students.map((student) => (
+          (students as any[]).map((student) => (
             <Link href={`/escola/alunos/${student.id}`} key={student.id} className="group relative bg-[#0a0a0f] rounded-[2rem] border border-white/5 p-6 overflow-hidden hover:border-[#7D7AE8]/40 hover:shadow-[0_10px_40px_rgba(125,122,232,0.15)] transition-all duration-500 hover:-translate-y-1 block">
               
               <div className="absolute inset-0 bg-gradient-to-br from-[#7D7AE8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

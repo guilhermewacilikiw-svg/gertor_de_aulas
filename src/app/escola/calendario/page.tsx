@@ -100,7 +100,7 @@ export default async function EscolaCalendarioPage() {
       title: className,
       subtitle: teacherName,
       location: s.room || 'Sem Sala',
-      type: 'schedule'
+      type: 'schedule' as const
     };
   });
 

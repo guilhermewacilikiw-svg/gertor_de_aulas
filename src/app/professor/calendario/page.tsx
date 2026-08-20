@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { SchoolCalendar, CalendarEvent } from '@/components/shared/SchoolCalendar';
+import { redirect } from 'next/navigation';
 
 export default async function ProfessorCalendarioPage() {
   const supabase = await createClient();
