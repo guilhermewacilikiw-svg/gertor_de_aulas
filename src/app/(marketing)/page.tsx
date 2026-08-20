@@ -56,8 +56,10 @@ export default async function LandingPage() {
         <div className="absolute inset-0 cyber-grid"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f]"></div>
         <div className="absolute top-0 w-full h-[5px] bg-[#A27AE8]/30 blur-sm animate-[scanline_8s_linear_infinite]"></div>
-        <div className="absolute top-0 right-[15%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#C0E87A]/30 to-transparent"></div>
-        <div className="absolute top-0 left-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#A27AE8]/30 to-transparent"></div>
+        <div className="absolute top-0 right-[15%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#C0E87A]/30 to-transparent hidden sm:block"></div>
+        <div className="absolute top-0 left-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#A27AE8]/30 to-transparent hidden sm:block"></div>
+        {/* Mobile Ambient Glow */}
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vw] bg-[#A27AE8]/20 rounded-full blur-[120px] sm:hidden"></div>
       </div>
 
       {/* HERO SECTION */}
@@ -98,7 +100,7 @@ export default async function LandingPage() {
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed px-4">
             Elimine a bagunça de planilhas. Conecte as aulas presenciais da sua escola com um ambiente EAD imersivo onde o aluno continua praticando em casa.
           </p>
 
@@ -133,9 +135,9 @@ export default async function LandingPage() {
             { label: 'Escolas', value: formatNumber(totalSchools), color: '#A27AE8' },
             { label: 'Estabilidade', value: '99.9%', color: '#C0E87A' }
           ].map((stat, idx) => (
-            <div key={idx} className="group bg-black/80 backdrop-blur-md border border-white/5 border-l-4 p-6 text-center hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-default cyber-clip" style={{ borderLeftColor: stat.color }}>
-              <h3 className="text-4xl font-black mb-1 font-mono tracking-tighter" style={{ color: stat.color, textShadow: `0 0 10px ${stat.color}80` }}>{stat.value}</h3>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">{stat.label}</p>
+            <div key={idx} className="group bg-black/80 backdrop-blur-md border border-white/5 border-l-4 p-4 sm:p-6 text-center hover:bg-white/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] cursor-default cyber-clip" style={{ borderLeftColor: stat.color }}>
+              <h3 className="text-2xl sm:text-4xl font-black mb-1 font-mono tracking-tighter" style={{ color: stat.color, textShadow: `0 0 10px ${stat.color}80` }}>{stat.value}</h3>
+              <p className="text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">{stat.label}</p>
             </div>
           ))}
         </div>
