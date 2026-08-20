@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@theme {
+  /* Mapping User's Palette to existing Tailwind utilities for automatic global replacement */
+  
+  /* #7D7AE8 (Primary Blue/Purple) mapped to Cyan */
+  --color-cyan-400: #7D7AE8;
+  --color-cyan-500: #7D7AE8;
+  --color-cyan-600: #5a57c2;
+
+  /* #A27AE8 (Secondary Purple) mapped to Indigo */
+  --color-indigo-400: #A27AE8;
+  --color-indigo-500: #A27AE8;
+  --color-indigo-600: #7d5eb5;
+
+  /* #C77AE8 (Pinkish Accent) mapped to Pink and Purple */
+  --color-purple-400: #C77AE8;
+  --color-purple-500: #C77AE8;
+  --color-pink-400: #C77AE8;
+  --color-pink-500: #C77AE8;
+  
+  /* #E5E87A (Yellow Highlight) mapped to Amber */
+  --color-amber-400: #E5E87A;
+  --color-amber-500: #E5E87A;
+  
+  /* #C0E87A (Green Success) mapped to Emerald */
+  --color-emerald-400: #C0E87A;
+  --color-emerald-500: #C0E87A;
+}
+
+@layer base {
+  body {
+    background-color: #0a0a0f; /* Deep dark space */
+    background-size: 50px 50px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif);
+    overflow-x: hidden;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Animations */
+@keyframes cyber-glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.animate-glitch:hover {
+  animation: cyber-glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+/* Cyber Utilities */
+.cyber-clip {
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cyber-clip-reverse {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+/* UI Elements - Overriding old soft glass */
+.glass-panel {
+  background: rgba(10, 10, 15, 0.95); /* Deep dark background */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 2px solid rgba(162, 122, 232, 0.5); /* Neon top border */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+}
+
+.glass-nav {
+  background: rgba(10, 10, 15, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: rgba(15, 15, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+  border-left: 3px solid rgba(192, 232, 122, 0.4); /* Neon side border */
+  border-radius: 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.glass-card:hover {
+  background: rgba(20, 20, 25, 0.9);
+  border-left-color: rgba(192, 232, 122, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(192, 232, 122, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0f; border-left: 1px solid rgba(255,255,255,0.05); }
+::-webkit-scrollbar-thumb { background: rgba(162, 122, 232, 0.3); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: rgba(162, 122, 232, 0.8); }
