@@ -142,7 +142,7 @@ export default async function LandingPage() {
       </section>
 
       {/* DETAILED FEATURES */}
-      <section className="max-w-6xl mx-auto px-4 mb-32 relative z-10">
+      <section id="recursos" className="max-w-6xl mx-auto px-4 mb-32 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4">
             Tudo o que sua escola precisa

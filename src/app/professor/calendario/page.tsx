@@ -43,6 +43,18 @@ export default async function ProfessorCalendarioPage() {
     .select('*')
     .eq('school_id', schoolId);
 
+  // Fetch class schedules for this teacher
+  const { data: schedulesData } = await supabase
+    .from('class_schedules')
+    .select(`
+      id, day_of_week, start_time, end_time, room,
+      classes!inner (
+        name, teacher_id
+      )
+    `)
+    .eq('school_id', schoolId)
+    .eq('classes.teacher_id', teacherId);
+
   const formattedEvents: CalendarEvent[] = [];
 
   lessons?.forEach(l => {
@@ -72,6 +84,20 @@ export default async function ProfessorCalendarioPage() {
     });
   });
 
+  const formattedSchedules = (schedulesData || []).map(s => {
+    const className = (s.classes as any)?.name || 'Turma';
+    return {
+      id: s.id,
+      dayOfWeek: s.day_of_week,
+      startTime: s.start_time.substring(0, 5),
+      endTime: s.end_time.substring(0, 5),
+      title: className,
+      subtitle: 'Minha Turma',
+      location: s.room || 'Sem Sala',
+      type: 'schedule' as const
+    };
+  });
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       <div>
@@ -79,7 +105,7 @@ export default async function ProfessorCalendarioPage() {
         <p className="text-sm text-gray-400 mt-1">Visualize suas aulas agendadas e os próximos eventos da instituição.</p>
       </div>
 
-      <SchoolCalendar events={formattedEvents} role="professor" />
+      <SchoolCalendar events={formattedEvents} schedules={formattedSchedules} role="professor" />
     </div>
   );
 }
