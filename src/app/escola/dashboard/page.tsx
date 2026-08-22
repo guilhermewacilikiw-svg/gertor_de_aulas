@@ -25,33 +25,20 @@ export default async function EscolaDashboard() {
 
   if (!schoolId) redirect('/login');
 
-  // Real Counts from Database
-  const { count: totalStudents } = await supabase
-    .from('students')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId);
-
-  const { count: totalTeachers } = await supabase
-    .from('teachers')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId);
-
-  const { count: totalLessonsToday } = await supabase
-    .from('lessons')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId);
-
-  const { count: totalLeads } = await supabase
-    .from('leads')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId);
-
-  // Real Recent Students
-  const { data: recentStudents } = await supabase
-    .from('students')
-    .select('id, status, users(name)')
-    .eq('school_id', schoolId)
-    .limit(5);
+  // Real Counts and Data from Database using Promise.all for performance
+  const [
+    { count: totalStudents },
+    { count: totalTeachers },
+    { count: totalLessonsToday },
+    { count: totalLeads },
+    { data: recentStudents }
+  ] = await Promise.all([
+    supabase.from('students').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase.from('teachers').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase.from('lessons').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase.from('leads').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase.from('students').select('id, status, users(name)').eq('school_id', schoolId).limit(5)
+  ]);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">

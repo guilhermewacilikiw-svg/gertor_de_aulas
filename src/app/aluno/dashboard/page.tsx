@@ -31,69 +31,74 @@ export default async function AlunoDashboard() {
   const studentId = studentRecord.id;
   const schoolId = studentRecord.school_id;
 
-  // 1. Fetch Next Lesson
-  const { data: nextLesson } = await supabase
-    .from('lessons')
-    .select(`
-      id, scheduled_start, topic, status,
-      classes (name, courses(name)),
-      teachers (users(name))
-    `)
-    .eq('school_id', schoolId)
-    .gte('scheduled_start', new Date().toISOString())
-    .order('scheduled_start', { ascending: true })
-    .limit(1)
-    .maybeSingle();
-
-  // 2. Fetch Last Completed Lesson + Record + Video
-  const { data: lastLesson } = await supabase
-    .from('lessons')
-    .select(`
-      id, scheduled_start, topic, completed_at,
-      classes (name, courses(name)),
-      teachers (users(name)),
-      lesson_records (summary, practice_instructions),
-      videos (id, title, storage_path, duration)
-    `)
-    .eq('school_id', schoolId)
-    .eq('status', 'completed')
-    .order('completed_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  // 3. Progress stats
-  const { count: completedLessonsCount } = await supabase
-    .from('lessons')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId)
-    .eq('status', 'completed');
-
-  // 4. Fetch Latest Assessment
-  const { data: lastAssessment } = await supabase
-    .from('student_assessments')
-    .select(`
-      id, evaluated_at, scores, global_score,
-      assessments (category_name),
-      teachers (users (name))
-    `)
-    .eq('student_id', studentId)
-    .order('evaluated_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  const { data: enrollment } = await supabase
-    .from('enrollments')
-    .select(`
-      class_id,
-      courses (
-        name,
-        course_modules (id, title, description, order_index)
-      )
-    `)
-    .eq('student_id', studentId)
-    .eq('status', 'active')
-    .limit(1)
-    .maybeSingle();
+  // Fetch core dashboard data in parallel
+  const [
+    { data: nextLesson },
+    { data: lastLesson },
+    { count: completedLessonsCount },
+    { data: lastAssessment },
+    { data: enrollment }
+  ] = await Promise.all([
+    supabase
+      .from('lessons')
+      .select(`
+        id, scheduled_start, topic, status,
+        classes (name, courses(name)),
+        teachers (users(name))
+      `)
+      .eq('school_id', schoolId)
+      .gte('scheduled_start', new Date().toISOString())
+      .order('scheduled_start', { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+    
+    supabase
+      .from('lessons')
+      .select(`
+        id, scheduled_start, topic, completed_at,
+        classes (name, courses(name)),
+        teachers (users(name)),
+        lesson_records (summary, practice_instructions),
+        videos (id, title, storage_path, duration)
+      `)
+      .eq('school_id', schoolId)
+      .eq('status', 'completed')
+      .order('completed_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+      
+    supabase
+      .from('lessons')
+      .select('id', { count: 'exact', head: true })
+      .eq('school_id', schoolId)
+      .eq('status', 'completed'),
+      
+    supabase
+      .from('student_assessments')
+      .select(`
+        id, evaluated_at, scores, global_score,
+        assessments (category_name),
+        teachers (users (name))
+      `)
+      .eq('student_id', studentId)
+      .order('evaluated_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+      
+    supabase
+      .from('enrollments')
+      .select(`
+        class_id,
+        courses (
+          name,
+          course_modules (id, title, description, order_index)
+        )
+      `)
+      .eq('student_id', studentId)
+      .eq('status', 'active')
+      .limit(1)
+      .maybeSingle()
+  ]);
 
   // Fetch extra materials for this student
   const classId = enrollment?.class_id;

@@ -3,6 +3,22 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
+import { z } from 'zod';
+
+const upsertFinanceSchema = z.object({
+  student_id: z.string().uuid(),
+  plan_name: z.string().min(1),
+  amount: z.string().refine(val => {
+    const num = parseFloat(val.replace(',', '.'));
+    return !isNaN(num) && num > 0;
+  }, { message: 'Valor inválido' }),
+  due_day: z.string().refine(val => {
+    const num = parseInt(val, 10);
+    return !isNaN(num) && num >= 1 && num <= 31;
+  }, { message: 'Dia inválido' }),
+  payment_method: z.enum(['credit_card', 'boleto', 'pix', 'cash', 'transfer'])
+});
+
 export async function upsertFinanceAction(formData: FormData) {
   const supabase = await createClient();
 
@@ -14,30 +30,32 @@ export async function upsertFinanceAction(formData: FormData) {
 
   if (!membership?.school_id) return { success: false, error: 'Escola não encontrada' };
 
-  const studentId = formData.get('student_id') as string;
-  const planName = formData.get('plan_name') as string;
-  const amountStr = formData.get('amount') as string;
-  const dueDayStr = formData.get('due_day') as string;
-  const paymentMethod = formData.get('payment_method') as string;
+  const validationResult = upsertFinanceSchema.safeParse({
+    student_id: formData.get('student_id'),
+    plan_name: formData.get('plan_name'),
+    amount: formData.get('amount'),
+    due_day: formData.get('due_day'),
+    payment_method: formData.get('payment_method')
+  });
 
-  if (!studentId || !planName || !amountStr || !dueDayStr || !paymentMethod) {
-    return { success: false, error: 'Preencha todos os campos obrigatórios' };
+  if (!validationResult.success) {
+    return { success: false, error: 'Dados inválidos: Verifique os campos preenchidos' };
   }
 
+  const { student_id, plan_name, amount: amountStr, due_day: dueDayStr, payment_method } = validationResult.data;
   const amount = parseFloat(amountStr.replace(',', '.'));
   const dueDay = parseInt(dueDayStr, 10);
   
   if (isNaN(amount) || amount <= 0) return { success: false, error: 'Valor inválido' };
   if (isNaN(dueDay) || dueDay < 1 || dueDay > 31) return { success: false, error: 'Dia de vencimento inválido' };
 
-  // Delete existing finance if replacing, or use UPSERT if constraint is set
   const { error } = await supabase.from('student_finances').upsert({
     school_id: membership.school_id,
-    student_id: studentId,
-    plan_name: planName,
+    student_id: student_id,
+    plan_name: plan_name,
     amount: amount,
     due_day: dueDay,
-    payment_method: paymentMethod,
+    payment_method: payment_method,
     status: 'active'
   }, { onConflict: 'student_id' });
 
