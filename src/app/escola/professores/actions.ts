@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { translateSupabaseError } from '@/lib/utils';
 
 export async function createTeacherAction(formData: FormData) {
   const supabase = await createClient();
@@ -53,11 +54,11 @@ export async function createTeacherAction(formData: FormData) {
 
   if (error) {
     console.error('RPC Error:', error);
-    return { success: false, error: 'Erro ao criar conta: ' + error.message };
+    return { success: false, error: 'Erro ao criar conta: ' + translateSupabaseError(error.message) };
   }
 
   if (data?.error) {
-    return { success: false, error: data.error };
+    return { success: false, error: translateSupabaseError(data.error) };
   }
 
   revalidatePath('/escola/professores');

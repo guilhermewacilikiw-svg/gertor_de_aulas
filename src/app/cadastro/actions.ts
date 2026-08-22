@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { translateSupabaseError } from '@/lib/utils';
 
 export async function saasRegisterAction(formData: FormData) {
   const supabase = await createClient();
@@ -29,7 +30,7 @@ export async function saasRegisterAction(formData: FormData) {
 
   if (signUpError) {
     console.error('SignUp Error:', signUpError);
-    return { success: false, error: signUpError.message };
+    return { success: false, error: translateSupabaseError(signUpError.message) };
   }
 
   if (!authData.user) {
