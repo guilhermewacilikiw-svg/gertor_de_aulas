@@ -11,10 +11,18 @@ export default async function AlunoFinanceiroPage() {
     redirect('/login');
   }
 
+  const { data: publicUser } = await supabase.from('users').select('id').eq('auth_user_id', user.id).single();
+  const { data: student } = await supabase.from('students').select('id').eq('user_id', publicUser?.id).single();
+
+  if (!student) {
+     return <div className="p-8 text-center text-white">Perfil de aluno não encontrado.</div>;
+  }
+
   // Note: RLS ensures the student only sees their own invoices
   const { data: invoices, error } = await supabase
-    .from('invoices')
-    .select('*, plans(name)')
+    .from('student_invoices')
+    .select('*, student_finances(plan_name)')
+    .eq('student_id', student.id)
     .order('due_date', { ascending: false });
 
   // Simulate current tuition calculation
@@ -45,14 +53,18 @@ export default async function AlunoFinanceiroPage() {
                </p>
             </div>
 
-            <div className="relative z-10 mt-6 flex gap-3">
-               <button className="bg-white text-primary font-semibold py-3 px-6 rounded-xl hover:bg-white/90 transition-colors shadow-sm">
-                 Pagar agora
-               </button>
-               <button className="bg-white/20 text-white font-semibold py-3 px-6 rounded-xl border border-white/20 hover:bg-white/30 transition-colors flex items-center gap-2">
-                 <Download className="w-4 h-4" />
-                 Boleto
-               </button>
+            <div className="relative z-10 mt-6 flex gap-3 flex-wrap">
+               {currentInvoice?.boleto_url && (
+                  <Link href={currentInvoice.boleto_url} target="_blank" className="bg-white text-primary font-semibold py-3 px-6 rounded-xl hover:bg-white/90 transition-colors shadow-sm flex items-center gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    Abrir Boleto
+                  </Link>
+               )}
+               {currentInvoice?.barcode && (
+                  <div className="bg-white/20 text-white text-xs font-mono p-3 rounded-xl border border-white/20 break-all">
+                    Linha: {currentInvoice.barcode}
+                  </div>
+               )}
             </div>
          </div>
 
@@ -63,7 +75,7 @@ export default async function AlunoFinanceiroPage() {
             </div>
             <div>
                <h3 className="font-bold text-lg">Ambiente Seguro</h3>
-               <p className="text-sm text-muted-foreground mt-2">Nós não processamos pagamentos com cartão diretamente, você trata a mensalidade direto com a escola.</p>
+               <p className="text-sm text-muted-foreground mt-2">Os boletos/links são informados diretamente pela sua escola. Se houver divergências no valor, contate a diretoria.</p>
             </div>
          </div>
       </div>
@@ -102,8 +114,8 @@ export default async function AlunoFinanceiroPage() {
               {invoices?.map((invoice: any) => (
                 <tr key={invoice.id} className="border-b last:border-0 hover:bg-muted/10 transition-colors">
                   <td className="px-6 py-4">
-                    <p className="font-medium text-foreground">{invoice.plans?.name || 'Mensalidade Padrão'}</p>
-                    <p className="text-xs text-muted-foreground">Ref: {invoice.reference_month || 'N/A'}</p>
+                    <p className="font-medium text-foreground">{invoice.student_finances?.plan_name || 'Mensalidade Padrão'}</p>
+                    <p className="text-xs text-muted-foreground">Método: {invoice.payment_method === 'boleto' ? 'Boleto' : invoice.payment_method}</p>
                   </td>
                   <td className="px-6 py-4 font-medium">
                     R$ {invoice.amount.toFixed(2).replace('.', ',')}
@@ -123,10 +135,10 @@ export default async function AlunoFinanceiroPage() {
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    {invoice.status === 'paid' ? (
-                       <button className="text-primary hover:underline text-xs font-medium flex items-center gap-1 justify-end w-full">
-                         Recibo <ExternalLink className="w-3 h-3" />
-                       </button>
+                    {invoice.boleto_url ? (
+                       <Link href={invoice.boleto_url} target="_blank" className="text-primary hover:underline text-xs font-medium flex items-center gap-1 justify-end w-full">
+                         Boleto <ExternalLink className="w-3 h-3" />
+                       </Link>
                     ) : (
                        <span className="text-muted-foreground text-xs">-</span>
                     )}

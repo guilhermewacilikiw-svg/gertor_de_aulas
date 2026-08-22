@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { BibliotecaMateriais } from './client-modal';
-import { FolderArchive, HardDrive, FileText } from 'lucide-react';
+import { FolderArchive, HardDrive, FileText, Link as LinkIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default async function EscolaConteudosPage() {
@@ -28,24 +28,33 @@ export default async function EscolaConteudosPage() {
 
   // Fetch real materials
   let initialMaterials: any[] = [];
-  if (schoolId) {
-    const { data: contents } = await supabase
-      .from('contents')
-      .select('*')
-      .eq('school_id', schoolId)
-      .order('created_at', { ascending: false });
+  let modules: any[] = [];
+  let lessons: any[] = [];
+  let students: any[] = [];
 
-    if (contents) {
-      initialMaterials = contents.map(c => ({
+  if (schoolId) {
+    const [contentsRes, modulesRes, lessonsRes, studentsRes] = await Promise.all([
+      supabase.from('contents').select('*').eq('school_id', schoolId).order('created_at', { ascending: false }),
+      supabase.from('course_modules').select('id, title').eq('school_id', schoolId),
+      supabase.from('lessons').select('id, topic, scheduled_start').eq('school_id', schoolId).order('scheduled_start', { ascending: false }),
+      supabase.from('students').select('id, name, users(name)').eq('school_id', schoolId)
+    ]);
+
+    if (contentsRes.data) {
+      initialMaterials = contentsRes.data.map(c => ({
         id: c.id,
         title: c.title,
         type: c.type,
-        target: c.description?.replace('Público Alvo: ', '') || 'Todos',
-        size: 'N/A', // Em um app real, salvaríamos o tamanho do arquivo
+        target: c.description || 'Todos',
+        size: 'Link Externo',
         uploadedAt: new Date(c.created_at).toLocaleDateString('pt-BR'),
         url: c.url
       }));
     }
+
+    modules = modulesRes.data || [];
+    lessons = lessonsRes.data || [];
+    students = studentsRes.data || [];
   }
 
   return (
@@ -63,20 +72,20 @@ export default async function EscolaConteudosPage() {
         {/* Grid Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <MetricCard 
-            title="Materiais Armazenados" 
+            title="Links e Vídeos" 
             value={initialMaterials.length.toString()} 
-            subtitle="Arquivos na biblioteca" 
+            subtitle="Cadastrados no sistema" 
             subtitleColor="text-[#C0E87A]"
             icon={<FolderArchive className="w-5 h-5 text-black" />} 
             color="from-[#C0E87A] to-[#E5E87A]" 
             glowColor="bg-[#C0E87A]"
           />
           <MetricCard 
-            title="Espaço Utilizado" 
-            value="N/A MB" 
-            subtitle="De 5 GB disponíveis" 
+            title="Armazenamento" 
+            value="Nuvem Externa" 
+            subtitle="Via Links" 
             subtitleColor="text-gray-400"
-            icon={<HardDrive className="w-5 h-5 text-white" />} 
+            icon={<LinkIcon className="w-5 h-5 text-white" />} 
             color="from-[#7D7AE8] to-[#A27AE8]" 
             glowColor="bg-[#7D7AE8]"
           />
@@ -92,7 +101,12 @@ export default async function EscolaConteudosPage() {
         </div>
 
         {/* Acervo Recente / Biblioteca */}
-        <BibliotecaMateriais initialMaterials={initialMaterials} />
+        <BibliotecaMateriais 
+          initialMaterials={initialMaterials} 
+          modules={modules}
+          lessons={lessons}
+          students={students}
+        />
 
       </div>
     </div>

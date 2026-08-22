@@ -70,44 +70,6 @@ export default async function EscolaDashboard() {
         <MetricCard title="Novos Leads" value={(totalLeads || 0).toString()} subtitle="Contatos landing page" icon={<UserPlus />} color="from-amber-500 to-orange-500" />
       </div>
 
-      {/* BLIST DE ALERTAS OPERACIONAIS */}
-      <div className="glass-card p-6 space-y-4">
-        <div className="flex items-center gap-2 text-amber-400">
-          <AlertTriangle className="w-5 h-5" />
-          <h2 className="text-lg font-extrabold text-white">Alertas Operacionais & Ações Necessárias</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <AlertItem
-            title="Aulas Aguardando Registro"
-            value="1 aula pendente"
-            description="Prof. Carlos precisa preencher o registro da aula de Violão A."
-            badge="Ação Pendente"
-            badgeColor="bg-amber-500/20 text-amber-300 border-amber-500/30"
-          />
-          <AlertItem
-            title="Alunos com Frequência Ótima"
-            value="100% de Presença"
-            description="Todos os alunos acompanhados estão com presença em dia."
-            badge="Frequência OK"
-            badgeColor="bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-          />
-          <AlertItem
-            title="Novas Matrículas"
-            value={`${totalStudents || 0} Ativas`}
-            description="Crescimento estável na unidade."
-            badge="Turmas Ativas"
-            badgeColor="bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
-          />
-          <AlertItem
-            title="Capacidade das Turmas"
-            value="Boas Vagas"
-            description="Captação aberta para novos alunos."
-            badge="Vagas Abertas"
-            badgeColor="bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
-          />
-        </div>
-      </div>
 
       {/* TABELA DE ALUNOS MATRICULADOS */}
       <div className="glass-card overflow-hidden">

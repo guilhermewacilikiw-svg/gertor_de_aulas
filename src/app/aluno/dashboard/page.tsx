@@ -81,10 +81,10 @@ export default async function AlunoDashboard() {
     .limit(1)
     .maybeSingle();
 
-  // 5. Fetch First Active Course and Modules for Trilha
   const { data: enrollment } = await supabase
     .from('enrollments')
     .select(`
+      class_id,
       courses (
         name,
         course_modules (id, title, description, order_index)
@@ -94,6 +94,20 @@ export default async function AlunoDashboard() {
     .eq('status', 'active')
     .limit(1)
     .maybeSingle();
+
+  // Fetch extra materials for this student
+  const classId = enrollment?.class_id;
+  const targetIds = [studentId, schoolId];
+  if (classId) targetIds.push(classId);
+
+  const { data: extraMaterialsData } = await supabase
+    .from('content_targets')
+    .select('contents(id, title, url, type)')
+    .in('target_id', targetIds)
+    .order('created_at', { ascending: false })
+    .limit(4);
+
+  const extraMaterials = (extraMaterialsData?.map(t => Array.isArray(t.contents) ? t.contents[0] : t.contents).filter(Boolean) || []) as any[];
 
   const formattedNextDate = nextLesson?.scheduled_start
     ? new Date(nextLesson.scheduled_start).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
@@ -219,36 +233,32 @@ export default async function AlunoDashboard() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
-            {modules.slice(0, 2).map((mod: any, idx: number) => (
-              <div key={mod.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors flex flex-col h-[260px] group cursor-pointer relative overflow-hidden">
-                {/* Visual Thumbnail */}
-                <div className="w-full flex-1 rounded-xl bg-gradient-to-br from-[#7D7AE8]/20 to-[#A27AE8]/10 mb-4 relative flex items-center justify-center overflow-hidden border border-white/5 group-hover:border-[#7D7AE8]/30 transition-colors">
-                  <div className="absolute inset-0 flex items-center justify-center text-8xl opacity-5 blur-[2px] font-black">
-                    {idx + 1}
-                  </div>
-                  <button className="relative z-10 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-[#7D7AE8]/50 transition-all shadow-lg">
-                    <Play className="w-5 h-5 text-white ml-1 fill-white" />
-                  </button>
+            {extraMaterials.length === 0 ? (
+                <div className="col-span-2 text-center text-gray-400 py-12">
+                  Nenhum material complementar no momento.
                 </div>
-                
-                {/* Content */}
-                <h3 className="text-base font-bold text-white truncate mb-auto">{mod.title}</h3>
-                
-                {/* Progress */}
-                <div className="mt-4 space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-white/40 font-medium">Progress</span>
-                    <span className="text-white font-bold">{mod.progress}%</span>
-                  </div>
-                  <div className="h-1.5 w-full bg-black/60 rounded-full overflow-hidden">
-                    <div 
-                      className={cn("h-full rounded-full", idx === 0 ? "bg-gradient-to-r from-[#C0E87A] to-[#E5E87A]" : "bg-gradient-to-r from-[#A27AE8] to-[#7D7AE8]")}
-                      style={{ width: `${mod.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            ) : (
+                extraMaterials.map((mat: any, idx: number) => (
+                  <Link href={mat.url || '#'} target="_blank" key={mat.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors flex flex-col h-[260px] group relative overflow-hidden">
+                    <div className="w-full flex-1 rounded-xl bg-gradient-to-br from-[#7D7AE8]/20 to-[#A27AE8]/10 mb-4 relative flex items-center justify-center overflow-hidden border border-white/5 group-hover:border-[#7D7AE8]/30 transition-colors">
+                      <div className="absolute inset-0 flex items-center justify-center text-8xl opacity-5 blur-[2px] font-black">
+                        {idx + 1}
+                      </div>
+                      <button className="relative z-10 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-[#7D7AE8]/50 transition-all shadow-lg">
+                        <Play className="w-5 h-5 text-white ml-1 fill-white" />
+                      </button>
+                    </div>
+                    
+                    <h3 className="text-base font-bold text-white truncate mb-auto">{mat.title}</h3>
+                    
+                    <div className="mt-4 space-y-2">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-white/40 font-medium uppercase tracking-widest">{mat.type === 'video' ? 'Vídeo' : 'Link Externo'}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+            )}
           </div>
         </div>
       </div>

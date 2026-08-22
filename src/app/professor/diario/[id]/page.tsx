@@ -14,7 +14,7 @@ export default async function ProfessorDiarioPage({ params }: { params: Promise<
   // Buscar detalhes da aula (garantir que ele é o professor desta aula)
   const { data: lesson, error: lessonError } = await supabase
     .from('lessons')
-    .select('*, classes(id, name, courses(name)), lesson_records(summary)')
+    .select('*, classes(id, name, courses(id, name)), lesson_records(summary)')
     .eq('id', id)
     .single();
 
@@ -38,8 +38,18 @@ export default async function ProfessorDiarioPage({ params }: { params: Promise<
 
   const students = (enrollments?.map(e => (Array.isArray(e.students) ? e.students[0] : e.students)).filter(Boolean) || []) as any[];
 
+  // Fetch course modules
+  const courseId = Array.isArray(lesson.classes?.courses) ? lesson.classes?.courses[0]?.id : lesson.classes?.courses?.id;
+  
+  const { data: courseModules } = await supabase
+    .from('course_modules')
+    .select('id, title')
+    .eq('course_id', courseId || '')
+    .order('order_index', { ascending: true });
+
   const isCompleted = lesson.status === 'completed';
   const initialSummary = lesson.lesson_records?.[0]?.summary || '';
+  const currentModuleId = lesson.module_id || '';
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -72,6 +82,8 @@ export default async function ProfessorDiarioPage({ params }: { params: Promise<
         students={students} 
         isCompleted={isCompleted} 
         initialSummary={initialSummary} 
+        modules={courseModules || []}
+        currentModuleId={currentModuleId}
       />
     </div>
   );

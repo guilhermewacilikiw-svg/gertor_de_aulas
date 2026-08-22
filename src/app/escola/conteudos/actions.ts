@@ -6,10 +6,11 @@ import { revalidatePath } from 'next/cache';
 export async function uploadMaterial(formData: FormData) {
   const title = formData.get('title') as string;
   const target = formData.get('target') as string;
-  const file = formData.get('file') as File;
+  const lesson_id = formData.get('lesson_id') as string;
+  const url = formData.get('url') as string;
 
-  if (!title || !target || !file || file.size === 0) {
-    return { error: 'Preencha todos os campos e anexe um arquivo válido.' };
+  if (!title || !target || !url) {
+    return { error: 'Preencha todos os campos obrigatórios e insira um link válido.' };
   }
 
   const supabase = await createClient();
@@ -37,50 +38,67 @@ export async function uploadMaterial(formData: FormData) {
 
     if (!membership) return { error: 'Escola não encontrada.' };
 
-    // 2. Determinar tipo de conteúdo pelo mime-type
-    let type = 'document';
-    if (file.type.startsWith('video/')) type = 'video';
-    else if (file.type.startsWith('audio/')) type = 'audio';
-    else if (file.type === 'application/pdf') type = 'pdf';
-    else if (file.type.includes('image/')) type = 'image';
+    // 2. Determinar tipo de conteúdo com base na URL
+    let type = 'link';
+    if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com')) type = 'video';
+    else if (url.includes('drive.google.com') && url.includes('pdf')) type = 'pdf';
 
-    // 3. Upload para o Supabase Storage
-    // Criar um nome de arquivo único seguro
-    const fileExt = file.name.split('.').pop();
-    const safeFileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-    const storagePath = `${membership.school_id}/${safeFileName}`;
+    // 3. Inserir no Banco de Dados
+    const insertData: any = {
+      school_id: membership.school_id,
+      created_by: publicUser.id,
+      title: title,
+      description: target,
+      type: type,
+      url: url,
+      status: 'published'
+    };
 
-    const { data: storageData, error: storageError } = await supabase.storage
-      .from('materials')
-      .upload(storagePath, file, {
-        cacheControl: '3600',
-        upsert: false
-      });
-
-    if (storageError) {
-      console.error('Erro de Storage:', storageError);
-      return { error: 'Erro ao fazer upload do arquivo. O bucket "materials" existe no Supabase?' };
-    }
-
-    // Gerar URL pública (supondo que o bucket seja público, senão criamos signed url na hora do acesso)
-    const { data: publicUrlData } = supabase.storage.from('materials').getPublicUrl(storagePath);
-
-    // 4. Inserir no Banco de Dados
-    const { error: dbError } = await supabase
+    const { data: contentData, error: dbError } = await supabase
       .from('contents')
-      .insert({
-        school_id: membership.school_id,
-        created_by: publicUser.id,
-        title: title,
-        description: `Público Alvo: ${target}`,
-        type: type,
-        url: publicUrlData.publicUrl,
-        status: 'published'
-      });
+      .insert(insertData)
+      .select()
+      .single();
 
     if (dbError) {
       console.error('Erro de BD:', dbError);
-      return { error: 'Arquivo enviado, mas falha ao registrar no banco de dados.' };
+      return { error: 'Falha ao registrar link no banco de dados.' };
+    }
+
+    // If target is student or module, or lesson, we insert it into content_targets
+    if (target.startsWith('module_')) {
+        await supabase.from('content_targets').insert({
+            school_id: membership.school_id,
+            content_id: contentData.id,
+            target_type: 'course',
+            target_id: target.replace('module_', '')
+        });
+    } else if (target.startsWith('student_')) {
+        await supabase.from('content_targets').insert({
+            school_id: membership.school_id,
+            content_id: contentData.id,
+            target_type: 'student',
+            target_id: target.replace('student_', '')
+        });
+    } else {
+         await supabase.from('content_targets').insert({
+            school_id: membership.school_id,
+            content_id: contentData.id,
+            target_type: 'school',
+            target_id: membership.school_id
+        });
+    }
+
+    if (lesson_id) {
+       await supabase.from('videos').insert({
+            school_id: membership.school_id,
+            lesson_id: lesson_id,
+            content_id: contentData.id,
+            title: title,
+            storage_path: url,
+            processing_status: 'ready',
+            visibility: 'private'
+       });
     }
 
     revalidatePath('/escola/conteudos');

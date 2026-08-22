@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { Plus, Search, MoreVertical, DollarSign, TrendingUp, TrendingDown, CreditCard, ShieldCheck } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { CreateInvoiceModal } from './client-modal';
+import { CreateInvoiceModal, UpdateInvoiceModal } from './client-modal';
 
 export default async function EscolaFinanceiroPage() {
   const supabase = await createClient();
@@ -28,8 +28,8 @@ export default async function EscolaFinanceiroPage() {
   if (!schoolId) redirect('/login');
 
   const { data: invoices } = await supabase
-    .from('invoices')
-    .select('*, subscriptions(plan_name)')
+    .from('student_invoices')
+    .select('*, students(name), student_finances(plan_name)')
     .eq('school_id', schoolId)
     .order('due_date', { ascending: false });
 
@@ -120,8 +120,8 @@ export default async function EscolaFinanceiroPage() {
                 {invoiceList.length > 0 ? invoiceList.map((invoice: any) => (
                   <tr key={invoice.id} className="hover:bg-white/5 transition-colors group cursor-default">
                     <td className="p-5 pl-6">
-                      <div className="font-bold text-white text-base group-hover:text-[#C0E87A] transition-colors">{invoice.student_name || 'Sem nome'}</div>
-                      <div className="text-xs text-gray-400 font-medium mt-0.5">{invoice.plan || 'Plano Básico'}</div>
+                      <div className="font-bold text-white text-base group-hover:text-[#C0E87A] transition-colors">{invoice.students?.name || 'Sem nome'}</div>
+                      <div className="text-xs text-gray-400 font-medium mt-0.5">{invoice.student_finances?.plan_name || 'Plano Básico'}</div>
                     </td>
                     <td className="p-5 font-bold text-white text-base">
                       R$ {Number(invoice.amount).toFixed(2).replace('.', ',')}
@@ -130,14 +130,17 @@ export default async function EscolaFinanceiroPage() {
                       {new Date(invoice.due_date).toLocaleDateString('pt-BR')}
                     </td>
                     <td className="p-5">
-                      <span className={cn(
-                        "px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border flex w-fit",
-                        invoice.status === 'paid'
-                          ? "bg-[#C0E87A]/10 text-[#C0E87A] border-[#C0E87A]/20"
-                          : "bg-[#E5E87A]/10 text-[#E5E87A] border-[#E5E87A]/20"
-                      )}>
-                        {invoice.status === 'paid' ? 'Pago' : 'Pendente'}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <span className={cn(
+                          "px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border flex w-fit",
+                          invoice.status === 'paid'
+                            ? "bg-[#C0E87A]/10 text-[#C0E87A] border-[#C0E87A]/20"
+                            : "bg-[#E5E87A]/10 text-[#E5E87A] border-[#E5E87A]/20"
+                        )}>
+                          {invoice.status === 'paid' ? 'Pago' : 'Pendente'}
+                        </span>
+                        <UpdateInvoiceModal invoice={invoice} />
+                      </div>
                     </td>
                   </tr>
                 )) : (

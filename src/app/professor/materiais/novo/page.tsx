@@ -13,11 +13,11 @@ export default function NovoMaterialPage() {
   
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [type, setType] = useState<'link' | 'pdf'>('link');
   const [linkUrl, setLinkUrl] = useState('');
-  const [selectedClassId, setSelectedClassId] = useState('');
+  const [target, setTarget] = useState('');
   
   const [classes, setClasses] = useState<any[]>([]);
+  const [students, setStudents] = useState<any[]>([]);
 
   useEffect(() => {
     async function loadClasses() {
@@ -37,7 +37,20 @@ export default function NovoMaterialPage() {
               
             if (dbClasses) {
               setClasses(dbClasses);
-              if (dbClasses.length > 0) setSelectedClassId(dbClasses[0].id);
+              
+              const classIds = dbClasses.map(c => c.id);
+              if (classIds.length > 0) {
+                 const { data: enrolls } = await supabase
+                    .from('enrollments')
+                    .select('students(id, name, student_code)')
+                    .in('class_id', classIds)
+                    .eq('status', 'active');
+                 
+                 const dbStudents = (enrolls?.map(e => Array.isArray(e.students) ? e.students[0] : e.students).filter(Boolean) || []) as any[];
+                 setStudents(dbStudents);
+                 
+                 setTarget(`class_${dbClasses[0].id}`);
+              }
             }
           }
         }
@@ -49,8 +62,7 @@ export default function NovoMaterialPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !selectedClassId) return alert("Preencha título e selecione uma turma.");
-    if (type === 'link' && !linkUrl) return alert("Insira o link do vídeo.");
+    if (!title || !target || !linkUrl) return alert("Preencha título, link e selecione o destino.");
 
     setLoading(true);
     const supabase = createClient();
@@ -64,7 +76,12 @@ export default function NovoMaterialPage() {
         const schoolId = teacherRecord?.school_id;
 
         if (schoolId) {
-          // 1. Criar o Content
+          // 1. Determinar tipo real baseado na URL
+          let type = 'link';
+          if (linkUrl.includes('youtube.com') || linkUrl.includes('youtu.be') || linkUrl.includes('vimeo.com')) type = 'video';
+          else if (linkUrl.includes('drive.google.com') && linkUrl.includes('pdf')) type = 'pdf';
+
+          // 2. Criar o Content
           const { data: content, error: contentError } = await supabase
             .from('contents')
             .insert({
@@ -73,6 +90,7 @@ export default function NovoMaterialPage() {
               title,
               description,
               type: type,
+              url: linkUrl,
               status: 'published'
             })
             .select()
@@ -84,24 +102,21 @@ export default function NovoMaterialPage() {
             return;
           }
 
-          // 2. Se for link, salva no content_targets
-          await supabase.from('content_targets').insert({
-            school_id: schoolId,
-            content_id: content.id,
-            target_type: 'class',
-            target_id: selectedClassId
-          });
-
-          // 3. Salvar o video
-          if (type === 'link') {
-             await supabase.from('videos').insert({
-               school_id: schoolId,
-               content_id: content.id,
-               title,
-               storage_path: linkUrl, 
-               visibility: 'class',
-               processing_status: 'ready'
-             });
+          // 3. Salvar no content_targets
+          if (target.startsWith('class_')) {
+              await supabase.from('content_targets').insert({
+                school_id: schoolId,
+                content_id: content.id,
+                target_type: 'class',
+                target_id: target.replace('class_', '')
+              });
+          } else if (target.startsWith('student_')) {
+              await supabase.from('content_targets').insert({
+                school_id: schoolId,
+                content_id: content.id,
+                target_type: 'student',
+                target_id: target.replace('student_', '')
+              });
           }
 
           router.push('/professor/materiais');
@@ -133,25 +148,6 @@ export default function NovoMaterialPage() {
       ) : (
         <form onSubmit={handleSubmit} className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-8 shadow-lg space-y-6">
           
-          <div className="grid grid-cols-2 gap-4">
-            <button 
-              type="button"
-              onClick={() => setType('link')}
-              className={`p-4 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 ${type === 'link' ? 'bg-[#7D7AE8]/20 border-[#7D7AE8] text-[#7D7AE8]' : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'}`}
-            >
-              <LinkIcon className="w-6 h-6" />
-              <span className="font-bold text-sm">Link Externo (Vídeo)</span>
-            </button>
-            <button 
-              type="button"
-              onClick={() => setType('pdf')}
-              className={`p-4 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 ${type === 'pdf' ? 'bg-[#C77AE8]/20 border-[#C77AE8] text-[#C77AE8]' : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'}`}
-            >
-              <FileText className="w-6 h-6" />
-              <span className="font-bold text-sm">Arquivo (PDF)</span>
-            </button>
-          </div>
-
           <div className="space-y-4 pt-4">
             <div>
               <label className="block text-sm font-bold text-gray-300 mb-1">Título do Material *</label>
@@ -165,28 +161,18 @@ export default function NovoMaterialPage() {
               />
             </div>
 
-            {type === 'link' && (
-              <div>
-                <label className="block text-sm font-bold text-gray-300 mb-1">Link do Vídeo (YouTube / Vimeo) *</label>
-                <input 
-                  type="url" 
-                  value={linkUrl}
-                  onChange={(e) => setLinkUrl(e.target.value)}
-                  placeholder="https://youtube.com/watch?v=..." 
-                  required
-                  className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
-                />
-                <p className="text-xs text-gray-500 mt-2">Dica: Use vídeos "Não Listados" no YouTube para manter exclusividade.</p>
-              </div>
-            )}
-
-            {type === 'pdf' && (
-              <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center bg-black hover:bg-white/5 transition-colors cursor-pointer">
-                <FileText className="w-8 h-8 text-gray-500 mx-auto mb-3" />
-                <p className="text-sm text-gray-300 font-bold">Clique para fazer upload de PDF</p>
-                <p className="text-xs text-gray-500 mt-1">Tamanho máximo: 10MB</p>
-              </div>
-            )}
+            <div>
+              <label className="block text-sm font-bold text-gray-300 mb-1">Link (YouTube, Vimeo, Drive) *</label>
+              <input 
+                type="url" 
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                placeholder="https://youtube.com/watch?v=..." 
+                required
+                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+              />
+              <p className="text-xs text-gray-500 mt-2">Dica: Use vídeos "Não Listados" no YouTube para manter exclusividade ou links do Google Drive com permissão de leitura.</p>
+            </div>
 
             <div>
               <label className="block text-sm font-bold text-gray-300 mb-1">Descrição Opcional</label>
@@ -199,15 +185,22 @@ export default function NovoMaterialPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-300 mb-1">Vincular à Turma *</label>
+              <label className="block text-sm font-bold text-gray-300 mb-1">Vincular a *</label>
               <select 
-                value={selectedClassId}
-                onChange={(e) => setSelectedClassId(e.target.value)}
+                value={target}
+                onChange={(e) => setTarget(e.target.value)}
                 className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] transition-all"
               >
-                {classes.map(cls => (
-                  <option key={cls.id} value={cls.id}>{cls.name} ({cls.courses?.name})</option>
-                ))}
+                <optgroup label="Suas Turmas">
+                  {classes.map(cls => (
+                    <option key={`class_${cls.id}`} value={`class_${cls.id}`}>{cls.name} ({cls.courses?.name})</option>
+                  ))}
+                </optgroup>
+                <optgroup label="Alunos Específicos">
+                  {students.map(std => (
+                    <option key={`student_${std.id}`} value={`student_${std.id}`}>Aluno: {std.name}</option>
+                  ))}
+                </optgroup>
               </select>
             </div>
           </div>

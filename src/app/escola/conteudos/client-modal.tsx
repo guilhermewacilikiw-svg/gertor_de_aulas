@@ -16,7 +16,17 @@ interface Material {
   url?: string;
 }
 
-export function BibliotecaMateriais({ initialMaterials = [] }: { initialMaterials?: Material[] }) {
+export function BibliotecaMateriais({ 
+  initialMaterials = [],
+  modules = [],
+  lessons = [],
+  students = []
+}: { 
+  initialMaterials?: Material[];
+  modules?: any[];
+  lessons?: any[];
+  students?: any[];
+}) {
   const [materials, setMaterials] = useState<Material[]>(initialMaterials);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -117,16 +127,16 @@ export function BibliotecaMateriais({ initialMaterials = [] }: { initialMaterial
                   </td>
                   <td className="p-5">
                     <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 text-gray-300">
-                      {mat.target}
+                      {mat.target === 'all' ? 'Escola' : (mat.target.includes('module_') ? 'Módulo' : (mat.target.includes('student_') ? 'Aluno Específico' : mat.target))}
                     </span>
                   </td>
-                  <td className="p-5 text-xs font-bold text-gray-400">{mat.size}</td>
+                  <td className="p-5 text-xs font-bold text-[#C0E87A]">{mat.size}</td>
                   <td className="p-5 text-xs font-medium text-gray-500">{mat.uploadedAt}</td>
                   <td className="p-5 text-right pr-6">
                     <div className="flex items-center justify-end gap-2">
-                      <button className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-colors" title="Download">
+                      <a href={mat.url} target="_blank" rel="noreferrer" className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-[#C0E87A] transition-colors" title="Acessar Link">
                         <FileDown className="w-4 h-4" />
-                      </button>
+                      </a>
                       <button className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
                         <MoreVertical className="w-4 h-4" />
                       </button>
@@ -202,27 +212,46 @@ export function BibliotecaMateriais({ initialMaterials = [] }: { initialMaterial
                   disabled={isPending}
                   className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all appearance-none disabled:opacity-50"
                 >
-                  <option value="all">Todos os Alunos da Escola</option>
-                  <option value="course_1">Apenas Turmas de Violão</option>
-                  <option value="course_2">Apenas Turmas de Canto</option>
+                  <option value="all">Material Base (Toda a Escola)</option>
+                  <optgroup label="Módulos">
+                    {modules.map(m => (
+                      <option key={m.id} value={`module_${m.id}`}>{m.title}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Alunos (Material Complementar)">
+                    {students.map(s => (
+                      <option key={s.id} value={`student_${s.id}`}>{s.users?.name || s.name}</option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Arquivo Base</label>
-                <div className="w-full relative">
-                  <input 
-                    type="file" 
-                    name="file" 
-                    required 
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Vincular a uma Aula (Opcional)</label>
+                <select
+                  name="lesson_id"
+                  disabled={isPending}
+                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all appearance-none disabled:opacity-50"
+                >
+                  <option value="">Nenhuma aula vinculada</option>
+                  {lessons.map(l => (
+                    <option key={l.id} value={l.id}>{new Date(l.scheduled_start).toLocaleDateString('pt-BR')} - {l.topic || 'Aula'}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Link do Conteúdo (URL)</label>
+                <div className="relative">
+                  <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <input
+                    type="url"
+                    name="url"
+                    required
                     disabled={isPending}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed z-10" 
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder-gray-600 disabled:opacity-50"
+                    placeholder="Ex: https://youtube.com/watch?v=..."
                   />
-                  <div className="w-full border-2 border-dashed border-white/10 rounded-2xl p-8 flex flex-col items-center justify-center text-center bg-white/5 hover:bg-white/10 transition-colors group">
-                    <Upload className="w-8 h-8 text-gray-500 group-hover:text-[#C0E87A] group-hover:-translate-y-1 transition-all mb-2" />
-                    <span className="text-sm font-bold text-white">Clique ou arraste o arquivo aqui</span>
-                    <span className="text-xs text-gray-500 mt-1">PDF, DOCX, MP4, MP3 ou ZIP (Max: 50MB)</span>
-                  </div>
                 </div>
               </div>
 
@@ -240,7 +269,7 @@ export function BibliotecaMateriais({ initialMaterials = [] }: { initialMaterial
                   disabled={isPending}
                   className="flex-1 py-3.5 rounded-xl bg-[#C0E87A] text-black font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Upload className="w-4 h-4 stroke-[3]" /> {isPending ? 'ENVIANDO...' : 'INICIAR UPLOAD'}
+                  <Upload className="w-4 h-4 stroke-[3]" /> {isPending ? 'SALVANDO...' : 'CADASTRAR LINK'}
                 </button>
               </div>
             </form>

@@ -62,3 +62,60 @@ export async function createStudentAction(formData: FormData) {
   
   return { success: true };
 }
+
+export async function importStudentsAction(students: { name: string, email: string, password?: string }[]) {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { success: false, error: 'Acesso negado' };
+  }
+
+  const { data: publicUser } = await supabase
+    .from('users')
+    .select('id')
+    .eq('auth_user_id', user.id)
+    .single();
+
+  if (!publicUser) {
+    return { success: false, error: 'Usuário não encontrado' };
+  }
+
+  const { data: membership } = await supabase
+    .from('school_memberships')
+    .select('school_id')
+    .eq('user_id', publicUser.id)
+    .single();
+
+  if (!membership?.school_id) {
+    return { success: false, error: 'Escola não encontrada' };
+  }
+
+  let successCount = 0;
+  let errors = [];
+
+  for (const student of students) {
+    if (!student.name || !student.email) continue;
+    
+    const { data, error } = await supabase.rpc('admin_create_student', {
+      p_name: student.name,
+      p_email: student.email,
+      p_password: student.password || 'Mudar@123',
+      p_school_id: membership.school_id
+    });
+
+    if (error || data?.error) {
+      errors.push(`Erro ao importar ${student.email}: ${error?.message || data?.error}`);
+    } else {
+      successCount++;
+    }
+  }
+
+  revalidatePath('/escola/alunos');
+  
+  return { 
+    success: true, 
+    successCount, 
+    errors 
+  };
+}

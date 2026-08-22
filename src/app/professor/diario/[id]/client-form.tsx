@@ -18,12 +18,15 @@ interface ClientFormProps {
   students: Student[];
   isCompleted: boolean;
   initialSummary: string;
+  modules: any[];
+  currentModuleId: string;
 }
 
-export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary }: ClientFormProps) {
+export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary, modules, currentModuleId }: ClientFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(initialSummary);
+  const [moduleId, setModuleId] = useState(currentModuleId);
   
   // Default all to present initially
   const [attendance, setAttendance] = useState<Record<string, boolean>>(() => {
@@ -45,7 +48,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
     }
 
     setLoading(true);
-    const res = await finishLesson(lessonId, attendance, summary);
+    const res = await finishLesson(lessonId, attendance, summary, moduleId);
     if (res.success) {
       confetti({
         particleCount: 100,
@@ -109,6 +112,25 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
             );
           })}
         </div>
+      </div>
+
+      {/* Módulo Relacionado */}
+      <div className="bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 shadow-lg space-y-4">
+        <div>
+          <h3 className="font-bold text-white text-lg">Módulo da Aula</h3>
+          <p className="text-sm text-gray-400">Qual módulo do curso foi ministrado hoje?</p>
+        </div>
+        <select
+          disabled={isCompleted}
+          value={moduleId}
+          onChange={(e) => setModuleId(e.target.value)}
+          className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all appearance-none"
+        >
+          <option value="">Selecione um módulo (Opcional)...</option>
+          {modules.map((m) => (
+            <option key={m.id} value={m.id}>{m.title}</option>
+          ))}
+        </select>
       </div>
 
       {/* Resumo da Aula */}

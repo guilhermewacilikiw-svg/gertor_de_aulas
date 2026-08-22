@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-export async function finishLesson(lessonId: string, attendanceData: Record<string, boolean>, summary: string) {
+export async function finishLesson(lessonId: string, attendanceData: Record<string, boolean>, summary: string, moduleId?: string) {
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -62,10 +62,14 @@ export async function finishLesson(lessonId: string, attendanceData: Record<stri
       }, { onConflict: 'lesson_id' });
   }
 
-  // 4. Mudar o status da aula para completed
+  // 4. Mudar o status da aula para completed e atrelar módulo
   const { error: lessonError } = await supabase
     .from('lessons')
-    .update({ status: 'completed', completed_at: new Date().toISOString() })
+    .update({ 
+      status: 'completed', 
+      completed_at: new Date().toISOString(),
+      module_id: moduleId || null
+    })
     .eq('id', lessonId);
 
   if (lessonError) {

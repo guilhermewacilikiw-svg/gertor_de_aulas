@@ -1,7 +1,7 @@
 import { Users, Search, Plus, Mail, Shield, UserSquare2, ChevronRight, Activity } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { InviteStudentModal } from './client-modal';
+import { InviteStudentModal, ImportStudentsModal } from './client-modal';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -97,6 +97,7 @@ export default async function AlunosPage() {
               Inativos
             </button>
           </div>
+          <ImportStudentsModal />
           <InviteStudentModal />
         </div>
       </div>
