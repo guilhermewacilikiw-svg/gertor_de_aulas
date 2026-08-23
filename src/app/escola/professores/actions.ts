@@ -39,9 +39,18 @@ export async function createTeacherAction(formData: FormData) {
   const password = formData.get('password') as string;
   const specialty = formData.get('specialty') as string;
 
+  // New fields
+  const cpfRaw = formData.get('cpf') as string;
+  const phoneRaw = formData.get('phone') as string;
+  const birthDate = formData.get('birth_date') as string;
+
   if (!name || !email || !password || !specialty) {
     return { success: false, error: 'Preencha todos os campos obrigatórios' };
   }
+
+  // Clean masking
+  const cpf = cpfRaw ? cpfRaw.replace(/\D/g, '') : null;
+  const phone = phoneRaw ? phoneRaw.replace(/\D/g, '') : null;
 
   // Chamar a função RPC segura para criar o professor e os perfis
   const { data, error } = await supabase.rpc('admin_create_teacher', {
@@ -49,7 +58,10 @@ export async function createTeacherAction(formData: FormData) {
     p_email: email,
     p_password: password,
     p_school_id: membership.school_id,
-    p_specialty: specialty
+    p_specialty: specialty,
+    p_cpf: cpf,
+    p_phone: phone,
+    p_birth_date: birthDate || null
   });
 
   if (error) {

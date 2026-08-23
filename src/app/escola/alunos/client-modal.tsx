@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Plus, X, Loader2, Mail, Lock, User, Sparkles, Upload } from 'lucide-react';
+import { useState, ChangeEvent } from 'react';
+import { Plus, X, Loader2, Mail, Lock, User, Sparkles, Upload, Phone, Calendar, FileText } from 'lucide-react';
 import { createStudentAction, importStudentsAction } from './actions';
 import confetti from 'canvas-confetti';
 
@@ -9,6 +9,26 @@ export function InviteStudentModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [cpf, setCpf] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    setCpf(value);
+  };
+
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+    value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+    setPhone(value);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,47 +88,91 @@ export function InviteStudentModal() {
                 </div>
               )}
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Nome Completo</label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
-                    placeholder="Ex: João Silva"
-                  />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5 md:col-span-2">
+                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Nome Completo</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      placeholder="Ex: João Silva"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">E-mail de Acesso</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
-                    placeholder="joao@email.com"
-                  />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">CPF</label>
+                  <div className="relative">
+                    <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                    <input
+                      type="text"
+                      name="cpf"
+                      value={cpf}
+                      onChange={handleCpfChange}
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      placeholder="000.000.000-00"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Senha Inicial</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                  <input
-                    type="text"
-                    name="password"
-                    required
-                    defaultValue="Mudar@123"
-                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
-                  />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Data de Nasc.</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                    <input
+                      type="date"
+                      name="birth_date"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30 [color-scheme:dark]"
+                    />
+                  </div>
                 </div>
-                <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Telefone (WhatsApp)</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                    <input
+                      type="text"
+                      name="phone"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      placeholder="(00) 00000-0000"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">E-mail de Acesso</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      placeholder="joao@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 md:col-span-2">
+                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Senha Inicial</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                    <input
+                      type="text"
+                      name="password"
+                      required
+                      defaultValue="Mudar@123"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                    />
+                  </div>
+                  <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
+                </div>
               </div>
 
               <div className="pt-4 flex gap-3">
