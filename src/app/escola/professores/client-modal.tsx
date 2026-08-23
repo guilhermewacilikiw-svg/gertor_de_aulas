@@ -43,16 +43,16 @@ export function InviteTeacherModal() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
-          <div className="bg-card w-full max-w-md rounded-3xl shadow-2xl border relative overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="p-6 border-b border-border flex justify-between items-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="glass-panel w-full max-w-md rounded-none shadow-2xl border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
+            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/40">
               <div>
-                <h3 className="font-bold text-xl">Novo Professor</h3>
-                <p className="text-sm text-muted-foreground">Cadastre um professor e libere o acesso dele à Wackoda.</p>
+                <h3 className="font-black text-xl text-white uppercase tracking-tight">Novo Professor</h3>
+                <p className="text-xs text-[#A27AE8] font-mono uppercase tracking-widest mt-1">INICIALIZAR ACESSO DOCENTE</p>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-2 rounded-full hover:bg-muted text-muted-foreground transition-colors"
+                className="p-2 border border-white/10 hover:bg-white/5 text-white/50 hover:text-white transition-colors cyber-clip-btn"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -65,75 +65,75 @@ export function InviteTeacherModal() {
                 </div>
               )}
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-foreground ml-1">Nome Completo</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Nome Completo</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="text"
                     name="name"
                     required
-                    className="w-full bg-muted/30 border rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
                     placeholder="Ex: Carlos Eduardo"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-foreground ml-1">Especialidade (Matéria)</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Especialidade (Matéria)</label>
                 <div className="relative">
-                  <BookOpen className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <BookOpen className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="text"
                     name="specialty"
                     required
-                    className="w-full bg-muted/30 border rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
                     placeholder="Ex: Matemática"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-foreground ml-1">E-mail de Acesso</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">E-mail de Acesso</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="email"
                     name="email"
                     required
-                    className="w-full bg-muted/30 border rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
                     placeholder="carlos@escola.com.br"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-foreground ml-1">Senha Inicial</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Senha Inicial</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="text"
                     name="password"
                     required
                     defaultValue="senha123"
-                    className="w-full bg-muted/30 border rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
                   />
                 </div>
-                <p className="text-xs text-muted-foreground ml-1">O professor poderá alterar a senha depois.</p>
+                <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O professor poderá alterar a senha depois.</p>
               </div>
 
               <div className="pt-4 flex gap-3">
                 <button 
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 py-3 rounded-xl bg-muted text-muted-foreground font-semibold hover:bg-muted/80 transition-colors"
+                  className="flex-1 py-3 bg-black/40 border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-colors cyber-clip-btn"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 rounded-xl bg-gradient-brand text-white font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-primary/25 flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-[#C0E87A] text-black font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Acesso'}
                 </button>

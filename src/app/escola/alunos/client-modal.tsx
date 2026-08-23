@@ -48,19 +48,16 @@ export function InviteStudentModal() {
             
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#C0E87A]/10 rounded-full blur-[80px] pointer-events-none"></div>
 
-            <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
+            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/40">
               <div>
-                <span className="text-xs font-bold text-[#C0E87A] uppercase tracking-wider flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> Cadastro
-                </span>
-                <h2 className="text-xl font-black text-white">Novo Aluno</h2>
-                <p className="text-xs text-gray-400 mt-0.5">Crie o acesso para o Portal do Aluno.</p>
+                <h3 className="font-black text-xl text-white uppercase tracking-tight">Novo Aluno</h3>
+                <p className="text-xs text-[#A27AE8] font-mono uppercase tracking-widest mt-1">INICIALIZAR ACESSO DISCENTE</p>
               </div>
-              <button
+              <button 
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                className="p-2 border border-white/10 hover:bg-white/5 text-white/50 hover:text-white transition-colors cyber-clip-btn"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -71,61 +68,61 @@ export function InviteStudentModal() {
                 </div>
               )}
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Nome Completo</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Nome Completo</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="text"
                     name="name"
                     required
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder-gray-600"
-                    placeholder="Ex: Maria Clara"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                    placeholder="Ex: João Silva"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">E-mail de Acesso</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">E-mail de Acesso</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="email"
                     name="email"
                     required
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder-gray-600"
-                    placeholder="maria@gmail.com"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                    placeholder="joao@email.com"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Senha Inicial</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Senha Inicial</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="text"
                     name="password"
                     required
-                    defaultValue="123456"
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder-gray-600"
+                    defaultValue="Mudar@123"
+                    className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
                   />
                 </div>
-                <p className="text-[10px] text-gray-500 ml-1">O aluno poderá alterar a senha depois.</p>
+                <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
               </div>
 
               <div className="pt-4 flex gap-3">
                 <button 
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition-colors"
+                  className="flex-1 py-3 bg-black/40 border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-colors cyber-clip-btn"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3.5 rounded-xl bg-[#C0E87A] text-black font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-[#C0E87A] text-black font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Acesso'}
                 </button>
@@ -204,8 +201,8 @@ export function ImportStudentsModal() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="glass-panel w-full max-w-md rounded-none shadow-2xl border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div>
