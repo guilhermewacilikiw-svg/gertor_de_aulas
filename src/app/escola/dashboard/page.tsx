@@ -1,4 +1,4 @@
-import { Users, GraduationCap, Calendar, AlertTriangle, UserPlus, FileText, CheckCircle2, Clock } from 'lucide-react';
+import { Users, GraduationCap, Calendar, AlertTriangle, UserPlus, FileText, CheckCircle2, Clock, LayoutDashboard } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
@@ -43,10 +43,38 @@ export default async function EscolaDashboard() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
       
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Painel Operacional da {schoolName}</h1>
-        <p className="text-sm text-gray-400 mt-1">Visão clara das aulas, frequência, leads e alertas da unidade.</p>
+      {/* HEADER HERO */}
+      <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+        {/* Animated Background Spheres */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#00F0FF]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#0080FF]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
+
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div>
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(0,240,255,0.15)] mb-6">
+              <LayoutDashboard className="w-4 h-4 text-[#00F0FF]" />
+              <span className="text-xs font-black uppercase tracking-widest text-white/80">
+                Painel Operacional
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+              Dashboard
+            </h1>
+            <p className="text-gray-400 max-w-xl text-lg">
+              Visão clara das aulas, frequência, leads e alertas operacionais da {schoolName}.
+            </p>
+          </div>
+          
+          <div className="shrink-0 flex items-center justify-center relative group">
+            <div className="absolute inset-0 bg-[#00F0FF]/20 rounded-full blur-2xl group-hover:bg-[#00F0FF]/30 transition-all duration-500"></div>
+            <div className="relative bg-black/40 border border-white/10 p-6 rounded-[2rem] backdrop-blur-xl flex flex-col items-center justify-center min-w-[160px] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+              <span className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#00F0FF] to-white drop-shadow-md">
+                {(totalStudents || 0) + (totalTeachers || 0)}
+              </span>
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Pessoas</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Grid de Indicadores Operacionais */}

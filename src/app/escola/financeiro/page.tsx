@@ -45,17 +45,33 @@ export default async function EscolaFinanceiroPage() {
     <div className="bg-[#0a0a0f] min-h-screen text-white w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="space-y-8 max-w-6xl mx-auto pb-12 pt-4">
         
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
-          <div>
-            <h1 className="text-4xl font-black tracking-tight drop-shadow-md">Módulo Financeiro <span className="text-[#C0E87A]">Desacoplado</span></h1>
-            <p className="text-sm text-gray-400 mt-2 font-medium">Gestão de mensalidades, cobranças e fluxo de caixa da escola.</p>
-          </div>
-          <div className="flex gap-4">
-            <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs transition-all shadow-lg hover:shadow-xl">
-              Ver Planos & Limites
-            </button>
-            <CreateInvoiceModal students={studentList} />
+        {/* HEADER HERO */}
+        <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#059669]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
+
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div>
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(16,185,129,0.15)] mb-6">
+                <DollarSign className="w-4 h-4 text-[#10B981]" />
+                <span className="text-xs font-black uppercase tracking-widest text-white/80">
+                  Gestão Financeira
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+                Financeiro
+              </h1>
+              <p className="text-gray-400 max-w-xl text-lg">
+                Gestão de mensalidades, cobranças e fluxo de caixa da escola.
+              </p>
+            </div>
+            
+            <div className="flex gap-4 flex-col sm:flex-row">
+              <button className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs transition-all shadow-lg hover:shadow-xl flex items-center justify-center">
+                Ver Planos & Limites
+              </button>
+              <CreateInvoiceModal students={studentList} />
+            </div>
           </div>
         </div>
 
