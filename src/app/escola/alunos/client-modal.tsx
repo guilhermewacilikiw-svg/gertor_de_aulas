@@ -43,8 +43,8 @@ export function InviteStudentModal() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
+          <div className="bg-[#050505] w-full max-w-md max-h-[90vh] overflow-y-auto rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
             
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#C0E87A]/10 rounded-full blur-[80px] pointer-events-none"></div>
 
@@ -201,8 +201,8 @@ export function ImportStudentsModal() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="glass-panel w-full max-w-md rounded-none shadow-2xl border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
+          <div className="bg-[#050505] w-full max-w-md rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div>

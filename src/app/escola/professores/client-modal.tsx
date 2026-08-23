@@ -43,8 +43,8 @@ export function InviteTeacherModal() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="glass-panel w-full max-w-md rounded-none shadow-2xl border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
+          <div className="bg-[#050505] w-full max-w-md rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
             <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/40">
               <div>
                 <h3 className="font-black text-xl text-white uppercase tracking-tight">Novo Professor</h3>
