@@ -37,57 +37,18 @@ export async function saasRegisterAction(formData: FormData) {
     return { success: false, error: 'Erro ao criar conta de usuário.' };
   }
 
-  // 2. Insert into schools and users manually
-  const { data: school, error: schoolError } = await supabase
-    .from('schools')
-    .insert({ 
-      name: schoolName, 
-      document: document || null,
-      phone: phone || null,
-      email: adminEmail,
-      status: 'active' 
-    })
-    .select('id')
-    .single();
+  // 2. Insert into schools and users manually using RPC to bypass RLS
+  const { data: schoolId, error: rpcError } = await supabase.rpc('create_school_and_membership', {
+    p_school_name: schoolName,
+    p_document: document || null,
+    p_phone: phone || null,
+    p_admin_email: adminEmail,
+    p_auth_user_id: authData.user.id
+  });
 
-  if (schoolError || !school) {
-    console.error('School Insert Error:', schoolError);
-    return { success: false, error: 'Erro ao criar o perfil da escola/professor.' };
-  }
-
-  // Insert into public.users (trigger might have done this, but we fallback)
-  // Check if exists first
-  let pubUser = null;
-  const { data: existingUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('auth_user_id', authData.user.id)
-    .maybeSingle();
-
-  if (existingUser) {
-    pubUser = existingUser;
-  } else {
-    const { data: newUser } = await supabase
-      .from('users')
-      .insert({ 
-        auth_user_id: authData.user.id, 
-        name: adminName, 
-        email: adminEmail, 
-        phone: phone || null,
-        status: 'active' 
-      })
-      .select('id')
-      .single();
-    pubUser = newUser;
-  }
-
-  if (pubUser) {
-    await supabase.from('school_memberships').insert({
-      school_id: school.id,
-      user_id: pubUser.id,
-      role: 'SCHOOL_ADMIN',
-      status: 'active'
-    });
+  if (rpcError || !schoolId) {
+    console.error('RPC Insert Error:', rpcError);
+    return { success: false, error: 'Erro ao criar o perfil da escola/professor. ' + (rpcError?.message || '') };
   }
 
   // 3. Sign in immediately so session cookies are stored
