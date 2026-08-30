@@ -190,7 +190,7 @@ export default async function AlunoDashboard() {
           <input 
             type="text" 
             placeholder="Search for..." 
-            className="pl-10 pr-4 py-2 bg-[#12121A] border border-white/10 rounded-full text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#7D7AE8]/50 w-64 transition-all"
+            className="pl-10 pr-4 py-2 bg-[#12121A] border border-white/10 rounded-full text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-600/50 w-64 transition-all"
           />
         </div>
       </div>
@@ -202,7 +202,7 @@ export default async function AlunoDashboard() {
         <div className="lg:col-span-5 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 group shadow-lg">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <p className="text-xs text-[#7D7AE8] font-black uppercase tracking-widest mb-1">Última Aula Gravada</p>
+              <p className="text-xs text-red-500 font-black uppercase tracking-widest mb-1">Última Aula Gravada</p>
               <h2 className="text-xl font-bold text-white truncate max-w-xs">{videoTitle}</h2>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default async function AlunoDashboard() {
             </div>
             <div className="h-2 w-full bg-black/60 rounded-full overflow-hidden border border-white/5">
               <div 
-                className="h-full rounded-full bg-gradient-to-r from-[#C0E87A] to-[#7D7AE8] relative"
+                className="h-full rounded-full bg-gradient-to-r from-red-500 to-red-600 relative"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
@@ -245,11 +245,11 @@ export default async function AlunoDashboard() {
             ) : (
                 extraMaterials.map((mat: any, idx: number) => (
                   <Link href={mat.url || '#'} target="_blank" key={mat.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors flex flex-col h-[260px] group relative overflow-hidden">
-                    <div className="w-full flex-1 rounded-xl bg-gradient-to-br from-[#7D7AE8]/20 to-[#A27AE8]/10 mb-4 relative flex items-center justify-center overflow-hidden border border-white/5 group-hover:border-[#7D7AE8]/30 transition-colors">
+                    <div className="w-full flex-1 rounded-xl bg-gradient-to-br from-red-600/20 to-red-500/10 mb-4 relative flex items-center justify-center overflow-hidden border border-white/5 group-hover:border-red-600/30 transition-colors">
                       <div className="absolute inset-0 flex items-center justify-center text-8xl opacity-5 blur-[2px] font-black">
                         {idx + 1}
                       </div>
-                      <button className="relative z-10 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-[#7D7AE8]/50 transition-all shadow-lg">
+                      <button className="relative z-10 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-red-600/50 transition-all shadow-lg">
                         <Play className="w-5 h-5 text-white ml-1 fill-white" />
                       </button>
                     </div>
@@ -282,30 +282,30 @@ export default async function AlunoDashboard() {
 
           <div className="space-y-4 flex-1">
             <div className="flex items-center gap-4 bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
-              <div className="w-12 h-12 rounded-xl bg-[#7D7AE8]/20 flex items-center justify-center text-[#7D7AE8] shrink-0 border border-[#7D7AE8]/30 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-red-600/20 flex items-center justify-center text-red-500 shrink-0 border border-red-600/30 group-hover:scale-105 transition-transform">
                 <FileText className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-bold text-white truncate">Exercício: Prática Diária</h4>
                 <p className="text-xs text-white/40 mt-0.5">{formattedNextDate}</p>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#E5E87A] shrink-0 bg-[#E5E87A]/10 px-2 py-1 rounded-md">Now</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-white shrink-0 bg-white/10 px-2 py-1 rounded-md">Now</span>
             </div>
 
             <div className="flex items-center gap-4 bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
-              <div className="w-12 h-12 rounded-xl bg-[#C0E87A]/20 flex items-center justify-center text-[#C0E87A] shrink-0 border border-[#C0E87A]/30 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center text-red-500 shrink-0 border border-red-500/30 group-hover:scale-105 transition-transform">
                 <Video className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-bold text-white truncate">Gravação: {nextCourseName}</h4>
                 <p className="text-xs text-white/40 mt-0.5">Next lesson</p>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#C0E87A] shrink-0 bg-[#C0E87A]/10 px-2 py-1 rounded-md">New</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-red-500 shrink-0 bg-red-500/10 px-2 py-1 rounded-md">New</span>
             </div>
 
             {lastRecord?.practice_instructions && (
                <div className="flex items-center gap-4 bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-xl bg-[#A27AE8]/20 flex items-center justify-center text-[#A27AE8] shrink-0 border border-[#A27AE8]/30 group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center text-red-500 shrink-0 border border-red-500/30 group-hover:scale-105 transition-transform">
                   <Dumbbell className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -316,7 +316,7 @@ export default async function AlunoDashboard() {
             )}
           </div>
 
-          <button className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-[#7D7AE8] to-[#A27AE8] text-white font-black text-sm shadow-[0_0_20px_rgba(125,122,232,0.4)] hover:shadow-[0_0_30px_rgba(125,122,232,0.6)] hover:scale-[1.02] transition-all">
+          <button className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-black text-sm shadow-[0_0_20px_rgba(125,122,232,0.4)] hover:shadow-[0_0_30px_rgba(125,122,232,0.6)] hover:scale-[1.02] transition-all">
             Show all
           </button>
         </div>
@@ -343,7 +343,7 @@ export default async function AlunoDashboard() {
                 />
                 {/* Progress Ring */}
                 <path
-                  className="text-[#7D7AE8] transition-all duration-1000 ease-out"
+                  className="text-red-500 transition-all duration-1000 ease-out"
                   strokeDasharray={strokeDasharray}
                   strokeWidth="3"
                   strokeLinecap="round"
@@ -367,14 +367,14 @@ export default async function AlunoDashboard() {
             <div className="w-full flex justify-between mt-8 px-6">
               <div className="text-center flex flex-col items-center">
                 <div className="flex items-center gap-2 justify-center mb-1">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#C0E87A] shadow-[0_0_8px_rgba(192,232,122,0.8)]"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(192,232,122,0.8)]"></div>
                   <span className="text-white font-bold">{globalScore}%</span>
                 </div>
                 <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">complete</span>
               </div>
               <div className="text-center flex flex-col items-center">
                 <div className="flex items-center gap-2 justify-center mb-1">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#7D7AE8] shadow-[0_0_8px_rgba(125,122,232,0.8)]"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_8px_rgba(125,122,232,0.8)]"></div>
                   <span className="text-white font-bold">{100 - globalScore}%</span>
                 </div>
                 <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">overview</span>
@@ -401,19 +401,19 @@ export default async function AlunoDashboard() {
           <div className="space-y-6 mt-4">
             <div className="flex items-center gap-4 group cursor-pointer">
               <span className="text-xs font-bold text-white/20 w-4 group-hover:text-white/60 transition-colors">1</span>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#7D7AE8] to-[#A27AE8] flex items-center justify-center text-white font-black text-lg border border-white/10 shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-black text-lg border border-white/10 shrink-0 shadow-lg group-hover:scale-110 transition-transform">
                 {nextTeacherName.charAt(0)}
               </div>
               <div className="min-w-0 flex-1">
                 <h4 className="text-sm font-bold text-white truncate">{nextTeacherName}</h4>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#E5E87A] mt-0.5">Current Instructor</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-white mt-0.5">Current Instructor</p>
               </div>
             </div>
 
             {lastLesson && (
               <div className="flex items-center gap-4 group cursor-pointer">
                 <span className="text-xs font-bold text-white/20 w-4 group-hover:text-white/60 transition-colors">2</span>
-                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#C0E87A] to-[#E5E87A] flex items-center justify-center text-black font-black text-lg border border-white/10 shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-red-500 to-white flex items-center justify-center text-white font-black text-lg border border-white/10 shrink-0 shadow-lg group-hover:scale-110 transition-transform">
                   {((lastLesson.teachers as any)?.users?.name || 'M').charAt(0)}
                 </div>
                 <div className="min-w-0 flex-1">

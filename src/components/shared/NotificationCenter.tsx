@@ -81,7 +81,7 @@ export function NotificationCenter({ userId, schoolId }: { userId?: string; scho
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 text-white font-extrabold text-[10px] flex items-center justify-center border-2 border-slate-900 animate-pulse">
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-tr from-red-600 to-red-900 text-white font-extrabold text-[10px] flex items-center justify-center border-2 border-slate-900 animate-pulse">
             {unreadCount}
           </span>
         )}
@@ -91,13 +91,13 @@ export function NotificationCenter({ userId, schoolId }: { userId?: string; scho
         <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-3xl bg-neutral-900 border border-slate-800 p-4 shadow-2xl z-50 text-white space-y-4 animate-in fade-in zoom-in-95 duration-200">
           <div className="flex items-center justify-between border-b border-white/10 pb-3">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <Sparkles className="w-4 h-4 text-white" />
               <h3 className="font-extrabold text-sm text-white">Notificações</h3>
             </div>
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1"
+                className="text-xs font-bold text-white hover:text-white transition-colors flex items-center gap-1"
               >
                 <Check className="w-3.5 h-3.5" /> Marcar lidas
               </button>
@@ -112,7 +112,7 @@ export function NotificationCenter({ userId, schoolId }: { userId?: string; scho
                 <div
                   key={n.id}
                   className={`p-3 rounded-2xl border transition-all ${
-                    !n.read_at ? 'bg-indigo-500/10 border-indigo-500/30' : 'bg-white/5 border-white/5 opacity-80'
+                    !n.read_at ? 'bg-red-500/10 border-red-500/20' : 'bg-white/5 border-white/5 opacity-80'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">

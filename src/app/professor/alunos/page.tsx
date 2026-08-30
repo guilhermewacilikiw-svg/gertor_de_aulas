@@ -95,7 +95,7 @@ export default function ProfessorAlunosPage() {
             placeholder="Buscar aluno por nome ou ID..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
           />
         </div>
       </div>
@@ -104,8 +104,8 @@ export default function ProfessorAlunosPage() {
         <div className="p-12 text-center text-gray-400">Carregando lista de alunos...</div>
       ) : filteredStudents.length === 0 ? (
         <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 flex flex-col items-center justify-center text-center shadow-lg">
-          <div className="w-16 h-16 bg-[#A27AE8]/10 rounded-full flex items-center justify-center mb-4">
-            <UserCircle2 className="w-8 h-8 text-[#A27AE8]" />
+          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
+            <UserCircle2 className="w-8 h-8 text-red-500" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Nenhum aluno encontrado</h3>
           <p className="text-gray-400 max-w-md">
@@ -115,13 +115,13 @@ export default function ProfessorAlunosPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStudents.map((student) => (
-            <div key={student.id} className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-[#7D7AE8]/30 transition-colors group">
+            <div key={student.id} className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-colors group">
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#7D7AE8]/20 border border-[#7D7AE8]/30 flex items-center justify-center text-[#7D7AE8] font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
                   {student.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg leading-tight group-hover:text-[#7D7AE8] transition-colors">{student.name}</h3>
+                  <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors">{student.name}</h3>
                   <p className="text-xs text-gray-500 font-mono mt-1">ID: {student.student_code || 'N/A'}</p>
                 </div>
               </div>

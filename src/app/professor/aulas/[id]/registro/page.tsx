@@ -35,14 +35,14 @@ export default async function RegistroAulaPage({ params }: { params: { id: strin
              <div className="flex items-center justify-between p-3 bg-muted/20 rounded-xl">
                <span className="font-medium">João (Aluno)</span>
                <div className="flex gap-2">
-                 <button className="px-4 py-1.5 bg-emerald-100 text-emerald-700 font-semibold rounded-lg text-sm border border-emerald-200">Presente</button>
+                 <button className="px-4 py-1.5 bg-white/10 text-white font-semibold rounded-lg text-sm border border-white/20">Presente</button>
                  <button className="px-4 py-1.5 bg-white text-muted-foreground font-semibold rounded-lg text-sm border hover:bg-muted transition-colors">Ausente</button>
                </div>
              </div>
              <div className="flex items-center justify-between p-3 bg-muted/20 rounded-xl">
                <span className="font-medium">Maria (Aluna)</span>
                <div className="flex gap-2">
-                 <button className="px-4 py-1.5 bg-emerald-100 text-emerald-700 font-semibold rounded-lg text-sm border border-emerald-200">Presente</button>
+                 <button className="px-4 py-1.5 bg-white/10 text-white font-semibold rounded-lg text-sm border border-white/20">Presente</button>
                  <button className="px-4 py-1.5 bg-white text-muted-foreground font-semibold rounded-lg text-sm border hover:bg-muted transition-colors">Ausente</button>
                </div>
              </div>

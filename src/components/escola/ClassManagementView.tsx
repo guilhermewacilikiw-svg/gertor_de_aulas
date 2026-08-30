@@ -7,7 +7,9 @@ import {
   removeScheduleAction, 
   enrollStudentAction, 
   removeStudentAction, 
-  transferStudentAction 
+  transferStudentAction,
+  assignStudentToScheduleAction,
+  removeStudentFromScheduleAction
 } from '@/app/escola/turmas/[id]/actions';
 
 const DAYS_OF_WEEK = [
@@ -33,8 +35,12 @@ export function ClassManagementView({
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+  const [isAssignStudentModalOpen, setIsAssignStudentModalOpen] = useState(false);
   
   const [transferEnrollmentId, setTransferEnrollmentId] = useState<string | null>(null);
+  const [selectedScheduleId, setSelectedScheduleId] = useState('');
+  const [assignStudentId, setAssignStudentId] = useState('');
+  const [assignSearch, setAssignSearch] = useState('');
 
   const [scheduleDay, setScheduleDay] = useState(1);
   const [scheduleStart, setScheduleStart] = useState('14:00');
@@ -43,6 +49,7 @@ export function ClassManagementView({
 
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [searchStudent, setSearchStudent] = useState('');
+  const [enrollmentTime, setEnrollmentTime] = useState('');
 
   const [selectedTransferClassId, setSelectedTransferClassId] = useState('');
 
@@ -73,9 +80,10 @@ export function ClassManagementView({
     if (!selectedStudentId) return;
     startTransition(async () => {
       try {
-        await enrollStudentAction(turma.id, turma.course_id, turma.school_id, selectedStudentId);
+        await enrollStudentAction(turma.id, turma.course_id, turma.school_id, selectedStudentId, enrollmentTime);
         setIsStudentModalOpen(false);
         setSelectedStudentId('');
+        setEnrollmentTime('');
       } catch (err: any) {
         alert(err.message);
       }
@@ -107,6 +115,20 @@ export function ClassManagementView({
     });
   };
 
+  const handleAssignStudentToSchedule = () => {
+    if (!selectedScheduleId || !assignStudentId) return;
+    startTransition(async () => {
+      try {
+        await assignStudentToScheduleAction(selectedScheduleId, assignStudentId, turma.id);
+        setIsAssignStudentModalOpen(false);
+        setSelectedScheduleId('');
+        setAssignStudentId('');
+      } catch (err: any) {
+        alert(err.message);
+      }
+    });
+  };
+
   const filteredStudents = availableStudents.filter(s => s.name.toLowerCase().includes(searchStudent.toLowerCase()));
 
   const capacity = turma.capacity || 15;
@@ -118,30 +140,30 @@ export function ClassManagementView({
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
       {/* 1. HERO HEADER */}
-      <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
         {/* Animated Background Spheres */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#7D7AE8]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#C0E87A]/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-[#A27AE8]/10 rounded-full blur-[60px] animate-pulse mix-blend-screen -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-500/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-red-500/10 rounded-full blur-[60px] animate-pulse mix-blend-screen -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: '4s' }}></div>
 
         <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10">
           
           <div className="flex-1 w-full text-center lg:text-left">
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(125,122,232,0.15)] mb-6">
-              <span className={`w-2 h-2 rounded-full animate-ping ${turma.status === 'active' ? 'bg-[#C0E87A]' : 'bg-red-400'}`}></span>
+              <span className={`w-2 h-2 rounded-full animate-ping ${turma.status === 'active' ? 'bg-red-500' : 'bg-red-400'}`}></span>
               <span className="text-xs font-black uppercase tracking-widest text-white/80">
                 {turma.status === 'active' ? 'Turma Ativa' : 'Turma Inativa'}
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-xl mb-6">
               {turma.name}
             </h1>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">
               <div className="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-2xl border border-white/5 backdrop-blur-sm">
-                <div className="w-8 h-8 rounded-full bg-[#7D7AE8]/20 flex items-center justify-center border border-[#7D7AE8]/30">
-                  <GraduationCap className="w-4 h-4 text-[#C77AE8]" />
+                <div className="w-8 h-8 rounded-full bg-red-600/20 flex items-center justify-center border border-red-600/30">
+                  <GraduationCap className="w-4 h-4 text-red-700" />
                 </div>
                 <div>
                   <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Curso Vinculado</p>
@@ -150,8 +172,8 @@ export function ClassManagementView({
               </div>
 
               <div className="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-2xl border border-white/5 backdrop-blur-sm">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#C0E87A]/20 to-[#E5E87A]/20 flex items-center justify-center border border-[#C0E87A]/30">
-                  <Users className="w-4 h-4 text-[#C0E87A]" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-red-500/20 to-white/20 flex items-center justify-center border border-red-500/30">
+                  <Users className="w-4 h-4 text-red-500" />
                 </div>
                 <div>
                   <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Professor Resp.</p>
@@ -174,7 +196,7 @@ export function ClassManagementView({
                 />
                 {/* Progress Ring */}
                 <path
-                  className={`${occupancyPercentage >= 100 ? 'text-red-400' : 'text-[#7D7AE8]'} transition-all duration-1000 ease-out`}
+                  className={`${occupancyPercentage >= 100 ? 'text-red-400' : 'text-red-500'} transition-all duration-1000 ease-out`}
                   strokeDasharray={strokeDasharray}
                   strokeWidth="3"
                   strokeLinecap="round"
@@ -211,7 +233,7 @@ export function ClassManagementView({
           onClick={() => setActiveTab('schedules')}
           className={`px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-300 ${
             activeTab === 'schedules'
-            ? 'bg-gradient-to-r from-[#7D7AE8] to-[#A27AE8] text-white shadow-[0_10px_30px_rgba(125,122,232,0.4)] scale-105'
+            ? 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-[0_10px_30px_rgba(125,122,232,0.4)] scale-105'
             : 'bg-white/5 text-gray-500 hover:bg-white/10 hover:text-white hover:scale-105 border border-white/5'
           }`}
         >
@@ -221,7 +243,7 @@ export function ClassManagementView({
           onClick={() => setActiveTab('students')}
           className={`px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-300 ${
             activeTab === 'students'
-            ? 'bg-gradient-to-r from-[#7D7AE8] to-[#A27AE8] text-white shadow-[0_10px_30px_rgba(125,122,232,0.4)] scale-105'
+            ? 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-[0_10px_30px_rgba(125,122,232,0.4)] scale-105'
             : 'bg-white/5 text-gray-500 hover:bg-white/10 hover:text-white hover:scale-105 border border-white/5'
           }`}
         >
@@ -247,8 +269,8 @@ export function ClassManagementView({
 
           {schedules.length === 0 ? (
             <div className="w-full flex flex-col items-center justify-center py-20 bg-gradient-to-b from-white/5 to-transparent rounded-3xl border border-white/5 border-dashed">
-              <div className="w-24 h-24 bg-[#7D7AE8]/20 rounded-full flex items-center justify-center mb-6 animate-float shadow-[0_0_30px_rgba(125,122,232,0.3)]">
-                <Calendar className="w-10 h-10 text-[#A27AE8]" />
+              <div className="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center mb-6 animate-float shadow-[0_0_30px_rgba(125,122,232,0.3)]">
+                <Calendar className="w-10 h-10 text-red-500" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Sem horários definidos</h3>
               <p className="text-gray-400 max-w-md text-center">Nenhum encontro agendado para esta turma. Adicione horários para estruturar o cronograma.</p>
@@ -256,13 +278,13 @@ export function ClassManagementView({
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {schedules.map((schedule) => (
-                <div key={schedule.id} className="relative group bg-[#1A1A24] rounded-3xl border border-white/5 overflow-hidden hover:border-[#7D7AE8]/50 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(125,122,232,0.15)] hover:-translate-y-1">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#7D7AE8]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div key={schedule.id} className="relative group bg-[#1A1A24] rounded-3xl border border-white/5 overflow-hidden hover:border-red-600/50 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(125,122,232,0.15)] hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
                   <div className="p-6 relative z-10">
                     <div className="flex justify-between items-start mb-6">
                       <div>
-                        <p className="text-xs font-bold text-[#E5E87A] uppercase tracking-widest mb-1">Dia da Semana</p>
+                        <p className="text-xs font-bold text-white uppercase tracking-widest mb-1">Dia da Semana</p>
                         <h3 className="font-black text-white text-2xl drop-shadow-md">{DAYS_OF_WEEK[schedule.day_of_week]}</h3>
                       </div>
                       <button 
@@ -277,7 +299,7 @@ export function ClassManagementView({
                     
                     <div className="space-y-3">
                       <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/5">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#7D7AE8] to-[#C77AE8] flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(125,122,232,0.4)]">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(125,122,232,0.4)]">
                           <Clock className="w-5 h-5 text-white" />
                         </div>
                         <div>
@@ -288,8 +310,8 @@ export function ClassManagementView({
 
                       {schedule.room && (
                         <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/5">
-                          <div className="w-10 h-10 rounded-full bg-[#C0E87A]/20 border border-[#C0E87A]/30 flex items-center justify-center shrink-0">
-                            <MapPin className="w-5 h-5 text-[#C0E87A]" />
+                          <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center shrink-0">
+                            <MapPin className="w-5 h-5 text-red-500" />
                           </div>
                           <div>
                             <p className="text-xs text-gray-500 font-bold uppercase">Local / Sala</p>
@@ -297,6 +319,58 @@ export function ClassManagementView({
                           </div>
                         </div>
                       )}
+
+                      <div className="flex flex-col gap-2 bg-black/40 p-4 rounded-2xl border border-white/5">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0">
+                              <Users className="w-4 h-4 text-red-500" />
+                            </div>
+                            <p className="text-xs text-gray-500 font-bold uppercase">Alunos Vinculados</p>
+                          </div>
+                          <button 
+                            onClick={() => {
+                              setSelectedScheduleId(schedule.id);
+                              setIsAssignStudentModalOpen(true);
+                            }}
+                            className="text-xs font-black text-white hover:text-red-400 transition-colors flex items-center gap-1"
+                          >
+                            <Plus className="w-3.5 h-3.5" /> Adicionar
+                          </button>
+                        </div>
+
+                        {schedule.schedule_participants && schedule.schedule_participants.length > 0 ? (
+                          <div className="flex flex-col gap-2">
+                            {schedule.schedule_participants.map((part: any) => (
+                              <div key={part.students.id} className="flex items-center justify-between bg-white/5 p-2 rounded-xl border border-white/5 group/part">
+                                <div className="flex items-center gap-2 truncate pr-2">
+                                  <div className="w-6 h-6 rounded-full bg-red-600/20 flex items-center justify-center shrink-0 border border-red-600/30">
+                                    <span className="text-[10px] font-black text-white">{part.students.name.charAt(0)}</span>
+                                  </div>
+                                  <p className="font-bold text-white text-sm truncate">{part.students.name}</p>
+                                </div>
+                                <button 
+                                  onClick={() => {
+                                    if (confirm(`Remover ${part.students.name} deste horário?`)) {
+                                      startTransition(async () => {
+                                        await removeStudentFromScheduleAction(schedule.id, part.students.id, turma.id);
+                                      });
+                                    }
+                                  }}
+                                  disabled={isPending}
+                                  className="w-6 h-6 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all opacity-0 group-hover/part:opacity-100 disabled:opacity-50"
+                                  title="Remover aluno"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-gray-500 italic mt-1">Nenhum aluno neste horário.</p>
+                        )}
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -317,7 +391,7 @@ export function ClassManagementView({
             <button 
               onClick={() => setIsStudentModalOpen(true)}
               disabled={occupancyPercentage >= 100}
-              className="px-6 py-3 bg-gradient-to-r from-[#C0E87A] to-[#E5E87A] rounded-2xl text-black font-black text-sm hover:shadow-[0_10px_30px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+              className="px-6 py-3 bg-red-600 hover:bg-red-500 rounded-2xl text-white font-black text-sm hover:shadow-[0_10px_30px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               <Plus className="w-5 h-5" /> Adicionar Aluno
             </button>
@@ -325,8 +399,8 @@ export function ClassManagementView({
 
           {enrollments.length === 0 ? (
             <div className="w-full flex flex-col items-center justify-center py-20 bg-gradient-to-b from-white/5 to-transparent rounded-3xl border border-white/5 border-dashed">
-              <div className="w-24 h-24 bg-[#C0E87A]/20 rounded-full flex items-center justify-center mb-6 animate-float shadow-[0_0_30px_rgba(192,232,122,0.3)]">
-                <Users className="w-10 h-10 text-[#C0E87A]" />
+              <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center mb-6 animate-float shadow-[0_0_30px_rgba(192,232,122,0.3)]">
+                <Users className="w-10 h-10 text-red-500" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Turma Vazia</h3>
               <p className="text-gray-400 max-w-md text-center">Ainda não há alunos vinculados. Clique no botão acima para adicionar o primeiro aluno a esta turma.</p>
@@ -335,22 +409,32 @@ export function ClassManagementView({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {enrollments.map((enr) => (
                 <div key={enr.id} className="glass-card group flex flex-col sm:flex-row items-center p-4 gap-4 overflow-hidden border border-white/5 hover:border-white/20 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7D7AE8] to-[#C77AE8] p-[2px] shrink-0 shadow-[0_0_15px_rgba(125,122,232,0.3)] group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-red-900 p-[2px] shrink-0 shadow-[0_0_15px_rgba(125,122,232,0.3)] group-hover:scale-110 transition-transform duration-500">
                     <div className="w-full h-full bg-[#0f0f0f] rounded-full flex items-center justify-center">
-                      <span className="font-black text-xl text-transparent bg-clip-text bg-gradient-to-br from-[#C0E87A] to-white">
+                      <span className="font-black text-xl text-white">
                         {enr.students?.name?.charAt(0) || '-'}
                       </span>
                     </div>
                   </div>
                   
                   <div className="flex-1 text-center sm:text-left min-w-0">
-                    <h3 className="font-black text-white text-lg truncate group-hover:text-[#C0E87A] transition-colors duration-300">{enr.students?.name}</h3>
+                    <h3 className="font-black text-white text-lg truncate group-hover:text-red-500 transition-colors duration-300">{enr.students?.name}</h3>
                     <p className="text-xs text-gray-500 truncate mb-2">{enr.students?.email}</p>
-                    <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">
-                      <Calendar className="w-3 h-3 text-white/40" />
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        Desde {new Date(enr.start_date).toLocaleDateString('pt-BR')}
-                      </span>
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                      <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">
+                        <Calendar className="w-3 h-3 text-white/40" />
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                          Desde {new Date(enr.start_date).toLocaleDateString('pt-BR')}
+                        </span>
+                      </div>
+                      {enr.specific_time && (
+                        <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">
+                          <Clock className="w-3 h-3 text-red-500/70" />
+                          <span className="text-[10px] font-bold text-red-400/80 uppercase tracking-widest">
+                            {enr.specific_time}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -360,7 +444,7 @@ export function ClassManagementView({
                         setTransferEnrollmentId(enr.id);
                         setIsTransferModalOpen(true);
                       }}
-                      className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#7D7AE8]/20 hover:border-[#7D7AE8]/40 hover:shadow-[0_0_15px_rgba(125,122,232,0.3)] transition-all duration-300 group-hover:scale-110"
+                      className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600/20 hover:border-red-600/40 hover:shadow-[0_0_15px_rgba(125,122,232,0.3)] transition-all duration-300 group-hover:scale-110"
                       title="Transferir de Turma"
                     >
                       <ArrowRightLeft className="w-5 h-5" />
@@ -386,9 +470,9 @@ export function ClassManagementView({
       {/* 1. SCHEDULE MODAL */}
       {isScheduleModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xl animate-in fade-in duration-300">
-          <div className="w-full max-w-lg bg-[#0a0a0f] border border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden transform animate-in zoom-in-95 duration-300">
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#7D7AE8]/30 rounded-full blur-[80px]"></div>
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#C0E87A]/20 rounded-full blur-[80px]"></div>
+          <div className="w-full max-w-lg bg-[#0a0a0f] border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden transform animate-in zoom-in-95 duration-300">
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-red-600/30 rounded-full blur-[80px]"></div>
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-red-500/20 rounded-full blur-[80px]"></div>
             
             <div className="relative z-10 flex items-center justify-between mb-8">
               <div>
@@ -396,17 +480,17 @@ export function ClassManagementView({
                 <p className="text-sm text-gray-400 mt-1">Configure o dia e hora deste encontro.</p>
               </div>
               <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                <Clock className="w-6 h-6 text-[#E5E87A]" />
+                <Clock className="w-6 h-6 text-white" />
               </div>
             </div>
             
             <div className="space-y-6 relative z-10">
               <div className="group">
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-[#7D7AE8] transition-colors">Dia da Semana</label>
+                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-red-500 transition-colors">Dia da Semana</label>
                 <select 
                   value={scheduleDay}
                   onChange={(e) => setScheduleDay(Number(e.target.value))}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all appearance-none cursor-pointer"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none cursor-pointer"
                 >
                   {DAYS_OF_WEEK.map((day, idx) => (
                     <option key={idx} value={idx} className="bg-[#0f0f0f]">{day}</option>
@@ -416,33 +500,33 @@ export function ClassManagementView({
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="group">
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-[#7D7AE8] transition-colors">Hora Inicial</label>
+                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-red-500 transition-colors">Hora Inicial</label>
                   <input 
                     type="time" 
                     value={scheduleStart}
                     onChange={(e) => setScheduleStart(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
                   />
                 </div>
                 <div className="group">
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-[#7D7AE8] transition-colors">Hora Final</label>
+                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-red-500 transition-colors">Hora Final</label>
                   <input 
                     type="time" 
                     value={scheduleEnd}
                     onChange={(e) => setScheduleEnd(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
                   />
                 </div>
               </div>
 
               <div className="group">
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-[#7D7AE8] transition-colors">Sala / Localização (Opcional)</label>
+                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-red-500 transition-colors">Sala / Localização (Opcional)</label>
                 <input 
                   type="text" 
                   value={scheduleRoom}
                   onChange={(e) => setScheduleRoom(e.target.value)}
                   placeholder="Ex: Laboratório 01"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
                 />
               </div>
             </div>
@@ -457,7 +541,7 @@ export function ClassManagementView({
               <button 
                 onClick={handleAddSchedule}
                 disabled={isPending || !scheduleStart || !scheduleEnd}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#7D7AE8] to-[#A27AE8] text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(125,122,232,0.5)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(125,122,232,0.5)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Salvando...' : 'Adicionar Horário'}
               </button>
@@ -469,8 +553,8 @@ export function ClassManagementView({
       {/* 2. ENROLL STUDENT MODAL */}
       {isStudentModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xl animate-in fade-in duration-300">
-          <div className="w-full max-w-2xl bg-[#0a0a0f] border border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh] transform animate-in zoom-in-95 duration-300">
-            <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#C0E87A]/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+          <div className="w-full max-w-2xl bg-[#0a0a0f] border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh] transform animate-in zoom-in-95 duration-300">
+            <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-red-500/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             
             <div className="relative z-10 flex items-center justify-between mb-8 shrink-0">
               <div>
@@ -478,19 +562,32 @@ export function ClassManagementView({
                 <p className="text-sm text-gray-400 mt-1">Busque um aluno ativo da escola para matricular nesta turma.</p>
               </div>
               <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                <Users className="w-6 h-6 text-[#C0E87A]" />
+                <Users className="w-6 h-6 text-red-500" />
               </div>
             </div>
             
-            <div className="relative mb-6 shrink-0 z-10">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-              <input 
-                type="text" 
-                placeholder="Digite o nome do aluno para filtrar..." 
-                value={searchStudent}
-                onChange={(e) => setSearchStudent(e.target.value)}
-                className="w-full bg-black/40 border border-white/10 rounded-2xl pl-14 pr-5 py-4 text-white font-bold focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all shadow-inner"
-              />
+            <div className="relative mb-6 shrink-0 z-10 space-y-4">
+              <div>
+                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 transition-colors">Horário Específico (Opcional)</label>
+                <input 
+                  type="text" 
+                  placeholder="Ex: 15h da tarde, Quarta às 10h..." 
+                  value={enrollmentTime}
+                  onChange={(e) => setEnrollmentTime(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
+                />
+              </div>
+
+              <div className="relative">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                <input 
+                  type="text" 
+                  placeholder="Digite o nome do aluno para filtrar..." 
+                  value={searchStudent}
+                  onChange={(e) => setSearchStudent(e.target.value)}
+                  className="w-full bg-black/40 border border-white/10 rounded-2xl pl-14 pr-5 py-4 text-white font-bold focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all shadow-inner"
+                />
+              </div>
             </div>
 
             <div className="flex-1 overflow-y-auto min-h-0 pr-2 custom-scrollbar space-y-3 z-10">
@@ -505,7 +602,7 @@ export function ClassManagementView({
                     onClick={() => setSelectedStudentId(student.id)}
                     className={`w-full text-left flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${
                       selectedStudentId === student.id 
-                      ? 'bg-gradient-to-r from-[#C0E87A]/20 to-transparent border-[#C0E87A]/50 shadow-[0_0_20px_rgba(192,232,122,0.15)] scale-[1.02]' 
+                      ? 'bg-gradient-to-r from-red-500/20 to-transparent border-red-500/50 shadow-[0_0_20px_rgba(192,232,122,0.15)] scale-[1.02]' 
                       : 'bg-white/5 border-white/5 hover:border-white/20 hover:bg-white/10'
                     }`}
                   >
@@ -517,7 +614,7 @@ export function ClassManagementView({
                       <p className="text-xs font-bold text-gray-500 truncate mt-0.5">{student.email}</p>
                     </div>
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
-                      selectedStudentId === student.id ? 'border-[#C0E87A] bg-[#C0E87A]' : 'border-white/20'
+                      selectedStudentId === student.id ? 'border-red-500 bg-red-500' : 'border-white/20'
                     }`}>
                       {selectedStudentId === student.id && <div className="w-2 h-2 rounded-full bg-black"></div>}
                     </div>
@@ -532,6 +629,7 @@ export function ClassManagementView({
                   setIsStudentModalOpen(false);
                   setSelectedStudentId('');
                   setSearchStudent('');
+                  setEnrollmentTime('');
                 }}
                 className="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
               >
@@ -540,7 +638,7 @@ export function ClassManagementView({
               <button 
                 onClick={handleEnrollStudent}
                 disabled={isPending || !selectedStudentId}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#C0E87A] to-[#E5E87A] text-black rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(192,232,122,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(192,232,122,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Vinculando...' : 'Matricular Aluno Selecionado'}
               </button>
@@ -552,8 +650,8 @@ export function ClassManagementView({
       {/* 3. TRANSFER STUDENT MODAL */}
       {isTransferModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xl animate-in fade-in duration-300">
-          <div className="w-full max-w-lg bg-[#0a0a0f] border border-white/10 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden transform animate-in zoom-in-95 duration-300">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+          <div className="w-full max-w-lg bg-[#0a0a0f] border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden transform animate-in zoom-in-95 duration-300">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
             
             <div className="relative z-10 flex items-center justify-between mb-8">
               <div>
@@ -561,13 +659,13 @@ export function ClassManagementView({
                 <p className="text-sm text-gray-400 mt-1">Mudança de turma para o mesmo curso.</p>
               </div>
               <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                <ArrowRightLeft className="w-6 h-6 text-amber-400" />
+                <ArrowRightLeft className="w-6 h-6 text-white" />
               </div>
             </div>
             
             <div className="space-y-6 relative z-10">
               <div className="group">
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-amber-400 transition-colors">Selecione a Nova Turma de Destino</label>
+                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-white transition-colors">Selecione a Nova Turma de Destino</label>
                 {otherClasses.length === 0 ? (
                   <div className="p-5 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0">!</div>
@@ -577,7 +675,7 @@ export function ClassManagementView({
                   <select 
                     value={selectedTransferClassId}
                     onChange={(e) => setSelectedTransferClassId(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all appearance-none cursor-pointer"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white font-bold focus:outline-none focus:border-red-500/20 focus:ring-1 focus:ring-amber-400 transition-all appearance-none cursor-pointer"
                   >
                     <option value="" className="bg-[#0f0f0f]">-- Escolha na lista abaixo --</option>
                     {otherClasses.map((c) => (
@@ -604,9 +702,109 @@ export function ClassManagementView({
               <button 
                 onClick={handleTransferStudent}
                 disabled={isPending || !selectedTransferClassId}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-neutral-900 text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Confirmando...' : 'Confirmar Transferência'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 4. ASSIGN STUDENT TO SCHEDULE MODAL */}
+      {isAssignStudentModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xl animate-in fade-in duration-300">
+          <div className="w-full max-w-lg bg-[#0a0a0f] border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden transform animate-in zoom-in-95 duration-300">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div className="relative z-10 flex items-center justify-between mb-8">
+              <div>
+                <h3 className="text-3xl font-black text-white tracking-tight">Vincular Aluno</h3>
+                <p className="text-sm text-gray-400 mt-1">Selecione um aluno já matriculado na turma.</p>
+              </div>
+              <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+            </div>
+            
+            <div className="space-y-6 relative z-10">
+              <div className="group">
+                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-white transition-colors">Selecione o Aluno</label>
+                {enrollments.length === 0 ? (
+                  <div className="p-5 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0">!</div>
+                    <p className="text-sm text-red-400 font-bold">Não há alunos matriculados nesta turma. Adicione alunos na aba 'Alunos Matriculados' primeiro.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <Search className="w-5 h-5 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2" />
+                      <input 
+                        type="text"
+                        placeholder="Buscar aluno pelo nome..."
+                        value={assignSearch}
+                        onChange={(e) => setAssignSearch(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-5 py-4 text-white focus:outline-none focus:border-red-500/30 focus:ring-1 focus:ring-red-400 transition-all placeholder:text-gray-600 font-bold"
+                      />
+                    </div>
+                    
+                    <div className="max-h-60 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+                      {enrollments
+                        .filter(enr => enr.students?.name.toLowerCase().includes(assignSearch.toLowerCase()))
+                        .map((enr) => (
+                          <div 
+                            key={enr.student_id}
+                            onClick={() => setAssignStudentId(enr.student_id)}
+                            className={`p-4 rounded-xl cursor-pointer transition-all border flex items-center justify-between ${
+                              assignStudentId === enr.student_id 
+                                ? 'bg-red-500/10 border-red-500/50 text-white shadow-[0_0_15px_rgba(239,68,68,0.1)]' 
+                                : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                                assignStudentId === enr.student_id ? 'bg-red-500 border-red-400 text-white' : 'bg-white/10 border-white/10 text-gray-500'
+                              }`}>
+                                <span className="text-sm font-black">{enr.students?.name.charAt(0)}</span>
+                              </div>
+                              <p className="font-bold text-base">{enr.students?.name}</p>
+                            </div>
+                            
+                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all ${
+                              assignStudentId === enr.student_id ? 'border-red-500 bg-red-500' : 'border-gray-600'
+                            }`}>
+                              {assignStudentId === enr.student_id && (
+                                <div className="w-2 h-2 bg-white rounded-full" />
+                              )}
+                            </div>
+                          </div>
+                      ))}
+                      {enrollments.filter(enr => enr.students?.name.toLowerCase().includes(assignSearch.toLowerCase())).length === 0 && (
+                        <p className="text-center text-gray-500 text-sm py-4">Nenhum aluno encontrado com esse nome.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-end gap-4 mt-10 relative z-10">
+              <button 
+                onClick={() => {
+                  setIsAssignStudentModalOpen(false);
+                  setSelectedScheduleId('');
+                  setAssignStudentId('');
+                }}
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={handleAssignStudentToSchedule}
+                disabled={isPending || !assignStudentId}
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(220,38,38,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+              >
+                {isPending ? 'Confirmando...' : 'Confirmar Vínculo'}
               </button>
             </div>
           </div>

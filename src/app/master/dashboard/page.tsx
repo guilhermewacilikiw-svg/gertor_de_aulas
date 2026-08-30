@@ -28,10 +28,10 @@ export default async function MasterDashboard() {
 
       {/* Cards de Métricas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <MetricCard title="Escolas Cadastradas" value={totalSchools.toString()} icon={<Building2 />} color="from-blue-500 to-cyan-500" />
-        <MetricCard title="Escolas Ativas" value={activeSchools.toString()} icon={<Activity />} color="from-emerald-500 to-teal-500" />
-        <MetricCard title="Total de Usuários" value={totalUsers.toString()} icon={<Users />} color="from-purple-500 to-indigo-500" />
-        <MetricCard title="MRR Estimado" value={mrrPlaceholder} icon={<Wallet />} color="from-amber-500 to-orange-500" />
+        <MetricCard title="Escolas Cadastradas" value={totalSchools.toString()} icon={<Building2 />} color="from-blue-500 to-red-900" />
+        <MetricCard title="Escolas Ativas" value={activeSchools.toString()} icon={<Activity />} color="from-red-600 to-red-900" />
+        <MetricCard title="Total de Usuários" value={totalUsers.toString()} icon={<Users />} color="from-red-600 to-red-900" />
+        <MetricCard title="MRR Estimado" value={mrrPlaceholder} icon={<Wallet />} color="from-neutral-800 to-neutral-900" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -65,7 +65,7 @@ export default async function MasterDashboard() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
-                        school.status === 'active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                        school.status === 'active' ? 'bg-red-600/10 text-white border border-white/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
                       }`}>
                         {school.status === 'active' ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
                         {school.status === 'active' ? 'Ativa' : 'Inativa'}
@@ -82,7 +82,7 @@ export default async function MasterDashboard() {
         <div className="bg-[#111] rounded-2xl border border-gray-800 shadow-xl overflow-hidden">
           <div className="p-6 border-b border-gray-800 flex justify-between items-center bg-gradient-to-r from-[#111] to-[#151515]">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Users className="w-5 h-5 text-purple-400" />
+              <Users className="w-5 h-5 text-red-500" />
               Usuários Recentes
             </h2>
           </div>

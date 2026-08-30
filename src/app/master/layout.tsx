@@ -42,7 +42,7 @@ export default async function MasterLayout({
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200">
       {/* Navbar Superior (Dark Mode Premium) */}
-      <nav className="border-b border-purple-900/30 bg-[#0a0a0a]/80 backdrop-blur-md sticky top-0 z-50">
+      <nav className="border-b border-red-500/20 bg-[#0a0a0a]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
@@ -55,7 +55,7 @@ export default async function MasterLayout({
                 </span>
               </div>
               <div className="hidden sm:ml-8 sm:flex sm:space-x-4">
-                <Link href="/master/dashboard" className="border-purple-500 text-purple-400 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                <Link href="/master/dashboard" className="border-red-500/20 text-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                   <LayoutDashboard className="w-4 h-4 mr-2" />
                   Visão Global
                 </Link>
@@ -71,7 +71,7 @@ export default async function MasterLayout({
             </div>
             <div className="flex items-center gap-4">
               <div className="text-sm text-gray-400">
-                Olá, <span className="text-purple-400 font-semibold">{publicUser.name}</span>
+                Olá, <span className="text-red-500 font-semibold">{publicUser.name}</span>
               </div>
               <form action="/auth/signout" method="post">
                 <button type="submit" className="p-2 text-gray-400 hover:text-red-400 transition-colors rounded-full hover:bg-red-500/10">

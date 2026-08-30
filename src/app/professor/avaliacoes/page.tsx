@@ -67,21 +67,21 @@ export default function ProfessorAvaliacoesPage() {
               const studentsCount = cls.enrollments?.[0]?.count || 0;
               return (
                 <Link href={`/professor/avaliacoes/lancar?classId=${cls.id}`} key={cls.id} className="group relative block">
-                  <div className="bg-black/50 border border-white/5 rounded-2xl p-6 hover:border-[#E5E87A]/50 transition-all shadow-lg flex flex-col h-full">
+                  <div className="bg-black/50 border border-white/5 rounded-2xl p-6 hover:border-white/50 transition-all shadow-lg flex flex-col h-full">
                     
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-10 h-10 rounded-xl bg-[#E5E87A]/10 flex items-center justify-center group-hover:bg-[#E5E87A]/20 transition-colors">
-                        <Star className="w-5 h-5 text-[#E5E87A]" />
+                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                        <Star className="w-5 h-5 text-white" />
                       </div>
                       <span className="text-xs font-bold bg-white/5 px-3 py-1 rounded-full text-gray-400 border border-white/10 group-hover:text-white transition-colors">
                         {studentsCount} Alunos
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-white text-lg leading-tight mb-1 group-hover:text-[#E5E87A] transition-colors">{cls.name}</h3>
+                    <h3 className="font-bold text-white text-lg leading-tight mb-1 group-hover:text-white transition-colors">{cls.name}</h3>
                     <p className="text-sm text-gray-500 font-medium mb-6">{cls.courses?.name}</p>
 
-                    <div className="mt-auto flex items-center justify-between text-[#E5E87A] font-bold text-sm">
+                    <div className="mt-auto flex items-center justify-between text-white font-bold text-sm">
                       <span>Lançar Notas</span>
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>

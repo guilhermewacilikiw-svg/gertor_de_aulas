@@ -39,12 +39,16 @@ export default async function TurmaDetailsPage({ params }: { params: Promise<{ i
   }
 
   // 2. Fetch Schedules
-  const { data: schedules } = await supabase
+  const { data: schedules, error: scheduleError } = await supabase
     .from('class_schedules')
-    .select('*')
+    .select('*, schedule_participants(students(id, name, email))')
     .eq('class_id', turma.id)
     .order('day_of_week', { ascending: true })
     .order('start_time', { ascending: true });
+
+  if (scheduleError) {
+    console.error('ERROR FETCHING SCHEDULES:', scheduleError);
+  }
 
   // 3. Fetch Enrollments
   const { data: enrollments } = await supabase

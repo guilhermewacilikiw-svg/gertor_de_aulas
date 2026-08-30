@@ -56,7 +56,7 @@ export function InviteStudentModal() {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#C0E87A] to-[#E5E87A] hover:scale-105 text-black font-black text-xs shadow-[0_0_20px_rgba(192,232,122,0.4)] transition-all flex items-center gap-2 group"
+        className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 hover:scale-105 text-white font-black text-xs shadow-lg shadow-red-600/20 transition-all flex items-center gap-2 group"
       >
         <Plus className="w-4 h-4 stroke-[3] group-hover:rotate-90 transition-transform" />
         Novo Aluno
@@ -66,12 +66,12 @@ export function InviteStudentModal() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
           <div className="bg-[#050505] w-full max-w-md max-h-[90vh] overflow-y-auto rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
             
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C0E87A]/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
             <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/40">
               <div>
                 <h3 className="font-black text-xl text-white uppercase tracking-tight">Novo Aluno</h3>
-                <p className="text-xs text-[#A27AE8] font-mono uppercase tracking-widest mt-1">INICIALIZAR ACESSO DISCENTE</p>
+                <p className="text-xs text-red-500 font-mono uppercase tracking-widest mt-1">INICIALIZAR ACESSO DISCENTE</p>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
@@ -97,7 +97,7 @@ export function InviteStudentModal() {
                       type="text"
                       name="name"
                       required
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                       placeholder="Ex: João Silva"
                     />
                   </div>
@@ -112,7 +112,7 @@ export function InviteStudentModal() {
                       name="cpf"
                       value={cpf}
                       onChange={handleCpfChange}
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                       placeholder="000.000.000-00"
                     />
                   </div>
@@ -125,7 +125,7 @@ export function InviteStudentModal() {
                     <input
                       type="date"
                       name="birth_date"
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30 [color-scheme:dark]"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30 [color-scheme:dark]"
                     />
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export function InviteStudentModal() {
                       name="phone"
                       value={phone}
                       onChange={handlePhoneChange}
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                       placeholder="(00) 00000-0000"
                     />
                   </div>
@@ -153,7 +153,7 @@ export function InviteStudentModal() {
                       type="email"
                       name="email"
                       required
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                       placeholder="joao@email.com"
                     />
                   </div>
@@ -168,7 +168,7 @@ export function InviteStudentModal() {
                       name="password"
                       required
                       defaultValue="Mudar@123"
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                     />
                   </div>
                   <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
@@ -186,7 +186,7 @@ export function InviteStudentModal() {
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 bg-[#C0E87A] text-black font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
+                  className="flex-1 py-3 bg-red-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Acesso'}
                 </button>
@@ -289,8 +289,8 @@ export function ImportStudentsModal() {
 
             {results ? (
               <div className="space-y-4">
-                <div className="p-4 bg-[#C0E87A]/20 border border-[#C0E87A]/30 rounded-xl text-center">
-                   <h3 className="text-[#C0E87A] font-black text-lg">{results.successCount} Alunos Importados!</h3>
+                <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-center">
+                   <h3 className="text-red-500 font-black text-lg">{results.successCount} Alunos Importados!</h3>
                 </div>
                 {results.errors.length > 0 && (
                    <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
@@ -319,7 +319,7 @@ export function ImportStudentsModal() {
                   />
                   {loading ? (
                      <div className="flex flex-col items-center justify-center">
-                        <Loader2 className="w-8 h-8 text-[#C0E87A] animate-spin mb-2" />
+                        <Loader2 className="w-8 h-8 text-red-500 animate-spin mb-2" />
                         <span className="text-sm font-bold text-gray-300">Processando arquivo...</span>
                      </div>
                   ) : (

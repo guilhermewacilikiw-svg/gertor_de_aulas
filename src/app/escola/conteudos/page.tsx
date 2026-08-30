@@ -62,7 +62,7 @@ export default async function EscolaConteudosPage() {
       <div className="space-y-8 max-w-6xl mx-auto pb-12 pt-4">
         
         {/* HEADER HERO */}
-        <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
+        <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#F59E0B]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#D97706]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
 
@@ -74,7 +74,7 @@ export default async function EscolaConteudosPage() {
                   Material
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-xl mb-4">
                 Conteúdos
               </h1>
               <p className="text-gray-400 max-w-xl text-lg">
@@ -90,10 +90,10 @@ export default async function EscolaConteudosPage() {
             title="Links e Vídeos" 
             value={initialMaterials.length.toString()} 
             subtitle="Cadastrados no sistema" 
-            subtitleColor="text-[#C0E87A]"
-            icon={<FolderArchive className="w-5 h-5 text-black" />} 
-            color="from-[#C0E87A] to-[#E5E87A]" 
-            glowColor="bg-[#C0E87A]"
+            subtitleColor="text-red-500"
+            icon={<FolderArchive className="w-5 h-5 text-white" />} 
+            color="from-red-500 to-white" 
+            glowColor="bg-red-500"
           />
           <MetricCard 
             title="Armazenamento" 
@@ -101,8 +101,8 @@ export default async function EscolaConteudosPage() {
             subtitle="Via Links" 
             subtitleColor="text-gray-400"
             icon={<LinkIcon className="w-5 h-5 text-white" />} 
-            color="from-[#7D7AE8] to-[#A27AE8]" 
-            glowColor="bg-[#7D7AE8]"
+            color="from-red-600 to-red-500" 
+            glowColor="bg-red-600"
           />
           <MetricCard 
             title="Acessos Totais" 
@@ -110,8 +110,8 @@ export default async function EscolaConteudosPage() {
             subtitle="Downloads e visualizações" 
             subtitleColor="text-gray-400"
             icon={<FileText className="w-5 h-5 text-white" />} 
-            color="from-[#A27AE8] to-[#C77AE8]" 
-            glowColor="bg-[#C77AE8]"
+            color="from-red-500 to-red-700" 
+            glowColor="bg-red-700"
           />
         </div>
 

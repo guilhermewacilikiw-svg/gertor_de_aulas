@@ -83,8 +83,8 @@ export default function ProfessorTurmasPage() {
       {/* Classes Grid */}
       {classes.length === 0 ? (
         <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 flex flex-col items-center justify-center text-center">
-          <div className="w-16 h-16 bg-[#A27AE8]/10 rounded-full flex items-center justify-center mb-4">
-            <Users className="w-8 h-8 text-[#A27AE8]" />
+          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
+            <Users className="w-8 h-8 text-red-500" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Nenhuma turma encontrada</h3>
           <p className="text-gray-400 max-w-md">
@@ -100,20 +100,20 @@ export default function ProfessorTurmasPage() {
 
             return (
               <Link href={`/professor/turmas/${cls.id}`} key={cls.id} className="group relative block">
-                <div className="h-full bg-[#0f0f0f] border border-white/5 group-hover:border-[#7D7AE8]/50 rounded-3xl p-6 transition-all duration-300 flex flex-col shadow-lg">
+                <div className="h-full bg-[#0f0f0f] border border-white/5 group-hover:border-red-600/50 rounded-3xl p-6 transition-all duration-300 flex flex-col shadow-lg">
                   
                   {/* Badge & Course */}
                   <div className="flex items-start justify-between mb-4">
-                    <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#A27AE8]/20 text-[#A27AE8] border border-[#A27AE8]/30">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-red-500/20 text-red-500 border border-red-500/30">
                       {cls.level || 'Todos os Níveis'}
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#7D7AE8]/20 transition-colors">
-                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-[#7D7AE8] transition-colors" />
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
+                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-red-500 transition-colors" />
                     </div>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-black text-white mb-1 group-hover:text-[#7D7AE8] transition-colors">
+                  <h3 className="text-xl font-black text-white mb-1 group-hover:text-red-500 transition-colors">
                     {cls.name}
                   </h3>
                   <div className="flex items-center gap-1.5 text-sm text-gray-400 mb-6 font-medium">

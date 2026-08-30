@@ -39,7 +39,7 @@ export default async function TurmaPage({ params }: { params: Promise<{ id: stri
     return (
       <div className="max-w-4xl mx-auto py-12 text-center">
         <h2 className="text-2xl font-bold mb-4 text-white">Turma não encontrada</h2>
-        <Link href="/professor/turmas" className="text-[#7D7AE8] hover:underline">
+        <Link href="/professor/turmas" className="text-red-500 hover:underline">
           &larr; Voltar para Minhas Turmas
         </Link>
       </div>
@@ -62,7 +62,7 @@ export default async function TurmaPage({ params }: { params: Promise<{ id: stri
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <div className="flex items-center gap-3 text-sm text-[#7D7AE8] font-semibold mb-2 uppercase tracking-wider">
+          <div className="flex items-center gap-3 text-sm text-red-500 font-semibold mb-2 uppercase tracking-wider">
             {classData.courses?.name}
           </div>
           <h1 className="text-3xl font-black text-white mb-2">{classData.name}</h1>
@@ -83,23 +83,23 @@ export default async function TurmaPage({ params }: { params: Promise<{ id: stri
             <div key={lesson.id} className="bg-black/50 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="flex items-center gap-1.5 bg-[#A27AE8]/10 text-[#A27AE8] px-3 py-1 rounded-lg text-xs font-semibold border border-[#A27AE8]/20">
+                  <span className="flex items-center gap-1.5 bg-red-500/10 text-red-500 px-3 py-1 rounded-lg text-xs font-semibold border border-red-500/20">
                     <CalendarIcon className="w-3.5 h-3.5" />
                     {new Date(lesson.scheduled_start).toLocaleDateString('pt-BR')}
                   </span>
                   {lesson.status === 'completed' ? (
-                    <span className="flex items-center gap-1.5 bg-[#C0E87A]/10 text-[#C0E87A] px-3 py-1 rounded-lg text-xs font-semibold border border-[#C0E87A]/20">
+                    <span className="flex items-center gap-1.5 bg-red-500/10 text-red-500 px-3 py-1 rounded-lg text-xs font-semibold border border-red-500/20">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Finalizada
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1.5 bg-[#E5E87A]/10 text-[#E5E87A] px-3 py-1 rounded-lg text-xs font-semibold border border-[#E5E87A]/20">
+                    <span className="flex items-center gap-1.5 bg-white/10 text-white px-3 py-1 rounded-lg text-xs font-semibold border border-white/20">
                       <Clock className="w-3.5 h-3.5" />
                       Pendente
                     </span>
                   )}
                 </div>
-                <h3 className="font-bold text-white text-lg group-hover:text-[#7D7AE8] transition-colors">
+                <h3 className="font-bold text-white text-lg group-hover:text-red-500 transition-colors">
                   {lesson.topic || 'Aula sem título'}
                 </h3>
                 {lesson.lesson_records?.[0]?.summary && (

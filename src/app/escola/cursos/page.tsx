@@ -1,7 +1,7 @@
 import { BookOpen, Search, Plus, MoreVertical, Users, Layers, ArrowRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { CreateCourseModal } from './client-modal';
+
 import Link from 'next/link';
 
 export default async function CursosPage() {
@@ -64,19 +64,19 @@ export default async function CursosPage() {
     <div className="space-y-6 max-w-6xl mx-auto pb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
       {/* HEADER HERO */}
-      <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#8B5CF6]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#7C3AED]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-500/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(139,92,246,0.15)] mb-6">
-              <BookOpen className="w-4 h-4 text-[#8B5CF6]" />
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(229,9,20,0.15)] mb-6">
+              <BookOpen className="w-4 h-4 text-red-500" />
               <span className="text-xs font-black uppercase tracking-widest text-white/80">
                 Trilhas de Aprendizado
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-xl mb-4">
               Cursos & Grade Curricular
             </h1>
             <p className="text-gray-400 max-w-xl text-lg">
@@ -85,7 +85,13 @@ export default async function CursosPage() {
           </div>
           
           <div className="flex gap-4 flex-col sm:flex-row">
-            <CreateCourseModal />
+            <Link 
+              href="/escola/cursos/novo"
+              className="bg-red-500 text-black px-5 py-2.5 rounded-xl font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/25 flex items-center gap-2 group"
+            >
+              <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+              Novo Curso
+            </Link>
           </div>
         </div>
       </div>
@@ -97,7 +103,7 @@ export default async function CursosPage() {
           <input
             type="text"
             placeholder="Buscar curso por nome ou categoria..."
-            className="w-full pl-9 pr-4 py-2.5 text-xs rounded-2xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-cyan-500"
+            className="w-full pl-9 pr-4 py-2.5 text-xs rounded-2xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-white/20"
           />
         </div>
       </div>
@@ -107,13 +113,13 @@ export default async function CursosPage() {
         {courseList.map((course) => (
           <div
             key={course.id}
-            className="bg-neutral-900/30 border border-neutral-800 rounded-3xl overflow-hidden border border-white/10 shadow-xl group hover:border-cyan-500/50 transition-all flex flex-col justify-between"
+            className="bg-neutral-900/30 border border-neutral-800 rounded-3xl overflow-hidden border border-white/10 shadow-xl group hover:border-white/20 transition-all flex flex-col justify-between"
           >
             {/* Header Banner */}
-            <div className="h-32 bg-gradient-to-br from-indigo-600 via-purple-600 to-cyan-500 p-5 relative flex flex-col justify-between overflow-hidden">
+            <div className="h-32 bg-gradient-to-br from-[#12121A] via-[#1A1A24] to-red-900/40 border-b border-white/5 p-5 relative flex flex-col justify-between overflow-hidden">
               <BookOpen className="w-24 h-24 text-white/10 absolute -right-4 -bottom-4 rotate-12" />
               
-              <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 text-cyan-300 backdrop-blur-md border border-white/10">
+              <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 text-white backdrop-blur-md border border-white/10">
                 {course.category} • {course.level}
               </span>
 
@@ -130,7 +136,7 @@ export default async function CursosPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs p-3 rounded-2xl bg-white/5 border border-white/5">
                   <span className="text-gray-400 flex items-center gap-1.5 font-medium">
-                    <Layers className="w-4 h-4 text-cyan-400" /> Planos / Módulos
+                    <Layers className="w-4 h-4 text-white" /> Planos / Módulos
                   </span>
                   <span className="font-bold text-white">{course.modulesCount} Módulos</span>
                 </div>
@@ -138,7 +144,7 @@ export default async function CursosPage() {
 
               <Link
                 href={`/escola/cursos/${course.id}`}
-                className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:brightness-110 text-white font-black text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 active:scale-95"
+                className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-black text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-500/20 active:scale-95"
               >
                 <span>GERENCIAR CURSO & PLANOS DE AULA</span>
                 <ArrowRight className="w-4 h-4" />

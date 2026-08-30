@@ -1,0 +1,1 @@
+ALTER TABLE enrollments ADD COLUMN IF NOT EXISTS room TEXT;

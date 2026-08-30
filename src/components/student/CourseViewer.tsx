@@ -91,12 +91,12 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
   };
 
   const getContentIcon = (type: string, completed?: boolean) => {
-    if (completed) return <CheckCircle className="w-5 h-5 text-emerald-400" />;
+    if (completed) return <CheckCircle className="w-5 h-5 text-white" />;
     
     switch (type) {
-      case 'video': return <PlayCircle className="w-5 h-5 text-pink-400" />;
+      case 'video': return <PlayCircle className="w-5 h-5 text-red-500" />;
       case 'pdf': return <FileText className="w-5 h-5 text-red-400" />;
-      case 'audio': return <Headphones className="w-5 h-5 text-purple-400" />;
+      case 'audio': return <Headphones className="w-5 h-5 text-red-500" />;
       case 'link': return <LinkIcon className="w-5 h-5 text-blue-400" />;
       default: return <File className="w-5 h-5 text-gray-400" />;
     }
@@ -168,7 +168,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 bg-neutral-900/30 p-6 rounded-3xl border border-white/10">
                 <div>
                   <h2 className="text-2xl font-black">{activeContent.title}</h2>
-                  <p className="text-sm text-cyan-400 mt-1 font-medium">{activeModule?.title}</p>
+                  <p className="text-sm text-white mt-1 font-medium">{activeModule?.title}</p>
                 </div>
 
                 <button 
@@ -176,11 +176,11 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                   disabled={isMarking}
                   className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2 shadow-lg border whitespace-nowrap active:scale-95 ${
                     activeContent.completed 
-                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20' 
-                    : 'bg-white text-black border-transparent hover:brightness-110'
+                    ? 'bg-red-600/10 text-white border-white/20 hover:bg-white/10' 
+                    : 'bg-white text-white border-transparent hover:brightness-110'
                   }`}
                 >
-                  {isMarking ? <Circle className="w-4 h-4 animate-spin" /> : <CheckCircle className={`w-5 h-5 ${activeContent.completed ? 'text-emerald-400' : 'text-black'}`} />}
+                  {isMarking ? <Circle className="w-4 h-4 animate-spin" /> : <CheckCircle className={`w-5 h-5 ${activeContent.completed ? 'text-white' : 'text-white'}`} />}
                   {activeContent.completed ? 'CONCLUÍDO' : 'MARCAR COMO CONCLUÍDA'}
                 </button>
               </div>
@@ -201,7 +201,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
           <h2 className="text-lg font-black text-white">Conteúdo do Curso</h2>
           <div className="mt-2 w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
             <div 
-              className="bg-cyan-400 h-full rounded-full transition-all duration-1000" 
+              className="bg-red-600 h-full rounded-full transition-all duration-1000" 
               style={{ 
                 width: `${Math.round((localModules.flatMap(m => m.contents).filter(c => c.completed).length / Math.max(1, localModules.flatMap(m => m.contents).length)) * 100)}%` 
               }} 
@@ -239,7 +239,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                           onClick={() => setActiveContentId(content.id)}
                           className={`w-full text-left p-3 pl-6 flex items-start gap-3 transition-colors ${
                             isActive 
-                            ? 'bg-cyan-500/10 border-l-2 border-cyan-400' 
+                            ? 'bg-red-600/10 border-l-2 border-white/20' 
                             : 'hover:bg-white/5 border-l-2 border-transparent'
                           }`}
                         >
@@ -247,7 +247,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                             {getContentIcon(content.type, content.completed)}
                           </div>
                           <div>
-                            <p className={`text-sm font-medium line-clamp-2 ${isActive ? 'text-cyan-400' : 'text-gray-300'}`}>
+                            <p className={`text-sm font-medium line-clamp-2 ${isActive ? 'text-white' : 'text-gray-300'}`}>
                               {cIdx + 1}. {content.title}
                             </p>
                             <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">{content.type}</p>

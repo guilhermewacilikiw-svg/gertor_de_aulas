@@ -30,13 +30,13 @@ export function TrilhaAprendizagemCard({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div className="flex items-center gap-2">
-          <Compass className="w-5 h-5 text-cyan-400" />
+          <Compass className="w-5 h-5 text-white" />
           <div>
             <h3 className="text-lg font-black text-white">Trilha de Aprendizagem</h3>
             <p className="text-xs text-gray-400">{courseName}</p>
           </div>
         </div>
-        <span className="text-xs font-bold px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+        <span className="text-xs font-bold px-3 py-1 rounded-full bg-red-500/10 text-white border border-red-500/20">
           Etapa 2 de {modules.length}
         </span>
       </div>
@@ -56,9 +56,9 @@ export function TrilhaAprendizagemCard({
               key={mod.id}
               className={`relative z-10 p-4 rounded-2xl border transition-all flex items-center justify-between gap-4 ${
                 isCurrent
-                  ? 'bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border-indigo-500/50 shadow-lg'
+                  ? 'bg-gradient-to-r from-red-600/20 to-red-900/20 border-red-500/20 shadow-lg'
                   : isCompleted
-                  ? 'bg-emerald-500/10 border-emerald-500/30'
+                  ? 'bg-red-600/10 border-white/20'
                   : 'bg-white/5 border-white/5 opacity-60'
               }`}
             >
@@ -66,9 +66,9 @@ export function TrilhaAprendizagemCard({
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shadow-md shrink-0 ${
                     isCompleted
-                      ? 'bg-emerald-500 text-white'
+                      ? 'bg-red-600 text-white'
                       : isCurrent
-                      ? 'bg-gradient-to-tr from-cyan-400 to-indigo-500 text-white animate-pulse'
+                      ? 'bg-gradient-to-tr from-red-600 to-red-900 text-white animate-pulse'
                       : 'bg-white/10 text-gray-400'
                   }`}
                 >
@@ -89,12 +89,12 @@ export function TrilhaAprendizagemCard({
 
               <div>
                 {isCurrent && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-cyan-500 text-slate-950 font-black text-xs shadow-md">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-red-600 text-slate-950 font-black text-xs shadow-md">
                     Atual <ChevronRight className="w-3 h-3" />
                   </span>
                 )}
                 {isCompleted && (
-                  <span className="text-xs font-bold text-emerald-400">Concluído</span>
+                  <span className="text-xs font-bold text-white">Concluído</span>
                 )}
                 {isLocked && (
                   <span className="text-xs font-semibold text-gray-500">Bloqueado</span>

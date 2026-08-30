@@ -24,6 +24,7 @@ export interface CompleteLessonPayload {
 export async function completeLessonFlow(payload: CompleteLessonPayload) {
   const supabase = createClient();
 
+
   // 1. Update lesson status to completed
   const { error: lessonErr } = await supabase
     .from('lessons')

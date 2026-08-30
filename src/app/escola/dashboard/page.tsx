@@ -44,20 +44,20 @@ export default async function EscolaDashboard() {
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
       
       {/* HEADER HERO */}
-      <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/10 overflow-hidden shadow-2xl p-8 md:p-12">
         {/* Animated Background Spheres */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#00F0FF]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#0080FF]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-900/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(0,240,255,0.15)] mb-6">
-              <LayoutDashboard className="w-4 h-4 text-[#00F0FF]" />
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6">
+              <LayoutDashboard className="w-4 h-4 text-red-500" />
               <span className="text-xs font-black uppercase tracking-widest text-white/80">
                 Painel Operacional
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 uppercase">
               Dashboard
             </h1>
             <p className="text-gray-400 max-w-xl text-lg">
@@ -66,12 +66,12 @@ export default async function EscolaDashboard() {
           </div>
           
           <div className="shrink-0 flex items-center justify-center relative group">
-            <div className="absolute inset-0 bg-[#00F0FF]/20 rounded-full blur-2xl group-hover:bg-[#00F0FF]/30 transition-all duration-500"></div>
-            <div className="relative bg-black/40 border border-white/10 p-6 rounded-[2rem] backdrop-blur-xl flex flex-col items-center justify-center min-w-[160px] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-              <span className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#00F0FF] to-white drop-shadow-md">
-                {(totalStudents || 0) + (totalTeachers || 0)}
+            <div className="absolute inset-0 bg-red-600/10 rounded-full blur-2xl group-hover:bg-red-600/20 transition-all duration-500"></div>
+            <div className="relative bg-black border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center min-w-[160px] shadow-2xl">
+              <span className="text-5xl font-black text-white drop-shadow-md">
+                {totalStudents || 0}
               </span>
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Pessoas</span>
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Alunos</span>
             </div>
           </div>
         </div>
@@ -79,21 +79,21 @@ export default async function EscolaDashboard() {
 
       {/* Grid de Indicadores Operacionais */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard title="Total de Alunos" value={(totalStudents || 0).toString()} subtitle="Alunos ativos" icon={<Users />} color="from-indigo-500 to-purple-500" />
-        <MetricCard title="Professores" value={(totalTeachers || 0).toString()} subtitle="Corpo docente" icon={<GraduationCap />} color="from-cyan-500 to-blue-500" />
-        <MetricCard title="Aulas do Dia" value={(totalLessonsToday || 0).toString()} subtitle="Agendadas hoje" icon={<Calendar />} color="from-emerald-500 to-teal-500" />
-        <MetricCard title="Novos Leads" value={(totalLeads || 0).toString()} subtitle="Contatos landing page" icon={<UserPlus />} color="from-amber-500 to-orange-500" />
+        <MetricCard title="Total de Alunos" value={(totalStudents || 0).toString()} subtitle="Alunos ativos" icon={<Users />} color="from-red-600 to-red-900" />
+        <MetricCard title="Professores" value={(totalTeachers || 0).toString()} subtitle="Corpo docente" icon={<GraduationCap />} color="from-neutral-700 to-neutral-900" />
+        <MetricCard title="Aulas do Dia" value={(totalLessonsToday || 0).toString()} subtitle="Agendadas hoje" icon={<Calendar />} color="from-red-600 to-red-900" />
+        <MetricCard title="Novos Leads" value={(totalLeads || 0).toString()} subtitle="Contatos landing page" icon={<UserPlus />} color="from-neutral-700 to-neutral-900" />
       </div>
 
 
       {/* TABELA DE ALUNOS MATRICULADOS */}
       <div className="glass-card overflow-hidden">
-        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Users className="w-5 h-5 text-indigo-400" />
+        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black">
+          <h2 className="text-lg font-black uppercase text-white flex items-center gap-2">
+            <Users className="w-5 h-5 text-red-500" />
             Alunos Matriculados ({schoolName})
           </h2>
-          <span className="text-xs text-cyan-400 font-semibold">{totalStudents} Ativos</span>
+          <span className="text-xs text-red-400 font-bold tracking-widest uppercase">{totalStudents} Ativos</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-gray-300">
@@ -107,16 +107,16 @@ export default async function EscolaDashboard() {
             <tbody className="divide-y divide-white/5">
               {recentStudents && recentStudents.length > 0 ? (
                 recentStudents.map((student: any) => (
-                  <tr key={student.id} className="hover:bg-white/5 transition-colors">
+                  <tr key={student.id} className="hover:bg-white/5 transition-colors border-b border-white/5">
                     <td className="p-4 font-bold text-white flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 text-xs font-bold border border-indigo-500/30 uppercase">
+                      <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 text-xs font-bold border border-red-500/20 uppercase">
                         {student.users?.name?.charAt(0) || '-'}
                       </div>
                       {student.users?.name || 'Aluno Sem Nome'}
                     </td>
                     <td className="p-4 text-xs font-mono text-gray-400">{student.id.split('-')[0]}</td>
                     <td className="p-4">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${student.status === 'active' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'bg-gray-500/20 text-gray-300 border-gray-500/30'}`}>
+                      <span className={`px-2.5 py-1 rounded text-xs font-bold border ${student.status === 'active' ? 'bg-white/10 text-white border-white/20' : 'bg-transparent text-gray-500 border-gray-800'}`}>
                         {student.status === 'active' ? 'Ativo' : 'Inativo'}
                       </span>
                     </td>
@@ -146,8 +146,8 @@ function MetricCard({ title, value, subtitle, icon, color }: { title: string; va
       </div>
       <div className="relative z-10 flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <span className="text-gray-400 font-medium text-xs uppercase tracking-wider">{title}</span>
-          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg`}>
+          <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">{title}</span>
+          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white border border-white/10`}>
             {icon}
           </div>
         </div>
@@ -169,7 +169,7 @@ function AlertItem({ title, value, description, badge, badgeColor }: { title: st
           {badge}
         </span>
       </div>
-      <div className="text-base font-black text-cyan-400">{value}</div>
+      <div className="text-base font-black text-white">{value}</div>
       <p className="text-xs text-gray-400">{description}</p>
     </div>
   );

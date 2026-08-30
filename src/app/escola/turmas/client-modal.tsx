@@ -36,7 +36,7 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#A27AE8] to-[#C77AE8] hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
+        className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
       >
         <Plus className="w-4 h-4 stroke-[3] group-hover:rotate-90 transition-transform" />
         Nova Turma
@@ -46,11 +46,11 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
             
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#A27AE8]/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
             <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
               <div>
-                <span className="text-xs font-bold text-[#A27AE8] uppercase tracking-wider flex items-center gap-1">
+                <span className="text-xs font-bold text-red-500 uppercase tracking-wider flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> Cadastro
                 </span>
                 <h2 className="text-xl font-black text-white">Nova Turma</h2>
@@ -79,7 +79,7 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
                     type="text"
                     name="name"
                     required
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#A27AE8] focus:ring-1 focus:ring-[#A27AE8] transition-all placeholder-gray-600"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-gray-600"
                     placeholder="Ex: Turma A - Manhã"
                   />
                 </div>
@@ -92,7 +92,7 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
                   <select
                     name="course_id"
                     required
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#A27AE8] focus:ring-1 focus:ring-[#A27AE8] transition-all appearance-none"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all appearance-none"
                   >
                     <option value="" className="bg-[#0a0a0f]">Selecione um curso...</option>
                     {courses.map((c) => (
@@ -106,7 +106,7 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Professor (Opcional)</label>
                 <select
                   name="teacher_id"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#A27AE8] focus:ring-1 focus:ring-[#A27AE8] transition-all"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
                 >
                   <option value="" className="bg-[#0a0a0f]">Nenhum professor definido</option>
                   {teachers.map((t) => (
@@ -122,7 +122,7 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
                   name="capacity"
                   required
                   defaultValue={30}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#A27AE8] focus:ring-1 focus:ring-[#A27AE8] transition-all"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
                 />
               </div>
 
@@ -137,7 +137,7 @@ export function CreateClassModal({ courses, teachers }: { courses: any[], teache
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3.5 rounded-xl bg-[#A27AE8] text-white font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(162,122,232,0.4)] transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3.5 rounded-xl bg-red-500 text-white font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(162,122,232,0.4)] transition-all flex items-center justify-center gap-2"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Turma'}
                 </button>

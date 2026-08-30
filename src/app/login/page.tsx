@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from 'react'
 import { login } from './actions'
-import { ArrowRight, Lock, Users, GraduationCap, Building2, AlertCircle } from 'lucide-react'
+import { ArrowRight, Lock, Users, GraduationCap, Building2, AlertCircle, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -40,23 +40,29 @@ export default function LoginPage() {
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 cyber-grid"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f]"></div>
-        <div className="absolute top-0 w-full h-[5px] bg-[#A27AE8]/30 blur-sm animate-[scanline_8s_linear_infinite]"></div>
+        <div className="absolute top-0 w-full h-[5px] bg-red-500/30 blur-sm animate-[scanline_8s_linear_infinite]"></div>
+      </div>
+
+      <div className="absolute top-6 left-6 z-50">
+        <Link href="/" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-500 hover:text-white transition-colors cyber-clip-btn border border-red-500/20 bg-red-500/5 px-4 py-2">
+          <ArrowLeft className="w-4 h-4" /> Voltar
+        </Link>
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div className="flex justify-center mb-6">
           <Link href="/" className="flex items-center gap-4 group">
-            <div className="w-16 h-16 overflow-hidden rounded-2xl p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all">
-              <Image src="/logo.jpg" alt="Wakoda Logo" width={64} height={64} className="w-full h-full object-cover" />
+            <div className="w-[90px] h-[90px] overflow-hidden rounded-2xl p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all">
+              <Image src="/logo-rock.jpg" alt="Wakoda Logo" width={90} height={90} className="w-full h-full object-cover" />
             </div>
-            <span className="font-black tracking-tight text-3xl text-white">Wakoda</span>
+            <span className="font-bebas tracking-tight text-3xl text-white">Wakoda</span>
           </Link>
         </div>
         <h2 className="mt-6 text-center text-3xl font-black tracking-tight text-white uppercase drop-shadow-md">
           Acesso ao Sistema
         </h2>
         <p className="mt-2 text-center text-xs font-mono text-white/50 uppercase tracking-widest">
-          SYS.LOGIN // SELECIONE O NÍVEL DE PERMISSÃO
+          Selecione seu perfil para entrar
         </p>
       </div>
 
@@ -68,7 +74,7 @@ export default function LoginPage() {
             onClick={() => setActiveTab('escola')}
             className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn ${
               activeTab === 'escola' 
-                ? 'bg-[#A27AE8] text-black shadow-[0_0_15px_rgba(162,122,232,0.4)]' 
+                ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(162,122,232,0.4)]' 
                 : 'text-white/50 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -90,7 +96,7 @@ export default function LoginPage() {
             onClick={() => setActiveTab('aluno')}
             className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn ${
               activeTab === 'aluno' 
-                ? 'bg-[#C0E87A] text-black shadow-[0_0_15px_rgba(192,232,122,0.4)]' 
+                ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.4)]' 
                 : 'text-white/50 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -98,7 +104,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <div className="bg-black/80 border-t-4 border-[#A27AE8] py-8 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-10 relative">
+        <div className="bg-black/80 border-t-4 border-red-500 py-8 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-10 relative">
           
           {/* Corner tech details */}
           <div className="absolute top-0 right-0 p-2 border-b border-l border-white/10 bg-white/5 text-[10px] font-black font-mono text-gray-500 tracking-widest">
@@ -118,7 +124,7 @@ export default function LoginPage() {
             
             <div className="space-y-2">
               <label htmlFor="email" className="block text-xs font-black uppercase tracking-widest text-white/80">
-                Identificação (E-mail)
+                E-mail
               </label>
               <div className="relative">
                 <input
@@ -127,19 +133,19 @@ export default function LoginPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full py-3 px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all font-mono text-sm rounded-none"
-                  placeholder="USER@DOMAIN.COM"
+                  className="block w-full py-3 px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all font-mono text-sm rounded-none"
+                  placeholder="seu@email.com"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
               <label htmlFor="password" className="block text-xs font-black uppercase tracking-widest text-white/80">
-                Credencial (Senha)
+                Senha
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-4 w-4 text-[#A27AE8]" />
+                  <Lock className="h-4 w-4 text-red-500" />
                 </div>
                 <input
                   id="password"
@@ -147,7 +153,7 @@ export default function LoginPage() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full py-3 pl-10 pr-4 bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all font-mono text-sm rounded-none"
+                  className="block w-full py-3 pl-10 pr-4 bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all font-mono text-sm rounded-none"
                   placeholder="••••••••"
                 />
               </div>
@@ -159,16 +165,16 @@ export default function LoginPage() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 border-white/10 bg-white/5 text-[#A27AE8] focus:ring-[#A27AE8] focus:ring-offset-[#0a0a0f] rounded-none"
+                  className="h-4 w-4 border-white/10 bg-white/5 text-red-500 focus:ring-red-500 focus:ring-offset-[#0a0a0f] rounded-none"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-xs font-mono uppercase text-white/60">
-                  Manter Sessão
+                  Lembrar de mim
                 </label>
               </div>
 
               <div className="text-xs font-mono uppercase">
-                <a href="#" className="font-bold text-[#A27AE8] hover:text-[#C0E87A] transition-colors">
-                  Recuperar Acesso
+                <a href="#" className="font-bold text-red-500 hover:text-red-500 transition-colors">
+                  Esqueci minha senha
                 </a>
               </div>
             </div>
@@ -177,10 +183,10 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full flex justify-center items-center gap-3 py-4 px-4 text-sm font-black uppercase tracking-widest text-black bg-[#C0E87A] hover:bg-black hover:text-[#C0E87A] border border-[#C0E87A] shadow-[0_0_20px_rgba(192,232,122,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed skew-x-[-10deg] group"
+                className="w-full flex justify-center items-center gap-3 py-4 px-4 text-sm font-black uppercase tracking-widest text-black bg-red-500 hover:bg-black hover:text-red-500 border border-red-500 shadow-[0_0_20px_rgba(192,232,122,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed skew-x-[-10deg] group"
               >
                 <span className="skew-x-[10deg] flex items-center gap-2">
-                  {isPending ? 'AUTENTICANDO...' : 'INICIAR SESSÃO'}
+                  {isPending ? 'ENTRANDO...' : 'ENTRAR'}
                   {!isPending && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
                 </span>
               </button>
@@ -189,10 +195,10 @@ export default function LoginPage() {
         </div>
         
         <p className="mt-8 text-center text-xs font-mono uppercase text-white/50">
-          Sem acesso? <Link href="/cadastro" className="text-[#C0E87A] font-bold hover:text-white transition-colors">Solicitar Nova Instância</Link>
+          Não tem uma conta? <Link href="/cadastro" className="text-red-500 font-bold hover:text-white transition-colors">Cadastre sua escola</Link>
         </p>
         <p className="mt-4 text-center text-xs font-mono uppercase text-white/50">
-          Falha no sistema? <a href="mailto:suporte@wakoda.com.br" className="text-white/80 hover:text-[#A27AE8] transition-colors">Contatar Engenharia</a>
+          Precisa de ajuda? <a href="mailto:suporte@wakoda.com.br" className="text-white/80 hover:text-red-500 transition-colors">Fale com o suporte</a>
         </p>
       </div>
     </div>

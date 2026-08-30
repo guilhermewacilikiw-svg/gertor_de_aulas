@@ -49,8 +49,8 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
           {/* Sidebar Header */}
           <div className="h-20 flex items-center px-6 border-b border-white/5 shrink-0 bg-black/40">
             <Link href="/" className="flex items-center gap-4 group w-full">
-              <div className="w-12 h-12 overflow-hidden p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all cyber-clip">
-                <Image src="/logo.jpg" alt="Wakoda Logo" width={48} height={48} className="w-full h-full object-cover" />
+              <div className="w-[68px] h-[68px] overflow-hidden p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all cyber-clip">
+                <Image src="/logo-rock.jpg" alt="Wakoda Logo" width={68} height={68} className="w-full h-full object-cover" />
               </div>
               <span className="font-black text-2xl tracking-tight text-white uppercase">{portalName}</span>
             </Link>
@@ -76,8 +76,8 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
                   className={cn(
                     "flex items-center gap-4 px-5 py-3.5 rounded-none text-xs font-black uppercase tracking-widest transition-all duration-300 relative group overflow-hidden cyber-clip-btn",
                     isActive 
-                      ? "bg-[#C0E87A] text-black shadow-[0_0_15px_rgba(192,232,122,0.3)] border-l-4 border-black" 
-                      : "text-white/60 hover:text-white hover:bg-white/5 border-l-4 border-transparent hover:border-[#A27AE8]"
+                      ? "bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.3)] border-l-4 border-black" 
+                      : "text-white/60 hover:text-white hover:bg-white/5 border-l-4 border-transparent hover:border-red-500"
                   )}
                   onClick={() => setSidebarOpen(false)}
                 >
@@ -85,7 +85,7 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
                   <div className="relative z-10 flex items-center gap-4">
                     <div className={cn(
                       "transition-transform group-hover:scale-110",
-                      isActive ? "text-black" : "text-white/40 group-hover:text-[#A27AE8]"
+                      isActive ? "text-black" : "text-white/40 group-hover:text-red-500"
                     )}>
                       {link.icon}
                     </div>
@@ -97,8 +97,8 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
           </div>
 
           {/* Sidebar Footer (User Info & Logout) */}
-          <div className="p-6 border-t border-[#A27AE8]/30 bg-black/60 relative">
-            <div className="absolute top-0 right-0 p-1 border-b border-l border-[#A27AE8]/30 bg-[#A27AE8]/10 text-[8px] font-black font-mono text-[#A27AE8] tracking-widest">
+          <div className="p-6 border-t border-red-500/30 bg-black/60 relative">
+            <div className="absolute top-0 right-0 p-1 border-b border-l border-red-500/30 bg-red-500/10 text-[8px] font-black font-mono text-red-500 tracking-widest">
               ACTIVE_USER
             </div>
             <div className="flex items-center justify-between mb-4">
@@ -110,7 +110,7 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
             <form action="/auth/signout" method="post" className="w-full">
               <button 
                 type="submit" 
-                className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-none text-xs font-black uppercase tracking-widest text-[#A27AE8] hover:text-black hover:bg-[#A27AE8] border border-[#A27AE8] transition-all shadow-[0_0_15px_rgba(162,122,232,0)] hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] cyber-clip-btn"
+                className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-none text-xs font-black uppercase tracking-widest text-red-500 hover:text-black hover:bg-red-500 border border-red-500 transition-all shadow-[0_0_15px_rgba(162,122,232,0)] hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] cyber-clip-btn"
               >
                 <LogOut className="w-4 h-4" />
                 Desconectar
@@ -135,7 +135,7 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
               {/* Header Title / Breadcrumb Placeholder */}
               <div className="hidden lg:block">
                 <div className="flex items-center gap-2 text-xs font-mono font-black text-white/40 uppercase tracking-widest">
-                  <span className="text-[#C0E87A] animate-pulse">●</span> SYS.ONLINE
+                  <span className="text-red-500 animate-pulse">●</span> SYS.ONLINE
                 </div>
               </div>
             </div>

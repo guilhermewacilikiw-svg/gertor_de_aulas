@@ -20,7 +20,7 @@ export function CreateLessonButton({ classId }: { classId: string }) {
     <button 
       onClick={handleCreate}
       disabled={loading}
-      className="bg-[#7D7AE8] hover:bg-[#7D7AE8]/90 text-white px-6 py-3 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+      className="bg-red-600 hover:bg-red-600/90 text-white px-6 py-3 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
     >
       {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
       Nova Aula

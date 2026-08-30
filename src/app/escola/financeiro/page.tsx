@@ -46,7 +46,7 @@ export default async function EscolaFinanceiroPage() {
       <div className="space-y-8 max-w-6xl mx-auto pb-12 pt-4">
         
         {/* HEADER HERO */}
-        <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
+        <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#059669]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
 
@@ -58,7 +58,7 @@ export default async function EscolaFinanceiroPage() {
                   Gestão Financeira
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-xl mb-4">
                 Financeiro
               </h1>
               <p className="text-gray-400 max-w-xl text-lg">
@@ -81,10 +81,10 @@ export default async function EscolaFinanceiroPage() {
             title="Receita Estimada" 
             value="R$ 0,00" 
             subtitle="+0% este mês" 
-            subtitleColor="text-[#C0E87A]"
-            icon={<TrendingUp className="w-5 h-5 text-black" />} 
-            color="from-[#C0E87A] to-[#E5E87A]" 
-            glowColor="bg-[#C0E87A]"
+            subtitleColor="text-red-500"
+            icon={<TrendingUp className="w-5 h-5 text-white" />} 
+            color="from-red-500 to-white" 
+            glowColor="bg-red-500"
           />
           <FinanceCard 
             title="Inadimplência Zero" 
@@ -92,8 +92,8 @@ export default async function EscolaFinanceiroPage() {
             subtitle="Todas as faturas em dia" 
             subtitleColor="text-gray-400"
             icon={<ShieldCheck className="w-5 h-5 text-white" />} 
-            color="from-[#7D7AE8] to-[#A27AE8]" 
-            glowColor="bg-[#7D7AE8]"
+            color="from-red-600 to-red-500" 
+            glowColor="bg-red-600"
           />
           <FinanceCard 
             title="Cobranças Pendentes" 
@@ -101,14 +101,14 @@ export default async function EscolaFinanceiroPage() {
             subtitle="Nenhuma fatura pendente" 
             subtitleColor="text-gray-400"
             icon={<CreditCard className="w-5 h-5 text-white" />} 
-            color="from-[#A27AE8] to-[#C77AE8]" 
-            glowColor="bg-[#C77AE8]"
+            color="from-red-500 to-red-700" 
+            glowColor="bg-red-700"
           />
         </div>
 
         {/* Table */}
         <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl shadow-xl overflow-hidden relative">
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#7D7AE8]/10 rounded-full blur-[80px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
 
           <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/5 relative z-10">
             <h3 className="font-bold text-white text-lg">Histórico de Cobranças</h3>
@@ -117,7 +117,7 @@ export default async function EscolaFinanceiroPage() {
               <input
                 type="text"
                 placeholder="Buscar cobrança..."
-                className="w-full pl-11 pr-4 py-3 text-xs rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#7D7AE8]/50 focus:ring-1 focus:ring-[#7D7AE8]/50 transition-all"
+                className="w-full pl-11 pr-4 py-3 text-xs rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-red-600/50 focus:ring-1 focus:ring-red-600/50 transition-all"
               />
             </div>
           </div>
@@ -136,7 +136,7 @@ export default async function EscolaFinanceiroPage() {
                 {invoiceList.length > 0 ? invoiceList.map((invoice: any) => (
                   <tr key={invoice.id} className="hover:bg-white/5 transition-colors group cursor-default">
                     <td className="p-5 pl-6">
-                      <div className="font-bold text-white text-base group-hover:text-[#C0E87A] transition-colors">{invoice.students?.name || 'Sem nome'}</div>
+                      <div className="font-bold text-white text-base group-hover:text-red-500 transition-colors">{invoice.students?.name || 'Sem nome'}</div>
                       <div className="text-xs text-gray-400 font-medium mt-0.5">{invoice.student_finances?.plan_name || 'Plano Básico'}</div>
                     </td>
                     <td className="p-5 font-bold text-white text-base">
@@ -150,8 +150,8 @@ export default async function EscolaFinanceiroPage() {
                         <span className={cn(
                           "px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border flex w-fit",
                           invoice.status === 'paid'
-                            ? "bg-[#C0E87A]/10 text-[#C0E87A] border-[#C0E87A]/20"
-                            : "bg-[#E5E87A]/10 text-[#E5E87A] border-[#E5E87A]/20"
+                            ? "bg-red-500/10 text-red-500 border-red-500/20"
+                            : "bg-white/10 text-white border-white/20"
                         )}>
                           {invoice.status === 'paid' ? 'Pago' : 'Pendente'}
                         </span>

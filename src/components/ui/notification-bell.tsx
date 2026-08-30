@@ -55,7 +55,7 @@ export function NotificationBell() {
                     >
                       <div className="shrink-0 mt-1">
                         {notif.type === 'lesson_completed' ? (
-                          <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center">
                             <Check className="w-4 h-4" />
                           </div>
                         ) : notif.type === 'achievement' ? (

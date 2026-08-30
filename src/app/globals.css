@@ -1,40 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  /* Mapping User's Palette to existing Tailwind utilities for automatic global replacement */
+  /* Mapping User's Palette for Rock School (60% Black, 30% White, 10% Red) */
   
-  /* #7D7AE8 (Primary Blue/Purple) mapped to Cyan */
-  --color-cyan-400: #7D7AE8;
-  --color-cyan-500: #7D7AE8;
-  --color-cyan-600: #5a57c2;
+  /* Overriding old cyber colors to Rock Theme colors */
+  --color-cyan-400: #ff2a2a;
+  --color-cyan-500: #e50914;
+  --color-cyan-600: #b91c1c;
 
-  /* #A27AE8 (Secondary Purple) mapped to Indigo */
-  --color-indigo-400: #A27AE8;
-  --color-indigo-500: #A27AE8;
-  --color-indigo-600: #7d5eb5;
+  --color-indigo-400: #ffffff;
+  --color-indigo-500: #f3f4f6;
+  --color-indigo-600: #9ca3af;
 
-  /* #C77AE8 (Pinkish Accent) mapped to Pink and Purple */
-  --color-purple-400: #C77AE8;
-  --color-purple-500: #C77AE8;
-  --color-pink-400: #C77AE8;
-  --color-pink-500: #C77AE8;
+  --color-purple-400: #ff2a2a;
+  --color-purple-500: #e50914;
+  --color-pink-400: #ff2a2a;
+  --color-pink-500: #e50914;
   
-  /* #E5E87A (Yellow Highlight) mapped to Amber */
-  --color-amber-400: #E5E87A;
-  --color-amber-500: #E5E87A;
+  --color-amber-400: #ffffff;
+  --color-amber-500: #e50914;
   
-  /* #C0E87A (Green Success) mapped to Emerald */
-  --color-emerald-400: #C0E87A;
-  --color-emerald-500: #C0E87A;
+  --color-emerald-400: #ffffff;
+  --color-emerald-500: #e50914;
+  
+  --font-bebas: var(--font-bebas), sans-serif;
 }
 
 @layer base {
   body {
-    background-color: #0a0a0f; /* Deep dark space */
-    background-size: 50px 50px;
+    background-color: #050505; /* Pitch black */
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 50% 0%, rgba(229, 9, 20, 0.05) 0%, transparent 50%),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100px 100px;
     background-attachment: fixed;
     color: #ffffff;
     font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif);
@@ -74,46 +72,38 @@
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
 }
 
-/* UI Elements - Overriding old soft glass */
+/* UI Elements - Overriding old soft glass to Rock Matte */
 .glass-panel {
-  background: rgba(10, 10, 15, 0.95); /* Deep dark background */
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-top: 2px solid rgba(162, 122, 232, 0.5); /* Neon top border */
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-  border-radius: 0;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid #e50914; /* Red accent */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+  border-radius: 0.5rem;
 }
 
 .glass-nav {
-  background: rgba(10, 10, 15, 0.95);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: #050505;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .glass-card {
-  background: rgba(15, 15, 20, 0.8);
+  background: #0f0f0f;
   border: 1px solid rgba(255, 255, 255, 0.05); 
-  border-left: 3px solid rgba(192, 232, 122, 0.4); /* Neon side border */
-  border-radius: 0;
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
   transition: all 0.3s ease;
   position: relative;
 }
 
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);
-  pointer-events: none;
-}
-
 .glass-card:hover {
-  background: rgba(20, 20, 25, 0.9);
-  border-left-color: rgba(192, 232, 122, 0.8);
-  box-shadow: 0 10px 30px -10px rgba(192, 232, 122, 0.1);
+  background: #141414;
+  border-left-color: #e50914;
+  box-shadow: 0 10px 30px -10px rgba(229, 9, 20, 0.15);
   transform: translateY(-2px);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #0a0a0f; border-left: 1px solid rgba(255,255,255,0.05); }
-::-webkit-scrollbar-thumb { background: rgba(162, 122, 232, 0.3); border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: rgba(162, 122, 232, 0.8); }
+::-webkit-scrollbar-track { background: #050505; border-left: 1px solid rgba(255,255,255,0.05); }
+::-webkit-scrollbar-thumb { background: rgba(229, 9, 20, 0.5); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #e50914; }

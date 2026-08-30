@@ -54,12 +54,7 @@ export default async function AlunoCoursePage({
     .select(`
       *,
       course_modules (
-        *,
-        module_contents (
-          contents (
-            id, title, type, url, description
-          )
-        )
+        *
       )
     `)
     .eq('id', courseId)
@@ -86,22 +81,12 @@ export default async function AlunoCoursePage({
   const sortedModules = rawModules.sort((a: any, b: any) => a.order_index - b.order_index);
 
   const modules = sortedModules.map((m: any) => {
-    const contents = m.module_contents
-      ? m.module_contents
-          .map((mc: any) => mc.contents)
-          .filter(Boolean)
-          .map((c: any) => ({
-            ...c,
-            completed: completedContentIds.has(c.id)
-          }))
-      : [];
-
     return {
       id: m.id,
       title: m.title,
       description: m.description || '',
       orderIndex: m.order_index,
-      contents
+      contents: []
     };
   });
 

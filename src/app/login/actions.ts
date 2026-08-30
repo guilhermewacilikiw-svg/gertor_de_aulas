@@ -70,6 +70,10 @@ export async function login(prevState: any, formData: FormData) {
 
     revalidatePath('/', 'layout')
     
+    if (authData.user.user_metadata?.requires_password_change) {
+      redirect('/ativacao')
+    }
+
     // Redirect based on role
     if (role === 'SUPER_ADMIN') {
       redirect('/master/dashboard')

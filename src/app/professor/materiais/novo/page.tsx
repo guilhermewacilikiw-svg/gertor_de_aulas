@@ -157,7 +157,7 @@ export default function NovoMaterialPage() {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Ex: Exercício de Pentatônica Módulo 1" 
                 required
-                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function NovoMaterialPage() {
                 onChange={(e) => setLinkUrl(e.target.value)}
                 placeholder="https://youtube.com/watch?v=..." 
                 required
-                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
               />
               <p className="text-xs text-gray-500 mt-2">Dica: Use vídeos "Não Listados" no YouTube para manter exclusividade ou links do Google Drive com permissão de leitura.</p>
             </div>
@@ -180,7 +180,7 @@ export default function NovoMaterialPage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Instruções para o aluno ao acessar este material..." 
-                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all min-h-[100px] resize-y"
+                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all min-h-[100px] resize-y"
               />
             </div>
 
@@ -189,7 +189,7 @@ export default function NovoMaterialPage() {
               <select 
                 value={target}
                 onChange={(e) => setTarget(e.target.value)}
-                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#7D7AE8] transition-all"
+                className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-red-600 transition-all"
               >
                 <optgroup label="Suas Turmas">
                   {classes.map(cls => (
@@ -209,7 +209,7 @@ export default function NovoMaterialPage() {
             <button 
               type="submit"
               disabled={loading}
-              className="bg-[#7D7AE8] hover:bg-[#7D7AE8]/90 text-white px-8 py-3.5 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50"
+              className="bg-red-600 hover:bg-red-600/90 text-white px-8 py-3.5 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle2 className="w-5 h-5" />}
               Salvar e Publicar

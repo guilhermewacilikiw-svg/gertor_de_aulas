@@ -38,11 +38,11 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
       {/* 1. TOP STATS CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Attendance Card */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-cyan-500/30 transition-all">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all" />
+        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-red-500/20 transition-all">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all" />
           <div className="relative z-10">
-            <div className="flex items-center gap-3 text-cyan-400 mb-4">
-              <div className="p-2 rounded-xl bg-cyan-500/10">
+            <div className="flex items-center gap-3 text-white mb-4">
+              <div className="p-2 rounded-xl bg-red-600/10">
                 <Target className="w-5 h-5" />
               </div>
               <h3 className="font-bold uppercase tracking-wider text-xs">Aulas Presenciais</h3>
@@ -52,18 +52,18 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
               <span className="text-sm font-medium text-gray-400 mb-1">presença geral</span>
             </div>
             <div className="mt-4 flex gap-4 text-xs font-medium">
-              <span className="text-emerald-400">{data.totalPresent} presenças</span>
-              <span className="text-rose-400">{data.totalAbsent} faltas</span>
+              <span className="text-white">{data.totalPresent} presenças</span>
+              <span className="text-red-500">{data.totalAbsent} faltas</span>
             </div>
           </div>
         </div>
 
         {/* Digital Content Card */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-indigo-500/30 transition-all">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all" />
+        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-red-500/20 transition-all">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all" />
           <div className="relative z-10">
-            <div className="flex items-center gap-3 text-indigo-400 mb-4">
-              <div className="p-2 rounded-xl bg-indigo-500/10">
+            <div className="flex items-center gap-3 text-red-500 mb-4">
+              <div className="p-2 rounded-xl bg-red-500/10">
                 <Zap className="w-5 h-5" />
               </div>
               <h3 className="font-bold uppercase tracking-wider text-xs">Materiais e Vídeos</h3>
@@ -74,7 +74,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
             </div>
             <div className="mt-4 w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-indigo-400 to-cyan-400 rounded-full transition-all duration-1000"
+                className="h-full bg-gradient-to-r from-neutral-800 to-red-900 rounded-full transition-all duration-1000"
                 style={{ width: `${contentProgressPercent}%` }}
               />
             </div>
@@ -85,11 +85,11 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
         </div>
 
         {/* Exercises Card */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all" />
+        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-white/20 transition-all">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 rounded-full blur-2xl group-hover:bg-white/10 transition-all" />
           <div className="relative z-10">
-            <div className="flex items-center gap-3 text-emerald-400 mb-4">
-              <div className="p-2 rounded-xl bg-emerald-500/10">
+            <div className="flex items-center gap-3 text-white mb-4">
+              <div className="p-2 rounded-xl bg-red-600/10">
                 <CheckCircle className="w-5 h-5" />
               </div>
               <h3 className="font-bold uppercase tracking-wider text-xs">Exercícios Complementares</h3>
@@ -100,7 +100,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
             </div>
             <div className="mt-4 w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
               <div 
-                className="h-full bg-emerald-400 rounded-full transition-all duration-1000"
+                className="h-full bg-white/10 rounded-full transition-all duration-1000"
                 style={{ width: `${exerciseProgressPercent}%` }}
               />
             </div>
@@ -117,7 +117,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
         {/* Pie Chart: Distribution */}
         <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6">
           <div className="flex items-center gap-2 mb-6">
-            <PieChartIcon className="w-5 h-5 text-cyan-400" />
+            <PieChartIcon className="w-5 h-5 text-white" />
             <h3 className="font-bold text-lg text-white">Distribuição de Participação</h3>
           </div>
           
@@ -157,7 +157,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
         {/* Bar Chart: Evolution */}
         <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6">
           <div className="flex items-center gap-2 mb-6">
-            <TrendingUp className="w-5 h-5 text-indigo-400" />
+            <TrendingUp className="w-5 h-5 text-red-500" />
             <h3 className="font-bold text-lg text-white">Engajamento Mensal</h3>
           </div>
           
@@ -199,9 +199,9 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
               <div key={act.id} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-white/5 transition-colors">
                 <div className="flex items-center gap-4">
                   <div className={`p-3 rounded-2xl border ${
-                    act.type === 'attendance' ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400' :
-                    act.type === 'content' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                    act.type === 'attendance' ? 'bg-red-500/10 border-red-500/20 text-red-500' :
+                    act.type === 'content' ? 'bg-red-600/10 border-white/20 text-white' :
+                    'bg-red-600/10 border-white/20 text-white'
                   }`}>
                     {act.type === 'attendance' ? <BookOpen className="w-5 h-5" /> :
                      act.type === 'content' ? <Activity className="w-5 h-5" /> :
@@ -218,18 +218,18 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
                 <div className="shrink-0 flex sm:justify-end">
                   {act.type === 'attendance' && (
                     <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                      act.status === 'present' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                      act.status === 'present' ? 'bg-red-600/10 text-white border-white/20' : 'bg-red-600/10 text-red-500 border-red-500/20'
                     }`}>
                       {act.status === 'present' ? 'Presente' : 'Falta'}
                     </span>
                   )}
                   {act.type === 'content' && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
                       Assistido
                     </span>
                   )}
                   {act.type === 'exercise' && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
                       Entregue
                     </span>
                   )}

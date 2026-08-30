@@ -50,19 +50,19 @@ export default async function TurmasPage() {
     <div className="space-y-8 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       
       {/* HEADER HERO */}
-      <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#7D7AE8]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#C77AE8]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-700/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(125,122,232,0.15)] mb-6">
-              <Users className="w-4 h-4 text-[#7D7AE8]" />
+              <Users className="w-4 h-4 text-red-500" />
               <span className="text-xs font-black uppercase tracking-widest text-white/80">
                 Classes
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/60 tracking-tight drop-shadow-xl mb-4">
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-xl mb-4">
               Gestão de Turmas
             </h1>
             <p className="text-gray-400 max-w-xl text-lg">
@@ -71,9 +71,9 @@ export default async function TurmasPage() {
           </div>
           
           <div className="shrink-0 flex items-center justify-center relative group">
-            <div className="absolute inset-0 bg-[#7D7AE8]/20 rounded-full blur-2xl group-hover:bg-[#7D7AE8]/30 transition-all duration-500"></div>
-            <div className="relative bg-black/40 border border-white/10 p-6 rounded-[2rem] backdrop-blur-xl flex flex-col items-center justify-center min-w-[160px] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-              <span className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#7D7AE8] to-white drop-shadow-md">
+            <div className="absolute inset-0 bg-red-600/20 rounded-full blur-2xl group-hover:bg-red-600/30 transition-all duration-500"></div>
+            <div className="relative bg-black/40 border border-white/10 p-6 rounded-2xl backdrop-blur-xl flex flex-col items-center justify-center min-w-[160px] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+              <span className="text-5xl font-black text-white drop-shadow-md">
                 {classes?.length || 0}
               </span>
               <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Turmas</span>
@@ -89,7 +89,7 @@ export default async function TurmasPage() {
           <input
             type="text"
             placeholder="Buscar turma ou curso..."
-            className="w-full bg-black/40 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all text-white font-medium placeholder:text-gray-600"
+            className="w-full bg-black/40 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all text-white font-medium placeholder:text-gray-600"
           />
         </div>
         
@@ -136,12 +136,12 @@ export default async function TurmasPage() {
                 return (
                 <tr key={turma.id} className="hover:bg-white/5 transition-colors group">
                   <td className="px-6 py-5">
-                    <p className="font-bold text-white text-base leading-tight group-hover:text-[#7D7AE8] transition-colors">{turma.name}</p>
+                    <p className="font-bold text-white text-base leading-tight group-hover:text-red-500 transition-colors">{turma.name}</p>
                     <p className="text-xs text-gray-500 mt-1 font-medium">{turma.courses?.name || 'Curso não vinculado'}</p>
                   </td>
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#7D7AE8]/20 border border-[#7D7AE8]/30 text-[#7D7AE8] flex items-center justify-center font-black text-xs">
+                      <div className="w-8 h-8 rounded-full bg-red-600/20 border border-red-600/30 text-red-500 flex items-center justify-center font-black text-xs">
                         {teacherName?.charAt(0) || '-'}
                       </div>
                       <span className="text-gray-300 font-medium">{teacherName || 'Não atribuído'}</span>
@@ -149,21 +149,21 @@ export default async function TurmasPage() {
                   </td>
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-2 text-gray-400 bg-black/50 w-fit px-3 py-1.5 rounded-lg border border-white/5">
-                      <Users className="w-4 h-4 text-[#C77AE8]" />
+                      <Users className="w-4 h-4 text-red-700" />
                       <span className="font-bold text-gray-300">{enrolledCount} / {turma.capacity || 0}</span>
                     </div>
                   </td>
                   <td className="px-6 py-5">
                     <span className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider border ${
                       turma.status === 'active' 
-                        ? 'bg-[#C0E87A]/10 text-[#C0E87A] border-[#C0E87A]/20' 
+                        ? 'bg-red-500/10 text-red-500 border-red-500/20' 
                         : 'bg-white/5 text-gray-500 border-white/10'
                     }`}>
                       {turma.status === 'active' ? 'Ativa' : 'Inativa'}
                     </span>
                   </td>
                   <td className="px-6 py-5 text-right">
-                    <Link href={`/escola/turmas/${turma.id}`} className="p-2 text-[#7D7AE8] font-bold text-xs hover:bg-[#7D7AE8]/10 hover:text-white rounded-xl transition-all inline-block border border-[#7D7AE8]/30">
+                    <Link href={`/escola/turmas/${turma.id}`} className="p-2 text-red-500 font-bold text-xs hover:bg-red-600/10 hover:text-white rounded-xl transition-all inline-block border border-red-600/30">
                       Gerenciar
                     </Link>
                   </td>

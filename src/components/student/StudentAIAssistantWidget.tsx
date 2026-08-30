@@ -42,17 +42,17 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center text-white shadow-md">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center text-white shadow-md">
             <Bot className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-sm font-black text-white flex items-center gap-1.5">
-              Wackoda AI <Sparkles className="w-3 h-3 text-cyan-400" />
+              Wackoda AI <Sparkles className="w-3 h-3 text-white" />
             </h3>
             <p className="text-[10px] text-gray-400">Assistente de Aprendizagem Isolado por Tenant</p>
           </div>
         </div>
-        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
           Online
         </span>
       </div>
@@ -67,8 +67,8 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
             <div
               className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
                 m.sender === 'user'
-                  ? 'bg-cyan-500 text-slate-950'
-                  : 'bg-gradient-to-tr from-indigo-500 to-purple-500 text-white'
+                  ? 'bg-red-600 text-slate-950'
+                  : 'bg-gradient-to-tr from-red-600 to-red-900 text-white'
               }`}
             >
               {m.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
@@ -77,7 +77,7 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
             <div
               className={`p-3 rounded-2xl text-xs leading-relaxed max-w-[85%] ${
                 m.sender === 'user'
-                  ? 'bg-cyan-500/20 border border-cyan-500/30 text-cyan-100 rounded-tr-none'
+                  ? 'bg-red-500/10 border border-red-500/20 text-white rounded-tr-none'
                   : 'bg-white/5 border border-white/5 text-gray-200 rounded-tl-none'
               }`}
             >
@@ -88,7 +88,7 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
 
         {loading && (
           <div className="flex items-center gap-2 text-xs text-gray-400">
-            <Loader2 className="w-4 h-4 animate-spin text-cyan-400" />
+            <Loader2 className="w-4 h-4 animate-spin text-white" />
             <span>AI analisando sua dúvida...</span>
           </div>
         )}
@@ -101,12 +101,12 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Pergunte sobre pestanas, ritmos, exercícios..."
-          className="flex-1 px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-500"
+          className="flex-1 px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-white/20"
         />
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-indigo-500 hover:brightness-110 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center active:scale-95"
+          className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-neutral-800 to-red-900 hover:brightness-110 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center active:scale-95"
         >
           <Send className="w-4 h-4" />
         </button>

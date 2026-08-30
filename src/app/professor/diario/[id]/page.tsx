@@ -22,7 +22,7 @@ export default async function ProfessorDiarioPage({ params }: { params: Promise<
     return (
       <div className="max-w-4xl mx-auto py-12 text-center">
         <h2 className="text-2xl font-bold mb-4 text-white">Aula não encontrada</h2>
-        <Link href="/professor/dashboard" className="text-[#7D7AE8] hover:underline">
+        <Link href="/professor/dashboard" className="text-red-500 hover:underline">
           &larr; Voltar para o Dashboard
         </Link>
       </div>
@@ -59,14 +59,14 @@ export default async function ProfessorDiarioPage({ params }: { params: Promise<
       </Link>
 
       <div>
-        <div className="flex items-center gap-3 text-sm text-[#7D7AE8] font-semibold mb-2 uppercase tracking-wider">
+        <div className="flex items-center gap-3 text-sm text-red-500 font-semibold mb-2 uppercase tracking-wider">
           <BookOpen className="w-4 h-4" />
           {lesson.classes?.courses?.name} &bull; {lesson.classes?.name}
         </div>
         <h1 className="text-3xl font-black text-white mb-4">Diário de Classe</h1>
         
         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
-          <span className="flex items-center gap-1.5 bg-[#A27AE8]/10 text-[#A27AE8] px-3 py-1.5 rounded-lg border border-[#A27AE8]/20">
+          <span className="flex items-center gap-1.5 bg-red-500/10 text-red-500 px-3 py-1.5 rounded-lg border border-red-500/20">
             <CalendarIcon className="w-4 h-4" />
             {new Date(lesson.scheduled_start).toLocaleDateString('pt-BR')}
           </span>

@@ -113,9 +113,9 @@ export default function LancarAvaliacaoClient() {
   if (!classId) return <div className="text-center text-gray-400 py-12">Turma não especificada.</div>;
   if (loading) return <div className="text-center text-gray-400 py-12">Carregando lista de alunos...</div>;
   if (success) return (
-    <div className="bg-[#C0E87A]/10 border border-[#C0E87A]/30 rounded-3xl p-12 text-center flex flex-col items-center">
-      <CheckCircle2 className="w-16 h-16 text-[#C0E87A] mb-4" />
-      <h2 className="text-2xl font-bold text-[#C0E87A]">Avaliações Salvas com Sucesso!</h2>
+    <div className="bg-red-500/10 border border-red-500/30 rounded-3xl p-12 text-center flex flex-col items-center">
+      <CheckCircle2 className="w-16 h-16 text-red-500 mb-4" />
+      <h2 className="text-2xl font-bold text-red-500">Avaliações Salvas com Sucesso!</h2>
       <p className="text-gray-400 mt-2">Redirecionando...</p>
     </div>
   );
@@ -124,8 +124,8 @@ export default function LancarAvaliacaoClient() {
     <div className="space-y-6">
       
       <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 shadow-lg flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-[#E5E87A]/10 flex items-center justify-center">
-          <Star className="w-6 h-6 text-[#E5E87A]" />
+        <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+          <Star className="w-6 h-6 text-white" />
         </div>
         <div>
           <h2 className="text-xl font-bold text-white">{classInfo?.name}</h2>
@@ -140,7 +140,7 @@ export default function LancarAvaliacaoClient() {
             type="text" 
             value={assessmentName}
             onChange={(e) => setAssessmentName(e.target.value)}
-            className="w-full md:w-1/2 px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#E5E87A] transition-all"
+            className="w-full md:w-1/2 px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-white transition-all"
           />
         </div>
 
@@ -153,7 +153,7 @@ export default function LancarAvaliacaoClient() {
           {students.map(student => (
             <div key={student.id} className="grid grid-cols-12 gap-4 items-center p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
               <div className="col-span-8 md:col-span-9 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#E5E87A]/20 flex items-center justify-center text-[#E5E87A] font-bold text-sm shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white font-bold text-sm shrink-0">
                   {student.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="truncate">
@@ -169,7 +169,7 @@ export default function LancarAvaliacaoClient() {
                     max="100" 
                     value={scores[student.id]}
                     onChange={(e) => handleScoreChange(student.id, e.target.value)}
-                    className="w-full pl-4 pr-8 py-2 bg-black border border-white/10 rounded-lg text-white font-bold text-right focus:outline-none focus:border-[#E5E87A] transition-colors"
+                    className="w-full pl-4 pr-8 py-2 bg-black border border-white/10 rounded-lg text-white font-bold text-right focus:outline-none focus:border-white transition-colors"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 font-bold">%</span>
                 </div>
@@ -183,7 +183,7 @@ export default function LancarAvaliacaoClient() {
         <button 
           onClick={handleSave}
           disabled={saving || students.length === 0}
-          className="bg-[#E5E87A] hover:bg-[#E5E87A]/90 text-black px-8 py-3.5 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50"
+          className="bg-white hover:bg-white/90 text-white px-8 py-3.5 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50"
         >
           {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
           Salvar Avaliações

@@ -36,7 +36,7 @@ export async function createTeacherAction(formData: FormData) {
 
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
+  const password = 'senha123'; // Senha padrão
   const specialty = formData.get('specialty') as string;
 
   // New fields
@@ -44,7 +44,7 @@ export async function createTeacherAction(formData: FormData) {
   const phoneRaw = formData.get('phone') as string;
   const birthDate = formData.get('birth_date') as string;
 
-  if (!name || !email || !password || !specialty) {
+  if (!name || !email || !specialty) {
     return { success: false, error: 'Preencha todos os campos obrigatórios' };
   }
 
@@ -71,6 +71,19 @@ export async function createTeacherAction(formData: FormData) {
 
   if (data?.error) {
     return { success: false, error: translateSupabaseError(data.error) };
+  }
+
+  // Set requires_password_change metadata
+  const { data: createdUser } = await supabase
+    .from('users')
+    .select('auth_user_id')
+    .eq('email', email)
+    .single();
+
+  if (createdUser?.auth_user_id) {
+    await supabase.auth.admin.updateUserById(createdUser.auth_user_id, {
+      user_metadata: { requires_password_change: true }
+    });
   }
 
   revalidatePath('/escola/professores');

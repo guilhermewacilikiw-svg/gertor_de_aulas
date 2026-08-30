@@ -33,7 +33,7 @@ export function AvaliacaoProgressCard({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-wider">
             <Award className="w-4 h-4" />
             Avaliação Pedagógica
           </div>
@@ -42,7 +42,7 @@ export function AvaliacaoProgressCard({
         </div>
 
         {/* Media Score Badge */}
-        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-300">
+        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-neutral-800/20 to-neutral-900/20 border border-red-500/20 text-red-500">
           <span className="text-2xl font-black">{averageScore}</span>
           <span className="text-[10px] font-bold uppercase tracking-wider">Média</span>
         </div>
@@ -54,11 +54,11 @@ export function AvaliacaoProgressCard({
           <div key={criterion} className="space-y-1">
             <div className="flex justify-between items-center text-xs font-bold">
               <span className="text-gray-300">{criterion}</span>
-              <span className="text-cyan-400 font-extrabold">{score.toFixed(1)} / 10</span>
+              <span className="text-white font-extrabold">{score.toFixed(1)} / 10</span>
             </div>
             <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden p-0.5">
               <div
-                className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-amber-400 rounded-full transition-all duration-700"
+                className="h-full bg-gradient-to-r from-red-600 via-indigo-500 to-red-900 rounded-full transition-all duration-700"
                 style={{ width: `${(score / 10) * 100}%` }}
               ></div>
             </div>
@@ -69,7 +69,7 @@ export function AvaliacaoProgressCard({
       {/* Teacher Notes */}
       {notes && (
         <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-1">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-white">
             <Sparkles className="w-3.5 h-3.5" />
             Parecer do Professor:
           </div>

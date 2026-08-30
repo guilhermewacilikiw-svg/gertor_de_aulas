@@ -28,18 +28,18 @@ export function LessonVideoPlayer({ videoUrl, thumbnailUrl, title, progress = 0 
 
   return (
     <>
-      <div className="relative w-full h-48 sm:h-56 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/10 border border-white/10 overflow-hidden flex items-center justify-center mb-6 group transition-all shadow-lg cursor-pointer hover:border-cyan-400/30" onClick={() => setIsPlaying(true)}>
+      <div className="relative w-full h-48 sm:h-56 rounded-2xl bg-gradient-to-br from-red-600/20 to-red-900/10 border border-white/10 overflow-hidden flex items-center justify-center mb-6 group transition-all shadow-lg cursor-pointer hover:border-white/20" onClick={() => setIsPlaying(true)}>
         
         {/* Dynamic Thumbnail or Gradient */}
         {thumbnailUrl ? (
           <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: `url(${thumbnailUrl})` }}></div>
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7D7AE8]/30 to-[#C0E87A]/30 opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-red-600/30 to-red-500/30 opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"></div>
         )}
         
         {/* 3D decorative shapes */}
-        <div className="absolute top-4 left-4 w-12 h-12 rounded bg-amber-400/40 rotate-12 blur-md transition-all group-hover:scale-150"></div>
-        <div className="absolute bottom-4 right-8 w-8 h-8 rounded-full bg-cyan-400/40 blur-md transition-all group-hover:scale-150"></div>
+        <div className="absolute top-4 left-4 w-12 h-12 rounded bg-red-600/10 rotate-12 blur-md transition-all group-hover:scale-150"></div>
+        <div className="absolute bottom-4 right-8 w-8 h-8 rounded-full bg-red-600 blur-md transition-all group-hover:scale-150"></div>
         
         {/* Play Button */}
         <button className="relative z-10 w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:scale-110 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
@@ -49,7 +49,7 @@ export function LessonVideoPlayer({ videoUrl, thumbnailUrl, title, progress = 0 
         {/* Progress Bar Override inside thumbnail */}
         {progress > 0 && (
           <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/50">
-            <div className="h-full bg-gradient-to-r from-amber-400 to-cyan-400" style={{ width: `${progress}%` }}></div>
+            <div className="h-full bg-gradient-to-r from-red-600 to-red-900" style={{ width: `${progress}%` }}></div>
           </div>
         )}
       </div>

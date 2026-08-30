@@ -16,5 +16,5 @@ export function translateSupabaseError(errorMsg: string): string {
   if (msg.includes('email rate limit exceeded')) return 'Muitas tentativas. Aguarde um momento e tente novamente.';
   if (msg.includes('invalid email')) return 'O formato do e-mail é inválido.';
   
-  return 'Ocorreu um erro no servidor. Tente novamente mais tarde.';
+  return errorMsg;
 }

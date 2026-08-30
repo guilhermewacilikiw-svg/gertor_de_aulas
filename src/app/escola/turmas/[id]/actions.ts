@@ -39,7 +39,7 @@ export async function removeScheduleAction(scheduleId: string, classId: string) 
   return { success: true };
 }
 
-export async function enrollStudentAction(classId: string, courseId: string, schoolId: string, studentId: string) {
+export async function enrollStudentAction(classId: string, courseId: string, schoolId: string, studentId: string, specificTime?: string) {
   const supabase = await createClient();
 
   // We should create a new enrollment or update an existing one.
@@ -52,6 +52,7 @@ export async function enrollStudentAction(classId: string, courseId: string, sch
     student_id: studentId,
     course_id: courseId,
     class_id: classId,
+    specific_time: specificTime || null,
     start_date: new Date().toISOString().split('T')[0],
     status: 'active'
   });
@@ -62,6 +63,8 @@ export async function enrollStudentAction(classId: string, courseId: string, sch
   }
 
   revalidatePath(`/escola/turmas/${classId}`);
+  revalidatePath(`/escola/alunos/${studentId}`);
+  revalidatePath(`/escola/dashboard`);
   return { success: true };
 }
 
@@ -78,6 +81,10 @@ export async function removeStudentAction(enrollmentId: string, classId: string)
   }
 
   revalidatePath(`/escola/turmas/${classId}`);
+  revalidatePath(`/escola/dashboard`);
+  // Note: we don't have studentId easily here, but usually layout revalidation is better.
+  // For now, let's just revalidate the layout to be safe.
+  revalidatePath('/escola', 'layout');
   return { success: true };
 }
 
@@ -95,5 +102,39 @@ export async function transferStudentAction(enrollmentId: string, newClassId: st
 
   revalidatePath(`/escola/turmas/${currentClassId}`);
   revalidatePath(`/escola/turmas/${newClassId}`);
+  return { success: true };
+}
+
+export async function assignStudentToScheduleAction(scheduleId: string, studentId: string, classId: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from('schedule_participants').insert({
+    schedule_id: scheduleId,
+    student_id: studentId
+  });
+
+  if (error) {
+    console.error('Error assigning student to schedule:', error);
+    throw new Error('Falha ao vincular aluno ao horário: ' + error.message);
+  }
+
+  revalidatePath(`/escola/turmas/${classId}`);
+  return { success: true };
+}
+
+export async function removeStudentFromScheduleAction(scheduleId: string, studentId: string, classId: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from('schedule_participants')
+    .delete()
+    .eq('schedule_id', scheduleId)
+    .eq('student_id', studentId);
+
+  if (error) {
+    console.error('Error removing student from schedule:', error);
+    throw new Error('Falha ao desvincular aluno do horário: ' + error.message);
+  }
+
+  revalidatePath(`/escola/turmas/${classId}`);
   return { success: true };
 }

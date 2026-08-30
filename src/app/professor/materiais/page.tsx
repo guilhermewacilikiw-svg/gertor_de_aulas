@@ -68,12 +68,12 @@ export default function ProfessorMateriaisPage() {
               placeholder="Buscar material..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
             />
           </div>
           <Link 
             href="/professor/materiais/novo"
-            className="w-full sm:w-auto bg-[#7D7AE8] hover:bg-[#7D7AE8]/90 text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-600/90 text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"
           >
             <Plus className="w-5 h-5" />
             Novo Material
@@ -85,8 +85,8 @@ export default function ProfessorMateriaisPage() {
         <div className="p-12 text-center text-gray-400">Carregando seus materiais...</div>
       ) : filteredContents.length === 0 ? (
         <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 flex flex-col items-center justify-center text-center shadow-lg">
-          <div className="w-16 h-16 bg-[#C77AE8]/10 rounded-full flex items-center justify-center mb-4">
-            <Video className="w-8 h-8 text-[#C77AE8]" />
+          <div className="w-16 h-16 bg-red-700/10 rounded-full flex items-center justify-center mb-4">
+            <Video className="w-8 h-8 text-red-700" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Nenhum material encontrado</h3>
           <p className="text-gray-400 max-w-md">
@@ -104,13 +104,13 @@ export default function ProfessorMateriaisPage() {
           {filteredContents.map((content) => {
             const isVideo = content.type === 'video' || content.type === 'link';
             return (
-              <div key={content.id} className="bg-[#0f0f0f] border border-white/5 rounded-3xl overflow-hidden flex flex-col shadow-lg hover:border-[#7D7AE8]/30 transition-all group">
+              <div key={content.id} className="bg-[#0f0f0f] border border-white/5 rounded-3xl overflow-hidden flex flex-col shadow-lg hover:border-red-600/30 transition-all group">
                 {/* Thumbnail Area */}
                 <div className="aspect-video bg-black relative flex items-center justify-center overflow-hidden">
                   {content.cover_image ? (
                     <img src={content.cover_image} alt={content.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity" />
                   ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#7D7AE8]/10 to-[#C77AE8]/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-red-700/10"></div>
                   )}
                   {isVideo ? (
                     <PlayCircle className="w-12 h-12 text-white/50 group-hover:text-white group-hover:scale-110 transition-all absolute" />
@@ -123,7 +123,7 @@ export default function ProfessorMateriaisPage() {
                       {content.type === 'link' ? 'VÍDEO (LINK)' : content.type.toUpperCase()}
                     </span>
                     {content.status === 'published' && (
-                      <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#C0E87A]/20 text-[#C0E87A] backdrop-blur-md border border-[#C0E87A]/30">
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-500/20 text-red-500 backdrop-blur-md border border-red-500/30">
                         PÚBLICO
                       </span>
                     )}
@@ -133,7 +133,7 @@ export default function ProfessorMateriaisPage() {
                 {/* Content Info */}
                 <div className="p-5 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-white text-lg leading-tight group-hover:text-[#7D7AE8] transition-colors line-clamp-2">
+                    <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-2">
                       {content.title}
                     </h3>
                     <button className="text-gray-500 hover:text-white transition-colors shrink-0">
@@ -149,7 +149,7 @@ export default function ProfessorMateriaisPage() {
                     <span className="text-xs text-gray-500 font-medium">
                       {new Date(content.created_at).toLocaleDateString('pt-BR')}
                     </span>
-                    <button className="text-[#7D7AE8] text-xs font-bold hover:underline flex items-center gap-1">
+                    <button className="text-red-500 text-xs font-bold hover:underline flex items-center gap-1">
                       Acessar <ExternalLink className="w-3 h-3" />
                     </button>
                   </div>

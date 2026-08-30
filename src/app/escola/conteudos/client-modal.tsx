@@ -63,10 +63,10 @@ export function BibliotecaMateriais({
 
   const getFileIcon = (type: string) => {
     switch (type) {
-      case 'pdf': return <FileText className="w-5 h-5 text-rose-400" />;
-      case 'video': return <Video className="w-5 h-5 text-cyan-400" />;
-      case 'sheet': return <FileCode2 className="w-5 h-5 text-emerald-400" />;
-      case 'archive': return <FolderArchive className="w-5 h-5 text-amber-400" />;
+      case 'pdf': return <FileText className="w-5 h-5 text-red-500" />;
+      case 'video': return <Video className="w-5 h-5 text-white" />;
+      case 'sheet': return <FileCode2 className="w-5 h-5 text-white" />;
+      case 'archive': return <FolderArchive className="w-5 h-5 text-white" />;
       default: return <Database className="w-5 h-5 text-gray-400" />;
     }
   };
@@ -77,7 +77,7 @@ export function BibliotecaMateriais({
         <h3 className="font-bold text-white text-lg">Acervo Recente</h3>
         <button 
           onClick={() => setIsOpen(true)}
-          className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#A27AE8] to-[#C77AE8] hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
         >
           <Upload className="w-4 h-4 stroke-[3] group-hover:-translate-y-1 transition-transform" />
           Novo Material
@@ -85,7 +85,7 @@ export function BibliotecaMateriais({
       </div>
 
       <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl shadow-xl overflow-hidden relative mb-8">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#A27AE8]/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/5 relative z-10">
           <div className="relative w-full sm:w-80">
@@ -95,7 +95,7 @@ export function BibliotecaMateriais({
               placeholder="Buscar material na biblioteca..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 text-xs rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#A27AE8]/50 focus:ring-1 focus:ring-[#A27AE8]/50 transition-all"
+              className="w-full pl-11 pr-4 py-3 text-xs rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/50 transition-all"
             />
           </div>
         </div>
@@ -120,7 +120,7 @@ export function BibliotecaMateriais({
                         {getFileIcon(mat.type)}
                       </div>
                       <div>
-                        <div className="font-bold text-white text-sm group-hover:text-[#A27AE8] transition-colors">{mat.title}</div>
+                        <div className="font-bold text-white text-sm group-hover:text-red-500 transition-colors">{mat.title}</div>
                         <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-0.5">{mat.type}</div>
                       </div>
                     </div>
@@ -130,11 +130,11 @@ export function BibliotecaMateriais({
                       {mat.target === 'all' ? 'Escola' : (mat.target.includes('module_') ? 'Módulo' : (mat.target.includes('student_') ? 'Aluno Específico' : mat.target))}
                     </span>
                   </td>
-                  <td className="p-5 text-xs font-bold text-[#C0E87A]">{mat.size}</td>
+                  <td className="p-5 text-xs font-bold text-red-500">{mat.size}</td>
                   <td className="p-5 text-xs font-medium text-gray-500">{mat.uploadedAt}</td>
                   <td className="p-5 text-right pr-6">
                     <div className="flex items-center justify-end gap-2">
-                      <a href={mat.url} target="_blank" rel="noreferrer" className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-[#C0E87A] transition-colors" title="Acessar Link">
+                      <a href={mat.url} target="_blank" rel="noreferrer" className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-red-500 transition-colors" title="Acessar Link">
                         <FileDown className="w-4 h-4" />
                       </a>
                       <button className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
@@ -162,11 +162,11 @@ export function BibliotecaMateriais({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
             
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C0E87A]/10 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
             <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
               <div>
-                <span className="text-xs font-bold text-[#C0E87A] uppercase tracking-wider flex items-center gap-1">
+                <span className="text-xs font-bold text-red-500 uppercase tracking-wider flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> Biblioteca
                 </span>
                 <h2 className="text-xl font-black text-white">Upload de Material</h2>
@@ -198,7 +198,7 @@ export function BibliotecaMateriais({
                     name="title"
                     required
                     disabled={isPending}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder-gray-600 disabled:opacity-50"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-gray-600 disabled:opacity-50"
                     placeholder="Ex: Escalas Maiores e Menores"
                   />
                 </div>
@@ -210,7 +210,7 @@ export function BibliotecaMateriais({
                   name="target"
                   required
                   disabled={isPending}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all appearance-none disabled:opacity-50"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all appearance-none disabled:opacity-50"
                 >
                   <option value="all">Material Base (Toda a Escola)</option>
                   <optgroup label="Módulos">
@@ -231,7 +231,7 @@ export function BibliotecaMateriais({
                 <select
                   name="lesson_id"
                   disabled={isPending}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all appearance-none disabled:opacity-50"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all appearance-none disabled:opacity-50"
                 >
                   <option value="">Nenhuma aula vinculada</option>
                   {lessons.map(l => (
@@ -249,7 +249,7 @@ export function BibliotecaMateriais({
                     name="url"
                     required
                     disabled={isPending}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder-gray-600 disabled:opacity-50"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-gray-600 disabled:opacity-50"
                     placeholder="Ex: https://youtube.com/watch?v=..."
                   />
                 </div>
@@ -267,7 +267,7 @@ export function BibliotecaMateriais({
                 <button 
                   type="submit"
                   disabled={isPending}
-                  className="flex-1 py-3.5 rounded-xl bg-[#C0E87A] text-black font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 py-3.5 rounded-xl bg-red-500 text-white font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Upload className="w-4 h-4 stroke-[3]" /> {isPending ? 'SALVANDO...' : 'CADASTRAR LINK'}
                 </button>

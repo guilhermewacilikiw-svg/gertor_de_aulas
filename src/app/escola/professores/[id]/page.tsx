@@ -64,14 +64,14 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
       </Link>
 
       {/* Profile Header */}
-      <div className="relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#12121A] to-[#0A0A0F] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#E5E87A]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#7D7AE8]/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3"></div>
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-600/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#E5E87A] to-amber-200 p-1 shadow-[0_0_30px_rgba(229,232,122,0.3)] shrink-0">
+          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white to-red-900 p-1 shadow-[0_0_30px_rgba(229,232,122,0.3)] shrink-0">
             <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-              <span className="font-black text-5xl text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400">
+              <span className="font-black text-5xl text-white">
                 {userName.charAt(0).toUpperCase()}
               </span>
             </div>
@@ -79,7 +79,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
 
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
-              <Star className="w-4 h-4 text-[#E5E87A]" />
+              <Star className="w-4 h-4 text-white" />
               <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
                 Professor Titular
               </span>
@@ -97,7 +97,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
 
           <div className="shrink-0 flex flex-col gap-4">
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 min-w-[140px] flex items-center gap-3">
-              <BookOpen className="w-6 h-6 text-[#7D7AE8]" />
+              <BookOpen className="w-6 h-6 text-red-500" />
               <div>
                 <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Especialidade</p>
                 <p className="font-bold text-white text-sm">{teacher.specialty || 'Geral'}</p>
@@ -110,7 +110,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
       {/* Classes Section */}
       <div className="bg-white/5 border border-white/5 rounded-3xl p-8 backdrop-blur-sm shadow-lg">
         <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-          <GraduationCap className="w-6 h-6 text-[#E5E87A]" />
+          <GraduationCap className="w-6 h-6 text-white" />
           Turmas Atribuídas
         </h2>
 
@@ -126,14 +126,14 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
               const schedules = Array.isArray(turma.class_schedules) ? turma.class_schedules : [];
 
               return (
-                <div key={turma.id} className="bg-[#1A1A24] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-[#E5E87A]/50 transition-all duration-300 flex flex-col md:flex-row gap-6">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#E5E87A]/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-[#E5E87A]/10 transition-all duration-500"></div>
+                <div key={turma.id} className="bg-[#1A1A24] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-white/50 transition-all duration-300 flex flex-col md:flex-row gap-6">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/10 transition-all duration-500"></div>
                   
                   <div className="flex-1 relative z-10">
                     <div className="flex items-center gap-3 mb-2">
                       <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
                         turma.status === 'active' 
-                        ? 'bg-[#C0E87A]/10 text-[#C0E87A] border-[#C0E87A]/20' 
+                        ? 'bg-red-500/10 text-red-500 border-red-500/20' 
                         : 'bg-white/5 text-gray-500 border-white/10'
                       }`}>
                         {turma.status === 'active' ? 'Ativa' : 'Inativa'}
@@ -144,7 +144,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
                     <h3 className="font-black text-white text-2xl mb-4">{turma.name}</h3>
                     
                     <div className="flex items-center gap-2 text-gray-400 bg-black/50 w-fit px-4 py-2 rounded-xl border border-white/5">
-                      <Users className="w-4 h-4 text-[#7D7AE8]" />
+                      <Users className="w-4 h-4 text-red-500" />
                       <span className="font-bold text-gray-300">{enrolledCount} / {turma.capacity || 0} Vagas Ocupadas</span>
                     </div>
                   </div>
@@ -155,7 +155,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
                       {schedules.map((schedule: any) => (
                         <div key={schedule.id} className="flex flex-col gap-1 bg-white/5 p-3 rounded-xl border border-white/5">
                           <div className="flex items-center gap-2 text-white">
-                            <Clock className="w-3.5 h-3.5 text-[#E5E87A]" />
+                            <Clock className="w-3.5 h-3.5 text-white" />
                             <span className="text-sm font-bold">{DAYS_OF_WEEK[schedule.day_of_week]} - {schedule.start_time.slice(0,5)} às {schedule.end_time.slice(0,5)}</span>
                           </div>
                           {schedule.room && (

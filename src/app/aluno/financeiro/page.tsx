@@ -70,7 +70,7 @@ export default async function AlunoFinanceiroPage() {
 
          {/* Security / Info Sidebar */}
          <div className="bg-card rounded-2xl p-6 shadow-soft border flex flex-col justify-center gap-4 text-center">
-            <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 mx-auto">
+            <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center text-red-500 mx-auto">
                <ShieldCheck className="w-8 h-8" />
             </div>
             <div>
@@ -125,7 +125,7 @@ export default async function AlunoFinanceiroPage() {
                   </td>
                   <td className="px-6 py-4">
                     {invoice.status === 'paid' && (
-                       <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-100 text-emerald-700">Pago</span>
+                       <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-white/10 text-white">Pago</span>
                     )}
                     {invoice.status === 'pending' && (
                        <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-yellow-100 text-yellow-700">Aguardando</span>

@@ -2,24 +2,24 @@ import { Shield } from 'lucide-react';
 
 export default function PoliticaPrivacidade() {
   return (
-    <div className="bg-[#0a0a0f] min-h-screen pt-32 pb-24 selection:bg-[#7D7AE8]/30 relative overflow-hidden">
+    <div className="bg-[#0a0a0f] min-h-screen pt-32 pb-24 selection:bg-red-600/30 relative overflow-hidden">
       <div className="absolute inset-0 cyber-grid opacity-30 pointer-events-none"></div>
       <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#7D7AE8]/10 border border-[#7D7AE8]/20 mb-6">
-            <Shield className="w-4 h-4 text-[#7D7AE8]" />
-            <span className="text-xs font-black uppercase tracking-widest text-[#7D7AE8]">Documentação Legal</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/10 border border-red-600/20 mb-6">
+            <Shield className="w-4 h-4 text-red-500" />
+            <span className="text-xs font-black uppercase tracking-widest text-red-500">Documentação Legal</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">
-            Política de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7D7AE8] to-[#C0E87A]">Privacidade</span>
+            Política de <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-500">Privacidade</span>
           </h1>
           <p className="text-gray-400">Última atualização: {new Date().toLocaleDateString('pt-BR')}</p>
         </div>
 
         {/* Content */}
-        <div className="prose prose-invert prose-p:text-gray-400 prose-headings:text-white prose-a:text-[#C0E87A] max-w-none">
+        <div className="prose prose-invert prose-p:text-gray-400 prose-headings:text-white prose-a:text-red-500 max-w-none">
           
           <h2 className="text-2xl font-bold mt-12 mb-4">1. Introdução</h2>
           <p className="mb-6 leading-relaxed">

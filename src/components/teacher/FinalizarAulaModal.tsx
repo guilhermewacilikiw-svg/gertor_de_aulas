@@ -90,7 +90,7 @@ export function FinalizarAulaModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div>
-            <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Finalização Rápida</span>
+            <span className="text-xs font-bold text-white uppercase tracking-wider">Finalização Rápida</span>
             <h2 className="text-xl font-black text-white">{className}</h2>
             <p className="text-xs text-gray-400 mt-0.5">{lessonTopic}</p>
           </div>
@@ -110,7 +110,7 @@ export function FinalizarAulaModal({
         )}
 
         {successMsg && (
-          <div className="p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-sm flex items-center justify-center gap-2 font-bold animate-in zoom-in-95">
+          <div className="p-4 rounded-xl bg-white/10 border border-white/20 text-white text-sm flex items-center justify-center gap-2 font-bold animate-in zoom-in-95">
             <Check className="w-5 h-5" />
             <span>Aula finalizada com sucesso! Notificação enviada.</span>
           </div>
@@ -121,7 +121,7 @@ export function FinalizarAulaModal({
           {/* STEP 1: Presença */}
           <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
-              <UserCheck className="w-4 h-4 text-cyan-400" />
+              <UserCheck className="w-4 h-4 text-white" />
               1. Confirmar Presença
             </label>
             <div className="space-y-2">
@@ -136,7 +136,7 @@ export function FinalizarAulaModal({
                         onClick={() => handleAttendanceChange(st.id, stt)}
                         className={`px-3 py-1 rounded-xl text-xs font-bold capitalize transition-all ${
                           st.attendance === stt
-                            ? stt === 'present' ? 'bg-emerald-500 text-white shadow-md' : 'bg-red-500 text-white'
+                            ? stt === 'present' ? 'bg-red-600 text-white shadow-md' : 'bg-red-500 text-white'
                             : 'bg-white/5 text-gray-400 hover:bg-white/10'
                         }`}
                       >
@@ -152,7 +152,7 @@ export function FinalizarAulaModal({
           {/* STEP 2: Conteúdo e Resumo */}
           <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-indigo-400" />
+              <FileText className="w-4 h-4 text-red-500" />
               2. Resumo do Conteúdo Trabalhado
             </label>
             <input
@@ -161,14 +161,14 @@ export function FinalizarAulaModal({
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               placeholder="Ex: Acordes C, D e G e Batida Pop"
-              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-indigo-500"
+              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
             />
           </div>
 
           {/* STEP 3: Orientação para Prática */}
           <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-400" />
+              <Sparkles className="w-4 h-4 text-white" />
               3. Orientação de Prática para o Aluno
             </label>
             <textarea
@@ -176,14 +176,14 @@ export function FinalizarAulaModal({
               value={practiceInstructions}
               onChange={(e) => setPracticeInstructions(e.target.value)}
               placeholder="O que o aluno deve treinar até a próxima aula?"
-              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500"
+              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
             />
           </div>
 
           {/* STEP 4: Vídeo da Aula */}
           <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
-              <Video className="w-4 h-4 text-pink-400" />
+              <Video className="w-4 h-4 text-red-500" />
               4. Vídeo da Aula (Gravada)
             </label>
             <div className="space-y-2">
@@ -192,14 +192,14 @@ export function FinalizarAulaModal({
                 value={videoTitle}
                 onChange={(e) => setVideoTitle(e.target.value)}
                 placeholder="Título do vídeo (Ex: Aula Prática 1)"
-                className="w-full px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-pink-500"
+                className="w-full px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-red-500/20"
               />
               <input
                 type="url"
                 value={videoPath}
                 onChange={(e) => setVideoPath(e.target.value)}
                 placeholder="Link do Vídeo (Zoom, Drive, YouTube, etc)"
-                className="w-full px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-pink-500"
+                className="w-full px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-red-500/20"
               />
             </div>
           </div>
@@ -209,7 +209,7 @@ export function FinalizarAulaModal({
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-6 rounded-2xl bg-white text-black font-medium hover:brightness-110 text-white font-extrabold text-base shadow-xl transition-all flex items-center justify-center gap-2 active:scale-98"
+              className="w-full py-3.5 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 text-white font-extrabold text-base shadow-xl transition-all flex items-center justify-center gap-2 active:scale-98"
             >
               {loading ? (
                 <>

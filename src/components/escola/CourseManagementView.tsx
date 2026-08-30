@@ -200,9 +200,9 @@ export function CourseManagementView({
 
   const getContentIcon = (type: string) => {
     switch (type) {
-      case 'video': return <Video className="w-4 h-4 text-pink-400" />;
+      case 'video': return <Video className="w-4 h-4 text-red-500" />;
       case 'pdf': return <FileText className="w-4 h-4 text-red-400" />;
-      case 'audio': return <Headphones className="w-4 h-4 text-purple-400" />;
+      case 'audio': return <Headphones className="w-4 h-4 text-red-500" />;
       case 'document': return <File className="w-4 h-4 text-blue-400" />;
       default: return <FileText className="w-4 h-4 text-gray-400" />;
     }
@@ -220,7 +220,7 @@ export function CourseManagementView({
           <ArrowLeft className="w-4 h-4" /> Voltar para Cursos
         </Link>
         {savedSuccess && (
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+          <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
             ✓ Alterações salvas com sucesso!
           </span>
         )}
@@ -229,14 +229,14 @@ export function CourseManagementView({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Gestão do Curso & Plano de Aulas</span>
+          <span className="text-xs font-bold text-white uppercase tracking-wider">Gestão do Curso & Plano de Aulas</span>
           <h1 className="text-3xl font-black text-white tracking-tight">{courseName}</h1>
         </div>
 
         <button
           onClick={handleSaveCourse}
           disabled={savingCourse}
-          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:brightness-110 text-white font-extrabold text-xs shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
+          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 via-indigo-600 to-red-900 hover:brightness-110 text-white font-extrabold text-xs shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
         >
           {savingCourse ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
           <span>SALVAR NÍVEL & DETALHES</span>
@@ -246,7 +246,7 @@ export function CourseManagementView({
       {/* Course Main Details Panel */}
       <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-6">
         <div className="flex items-center gap-2 border-b border-white/10 pb-3">
-          <BookOpen className="w-5 h-5 text-indigo-400" />
+          <BookOpen className="w-5 h-5 text-red-500" />
           <h2 className="text-lg font-bold text-white">Informações Gerais do Curso</h2>
         </div>
 
@@ -257,7 +257,7 @@ export function CourseManagementView({
               type="text"
               value={courseName}
               onChange={(e) => setCourseName(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-indigo-500"
+              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
             />
           </div>
 
@@ -269,7 +269,7 @@ export function CourseManagementView({
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 placeholder="Ex: Música, Dança, Idiomas..."
-                className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
               />
             </div>
 
@@ -278,7 +278,7 @@ export function CourseManagementView({
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
               >
                 <option value="Iniciante">Iniciante</option>
                 <option value="Intermediário">Intermediário</option>
@@ -293,7 +293,7 @@ export function CourseManagementView({
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-indigo-500"
+              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
             />
           </div>
         </div>
@@ -303,7 +303,7 @@ export function CourseManagementView({
       <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-6">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-cyan-400" />
+            <Layers className="w-5 h-5 text-white" />
             <div>
               <h2 className="text-lg font-black text-white">Grade Curricular & Planos de Aula</h2>
               <p className="text-xs text-gray-400">Monte a sequência pedagógica adicionando módulos e criando aulas (vídeos, PDFs, etc).</p>
@@ -312,7 +312,7 @@ export function CourseManagementView({
 
           <button
             onClick={() => setIsModuleModalOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:brightness-110 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 active:scale-95"
+            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 active:scale-95"
           >
             <Plus className="w-4 h-4" />
             Novo Módulo
@@ -332,7 +332,7 @@ export function CourseManagementView({
                 {/* Module Header */}
                 <div className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-black/20">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-300 font-black text-sm flex items-center justify-center border border-indigo-500/30 shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600/20 to-red-900/20 text-white font-black text-sm flex items-center justify-center border border-red-500/20 shrink-0">
                       #{idx + 1}
                     </div>
                     <div className="space-y-1">
@@ -347,7 +347,7 @@ export function CourseManagementView({
                         setActiveModuleId(m.id);
                         setIsContentModalOpen(true);
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20 font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-red-600/10 text-white hover:bg-red-500/10 border border-white/20 font-semibold text-xs flex items-center gap-1.5 transition-colors"
                     >
                       <Plus className="w-3 h-3" /> Nova Aula
                     </button>
@@ -399,7 +399,7 @@ export function CourseManagementView({
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
-                <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Novo Plano</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Novo Plano</span>
                 <h3 className="text-xl font-black text-white">Adicionar Módulo</h3>
               </div>
               <button
@@ -419,7 +419,7 @@ export function CourseManagementView({
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder="Ex: Módulo 4: Acordes com Pestana"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-white/20"
                 />
               </div>
 
@@ -430,14 +430,14 @@ export function CourseManagementView({
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
                   placeholder="Descreva o objetivo das aulas..."
-                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-white/20"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-white text-black font-medium hover:brightness-110 font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                 <span>SALVAR MÓDULO</span>
@@ -454,7 +454,7 @@ export function CourseManagementView({
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
-                <span className="text-xs font-bold text-pink-400 uppercase tracking-wider">Nova Aula</span>
+                <span className="text-xs font-bold text-red-500 uppercase tracking-wider">Nova Aula</span>
                 <h3 className="text-xl font-black text-white">Adicionar Conteúdo</h3>
               </div>
               <button
@@ -471,7 +471,7 @@ export function CourseManagementView({
                 <select
                   value={contentType}
                   onChange={(e: any) => setContentType(e.target.value)}
-                  className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500"
+                  className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                 >
                   <option value="video">Vídeo Aula</option>
                   <option value="pdf">Material em PDF</option>
@@ -489,7 +489,7 @@ export function CourseManagementView({
                   value={contentTitle}
                   onChange={(e) => setContentTitle(e.target.value)}
                   placeholder="Ex: Aula 01 - Postura e Afinação"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500"
+                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                 />
               </div>
 
@@ -501,7 +501,7 @@ export function CourseManagementView({
                     value={contentUrl}
                     onChange={(e) => setContentUrl(e.target.value)}
                     placeholder="https://..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500"
+                    className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                   />
                   <p className="text-[10px] text-gray-500">Cole o link do vídeo hospedado externamente.</p>
                 </div>
@@ -510,7 +510,7 @@ export function CourseManagementView({
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:brightness-110 text-white font-black text-sm shadow-xl shadow-pink-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-black text-sm shadow-xl shadow-pink-500/20 transition-all flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Check className="w-5 h-5" />}
                 <span>SALVAR AULA</span>

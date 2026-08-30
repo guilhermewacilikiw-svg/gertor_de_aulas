@@ -71,7 +71,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
             <h3 className="font-bold text-white text-lg">Lista de Presença</h3>
             <p className="text-sm text-gray-400">Registre a frequência dos alunos matriculados.</p>
           </div>
-          <div className="text-sm font-bold bg-[#A27AE8]/20 text-[#A27AE8] px-4 py-1.5 rounded-full border border-[#A27AE8]/30">
+          <div className="text-sm font-bold bg-red-500/20 text-red-500 px-4 py-1.5 rounded-full border border-red-500/30">
             {Object.values(attendance).filter(v => v).length} / {students.length} Presentes
           </div>
         </div>
@@ -83,7 +83,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
             return (
               <div key={student.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 hover:bg-white/5 transition-colors gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-[#7D7AE8]/20 border border-[#7D7AE8]/30 flex items-center justify-center text-[#7D7AE8] font-black text-lg">
+                  <div className="w-12 h-12 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-lg">
                     {student.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
@@ -96,14 +96,14 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
                   <button 
                     disabled={isCompleted}
                     onClick={() => handleToggle(student.id, true)}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${isPresent ? 'bg-[#C0E87A] text-black shadow-lg shadow-[#C0E87A]/20 scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${isPresent ? 'bg-red-500 text-white shadow-lg shadow-red-500/20 scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
                   >
                     <Check className="w-4 h-4" /> Presente
                   </button>
                   <button 
                     disabled={isCompleted}
                     onClick={() => handleToggle(student.id, false)}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${!isPresent ? 'bg-[#C77AE8] text-white shadow-lg shadow-[#C77AE8]/20 scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${!isPresent ? 'bg-red-700 text-white shadow-lg shadow-red-700/20 scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
                   >
                     <X className="w-4 h-4" /> Falta
                   </button>
@@ -124,7 +124,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
           disabled={isCompleted}
           value={moduleId}
           onChange={(e) => setModuleId(e.target.value)}
-          className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] transition-all appearance-none"
+          className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none"
         >
           <option value="">Selecione um módulo (Opcional)...</option>
           {modules.map((m) => (
@@ -144,7 +144,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
           placeholder="Ex: Hoje revisamos a escala pentatônica. O João teve um pouco de dificuldade com a pestana..."
-          className="w-full min-h-[150px] p-5 rounded-2xl border border-white/10 bg-black text-white focus:outline-none focus:border-[#7D7AE8] focus:ring-1 focus:ring-[#7D7AE8] resize-y transition-colors placeholder:text-gray-600"
+          className="w-full min-h-[150px] p-5 rounded-2xl border border-white/10 bg-black text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 resize-y transition-colors placeholder:text-gray-600"
         />
       </div>
 
@@ -154,7 +154,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
           <button 
             disabled={loading}
             onClick={handleFinish}
-            className="bg-[#7D7AE8] text-white px-8 py-4 rounded-2xl font-black hover:bg-[#7D7AE8]/90 transition-all shadow-lg active:scale-95 flex items-center gap-2 text-lg disabled:opacity-50 disabled:pointer-events-none"
+            className="bg-red-600 text-white px-8 py-4 rounded-2xl font-black hover:bg-red-600/90 transition-all shadow-lg active:scale-95 flex items-center gap-2 text-lg disabled:opacity-50 disabled:pointer-events-none"
           >
             {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-6 h-6" />}
             Salvar Diário e Finalizar Aula
@@ -163,7 +163,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
       )}
       
       {isCompleted && (
-        <div className="bg-[#C0E87A]/10 text-[#C0E87A] border border-[#C0E87A]/30 p-5 rounded-2xl font-bold text-center flex items-center justify-center gap-3">
+        <div className="bg-red-500/10 text-red-500 border border-red-500/30 p-5 rounded-2xl font-bold text-center flex items-center justify-center gap-3">
           <Check className="w-6 h-6" />
           Esta aula foi finalizada com sucesso!
         </div>

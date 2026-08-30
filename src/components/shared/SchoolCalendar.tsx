@@ -130,13 +130,13 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
       {/* MAIN CALENDAR AREA */}
       <div className="flex-1 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col relative">
         {/* Glow Effects */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
 
         {/* Header */}
         <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7D7AE8] to-[#C0E87A] p-0.5 shadow-lg">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-red-500 p-0.5 shadow-lg">
                <div className="w-full h-full bg-[#12121A] rounded-[10px] flex items-center justify-center">
                  <CalendarIcon className="w-5 h-5 text-white" />
                </div>
@@ -181,17 +181,17 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
         {/* CONTENT - MONTH VIEW */}
         {viewMode === 'month' && (
-          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0f]/50">
-            <div className="grid grid-cols-7 border-b border-white/5">
+          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0f]/50 overflow-y-auto styled-scrollbar">
+            <div className="grid grid-cols-7 border-b border-white/5 sticky top-0 bg-[#0a0a0f]/90 backdrop-blur-md z-20">
               {weekDays.map(day => (
-                <div key={day} className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-[#7D7AE8]">
+                <div key={day} className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-red-600">
                   {day}
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-7 flex-1">
+            <div className="grid grid-cols-7 flex-1 min-h-min">
               {days.map((date, i) => {
-                if (!date) return <div key={`empty-${i}`} className="min-h-[120px] border-r border-b border-white/5 bg-[#12121A]/30" />;
+                if (!date) return <div key={`empty-${i}`} className="min-h-[90px] md:min-h-[100px] border-r border-b border-white/5 bg-[#12121A]/30" />;
                 
                 const dayEvents = getEventsForDate(date);
                 
@@ -200,13 +200,13 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     key={i}
                     onClick={() => handleSelectDate(date)}
                     className={cn(
-                      "min-h-[120px] border-r border-b border-white/5 p-2 flex flex-col items-start gap-1 transition-all hover:bg-white/5 group relative text-left",
-                      isSelected(date) && "bg-[#7D7AE8]/10 border-[#7D7AE8]/30 ring-1 ring-inset ring-[#7D7AE8]/50"
+                      "min-h-[90px] md:min-h-[100px] border-r border-b border-white/5 p-2 flex flex-col items-start gap-1 transition-all hover:bg-white/5 group relative text-left",
+                      isSelected(date) && "bg-red-600/10 border-red-600/30 ring-1 ring-inset ring-red-600/50"
                     )}
                   >
                     <div className={cn(
                       "w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mb-1 shrink-0 transition-all",
-                      isToday(date) ? "bg-gradient-to-r from-[#7D7AE8] to-[#C0E87A] text-black shadow-[0_0_20px_rgba(192,232,122,0.4)]" : "text-gray-400 group-hover:text-white"
+                      isToday(date) ? "bg-gradient-to-r from-red-600 to-red-500 text-black shadow-[0_0_20px_rgba(192,232,122,0.4)]" : "text-gray-400 group-hover:text-white"
                     )}>
                       {date.getDate()}
                     </div>
@@ -215,7 +215,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                       {dayEvents.slice(0, 3).map((e, idx) => (
                         <div key={idx} className={cn(
                           "text-[10px] px-2 py-1 rounded-md border truncate font-bold",
-                          e.type === 'lesson' ? "bg-[#7D7AE8]/10 text-[#A27AE8] border-[#7D7AE8]/20" : "bg-[#C0E87A]/10 text-[#C0E87A] border-[#C0E87A]/20"
+                          e.type === 'lesson' ? "bg-red-600/10 text-red-500 border-red-600/20" : "bg-red-500/10 text-red-500 border-red-500/20"
                         )}>
                           {e.startTime && <span className="opacity-70 mr-1">{e.startTime}</span>}
                           {e.title}
@@ -230,7 +230,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
                     <div className="sm:hidden flex flex-wrap gap-1 mt-auto pb-1">
                       {dayEvents.map((e, idx) => (
-                        <div key={idx} className={cn("w-1.5 h-1.5 rounded-full", e.type === 'lesson' ? "bg-[#7D7AE8]" : "bg-[#C0E87A]")} />
+                        <div key={idx} className={cn("w-1.5 h-1.5 rounded-full", e.type === 'lesson' ? "bg-red-600" : "bg-red-500")} />
                       ))}
                     </div>
                   </button>
@@ -248,7 +248,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
               <div className="grid grid-cols-[60px_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b border-white/5 sticky top-0 bg-[#0a0a0f]/90 backdrop-blur-md z-30">
                 <div className="py-4 border-r border-white/5"></div>
                 {weekDays.map((day, i) => (
-                  <div key={day} className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-[#7D7AE8] border-r border-white/5">
+                  <div key={day} className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-red-600 border-r border-white/5">
                     {day}
                   </div>
                 ))}
@@ -286,14 +286,14 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                             className={cn(
                               "rounded-lg p-2 text-left pointer-events-auto transition-all shadow-lg overflow-hidden group border border-white/10",
                               selectedSchedule?.id === schedule.id 
-                                ? "bg-gradient-to-br from-[#7D7AE8] to-[#A27AE8] text-white z-20 scale-[1.02] shadow-[0_10px_30px_rgba(125,122,232,0.5)] border-white/30"
-                                : "bg-[#12121A]/80 backdrop-blur-md text-gray-300 hover:bg-[#7D7AE8]/20 hover:border-[#7D7AE8]/50 z-10"
+                                ? "bg-gradient-to-br from-red-600 to-red-500 text-white z-20 scale-[1.02] shadow-[0_10px_30px_rgba(125,122,232,0.5)] border-white/30"
+                                : "bg-[#12121A]/80 backdrop-blur-md text-gray-300 hover:bg-red-600/20 hover:border-red-600/50 z-10"
                             )}
                           >
                             <div className="text-[10px] font-black tracking-widest uppercase mb-1 opacity-80">
                               {schedule.startTime} - {schedule.endTime}
                             </div>
-                            <div className={cn("text-xs font-bold leading-tight truncate", selectedSchedule?.id === schedule.id ? "text-white" : "text-[#C0E87A]")}>
+                            <div className={cn("text-xs font-bold leading-tight truncate", selectedSchedule?.id === schedule.id ? "text-white" : "text-red-500")}>
                               {schedule.title}
                             </div>
                             <div className="text-[10px] truncate opacity-70 mt-1">{schedule.subtitle}</div>
@@ -312,7 +312,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
       {/* SIDE PANEL: DETAILS */}
       <div className="w-full lg:w-96 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl flex flex-col overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] shrink-0 h-fit lg:h-auto lg:min-h-[600px] relative">
-         <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-[#C0E87A]/10 rounded-full blur-[80px] pointer-events-none z-0"></div>
+         <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-red-500/10 rounded-full blur-[80px] pointer-events-none z-0"></div>
 
         {/* Content based on view mode and selection */}
         {viewMode === 'month' && selectedDate ? (
@@ -321,7 +321,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
               <h3 className="text-xl font-black text-white">
                 {selectedDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
               </h3>
-              <p className="text-sm text-[#7D7AE8] font-bold uppercase tracking-widest mt-1">{selectedEvents.length} eventos</p>
+              <p className="text-sm text-red-600 font-bold uppercase tracking-widest mt-1">{selectedEvents.length} eventos</p>
             </div>
 
             <div className="flex-1 p-6 overflow-y-auto space-y-4 styled-scrollbar">
@@ -336,7 +336,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <div className="space-y-1">
                       <span className={cn(
                         "text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md",
-                        event.type === 'lesson' ? "bg-[#7D7AE8]/20 text-[#A27AE8]" : "bg-[#C0E87A]/20 text-[#C0E87A]"
+                        event.type === 'lesson' ? "bg-red-600/20 text-red-500" : "bg-red-500/20 text-red-500"
                       )}>
                         {event.type === 'lesson' ? 'Aula Regular' : 'Evento'}
                       </span>
@@ -347,13 +347,13 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <div className="mt-4 pt-4 border-t border-white/10 space-y-2 text-xs font-bold text-gray-400">
                       {(event.startTime || event.endTime) && (
                         <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-[#7D7AE8]" />
+                          <Clock className="w-4 h-4 text-red-600" />
                           <span>{event.startTime} {event.endTime ? `às ${event.endTime}` : ''}</span>
                         </div>
                       )}
                       {event.location && (
                         <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-[#C0E87A]" />
+                          <MapPin className="w-4 h-4 text-red-500" />
                           <span>{event.location}</span>
                         </div>
                       )}
@@ -365,11 +365,11 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
           </div>
         ) : viewMode === 'week' && selectedSchedule ? (
           <div className="relative z-10 flex flex-col h-full">
-            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-[#7D7AE8]/20 to-transparent">
+            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-red-600/20 to-transparent">
               <h3 className="text-xl font-black text-white leading-tight">
                 {selectedSchedule.title}
               </h3>
-              <p className="text-sm text-[#A27AE8] font-bold uppercase tracking-widest mt-2">
+              <p className="text-sm text-red-500 font-bold uppercase tracking-widest mt-2">
                 {weekDays[selectedSchedule.dayOfWeek]} • {selectedSchedule.startTime} às {selectedSchedule.endTime}
               </p>
             </div>
@@ -378,7 +378,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
               <div className="bg-[#12121A]/80 rounded-2xl p-5 border border-white/5 space-y-4 shadow-xl">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                    <Clock className="w-5 h-5 text-[#C0E87A]" />
+                    <Clock className="w-5 h-5 text-red-500" />
                   </div>
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Horário</p>
@@ -389,7 +389,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-[#7D7AE8]" />
+                    <MapPin className="w-5 h-5 text-red-600" />
                   </div>
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Local</p>
@@ -399,7 +399,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                    <Users className="w-5 h-5 text-[#A27AE8]" />
+                    <Users className="w-5 h-5 text-red-500" />
                   </div>
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Professor</p>
@@ -413,9 +413,9 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
           <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center p-8 text-gray-500">
             <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/5 shadow-inner">
               {viewMode === 'month' ? (
-                <CalendarIcon className="w-10 h-10 opacity-30 text-[#7D7AE8]" />
+                <CalendarIcon className="w-10 h-10 opacity-30 text-red-600" />
               ) : (
-                <Grid3X3 className="w-10 h-10 opacity-30 text-[#C0E87A]" />
+                <Grid3X3 className="w-10 h-10 opacity-30 text-red-500" />
               )}
             </div>
             <h3 className="text-xl font-black text-white mb-2">Detalhes</h3>

@@ -93,7 +93,7 @@ export default function ProfessorDashboard() {
           {lessons.length > 0 && (
             <button
               onClick={() => openFinalize(lessons[0])}
-              className="px-6 py-4 rounded-2xl bg-gradient-to-r from-[#C0E87A] to-[#7D7AE8] hover:scale-105 text-black font-black text-sm shadow-[0_0_20px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2"
+              className="px-6 py-4 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 hover:scale-105 text-white font-black text-sm shadow-lg shadow-red-600/20 transition-all flex items-center justify-center gap-2"
             >
               <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
               <span>FINALIZAR AULA ATUAL</span>
@@ -107,38 +107,38 @@ export default function ProfessorDashboard() {
             title="Aulas Agendadas" 
             value={lessons.filter(l => l.status === 'scheduled').length.toString()} 
             icon={<Calendar className="w-6 h-6" />} 
-            color="from-[#7D7AE8] to-[#A27AE8]" 
-            glowColor="bg-[#7D7AE8]"
+            color="from-red-600 to-red-500" 
+            glowColor="bg-red-600"
           />
           <MetricCard 
             title="Aulas Concluídas" 
             value={lessons.filter(l => l.status === 'completed').length.toString()} 
             icon={<CheckCircle2 className="w-6 h-6" />} 
-            color="from-[#C0E87A] to-[#E5E87A]" 
-            glowColor="bg-[#C0E87A]"
-            textColor="text-black"
+            color="from-red-500 to-white" 
+            glowColor="bg-red-500"
+            textColor="text-white"
           />
           <MetricCard 
             title="Turmas Ativas" 
             value={activeClassesCount.toString()} 
             icon={<Users className="w-6 h-6" />} 
-            color="from-[#A27AE8] to-[#C77AE8]" 
-            glowColor="bg-[#A27AE8]"
+            color="from-red-500 to-red-700" 
+            glowColor="bg-red-500"
           />
         </div>
 
         {/* Lista de Aulas */}
         <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#7D7AE8]/10 rounded-full blur-[80px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
 
           <div className="flex items-center justify-between mb-8 relative z-10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7D7AE8]/20 to-transparent flex items-center justify-center border border-[#7D7AE8]/30">
-                <Clock className="w-5 h-5 text-[#7D7AE8]" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600/20 to-transparent flex items-center justify-center border border-red-600/30">
+                <Clock className="w-5 h-5 text-red-500" />
               </div>
               <h2 className="text-xl font-bold text-white">Aulas de Hoje & Próximas</h2>
             </div>
-            <span className="text-xs text-[#E5E87A] font-black uppercase tracking-widest bg-[#E5E87A]/10 px-3 py-1.5 rounded-lg">{lessons.length} Aulas</span>
+            <span className="text-xs text-white font-black uppercase tracking-widest bg-white/10 px-3 py-1.5 rounded-lg">{lessons.length} Aulas</span>
           </div>
 
           <div className="space-y-4 relative z-10">
@@ -155,19 +155,19 @@ export default function ProfessorDashboard() {
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-[#7D7AE8]/20 text-[#A27AE8]">
+                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-red-600/20 text-red-500">
                         {courseName} • {className}
                       </span>
                       <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
                         <Clock className="w-3 h-3" /> {timeStr}
                       </span>
                     </div>
-                    <h3 className="font-bold text-white text-lg group-hover:text-[#C0E87A] transition-colors pt-1">{lesson.topic}</h3>
+                    <h3 className="font-bold text-white text-lg group-hover:text-red-500 transition-colors pt-1">{lesson.topic}</h3>
                   </div>
 
                   <div className="flex items-center gap-3 mt-2 md:mt-0">
                     {isCompleted ? (
-                      <span className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#C0E87A]/10 text-[#C0E87A] font-bold text-xs border border-[#C0E87A]/20">
+                      <span className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-500/10 text-red-500 font-bold text-xs border border-red-500/20">
                         <CheckCircle2 className="w-4 h-4" /> Concluída
                       </span>
                     ) : (
@@ -175,7 +175,7 @@ export default function ProfessorDashboard() {
                         onClick={() => openFinalize(lesson)}
                         className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-all flex items-center gap-2 hover:scale-105"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-[#7D7AE8]" />
+                        <CheckCircle2 className="w-4 h-4 text-red-500" />
                         Finalizar Aula
                       </button>
                     )}

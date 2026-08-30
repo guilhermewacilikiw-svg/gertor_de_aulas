@@ -100,7 +100,7 @@ export function SaaSOnboardingForm() {
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
             accountType === 'school' 
-              ? "bg-[#C0E87A] text-black shadow-[0_0_15px_rgba(192,232,122,0.3)]" 
+              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.3)]" 
               : "text-white/50 hover:text-white hover:bg-white/5"
           )}
         >
@@ -112,7 +112,7 @@ export function SaaSOnboardingForm() {
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
             accountType === 'solo' 
-              ? "bg-[#C0E87A] text-black shadow-[0_0_15px_rgba(192,232,122,0.3)]" 
+              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.3)]" 
               : "text-white/50 hover:text-white hover:bg-white/5"
           )}
         >
@@ -125,7 +125,7 @@ export function SaaSOnboardingForm() {
           <h2 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
             {accountType === 'school' ? 'Crie a conta da sua Escola' : 'Sua Conta de Professor'}
           </h2>
-          <p className="text-[#C0E87A] text-xs font-mono uppercase tracking-widest">
+          <p className="text-red-500 text-xs font-mono uppercase tracking-widest">
             INICIALIZAR SISTEMA DE GESTÃO
           </p>
         </div>
@@ -147,7 +147,7 @@ export function SaaSOnboardingForm() {
                 type="text"
                 name="schoolName"
                 required
-                className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                 placeholder={accountType === 'school' ? 'Ex: Conservatório Mozart' : 'Ex: Aulas de Violão do João'}
               />
             </div>
@@ -164,7 +164,7 @@ export function SaaSOnboardingForm() {
                 value={document}
                 onChange={handleDocumentChange}
                 required
-                className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                 placeholder="00.000.000/0001-00"
               />
             </div>
@@ -181,7 +181,7 @@ export function SaaSOnboardingForm() {
                   type="text"
                   name="adminName"
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="Carlos Silva"
                 />
               </div>
@@ -196,7 +196,7 @@ export function SaaSOnboardingForm() {
                   value={phone}
                   onChange={handlePhoneChange}
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="(11) 90000-0000"
                 />
               </div>
@@ -212,7 +212,7 @@ export function SaaSOnboardingForm() {
                   type="email"
                   name="adminEmail"
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="contato@empresa.com"
                 />
               </div>
@@ -226,7 +226,7 @@ export function SaaSOnboardingForm() {
                   type="email"
                   name="confirmAdminEmail"
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="contato@empresa.com"
                 />
               </div>
@@ -243,7 +243,7 @@ export function SaaSOnboardingForm() {
                   name="adminPassword"
                   required
                   minLength={6}
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="••••••••"
                 />
               </div>
@@ -258,7 +258,7 @@ export function SaaSOnboardingForm() {
                   name="confirmAdminPassword"
                   required
                   minLength={6}
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-[#C0E87A] focus:ring-1 focus:ring-[#C0E87A] transition-all placeholder:text-white/30"
+                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="••••••••"
                 />
               </div>
@@ -271,17 +271,17 @@ export function SaaSOnboardingForm() {
               id="terms"
               checked={acceptedTerms}
               onChange={(e) => setAcceptedTerms(e.target.checked)}
-              className="mt-1 w-4 h-4 rounded-none border-white/20 bg-black/50 text-[#C0E87A] focus:ring-[#C0E87A]/50 accent-[#C0E87A]"
+              className="mt-1 w-4 h-4 rounded-none border-white/20 bg-black/50 text-red-500 focus:ring-red-500/50 accent-red-500"
             />
             <label htmlFor="terms" className="text-xs font-mono text-white/60 leading-relaxed uppercase tracking-widest mt-1">
-              ACEITO OS <Link href="/legal/termos" target="_blank" className="text-[#A27AE8] hover:underline font-bold">TERMOS DE USO</Link> E <Link href="/legal/privacidade" target="_blank" className="text-[#A27AE8] hover:underline font-bold">PRIVACIDADE</Link>.
+              ACEITO OS <Link href="/legal/termos" target="_blank" className="text-red-500 hover:underline font-bold">TERMOS DE USO</Link> E <Link href="/legal/privacidade" target="_blank" className="text-red-500 hover:underline font-bold">PRIVACIDADE</Link>.
             </label>
           </div>
 
           <button 
             type="submit"
             disabled={loading}
-            className="w-full py-4 mt-4 bg-[#C0E87A] text-black font-black text-sm uppercase tracking-widest hover:brightness-110 shadow-[0_0_20px_rgba(192,232,122,0.3)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 cyber-clip-btn"
+            className="w-full py-4 mt-4 bg-red-500 text-black font-black text-sm uppercase tracking-widest hover:brightness-110 shadow-[0_0_20px_rgba(192,232,122,0.3)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 cyber-clip-btn"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
               <>
@@ -292,7 +292,7 @@ export function SaaSOnboardingForm() {
         </form>
 
         <p className="text-center text-xs font-mono uppercase tracking-widest text-white/50 mt-8">
-          JÁ POSSUI CADASTRO? <Link href="/login" className="text-[#C0E87A] font-bold hover:text-white transition-colors">ACESSAR SISTEMA</Link>
+          JÁ POSSUI CADASTRO? <Link href="/login" className="text-red-500 font-bold hover:text-white transition-colors">ACESSAR SISTEMA</Link>
         </p>
       </div>
     </div>
