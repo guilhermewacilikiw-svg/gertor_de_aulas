@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { translateSupabaseError } from '@/lib/utils';
+import { checkSchoolLimit } from '@/lib/saas/limits';
 
 export async function createStudentAction(formData: FormData) {
   const supabase = await createClient();
@@ -32,6 +33,15 @@ export async function createStudentAction(formData: FormData) {
 
   if (!membership?.school_id) {
     return { success: false, error: 'Escola não encontrada para este usuário' };
+  }
+
+  // Validação de Limites de Plano SaaS
+  const limitCheck = await checkSchoolLimit(membership.school_id, 'students');
+  if (!limitCheck.allowed) {
+    return { 
+      success: false, 
+      error: limitCheck.error || 'Limite de alunos atingido para o plano atual da sua escola.' 
+    };
   }
 
   const name = formData.get('name') as string;

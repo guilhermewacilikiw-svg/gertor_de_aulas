@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { LayoutDashboard, Users, CreditCard, BookOpen, Calendar } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, BookOpen, Calendar, Sparkles } from 'lucide-react';
 import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
+import { TrialBanner } from '@/components/escola/TrialBanner';
+import { getSchoolPlanAndUsage } from '@/lib/saas/limits';
 
 export default async function EscolaLayout({
   children,
@@ -38,6 +40,8 @@ export default async function EscolaLayout({
     }
   }
 
+  const subInfo = schoolId ? await getSchoolPlanAndUsage(schoolId) : null;
+
   const links: DashboardLink[] = [
     { label: 'Painel', href: '/escola/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
     { label: 'Calendário', href: '/escola/calendario', icon: <Calendar className="w-4 h-4" /> },
@@ -47,16 +51,20 @@ export default async function EscolaLayout({
     { label: 'Cursos', href: '/escola/cursos', icon: <BookOpen className="w-4 h-4" /> },
     { label: 'Conteúdos', href: '/escola/conteudos', icon: <BookOpen className="w-4 h-4" /> },
     { label: 'Financeiro', href: '/escola/financeiro', icon: <CreditCard className="w-4 h-4" /> },
+    { label: 'Assinatura SaaS', href: '/escola/assinatura', icon: <Sparkles className="w-4 h-4 text-red-400" /> },
   ];
 
   return (
-    <DashboardLayout
-      portalName="Portal da Escola"
-      userName={adminName}
-      links={links}
-      headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
-    >
-      {children}
-    </DashboardLayout>
+    <>
+      <TrialBanner subscription={subInfo} />
+      <DashboardLayout
+        portalName="Portal da Escola"
+        userName={adminName}
+        links={links}
+        headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
+      >
+        {children}
+      </DashboardLayout>
+    </>
   );
 }
