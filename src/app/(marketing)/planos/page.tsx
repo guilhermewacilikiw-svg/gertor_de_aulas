@@ -16,7 +16,7 @@ export default function PlanosPage() {
             Planos que acompanham o <span className="text-red-500">seu ritmo</span>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg">
-            Comece com <strong>14 dias de teste grátis</strong>. Sem taxas ocultas, sem cartão de crédito antecipado e sem fidelidade.
+            Todos os planos contam com <strong>14 dias de teste grátis</strong>. Sem taxas ocultas, sem cartão de crédito antecipado e sem fidelidade.
           </p>
         </div>
 
@@ -24,7 +24,11 @@ export default function PlanosPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
           
           {/* Plano Solo */}
-          <div className="bg-[#12121A]/90 border border-white/10 p-8 rounded-3xl flex flex-col justify-between hover:border-red-500/30 transition-all hover:-translate-y-1 shadow-xl">
+          <div className="bg-[#12121A]/90 border border-white/10 p-8 rounded-3xl flex flex-col justify-between hover:border-red-500/30 transition-all hover:-translate-y-1 shadow-xl relative">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-white/10 border border-white/20 text-gray-300 text-[10px] font-black uppercase tracking-widest py-1 px-4 rounded-full shadow-lg">
+              14 Dias Grátis
+            </div>
+
             <div>
               <span className="text-xs font-mono font-bold text-gray-400 uppercase tracking-widest">Professores Autônomos</span>
               <h3 className="text-2xl font-black text-white mt-1 mb-2">Solo (Garage)</h3>
@@ -45,15 +49,15 @@ export default function PlanosPage() {
               </ul>
             </div>
 
-            <Link href="/cadastro?plan=solo" className="w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-center border border-white/10 hover:bg-white/5 text-white transition-all">
-              Experimentar Solo
+            <Link href="/cadastro?plan=solo" className="w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-red-500/40 text-white transition-all">
+              Começar 14 Dias Grátis
             </Link>
           </div>
 
           {/* Plano Stage (Destaque) */}
           <div className="bg-gradient-to-b from-red-600/30 via-[#12121A] to-[#12121A] border-2 border-red-500 p-8 rounded-3xl flex flex-col justify-between relative transform md:-translate-y-4 shadow-[0_0_40px_rgba(239,68,68,0.2)]">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-red-500 text-black text-[10px] font-black uppercase tracking-widest py-1 px-4 rounded-full shadow-lg">
-              Mais Escolhido
+              Mais Escolhido • 14 Dias Grátis
             </div>
             
             <div>
@@ -83,7 +87,11 @@ export default function PlanosPage() {
           </div>
 
           {/* Plano Festival */}
-          <div className="bg-[#12121A]/90 border border-white/10 p-8 rounded-3xl flex flex-col justify-between hover:border-red-500/30 transition-all hover:-translate-y-1 shadow-xl">
+          <div className="bg-[#12121A]/90 border border-white/10 p-8 rounded-3xl flex flex-col justify-between hover:border-red-500/30 transition-all hover:-translate-y-1 shadow-xl relative">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-white/10 border border-white/20 text-gray-300 text-[10px] font-black uppercase tracking-widest py-1 px-4 rounded-full shadow-lg">
+              14 Dias Grátis
+            </div>
+
             <div>
               <span className="text-xs font-mono font-bold text-gray-400 uppercase tracking-widest">Grandes Conservatórios</span>
               <h3 className="text-2xl font-black text-white mt-1 mb-2">Festival (Arena)</h3>
@@ -104,8 +112,8 @@ export default function PlanosPage() {
               </ul>
             </div>
 
-            <Link href="/cadastro?plan=festival" className="w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-center border border-white/10 hover:bg-white/5 text-white transition-all">
-              Contratar Festival
+            <Link href="/cadastro?plan=festival" className="w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-red-500/40 text-white transition-all">
+              Começar 14 Dias Grátis
             </Link>
           </div>
         </div>
