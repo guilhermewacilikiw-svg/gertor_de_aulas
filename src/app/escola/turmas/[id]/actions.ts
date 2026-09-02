@@ -106,19 +106,34 @@ export async function transferStudentAction(enrollmentId: string, newClassId: st
 }
 
 export async function assignStudentToScheduleAction(scheduleId: string, studentId: string, classId: string) {
+  return assignStudentsToScheduleAction(scheduleId, [studentId], classId);
+}
+
+export async function assignStudentsToScheduleAction(scheduleId: string, studentIds: string[], classId: string) {
   const supabase = await createClient();
 
-  const { error } = await supabase.from('schedule_participants').insert({
+  if (!studentIds || studentIds.length === 0) {
+    return { success: true };
+  }
+
+  const recordsToInsert = studentIds.map(studentId => ({
     schedule_id: scheduleId,
     student_id: studentId
-  });
+  }));
+
+  // Insert or ignore if already linked
+  const { error } = await supabase
+    .from('schedule_participants')
+    .upsert(recordsToInsert, { onConflict: 'schedule_id,student_id', ignoreDuplicates: true });
 
   if (error) {
-    console.error('Error assigning student to schedule:', error);
-    throw new Error('Falha ao vincular aluno ao horário: ' + error.message);
+    console.error('Error assigning students to schedule:', error);
+    throw new Error('Falha ao vincular alunos ao horário: ' + error.message);
   }
 
   revalidatePath(`/escola/turmas/${classId}`);
+  revalidatePath(`/escola/calendario`);
+  revalidatePath(`/professor/calendario`);
   return { success: true };
 }
 
@@ -136,5 +151,7 @@ export async function removeStudentFromScheduleAction(scheduleId: string, studen
   }
 
   revalidatePath(`/escola/turmas/${classId}`);
+  revalidatePath(`/escola/calendario`);
+  revalidatePath(`/professor/calendario`);
   return { success: true };
 }

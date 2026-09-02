@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Calendar, Clock, MapPin, Users, Plus, Trash2, ArrowRightLeft, Search, GraduationCap, Play } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Plus, Trash2, ArrowRightLeft, Search, GraduationCap, Play, Check, CheckSquare, Square } from 'lucide-react';
 import { 
   addScheduleAction, 
   removeScheduleAction, 
@@ -9,6 +9,7 @@ import {
   removeStudentAction, 
   transferStudentAction,
   assignStudentToScheduleAction,
+  assignStudentsToScheduleAction,
   removeStudentFromScheduleAction
 } from '@/app/escola/turmas/[id]/actions';
 
@@ -39,7 +40,7 @@ export function ClassManagementView({
   
   const [transferEnrollmentId, setTransferEnrollmentId] = useState<string | null>(null);
   const [selectedScheduleId, setSelectedScheduleId] = useState('');
-  const [assignStudentId, setAssignStudentId] = useState('');
+  const [assignStudentIds, setAssignStudentIds] = useState<string[]>([]);
   const [assignSearch, setAssignSearch] = useState('');
 
   const [scheduleDay, setScheduleDay] = useState(1);
@@ -91,7 +92,7 @@ export function ClassManagementView({
   };
 
   const handleRemoveStudent = (enrollmentId: string) => {
-    if (!confirm('Remover o aluno desta turma?')) return;
+    if (!confirm('Tem certeza que deseja desmatricular este aluno da turma?')) return;
     startTransition(async () => {
       try {
         await removeStudentAction(enrollmentId, turma.id);
@@ -116,13 +117,13 @@ export function ClassManagementView({
   };
 
   const handleAssignStudentToSchedule = () => {
-    if (!selectedScheduleId || !assignStudentId) return;
+    if (!selectedScheduleId || assignStudentIds.length === 0) return;
     startTransition(async () => {
       try {
-        await assignStudentToScheduleAction(selectedScheduleId, assignStudentId, turma.id);
+        await assignStudentsToScheduleAction(selectedScheduleId, assignStudentIds, turma.id);
         setIsAssignStudentModalOpen(false);
         setSelectedScheduleId('');
-        setAssignStudentId('');
+        setAssignStudentIds([]);
       } catch (err: any) {
         alert(err.message);
       }
@@ -331,11 +332,13 @@ export function ClassManagementView({
                           <button 
                             onClick={() => {
                               setSelectedScheduleId(schedule.id);
+                              const alreadyAssigned = (schedule.schedule_participants || []).map((p: any) => p.students?.id).filter(Boolean);
+                              setAssignStudentIds(alreadyAssigned);
                               setIsAssignStudentModalOpen(true);
                             }}
                             className="text-xs font-black text-white hover:text-red-400 transition-colors flex items-center gap-1"
                           >
-                            <Plus className="w-3.5 h-3.5" /> Adicionar
+                            <Plus className="w-3.5 h-3.5" /> Adicionar / Gerenciar
                           </button>
                         </div>
 
@@ -719,8 +722,8 @@ export function ClassManagementView({
             
             <div className="relative z-10 flex items-center justify-between mb-8">
               <div>
-                <h3 className="text-3xl font-black text-white tracking-tight">Vincular Aluno</h3>
-                <p className="text-sm text-gray-400 mt-1">Selecione um aluno já matriculado na turma.</p>
+                <h3 className="text-3xl font-black text-white tracking-tight">Vincular Alunos ao Horário</h3>
+                <p className="text-sm text-gray-400 mt-1">Marque todos os alunos que participarão deste horário.</p>
               </div>
               <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
                 <Users className="w-6 h-6 text-white" />
@@ -729,7 +732,27 @@ export function ClassManagementView({
             
             <div className="space-y-6 relative z-10">
               <div className="group">
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 group-focus-within:text-white transition-colors">Selecione o Aluno</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest group-focus-within:text-white transition-colors">
+                    Alunos da Turma ({assignStudentIds.length} selecionado{assignStudentIds.length === 1 ? '' : 's'})
+                  </label>
+                  {enrollments.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (assignStudentIds.length === enrollments.length) {
+                          setAssignStudentIds([]);
+                        } else {
+                          setAssignStudentIds(enrollments.map(e => e.student_id));
+                        }
+                      }}
+                      className="text-xs font-black text-red-400 hover:text-red-300 transition-colors"
+                    >
+                      {assignStudentIds.length === enrollments.length ? 'Desmarcar Todos' : 'Selecionar Todos'}
+                    </button>
+                  )}
+                </div>
+
                 {enrollments.length === 0 ? (
                   <div className="p-5 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0">!</div>
@@ -751,34 +774,43 @@ export function ClassManagementView({
                     <div className="max-h-60 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
                       {enrollments
                         .filter(enr => enr.students?.name.toLowerCase().includes(assignSearch.toLowerCase()))
-                        .map((enr) => (
-                          <div 
-                            key={enr.student_id}
-                            onClick={() => setAssignStudentId(enr.student_id)}
-                            className={`p-4 rounded-xl cursor-pointer transition-all border flex items-center justify-between ${
-                              assignStudentId === enr.student_id 
-                                ? 'bg-red-500/10 border-red-500/50 text-white shadow-[0_0_15px_rgba(239,68,68,0.1)]' 
-                                : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-                            }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
-                                assignStudentId === enr.student_id ? 'bg-red-500 border-red-400 text-white' : 'bg-white/10 border-white/10 text-gray-500'
-                              }`}>
-                                <span className="text-sm font-black">{enr.students?.name.charAt(0)}</span>
+                        .map((enr) => {
+                          const isSelected = assignStudentIds.includes(enr.student_id);
+                          return (
+                            <div 
+                              key={enr.student_id}
+                              onClick={() => {
+                                if (isSelected) {
+                                  setAssignStudentIds(prev => prev.filter(id => id !== enr.student_id));
+                                } else {
+                                  setAssignStudentIds(prev => [...prev, enr.student_id]);
+                                }
+                              }}
+                              className={`p-4 rounded-xl cursor-pointer transition-all border flex items-center justify-between ${
+                                isSelected 
+                                  ? 'bg-red-500/15 border-red-500/60 text-white shadow-[0_0_15px_rgba(239,68,68,0.15)]' 
+                                  : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
+                                  isSelected ? 'bg-red-500 border-red-400 text-white' : 'bg-white/10 border-white/10 text-gray-500'
+                                }`}>
+                                  <span className="text-sm font-black">{enr.students?.name.charAt(0)}</span>
+                                </div>
+                                <p className="font-bold text-base text-white">{enr.students?.name}</p>
                               </div>
-                              <p className="font-bold text-base">{enr.students?.name}</p>
+                              
+                              <div className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-all ${
+                                isSelected ? 'border-red-500 bg-red-500 text-black shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/20 bg-white/5'
+                              }`}>
+                                {isSelected && (
+                                  <Check className="w-4 h-4 text-white stroke-[3]" />
+                                )}
+                              </div>
                             </div>
-                            
-                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all ${
-                              assignStudentId === enr.student_id ? 'border-red-500 bg-red-500' : 'border-gray-600'
-                            }`}>
-                              {assignStudentId === enr.student_id && (
-                                <div className="w-2 h-2 bg-white rounded-full" />
-                              )}
-                            </div>
-                          </div>
-                      ))}
+                          );
+                        })}
                       {enrollments.filter(enr => enr.students?.name.toLowerCase().includes(assignSearch.toLowerCase())).length === 0 && (
                         <p className="text-center text-gray-500 text-sm py-4">Nenhum aluno encontrado com esse nome.</p>
                       )}
@@ -793,7 +825,7 @@ export function ClassManagementView({
                 onClick={() => {
                   setIsAssignStudentModalOpen(false);
                   setSelectedScheduleId('');
-                  setAssignStudentId('');
+                  setAssignStudentIds([]);
                 }}
                 className="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
               >
@@ -801,10 +833,10 @@ export function ClassManagementView({
               </button>
               <button 
                 onClick={handleAssignStudentToSchedule}
-                disabled={isPending || !assignStudentId}
+                disabled={isPending || assignStudentIds.length === 0}
                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-black text-sm hover:shadow-[0_10px_30px_rgba(220,38,38,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
-                {isPending ? 'Confirmando...' : 'Confirmar Vínculo'}
+                {isPending ? 'Confirmando...' : `Confirmar Vínculo (${assignStudentIds.length})`}
               </button>
             </div>
           </div>
