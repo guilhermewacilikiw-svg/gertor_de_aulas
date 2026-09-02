@@ -33,7 +33,13 @@ export default async function ProfessorCalendarioPage() {
     .from('lessons')
     .select(`
       id, topic, scheduled_start, scheduled_end, status,
-      classes (name, room)
+      classes (
+        id, name, room,
+        enrollments (
+          status,
+          students (id, name, email)
+        )
+      )
     `)
     .eq('teacher_id', teacherId);
 
@@ -49,7 +55,15 @@ export default async function ProfessorCalendarioPage() {
     .select(`
       id, day_of_week, start_time, end_time, room,
       classes!inner (
-        name, teacher_id
+        id,
+        name,
+        teacher_id,
+        enrollments (
+          status,
+          students (
+            id, name, email
+          )
+        )
       ),
       schedule_participants (
         students (
@@ -64,6 +78,11 @@ export default async function ProfessorCalendarioPage() {
 
   lessons?.forEach(l => {
     const d = new Date(l.scheduled_start);
+    const enrolledStudents = ((l.classes as any)?.enrollments || [])
+      .filter((e: any) => e.status !== 'inactive' && e.status !== 'cancelled')
+      .map((e: any) => e.students)
+      .filter(Boolean);
+
     formattedEvents.push({
       id: l.id,
       title: (l.classes as any)?.name || 'Aula',
@@ -73,7 +92,8 @@ export default async function ProfessorCalendarioPage() {
       type: 'lesson',
       status: l.status,
       subtitle: l.topic || 'Sem tópico',
-      location: (l.classes as any)?.room || 'Sala não definida'
+      location: (l.classes as any)?.room || 'Sala não definida',
+      participants: enrolledStudents
     });
   });
 
@@ -91,9 +111,16 @@ export default async function ProfessorCalendarioPage() {
 
   const formattedSchedules = (schedulesData || []).map(s => {
     const className = (s.classes as any)?.name || 'Turma';
-    const participants = (s.schedule_participants || [])
+    const directParticipants = (s.schedule_participants || [])
       .map((p: any) => p.students)
       .filter(Boolean);
+
+    const enrolledStudents = ((s.classes as any)?.enrollments || [])
+      .filter((e: any) => e.status !== 'inactive' && e.status !== 'cancelled')
+      .map((e: any) => e.students)
+      .filter(Boolean);
+
+    const participants = directParticipants.length > 0 ? directParticipants : enrolledStudents;
 
     return {
       id: s.id,

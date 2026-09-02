@@ -34,7 +34,13 @@ export default async function EscolaCalendarioPage() {
     .from('lessons')
     .select(`
       id, topic, scheduled_start, scheduled_end, status,
-      classes (name, room),
+      classes (
+        id, name, room,
+        enrollments (
+          status,
+          students (id, name, email)
+        )
+      ),
       teachers (users(name))
     `)
     .eq('school_id', schoolId);
@@ -45,15 +51,22 @@ export default async function EscolaCalendarioPage() {
     .select('*')
     .eq('school_id', schoolId);
 
-  // Fetch all class schedules (Grade Semanal com Alunos)
+  // Fetch all class schedules (Grade Semanal com Alunos e Fallback de Matrículas)
   const { data: schedulesData } = await supabase
     .from('class_schedules')
     .select(`
       id, day_of_week, start_time, end_time, room,
       classes (
+        id,
         name,
         teachers (
           users (name)
+        ),
+        enrollments (
+          status,
+          students (
+            id, name, email
+          )
         )
       ),
       schedule_participants (
@@ -68,6 +81,11 @@ export default async function EscolaCalendarioPage() {
 
   lessons?.forEach(l => {
     const d = new Date(l.scheduled_start);
+    const enrolledStudents = ((l.classes as any)?.enrollments || [])
+      .filter((e: any) => e.status !== 'inactive' && e.status !== 'cancelled')
+      .map((e: any) => e.students)
+      .filter(Boolean);
+
     formattedEvents.push({
       id: l.id,
       title: (l.classes as any)?.name || 'Aula',
@@ -77,7 +95,8 @@ export default async function EscolaCalendarioPage() {
       type: 'lesson',
       status: l.status,
       subtitle: `Prof. ${(l.teachers as any)?.users?.name || ''} - ${l.topic || 'Sem tópico'}`,
-      location: (l.classes as any)?.room || 'Sala não definida'
+      location: (l.classes as any)?.room || 'Sala não definida',
+      participants: enrolledStudents
     });
   });
 
@@ -97,9 +116,18 @@ export default async function EscolaCalendarioPage() {
     // Navigate relationship class_schedules -> classes -> teachers -> users
     const className = (s.classes as any)?.name || 'Turma Indefinida';
     const teacherName = (s.classes as any)?.teachers?.users?.name || 'Prof. Indefinido';
-    const participants = (s.schedule_participants || [])
+    
+    const directParticipants = (s.schedule_participants || [])
       .map((p: any) => p.students)
       .filter(Boolean);
+
+    const enrolledStudents = ((s.classes as any)?.enrollments || [])
+      .filter((e: any) => e.status !== 'inactive' && e.status !== 'cancelled')
+      .map((e: any) => e.students)
+      .filter(Boolean);
+
+    // Fallback: se não tiver participantes específicos alocados no horário, puxa os alunos matriculados na turma
+    const participants = directParticipants.length > 0 ? directParticipants : enrolledStudents;
     
     return {
       id: s.id,
