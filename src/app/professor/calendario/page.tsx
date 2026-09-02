@@ -50,6 +50,11 @@ export default async function ProfessorCalendarioPage() {
       id, day_of_week, start_time, end_time, room,
       classes!inner (
         name, teacher_id
+      ),
+      schedule_participants (
+        students (
+          id, name, email
+        )
       )
     `)
     .eq('school_id', schoolId)
@@ -86,6 +91,10 @@ export default async function ProfessorCalendarioPage() {
 
   const formattedSchedules = (schedulesData || []).map(s => {
     const className = (s.classes as any)?.name || 'Turma';
+    const participants = (s.schedule_participants || [])
+      .map((p: any) => p.students)
+      .filter(Boolean);
+
     return {
       id: s.id,
       dayOfWeek: s.day_of_week,
@@ -94,7 +103,8 @@ export default async function ProfessorCalendarioPage() {
       title: className,
       subtitle: 'Minha Turma',
       location: s.room || 'Sem Sala',
-      type: 'schedule' as const
+      type: 'schedule' as const,
+      participants
     };
   });
 

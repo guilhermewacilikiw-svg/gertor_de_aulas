@@ -45,7 +45,7 @@ export default async function EscolaCalendarioPage() {
     .select('*')
     .eq('school_id', schoolId);
 
-  // Fetch all class schedules (Grade Semanal)
+  // Fetch all class schedules (Grade Semanal com Alunos)
   const { data: schedulesData } = await supabase
     .from('class_schedules')
     .select(`
@@ -54,6 +54,11 @@ export default async function EscolaCalendarioPage() {
         name,
         teachers (
           users (name)
+        )
+      ),
+      schedule_participants (
+        students (
+          id, name, email
         )
       )
     `)
@@ -92,6 +97,9 @@ export default async function EscolaCalendarioPage() {
     // Navigate relationship class_schedules -> classes -> teachers -> users
     const className = (s.classes as any)?.name || 'Turma Indefinida';
     const teacherName = (s.classes as any)?.teachers?.users?.name || 'Prof. Indefinido';
+    const participants = (s.schedule_participants || [])
+      .map((p: any) => p.students)
+      .filter(Boolean);
     
     return {
       id: s.id,
@@ -101,7 +109,8 @@ export default async function EscolaCalendarioPage() {
       title: className,
       subtitle: teacherName,
       location: s.room || 'Sem Sala',
-      type: 'schedule' as const
+      type: 'schedule' as const,
+      participants
     };
   });
 

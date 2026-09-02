@@ -25,6 +25,7 @@ export interface ClassSchedule {
   subtitle?: string;
   location?: string;
   type: 'schedule';
+  participants?: { id: string; name: string; email?: string }[];
 }
 
 interface SchoolCalendarProps {
@@ -290,13 +291,23 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                                 : "bg-[#12121A]/80 backdrop-blur-md text-gray-300 hover:bg-red-600/20 hover:border-red-600/50 z-10"
                             )}
                           >
-                            <div className="text-[10px] font-black tracking-widest uppercase mb-1 opacity-80">
+                            <div className="text-[10px] font-black tracking-widest uppercase mb-0.5 opacity-80">
                               {schedule.startTime} - {schedule.endTime}
                             </div>
-                            <div className={cn("text-xs font-bold leading-tight truncate", selectedSchedule?.id === schedule.id ? "text-white" : "text-red-500")}>
+                            <div className={cn("text-xs font-bold leading-tight truncate", selectedSchedule?.id === schedule.id ? "text-white" : "text-red-400")}>
                               {schedule.title}
                             </div>
-                            <div className="text-[10px] truncate opacity-70 mt-1">{schedule.subtitle}</div>
+                            <div className="text-[10px] truncate opacity-70">{schedule.subtitle}</div>
+                            
+                            {/* Alunos participantes do horário */}
+                            {schedule.participants && schedule.participants.length > 0 && (
+                              <div className="mt-1 pt-1 border-t border-white/10 flex items-center gap-1 text-[10px] font-bold text-gray-300 truncate">
+                                <Users className="w-3 h-3 text-red-400 shrink-0" />
+                                <span className="truncate">
+                                  {schedule.participants.map(p => p.name).join(', ')}
+                                </span>
+                              </div>
+                            )}
                           </button>
                         );
                       })}
@@ -406,6 +417,39 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <p className="text-sm font-bold text-white mt-1">{selectedSchedule.subtitle}</p>
                   </div>
                 </div>
+              </div>
+
+              {/* Lista de Alunos Participantes da Aula */}
+              <div className="bg-[#12121A]/80 rounded-2xl p-5 border border-white/5 space-y-3 shadow-xl">
+                <div className="flex items-center justify-between pb-2 border-b border-white/5">
+                  <div className="flex items-center gap-2">
+                    <Users className="w-4 h-4 text-red-400" />
+                    <span className="text-xs font-black uppercase tracking-wider text-white">Alunos Nesta Aula</span>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-600/20 text-red-400 border border-red-500/30">
+                    {selectedSchedule.participants?.length || 0} {selectedSchedule.participants?.length === 1 ? 'aluno' : 'alunos'}
+                  </span>
+                </div>
+
+                {selectedSchedule.participants && selectedSchedule.participants.length > 0 ? (
+                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1 styled-scrollbar">
+                    {selectedSchedule.participants.map((p, pIdx) => (
+                      <div key={p.id || pIdx} className="p-2.5 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-300 text-xs font-black shrink-0">
+                          {p.name.charAt(0)}
+                        </div>
+                        <div className="truncate">
+                          <p className="text-xs font-bold text-white truncate">{p.name}</p>
+                          {p.email && <p className="text-[10px] text-gray-500 truncate">{p.email}</p>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-gray-500 italic py-2 text-center">
+                    Nenhum aluno vinculado a este horário ainda.
+                  </p>
+                )}
               </div>
             </div>
           </div>
