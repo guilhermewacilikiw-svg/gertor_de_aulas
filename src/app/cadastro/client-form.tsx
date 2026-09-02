@@ -10,11 +10,14 @@ import { cn } from '@/lib/utils';
 export function SaaSOnboardingForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const plan = searchParams.get('plan');
+  const planParam = searchParams.get('plan');
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [accountType, setAccountType] = useState<'school' | 'solo'>('school');
+  const [accountType, setAccountType] = useState<'school' | 'solo'>(planParam === 'solo' ? 'solo' : 'school');
+  const [selectedPlan, setSelectedPlan] = useState<'solo' | 'stage' | 'festival'>(
+    planParam === 'solo' ? 'solo' : planParam === 'festival' ? 'festival' : 'stage'
+  );
   
   const [document, setDocument] = useState('');
   const [phone, setPhone] = useState('');
@@ -78,6 +81,7 @@ export function SaaSOnboardingForm() {
     
     formData.append('document', document.replace(/\D/g, '')); // Send numbers only
     formData.append('phone', phone.replace(/\D/g, ''));
+    formData.append('planCode', selectedPlan);
     
     const res = await saasRegisterAction(formData);
     
@@ -93,10 +97,13 @@ export function SaaSOnboardingForm() {
     <div className="w-full max-w-xl mx-auto">
       
       {/* Account Type Selector */}
-      <div className="flex bg-black/40 border border-white/10 p-1 mb-8 cyber-clip">
+      <div className="flex bg-black/40 border border-white/10 p-1 mb-6 cyber-clip">
         <button
           type="button"
-          onClick={() => setAccountType('school')}
+          onClick={() => {
+            setAccountType('school');
+            if (selectedPlan === 'solo') setSelectedPlan('stage');
+          }}
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
             accountType === 'school' 
@@ -104,11 +111,14 @@ export function SaaSOnboardingForm() {
               : "text-white/50 hover:text-white hover:bg-white/5"
           )}
         >
-          <Building2 className="w-4 h-4" /> Escola
+          <Building2 className="w-4 h-4" /> Escola de Música
         </button>
         <button
           type="button"
-          onClick={() => setAccountType('solo')}
+          onClick={() => {
+            setAccountType('solo');
+            setSelectedPlan('solo');
+          }}
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
             accountType === 'solo' 
@@ -116,18 +126,80 @@ export function SaaSOnboardingForm() {
               : "text-white/50 hover:text-white hover:bg-white/5"
           )}
         >
-          <User className="w-4 h-4" /> Professor
+          <User className="w-4 h-4" /> Professor Autônomo
         </button>
       </div>
 
       <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip">
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h2 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
             {accountType === 'school' ? 'Crie a conta da sua Escola' : 'Sua Conta de Professor'}
           </h2>
           <p className="text-red-500 text-xs font-mono uppercase tracking-widest">
-            INICIALIZAR SISTEMA DE GESTÃO
+            14 DIAS DE ACESSO GRÁTIS • SEM CARTÃO
           </p>
+        </div>
+
+        {/* Plan Selection Radios */}
+        <div className="mb-6 space-y-2">
+          <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1 block">
+            Escolha o Plano do seu Teste Grátis:
+          </label>
+          <div className="grid grid-cols-3 gap-2.5">
+            {/* Solo */}
+            <button
+              type="button"
+              onClick={() => setSelectedPlan('solo')}
+              className={cn(
+                "p-3 text-left transition-all border relative flex flex-col justify-between cyber-clip-btn",
+                selectedPlan === 'solo'
+                  ? "bg-red-950/60 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+              )}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider block">Solo</span>
+                <span className="text-xs font-black text-white">R$ 59/mês</span>
+              </div>
+              <span className="text-[9px] text-gray-400 block mt-1">Até 30 alunos</span>
+            </button>
+
+            {/* Stage */}
+            <button
+              type="button"
+              onClick={() => setSelectedPlan('stage')}
+              className={cn(
+                "p-3 text-left transition-all border relative flex flex-col justify-between cyber-clip-btn",
+                selectedPlan === 'stage'
+                  ? "bg-red-950/60 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+              )}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider block text-red-400">Stage Pro</span>
+                <span className="text-xs font-black text-white">R$ 169/mês</span>
+              </div>
+              <span className="text-[9px] text-gray-300 block mt-1">Até 150 alunos</span>
+            </button>
+
+            {/* Festival */}
+            <button
+              type="button"
+              onClick={() => setSelectedPlan('festival')}
+              className={cn(
+                "p-3 text-left transition-all border relative flex flex-col justify-between cyber-clip-btn",
+                selectedPlan === 'festival'
+                  ? "bg-red-950/60 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+              )}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider block">Festival</span>
+                <span className="text-xs font-black text-white">R$ 349/mês</span>
+              </div>
+              <span className="text-[9px] text-gray-400 block mt-1">Ilimitado</span>
+            </button>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

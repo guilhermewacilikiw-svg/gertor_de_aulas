@@ -51,28 +51,41 @@ export async function saasRegisterAction(formData: FormData) {
     return { success: false, error: 'Erro ao criar o perfil da escola/professor. ' + (rpcError?.message || '') };
   }
 
-  // 3. Configurar Trial de 14 dias e vincular ao plano Stage
+  // 3. Configurar Trial de 14 dias e vincular ao plano escolhido (Solo, Stage ou Festival)
   try {
     const trialEnd = new Date();
     trialEnd.setDate(trialEnd.getDate() + 14);
 
-    const { data: stagePlan } = await supabase
+    const chosenPlanCode = (formData.get('planCode') as string) || 'stage';
+
+    const { data: selectedPlan } = await supabase
       .from('plans')
       .select('id')
-      .eq('code', 'stage')
+      .eq('code', chosenPlanCode)
       .single();
+
+    // Fallback para stage caso não encontre
+    let planIdToAssign = selectedPlan?.id;
+    if (!planIdToAssign) {
+      const { data: fallbackPlan } = await supabase
+        .from('plans')
+        .select('id')
+        .eq('code', 'stage')
+        .single();
+      planIdToAssign = fallbackPlan?.id || null;
+    }
 
     await supabase
       .from('schools')
       .update({
-        plan_id: stagePlan?.id || null,
+        plan_id: planIdToAssign,
         subscription_status: 'trialing',
         trial_ends_at: trialEnd.toISOString(),
         current_period_end: trialEnd.toISOString()
       })
       .eq('id', schoolId);
   } catch (err) {
-    console.warn('Erro não-bloqueante ao setar trial:', err);
+    console.warn('Erro não-bloqueante ao setar trial e plano:', err);
   }
 
   // 4. Sign in immediately so session cookies are stored
