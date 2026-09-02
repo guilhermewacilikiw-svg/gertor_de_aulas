@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Grid3X3, List, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Grid3X3, List, Users, Sparkles, PartyPopper } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { isBrazilianHoliday } from '@/lib/holidays';
 
 export interface CalendarEvent {
   id: string;
@@ -10,10 +11,11 @@ export interface CalendarEvent {
   date: Date;
   startTime?: string;
   endTime?: string;
-  type: 'lesson' | 'event';
+  type: 'lesson' | 'event' | 'holiday';
   status?: string; 
   subtitle?: string; 
   location?: string;
+  participants?: { id: string; name: string; email?: string }[];
 }
 
 export interface ClassSchedule {
@@ -73,11 +75,52 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
   const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
   const getEventsForDate = (date: Date) => {
-    return events.filter(e => 
+    const combined: CalendarEvent[] = [];
+
+    // 1. Feriados Nacionais do Brasil
+    const holiday = isBrazilianHoliday(date);
+    if (holiday) {
+      combined.push({
+        id: `holiday-${holiday.date}`,
+        title: holiday.name,
+        date: date,
+        type: 'holiday',
+        subtitle: 'Feriado Nacional'
+      });
+    }
+
+    // 2. Aulas Recorrentes da Grade Semanal correspondentes a este dia da semana
+    const dayOfWeek = date.getDay(); // 0 = Domingo, 1 = Segunda...
+    const daySchedules = schedules.filter(s => s.dayOfWeek === dayOfWeek);
+
+    daySchedules.forEach(s => {
+      combined.push({
+        id: `sched-${s.id}-${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+        title: s.title,
+        date: date,
+        startTime: s.startTime,
+        endTime: s.endTime,
+        type: 'lesson',
+        subtitle: s.subtitle,
+        location: s.location,
+        participants: s.participants
+      });
+    });
+
+    // 3. Eventos pontuais e aulas específicas registradas no banco
+    const specificEvents = events.filter(e => 
       e.date.getDate() === date.getDate() && 
       e.date.getMonth() === date.getMonth() && 
       e.date.getFullYear() === date.getFullYear()
-    ).sort((a, b) => (a.startTime || '').localeCompare(b.startTime || ''));
+    );
+
+    combined.push(...specificEvents);
+
+    return combined.sort((a, b) => {
+      if (a.type === 'holiday') return -1;
+      if (b.type === 'holiday') return 1;
+      return (a.startTime || '').localeCompare(b.startTime || '');
+    });
   };
 
   const selectedEvents = selectedDate ? getEventsForDate(selectedDate) : [];
@@ -212,26 +255,42 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                       {date.getDate()}
                     </div>
                     
-                    <div className="w-full flex-1 overflow-hidden space-y-1.5 hidden sm:block">
+                    <div className="w-full flex-1 overflow-hidden space-y-1 hidden sm:block">
                       {dayEvents.slice(0, 3).map((e, idx) => (
                         <div key={idx} className={cn(
-                          "text-[10px] px-2 py-1 rounded-md border truncate font-bold",
-                          e.type === 'lesson' ? "bg-red-600/10 text-red-500 border-red-600/20" : "bg-red-500/10 text-red-500 border-red-500/20"
+                          "text-[10px] px-1.5 py-0.5 rounded border truncate font-bold flex items-center gap-1",
+                          e.type === 'holiday' 
+                            ? "bg-amber-500/20 text-amber-300 border-amber-500/30" 
+                            : e.type === 'lesson' 
+                            ? "bg-red-600/15 text-red-300 border-red-500/30" 
+                            : "bg-blue-500/15 text-blue-300 border-blue-500/30"
                         )}>
-                          {e.startTime && <span className="opacity-70 mr-1">{e.startTime}</span>}
-                          {e.title}
+                          {e.type === 'holiday' ? (
+                            <span className="truncate">🎉 {e.title}</span>
+                          ) : (
+                            <>
+                              {e.startTime && <span className="opacity-80 font-mono text-[9px] shrink-0">{e.startTime}</span>}
+                              <span className="truncate">{e.title}</span>
+                            </>
+                          )}
                         </div>
                       ))}
                       {dayEvents.length > 3 && (
-                        <div className="text-[10px] text-gray-500 font-bold pl-1 uppercase tracking-wider">
-                          + {dayEvents.length - 3} itens
+                        <div className="text-[9px] text-gray-400 font-bold pl-1 uppercase tracking-wider">
+                          + {dayEvents.length - 3} mais
                         </div>
                       )}
                     </div>
 
                     <div className="sm:hidden flex flex-wrap gap-1 mt-auto pb-1">
                       {dayEvents.map((e, idx) => (
-                        <div key={idx} className={cn("w-1.5 h-1.5 rounded-full", e.type === 'lesson' ? "bg-red-600" : "bg-red-500")} />
+                        <div 
+                          key={idx} 
+                          className={cn(
+                            "w-1.5 h-1.5 rounded-full", 
+                            e.type === 'holiday' ? "bg-amber-400" : e.type === 'lesson' ? "bg-red-500" : "bg-blue-500"
+                          )} 
+                        />
                       ))}
                     </div>
                   </button>
@@ -339,38 +398,81 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
               {selectedEvents.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">
                   <CalendarIcon className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                  <p className="font-medium">Nenhum evento agendado para este dia.</p>
+                  <p className="font-medium">Nenhum evento ou aula para este dia.</p>
                 </div>
               ) : (
-                selectedEvents.map(event => (
-                  <div key={event.id} className="bg-[#12121A]/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 hover:border-white/20 transition-all shadow-lg hover:-translate-y-1">
-                    <div className="space-y-1">
-                      <span className={cn(
-                        "text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md",
-                        event.type === 'lesson' ? "bg-red-600/20 text-red-500" : "bg-red-500/20 text-red-500"
-                      )}>
-                        {event.type === 'lesson' ? 'Aula Regular' : 'Evento'}
-                      </span>
-                      <h4 className="text-base font-bold text-white pt-2">{event.title}</h4>
-                      {event.subtitle && <p className="text-xs text-gray-400 font-medium">{event.subtitle}</p>}
-                    </div>
+                selectedEvents.map(event => {
+                  if (event.type === 'holiday') {
+                    return (
+                      <div key={event.id} className="bg-amber-950/40 backdrop-blur-md border border-amber-500/40 rounded-2xl p-4 shadow-lg animate-in fade-in duration-300">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-300 border border-amber-500/30 shrink-0">
+                            <PartyPopper className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">Feriado Nacional</span>
+                            <h4 className="text-base font-black text-white mt-0.5">{event.title}</h4>
+                            <p className="text-xs text-amber-200/70 mt-0.5">Sem expediente / data comemorativa oficial</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
 
-                    <div className="mt-4 pt-4 border-t border-white/10 space-y-2 text-xs font-bold text-gray-400">
-                      {(event.startTime || event.endTime) && (
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-red-600" />
-                          <span>{event.startTime} {event.endTime ? `às ${event.endTime}` : ''}</span>
-                        </div>
-                      )}
-                      {event.location && (
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-red-500" />
-                          <span>{event.location}</span>
+                  return (
+                    <div key={event.id} className="bg-[#12121A]/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 hover:border-white/20 transition-all shadow-lg hover:-translate-y-1 space-y-3">
+                      <div>
+                        <span className={cn(
+                          "text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md",
+                          event.type === 'lesson' ? "bg-red-600/20 text-red-400 border border-red-500/30" : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                        )}>
+                          {event.type === 'lesson' ? 'Aula Regular' : 'Evento'}
+                        </span>
+                        <h4 className="text-base font-bold text-white pt-2">{event.title}</h4>
+                        {event.subtitle && <p className="text-xs text-gray-400 font-medium">{event.subtitle}</p>}
+                      </div>
+
+                      <div className="pt-3 border-t border-white/10 space-y-2 text-xs font-bold text-gray-400">
+                        {(event.startTime || event.endTime) && (
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-red-500" />
+                            <span>{event.startTime} {event.endTime ? `às ${event.endTime}` : ''}</span>
+                          </div>
+                        )}
+                        {event.location && (
+                          <div className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-red-400" />
+                            <span>{event.location}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Lista de Alunos Participantes da Aula */}
+                      {event.participants && event.participants.length > 0 && (
+                        <div className="pt-3 border-t border-white/10 space-y-2">
+                          <div className="flex items-center justify-between text-[11px] font-bold text-gray-300">
+                            <span className="flex items-center gap-1.5 text-red-400">
+                              <Users className="w-3.5 h-3.5" /> Alunos nesta aula:
+                            </span>
+                            <span className="text-[10px] text-gray-400 font-mono">
+                              {event.participants.length}
+                            </span>
+                          </div>
+                          <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 styled-scrollbar">
+                            {event.participants.map((p, idx) => (
+                              <div key={p.id || idx} className="flex items-center gap-2 p-1.5 rounded-lg bg-white/5 text-xs text-white">
+                                <div className="w-5 h-5 rounded-full bg-red-600/30 flex items-center justify-center text-[10px] font-bold text-red-300 shrink-0">
+                                  {p.name.charAt(0)}
+                                </div>
+                                <span className="truncate font-medium">{p.name}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>
