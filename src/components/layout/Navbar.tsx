@@ -19,12 +19,10 @@ export function Navbar() {
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
+          <Link href="/" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Início</Link>
           <Link href="/#recursos" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Recursos</Link>
           <Link href="/#beneficios" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Benefícios</Link>
-          <Link href="/planos" className="text-sm font-bold text-red-400 hover:text-red-300 hover:-translate-y-0.5 transition-all flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-            Planos & Preços
-          </Link>
+          <Link href="/#planos" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Planos</Link>
         </div>
         
         <div className="flex items-center gap-3">
@@ -47,12 +45,10 @@ export function Navbar() {
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 mt-2 p-4 animate-in fade-in slide-in-from-top-2">
           <div className="bg-[#12121A] border border-white/10 rounded-2xl p-4 flex flex-col gap-4 shadow-2xl">
+            <Link href="/" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Início</Link>
             <Link href="/#recursos" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Recursos</Link>
             <Link href="/#beneficios" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Benefícios</Link>
-            <Link href="/planos" onClick={() => setIsOpen(false)} className="text-sm font-black text-red-400 hover:text-white p-2 border-b border-white/10 pb-4 flex items-center justify-between">
-              Planos & Preços
-              <span className="text-[10px] uppercase font-mono px-2 py-0.5 bg-red-500/20 text-red-300 border border-red-500/30">14 Dias Grátis</span>
-            </Link>
+            <Link href="/#planos" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2 border-b border-white/10 pb-4">Planos</Link>
             <Link href="/login" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Entrar na minha conta</Link>
             <Link href="/cadastro" onClick={() => setIsOpen(false)} className="w-full text-center py-3 rounded-xl bg-red-600 text-white text-sm font-black mt-2">
               Criar Conta Grátis
