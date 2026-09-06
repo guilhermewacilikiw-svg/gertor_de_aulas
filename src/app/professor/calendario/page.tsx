@@ -28,51 +28,55 @@ export default async function ProfessorCalendarioPage() {
   const teacherId = teacherRecord.id;
   const schoolId = teacherRecord.school_id;
 
-  // Fetch lessons for this teacher
-  const { data: lessons } = await supabase
-    .from('lessons')
-    .select(`
-      id, topic, scheduled_start, scheduled_end, status,
-      classes (
-        id, name, room,
-        enrollments (
-          status,
-          students (id, name, email)
+  // Fetch lessons, events and schedules concurrently in parallel
+  const [
+    { data: lessons },
+    { data: eventsData },
+    { data: schedulesData }
+  ] = await Promise.all([
+    supabase
+      .from('lessons')
+      .select(`
+        id, topic, scheduled_start, scheduled_end, status,
+        classes (
+          id, name, room,
+          enrollments (
+            status,
+            students (id, name, email)
+          )
         )
-      )
-    `)
-    .eq('teacher_id', teacherId);
+      `)
+      .eq('teacher_id', teacherId),
 
-  // Fetch school events
-  const { data: eventsData } = await supabase
-    .from('events')
-    .select('*')
-    .eq('school_id', schoolId);
+    supabase
+      .from('events')
+      .select('*')
+      .eq('school_id', schoolId),
 
-  // Fetch class schedules for this teacher
-  const { data: schedulesData } = await supabase
-    .from('class_schedules')
-    .select(`
-      id, day_of_week, start_time, end_time, room,
-      classes!inner (
-        id,
-        name,
-        teacher_id,
-        enrollments (
-          status,
+    supabase
+      .from('class_schedules')
+      .select(`
+        id, day_of_week, start_time, end_time, room,
+        classes!inner (
+          id,
+          name,
+          teacher_id,
+          enrollments (
+            status,
+            students (
+              id, name, email
+            )
+          )
+        ),
+        schedule_participants (
           students (
             id, name, email
           )
         )
-      ),
-      schedule_participants (
-        students (
-          id, name, email
-        )
-      )
-    `)
-    .eq('school_id', schoolId)
-    .eq('classes.teacher_id', teacherId);
+      `)
+      .eq('school_id', schoolId)
+      .eq('classes.teacher_id', teacherId)
+  ]);
 
   const formattedEvents: CalendarEvent[] = [];
 

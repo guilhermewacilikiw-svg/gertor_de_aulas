@@ -19,22 +19,15 @@ export default async function AlunoLayout({
   if (user) {
     const { data: publicUser } = await supabase
       .from('users')
-      .select('id, name')
+      .select('id, name, school_memberships(school_id)')
       .eq('auth_user_id', user.id)
       .maybeSingle();
 
     if (publicUser) {
       publicUserId = publicUser.id;
       userName = publicUser.name;
-      const { data: membership } = await supabase
-        .from('school_memberships')
-        .select('school_id')
-        .eq('user_id', publicUser.id)
-        .maybeSingle();
-
-      if (membership) {
-        schoolId = membership.school_id;
-      }
+      const memberships: any = publicUser.school_memberships;
+      schoolId = Array.isArray(memberships) ? memberships[0]?.school_id : memberships?.school_id;
     }
   }
 

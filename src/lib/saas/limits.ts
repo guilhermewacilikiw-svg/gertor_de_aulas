@@ -37,50 +37,51 @@ export interface SchoolSubscriptionInfo {
 export async function getSchoolPlanAndUsage(schoolId: string): Promise<SchoolSubscriptionInfo | null> {
   const supabase = await createClient();
 
-  // 1. Obter dados da escola e plano vinculado
-  const { data: school, error: schoolError } = await supabase
-    .from('schools')
-    .select(`
-      id,
-      name,
-      subscription_status,
-      trial_ends_at,
-      current_period_end,
-      plan_id,
-      plans (
+  // 1. Obter dados da escola, contagem de alunos e contagem de professores em paralelo
+  const [schoolRes, studentRes, teacherRes] = await Promise.all([
+    supabase
+      .from('schools')
+      .select(`
         id,
-        code,
         name,
-        description,
-        price_monthly,
-        price_yearly,
-        max_students,
-        max_teachers,
-        features
-      )
-    `)
-    .eq('id', schoolId)
-    .single();
+        subscription_status,
+        trial_ends_at,
+        current_period_end,
+        plan_id,
+        plans (
+          id,
+          code,
+          name,
+          description,
+          price_monthly,
+          price_yearly,
+          max_students,
+          max_teachers,
+          features
+        )
+      `)
+      .eq('id', schoolId)
+      .single(),
 
-  if (schoolError || !school) {
-    console.error('Erro ao buscar dados do plano da escola:', schoolError);
+    supabase
+      .from('students')
+      .select('id', { count: 'exact', head: true })
+      .eq('school_id', schoolId),
+
+    supabase
+      .from('teachers')
+      .select('id', { count: 'exact', head: true })
+      .eq('school_id', schoolId)
+  ]);
+
+  const school = schoolRes.data;
+  if (schoolRes.error || !school) {
+    console.error('Erro ao buscar dados do plano da escola:', schoolRes.error);
     return null;
   }
 
-  // 2. Contar alunos ativos
-  const { count: studentCount } = await supabase
-    .from('students')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId);
-
-  // 3. Contar professores ativos
-  const { count: teacherCount } = await supabase
-    .from('teachers')
-    .select('id', { count: 'exact', head: true })
-    .eq('school_id', schoolId);
-
-  const students = studentCount || 0;
-  const teachers = teacherCount || 0;
+  const students = studentRes.count || 0;
+  const teachers = teacherRes.count || 0;
 
   // Normalizar dados do plano (fallback para Stage Pro se não tiver plano explicitado)
   const planData: PlanData = (school.plans as any) || {

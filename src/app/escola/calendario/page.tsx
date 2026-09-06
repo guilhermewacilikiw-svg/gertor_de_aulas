@@ -12,70 +12,67 @@ export default async function EscolaCalendarioPage() {
   if (user) {
     const { data: publicUser } = await supabase
       .from('users')
-      .select('id')
+      .select('id, school_memberships(school_id)')
       .eq('auth_user_id', user.id)
       .maybeSingle();
 
     if (publicUser) {
-      const { data: membership } = await supabase
-        .from('school_memberships')
-        .select('school_id')
-        .eq('user_id', publicUser.id)
-        .maybeSingle();
-
-      if (membership) {
-        schoolId = membership.school_id;
-      }
+      const memberships: any = publicUser.school_memberships;
+      schoolId = Array.isArray(memberships) ? memberships[0]?.school_id : memberships?.school_id;
     }
   }
 
-  // Fetch all lessons for the school
-  const { data: lessons } = await supabase
-    .from('lessons')
-    .select(`
-      id, topic, scheduled_start, scheduled_end, status,
-      classes (
-        id, name, room,
-        enrollments (
-          status,
-          students (id, name, email)
-        )
-      ),
-      teachers (users(name))
-    `)
-    .eq('school_id', schoolId);
-
-  // Fetch all events for the school
-  const { data: eventsData } = await supabase
-    .from('events')
-    .select('*')
-    .eq('school_id', schoolId);
-
-  // Fetch all class schedules (Grade Semanal com Alunos e Fallback de Matrículas)
-  const { data: schedulesData } = await supabase
-    .from('class_schedules')
-    .select(`
-      id, day_of_week, start_time, end_time, room,
-      classes (
-        id,
-        name,
-        teachers (
-          users (name)
+  // Fetch lessons, events and schedules concurrently in parallel
+  const [
+    { data: lessons },
+    { data: eventsData },
+    { data: schedulesData }
+  ] = await Promise.all([
+    supabase
+      .from('lessons')
+      .select(`
+        id, topic, scheduled_start, scheduled_end, status,
+        classes (
+          id, name, room,
+          enrollments (
+            status,
+            students (id, name, email)
+          )
         ),
-        enrollments (
-          status,
+        teachers (users(name))
+      `)
+      .eq('school_id', schoolId),
+
+    supabase
+      .from('events')
+      .select('*')
+      .eq('school_id', schoolId),
+
+    supabase
+      .from('class_schedules')
+      .select(`
+        id, day_of_week, start_time, end_time, room,
+        classes (
+          id,
+          name,
+          teachers (
+            users (name)
+          ),
+          enrollments (
+            status,
+            students (
+              id, name, email
+            )
+          )
+        ),
+        schedule_participants (
           students (
             id, name, email
           )
         )
-      ),
-      schedule_participants (
-        students (
-          id, name, email
-        )
-      )
-    `)
-    .eq('school_id', schoolId);
+      `)
+      .eq('school_id', schoolId)
+  ]);
 
   const formattedEvents: CalendarEvent[] = [];
 

@@ -12,17 +12,13 @@ export default async function AlunoCalendarioPage() {
   if (user) {
     const { data: publicUser } = await supabase
       .from('users')
-      .select('id')
+      .select('id, students(id, school_id)')
       .eq('auth_user_id', user.id)
       .maybeSingle();
 
     if (publicUser) {
-      const { data: studentRecord } = await supabase
-        .from('students')
-        .select('id, school_id')
-        .eq('user_id', publicUser.id)
-        .maybeSingle();
-
+      const s: any = publicUser.students;
+      const studentRecord = Array.isArray(s) ? s[0] : s;
       if (studentRecord) {
         studentId = studentRecord.id;
         schoolId = studentRecord.school_id;
@@ -30,12 +26,21 @@ export default async function AlunoCalendarioPage() {
     }
   }
 
-  // Fetch all classes this student is enrolled in
-  const { data: enrollments } = await supabase
-    .from('enrollments')
-    .select('class_id')
-    .eq('student_id', studentId)
-    .not('class_id', 'is', null);
+  // Fetch enrollments and school events in parallel
+  const [
+    { data: enrollments },
+    { data: eventsData }
+  ] = await Promise.all([
+    supabase
+      .from('enrollments')
+      .select('class_id')
+      .eq('student_id', studentId)
+      .not('class_id', 'is', null),
+    supabase
+      .from('events')
+      .select('*')
+      .eq('school_id', schoolId)
+  ]);
 
   const classIds = enrollments?.map(e => e.class_id).filter(Boolean) || [];
 
@@ -53,12 +58,6 @@ export default async function AlunoCalendarioPage() {
       
     if (data) lessons = data;
   }
-
-  // Fetch school events
-  const { data: eventsData } = await supabase
-    .from('events')
-    .select('*')
-    .eq('school_id', schoolId);
 
   const formattedEvents: CalendarEvent[] = [];
 
