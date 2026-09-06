@@ -62,7 +62,7 @@ export async function uploadMaterial(formData: FormData) {
 
     if (dbError) {
       console.error('Erro de BD:', dbError);
-      return { error: 'Falha ao registrar link no banco de dados.' };
+      return { error: 'Falha ao registrar link no banco de dados: ' + dbError.message };
     }
 
     // If target is student or module, or lesson, we insert it into content_targets
