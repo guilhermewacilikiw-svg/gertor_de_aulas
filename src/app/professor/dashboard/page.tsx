@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Calendar, Users, CheckCircle2, Clock, PlayCircle, Plus } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { FinalizarAulaModal } from '@/components/teacher/FinalizarAulaModal';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { StatCard } from '@/components/shared/StatCard';
 import { cn } from '@/lib/utils';
 
 export default function ProfessorDashboard() {
@@ -78,52 +80,44 @@ export default function ProfessorDashboard() {
     <div className="bg-[#0a0a0f] min-h-screen pb-12 w-full text-white animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pt-4">
-          <div>
-            <h1 className="text-4xl font-black tracking-tight drop-shadow-md">
-              Olá, Prof. {teacherName} <span className="animate-pulse inline-block">🎸</span>
-            </h1>
-            <p className="text-sm text-gray-400 mt-2 font-medium">
-              Gerencie suas aulas e registre o progresso dos seus alunos.
-            </p>
-          </div>
+        {/* Header Hero Padronizado */}
+        <PageHeader
+          badgeIcon={<Users className="w-4 h-4" />}
+          badgeText="Portal do Professor"
+          title={`Olá, Prof. ${teacherName || 'Docente'}`}
+          subtitle="Acompanhe suas aulas do dia, lance diários e controle presenças da sua turma."
+          action={
+            lessons.length > 0 ? (
+              <button
+                onClick={() => openFinalize(lessons[0])}
+                className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.35)] transition-all flex items-center justify-center gap-2 active:scale-95"
+              >
+                <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
+                <span>Finalizar Aula Atual</span>
+              </button>
+            ) : undefined
+          }
+        />
 
-          {/* Quick action button */}
-          {lessons.length > 0 && (
-            <button
-              onClick={() => openFinalize(lessons[0])}
-              className="px-6 py-4 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 hover:scale-105 text-white font-black text-sm shadow-lg shadow-red-600/20 transition-all flex items-center justify-center gap-2"
-            >
-              <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
-              <span>FINALIZAR AULA ATUAL</span>
-            </button>
-          )}
-        </div>
-
-        {/* Grid Stats */}
+        {/* Grid Stats Padronizado */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <MetricCard 
+          <StatCard 
             title="Aulas Agendadas" 
-            value={lessons.filter(l => l.status === 'scheduled').length.toString()} 
+            value={lessons.filter(l => l.status === 'scheduled').length} 
+            subtitle="Para os próximos períodos"
             icon={<Calendar className="w-6 h-6" />} 
-            color="from-red-600 to-red-500" 
-            glowColor="bg-red-600"
           />
-          <MetricCard 
+          <StatCard 
             title="Aulas Concluídas" 
-            value={lessons.filter(l => l.status === 'completed').length.toString()} 
+            value={lessons.filter(l => l.status === 'completed').length} 
+            subtitle="Diários registrados"
             icon={<CheckCircle2 className="w-6 h-6" />} 
-            color="from-red-500 to-white" 
-            glowColor="bg-red-500"
-            textColor="text-white"
           />
-          <MetricCard 
+          <StatCard 
             title="Turmas Ativas" 
-            value={activeClassesCount.toString()} 
+            value={activeClassesCount} 
+            subtitle="Sob sua regência"
             icon={<Users className="w-6 h-6" />} 
-            color="from-red-500 to-red-700" 
-            glowColor="bg-red-500"
           />
         </div>
 

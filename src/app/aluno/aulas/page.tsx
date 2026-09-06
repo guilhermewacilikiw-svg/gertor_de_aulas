@@ -1,5 +1,7 @@
 import { PlayCircle, BookOpen, Layers, ArrowRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { EmptyState } from '@/components/shared/EmptyState';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -54,31 +56,29 @@ export default async function MinhasAulasPage() {
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Minhas Aulas</h1>
-        <p className="text-sm text-gray-400 mt-1">Acesse seus cursos, assista aos vídeos complementares e materiais de apoio.</p>
-      </div>
+      {/* Header Padronizado */}
+      <PageHeader
+        badgeIcon={<BookOpen className="w-4 h-4" />}
+        badgeText="Conteúdo Digital"
+        title="Minhas Aulas"
+        subtitle="Acesse seus cursos, assista aos vídeos complementares e baixe materiais de apoio."
+      />
 
       {enrolledCourses.length === 0 ? (
-        <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-12 flex flex-col items-center justify-center text-center shadow-soft">
-          <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
-            <BookOpen className="w-8 h-8 text-gray-500" />
-          </div>
-          <h3 className="text-xl font-bold mb-2 text-white">Nenhum curso encontrado</h3>
-          <p className="text-gray-400 max-w-md">
-            Você ainda não está matriculado em nenhum curso com material digital. Fale com a secretaria da escola.
-          </p>
-        </div>
+        <EmptyState
+          icon={<BookOpen className="w-8 h-8" />}
+          title="Nenhum curso encontrado"
+          description="Você ainda não está matriculado em nenhum curso com material digital. Fale com a secretaria da escola."
+        />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {enrolledCourses.map((course) => (
             <div
               key={course.id}
-              className="bg-neutral-900/30 border border-neutral-800 rounded-3xl overflow-hidden shadow-xl group hover:border-white/20 transition-all flex flex-col justify-between"
+              className="bg-[#0e0e14] border border-white/10 rounded-2xl overflow-hidden shadow-xl group hover:border-red-600/40 transition-all flex flex-col justify-between"
             >
               {/* Header Banner */}
-              <div className="h-32 bg-gradient-to-br from-neutral-800 via-purple-600 to-red-900 p-5 relative flex flex-col justify-between overflow-hidden">
+              <div className="h-32 bg-gradient-to-br from-neutral-900 via-red-950 to-red-900 p-5 relative flex flex-col justify-between overflow-hidden">
                 <PlayCircle className="w-24 h-24 text-white/10 absolute -right-4 -bottom-4 rotate-12 group-hover:scale-110 transition-transform duration-500" />
                 
                 <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 text-white backdrop-blur-md border border-white/10">

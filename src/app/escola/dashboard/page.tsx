@@ -1,5 +1,7 @@
 import { Users, GraduationCap, Calendar, AlertTriangle, UserPlus, FileText, CheckCircle2, Clock, LayoutDashboard } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { StatCard } from '@/components/shared/StatCard';
 import { redirect } from 'next/navigation';
 
 export default async function EscolaDashboard() {
@@ -43,46 +45,28 @@ export default async function EscolaDashboard() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
       
-      {/* HEADER HERO */}
-      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/10 overflow-hidden shadow-2xl p-8 md:p-12">
-        {/* Animated Background Spheres */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-900/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
-
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div>
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6">
-              <LayoutDashboard className="w-4 h-4 text-red-500" />
-              <span className="text-xs font-black uppercase tracking-widest text-white/80">
-                Painel Operacional
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 uppercase">
-              Dashboard
-            </h1>
-            <p className="text-gray-400 max-w-xl text-lg">
-              Visão clara das aulas, frequência, leads e alertas operacionais da {schoolName}.
-            </p>
+      {/* Header Padronizado */}
+      <PageHeader
+        badgeIcon={<LayoutDashboard className="w-4 h-4" />}
+        badgeText="Painel Operacional"
+        title="Dashboard"
+        subtitle={`Visão clara das aulas, frequência, corpo docente e alertas operacionais da ${schoolName}.`}
+        action={
+          <div className="relative bg-[#0e0e14] border border-white/10 p-4 px-6 rounded-2xl flex flex-col items-center justify-center min-w-[140px] shadow-xl">
+            <span className="text-4xl font-black text-white drop-shadow-md">
+              {totalStudents || 0}
+            </span>
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Alunos Ativos</span>
           </div>
-          
-          <div className="shrink-0 flex items-center justify-center relative group">
-            <div className="absolute inset-0 bg-red-600/10 rounded-full blur-2xl group-hover:bg-red-600/20 transition-all duration-500"></div>
-            <div className="relative bg-black border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center min-w-[160px] shadow-2xl">
-              <span className="text-5xl font-black text-white drop-shadow-md">
-                {totalStudents || 0}
-              </span>
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Alunos</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        }
+      />
 
       {/* Grid de Indicadores Operacionais */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard title="Total de Alunos" value={(totalStudents || 0).toString()} subtitle="Alunos ativos" icon={<Users />} color="from-red-600 to-red-900" />
-        <MetricCard title="Professores" value={(totalTeachers || 0).toString()} subtitle="Corpo docente" icon={<GraduationCap />} color="from-neutral-700 to-neutral-900" />
-        <MetricCard title="Aulas do Dia" value={(totalLessonsToday || 0).toString()} subtitle="Agendadas hoje" icon={<Calendar />} color="from-red-600 to-red-900" />
-        <MetricCard title="Novos Leads" value={(totalLeads || 0).toString()} subtitle="Contatos landing page" icon={<UserPlus />} color="from-neutral-700 to-neutral-900" />
+        <StatCard title="Total de Alunos" value={totalStudents || 0} subtitle="Alunos matriculados" icon={<Users className="w-5 h-5" />} />
+        <StatCard title="Professores" value={totalTeachers || 0} subtitle="Corpo docente ativo" icon={<GraduationCap className="w-5 h-5" />} />
+        <StatCard title="Aulas do Dia" value={totalLessonsToday || 0} subtitle="Agendadas para hoje" icon={<Calendar className="w-5 h-5" />} />
+        <StatCard title="Novos Leads" value={totalLeads || 0} subtitle="Interessados na landing page" icon={<UserPlus className="w-5 h-5" />} />
       </div>
 
 

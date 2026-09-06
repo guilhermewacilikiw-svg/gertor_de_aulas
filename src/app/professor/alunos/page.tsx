@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Users, Search, ChevronRight, BookOpen, UserCircle2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { EmptyState } from '@/components/shared/EmptyState';
 import Link from 'next/link';
 
 export default function ProfessorAlunosPage() {
@@ -80,38 +82,33 @@ export default function ProfessorAlunosPage() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Meus Alunos</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Visão geral de todos os alunos matriculados nas suas turmas.
-          </p>
-        </div>
-        
-        <div className="relative w-full md:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-          <input 
-            type="text" 
-            placeholder="Buscar aluno por nome ou ID..." 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#0f0f0f] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
-          />
-        </div>
-      </div>
+      <PageHeader
+        badgeIcon={<Users className="w-4 h-4" />}
+        badgeText="Alunos"
+        title="Meus Alunos"
+        subtitle="Visão geral de todos os alunos matriculados nas suas turmas ativas."
+        action={
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <input 
+              type="text" 
+              placeholder="Buscar aluno por nome ou ID..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-[#0e0e14] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-gray-600"
+            />
+          </div>
+        }
+      />
 
       {loading ? (
         <div className="p-12 text-center text-gray-400">Carregando lista de alunos...</div>
       ) : filteredStudents.length === 0 ? (
-        <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 flex flex-col items-center justify-center text-center shadow-lg">
-          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
-            <UserCircle2 className="w-8 h-8 text-red-500" />
-          </div>
-          <h3 className="text-xl font-bold text-white mb-2">Nenhum aluno encontrado</h3>
-          <p className="text-gray-400 max-w-md">
-            Você ainda não possui alunos matriculados nas suas turmas ativas ou a busca não retornou resultados.
-          </p>
-        </div>
+        <EmptyState
+          icon={<UserCircle2 className="w-8 h-8" />}
+          title="Nenhum aluno encontrado"
+          description="Você ainda não possui alunos matriculados nas suas turmas ativas ou a busca não retornou resultados."
+        />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStudents.map((student) => (

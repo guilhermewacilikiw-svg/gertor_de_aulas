@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Users, Clock, ArrowRight, BookOpen, UserCircle2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { EmptyState } from '@/components/shared/EmptyState';
 import Link from 'next/link';
 
 export default function ProfessorTurmasPage() {
@@ -72,25 +74,21 @@ export default function ProfessorTurmasPage() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Minhas Turmas</h1>
-        <p className="text-sm text-gray-400 mt-1">
-          Acesse suas turmas para fazer o diário de classe e acompanhar os alunos.
-        </p>
-      </div>
+      {/* Header Padronizado */}
+      <PageHeader
+        badgeIcon={<Users className="w-4 h-4" />}
+        badgeText="Pedagógico"
+        title="Minhas Turmas"
+        subtitle="Acesse suas turmas para fazer o diário de classe e acompanhar a frequência dos alunos."
+      />
 
       {/* Classes Grid */}
       {classes.length === 0 ? (
-        <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 flex flex-col items-center justify-center text-center">
-          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
-            <Users className="w-8 h-8 text-red-500" />
-          </div>
-          <h3 className="text-xl font-bold text-white mb-2">Nenhuma turma encontrada</h3>
-          <p className="text-gray-400 max-w-md">
-            Você ainda não foi alocado a nenhuma turma ativa. Fale com a secretaria da escola.
-          </p>
-        </div>
+        <EmptyState
+          icon={<Users className="w-8 h-8" />}
+          title="Nenhuma turma encontrada"
+          description="Você ainda não foi alocado a nenhuma turma ativa. Fale com a coordenação da escola para vincular seus horários."
+        />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {classes.map((cls) => {

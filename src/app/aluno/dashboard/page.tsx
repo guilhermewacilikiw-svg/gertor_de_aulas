@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { LessonVideoPlayer } from '@/components/student/LessonVideoPlayer';
+import { PageHeader } from '@/components/shared/PageHeader';
 import { cn } from '@/lib/utils';
 
 export default async function AlunoDashboard() {
@@ -174,26 +175,13 @@ export default async function AlunoDashboard() {
   return (
     <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 bg-[#0a0a0f] min-h-screen text-white">
       
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-4xl font-black tracking-tight drop-shadow-md">
-            Dashboard
-          </h1>
-        </div>
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg className="h-5 w-5 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <input 
-            type="text" 
-            placeholder="Search for..." 
-            className="pl-10 pr-4 py-2 bg-[#12121A] border border-white/10 rounded-full text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-600/50 w-64 transition-all"
-          />
-        </div>
-      </div>
+      {/* Header Padronizado */}
+      <PageHeader
+        badgeIcon={<Award className="w-4 h-4" />}
+        badgeText="Portal do Aluno"
+        title={`Bem-vindo, ${studentName}! 🎸`}
+        subtitle="Acompanhe sua evolução musical, acesse as próximas aulas e pratique com os materiais de estudo."
+      />
 
       {/* TOP ROW */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
