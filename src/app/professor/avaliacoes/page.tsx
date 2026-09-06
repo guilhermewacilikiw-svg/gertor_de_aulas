@@ -5,6 +5,9 @@ import { Star, Plus, Users, Search, TrendingUp, ChevronRight } from 'lucide-reac
 import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 
+import { PageHeader } from '@/components/shared/PageHeader';
+import { Award, BookOpen } from 'lucide-react';
+
 export default function ProfessorAvaliacoesPage() {
   const [loading, setLoading] = useState(true);
   const [classes, setClasses] = useState<any[]>([]);
@@ -40,21 +43,22 @@ export default function ProfessorAvaliacoesPage() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
       
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Avaliações</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Lance as avaliações mensais para os alunos das suas turmas.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badgeIcon={<Award className="w-4 h-4" />}
+        badgeText="Painel Pedagógico"
+        title="Avaliações & Critérios"
+        subtitle="Lance notas de 0 a 10, gerencie atividades didáticas e destaque critérios principais para suas turmas."
+      />
 
-      <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-8 shadow-lg">
-        <div className="flex items-center justify-between mb-8">
+      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-xl font-bold text-white">Selecione uma Turma</h2>
-            <p className="text-sm text-gray-400">Para lançar as notas ou porcentagens de evolução.</p>
+            <p className="text-sm text-gray-400">Escolha a turma para configurar atividades e lançar as notas de 0 a 10.</p>
           </div>
+          <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 self-start sm:self-auto">
+            Critérios & Destaques Ativos
+          </span>
         </div>
 
         {loading ? (
@@ -67,23 +71,28 @@ export default function ProfessorAvaliacoesPage() {
               const studentsCount = cls.enrollments?.[0]?.count || 0;
               return (
                 <Link href={`/professor/avaliacoes/lancar?classId=${cls.id}`} key={cls.id} className="group relative block">
-                  <div className="bg-black/50 border border-white/5 rounded-2xl p-6 hover:border-white/50 transition-all shadow-lg flex flex-col h-full">
+                  <div className="bg-black/40 border border-white/5 rounded-2xl p-6 hover:border-red-500/40 hover:shadow-[0_0_25px_rgba(239,68,68,0.15)] transition-all shadow-lg flex flex-col h-full">
                     
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                        <Star className="w-5 h-5 text-white" />
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white shadow-md shadow-red-600/20 group-hover:scale-105 transition-transform">
+                        <Star className="w-6 h-6 fill-white/20" />
                       </div>
                       <span className="text-xs font-bold bg-white/5 px-3 py-1 rounded-full text-gray-400 border border-white/10 group-hover:text-white transition-colors">
                         {studentsCount} Alunos
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-white text-lg leading-tight mb-1 group-hover:text-white transition-colors">{cls.name}</h3>
-                    <p className="text-sm text-gray-500 font-medium mb-6">{cls.courses?.name}</p>
+                    <h3 className="font-bold text-white text-lg leading-tight mb-1 group-hover:text-red-400 transition-colors">
+                      {cls.name}
+                    </h3>
+                    <p className="text-sm text-gray-500 font-medium mb-6 flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-gray-600" />
+                      <span>{cls.courses?.name || 'Curso'}</span>
+                    </p>
 
-                    <div className="mt-auto flex items-center justify-between text-white font-bold text-sm">
-                      <span>Lançar Notas</span>
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between text-white font-bold text-sm">
+                      <span className="text-red-400 group-hover:translate-x-0.5 transition-transform">Lançar Notas (0 a 10)</span>
+                      <ChevronRight className="w-4 h-4 text-red-500 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>

@@ -11,13 +11,34 @@ async function run() {
   try {
     await client.connect();
     
-    const users = await client.query(`SELECT id, auth_user_id, email FROM public.users`);
-    console.log("public.users:");
-    console.table(users.rows);
-
-    const memberships = await client.query(`SELECT id, user_id, role FROM public.school_memberships`);
-    console.log("public.school_memberships:");
-    console.table(memberships.rows);
+    await client.query(`ALTER TABLE assessment_items ADD COLUMN IF NOT EXISTS is_highlighted BOOLEAN DEFAULT false;`);
+    await client.query(`DROP POLICY IF EXISTS "Teachers and admins manage assessments" ON assessments;`);
+    await client.query(`
+      CREATE POLICY "Teachers and admins manage assessments" ON assessments
+        FOR ALL USING (
+          has_school_role(school_id, 'TEACHER'::user_role) OR
+          has_school_role(school_id, 'SCHOOL_ADMIN'::user_role) OR
+          has_school_role(school_id, 'MANAGER'::user_role)
+        ) WITH CHECK (
+          has_school_role(school_id, 'TEACHER'::user_role) OR
+          has_school_role(school_id, 'SCHOOL_ADMIN'::user_role) OR
+          has_school_role(school_id, 'MANAGER'::user_role)
+        );
+    `);
+    await client.query(`DROP POLICY IF EXISTS "Teachers and admins manage assessment items" ON assessment_items;`);
+    await client.query(`
+      CREATE POLICY "Teachers and admins manage assessment items" ON assessment_items
+        FOR ALL USING (
+          has_school_role(school_id, 'TEACHER'::user_role) OR
+          has_school_role(school_id, 'SCHOOL_ADMIN'::user_role) OR
+          has_school_role(school_id, 'MANAGER'::user_role)
+        ) WITH CHECK (
+          has_school_role(school_id, 'TEACHER'::user_role) OR
+          has_school_role(school_id, 'SCHOOL_ADMIN'::user_role) OR
+          has_school_role(school_id, 'MANAGER'::user_role)
+        );
+    `);
+    console.log("ASSESSMENT_RLS_MIGRATED_SUCCESSFULLY");
 
   } catch (err) {
     console.error('Execution error', err.stack);

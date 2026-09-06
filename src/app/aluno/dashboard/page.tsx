@@ -1,4 +1,4 @@
-import { Calendar, Play, CheckCircle2, Award, ArrowRight, Video, FileText, Dumbbell, Compass } from 'lucide-react';
+import { Calendar, Play, CheckCircle2, Award, ArrowRight, Video, FileText, Dumbbell, Compass, Star } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -77,9 +77,8 @@ export default async function AlunoDashboard() {
     supabase
       .from('student_assessments')
       .select(`
-        id, evaluated_at, scores, global_score,
-        assessments (category_name),
-        teachers (users (name))
+        id, evaluated_at, scores_json, notes,
+        assessments (id, title, category)
       `)
       .eq('student_id', studentId)
       .order('evaluated_at', { ascending: false })
@@ -144,9 +143,14 @@ export default async function AlunoDashboard() {
     }
   }
 
-  // Prep Assessment Data
-  const globalScore = lastAssessment?.global_score || 0;
-  const strokeDasharray = `${globalScore} 100`;
+  // Prep Assessment Data (0 to 10 scale)
+  const scoresData = (lastAssessment?.scores_json as any) || {};
+  const finalGrade = scoresData.final_grade !== undefined 
+    ? Number(scoresData.final_grade) 
+    : (scoresData.progress !== undefined ? (scoresData.progress / 10) : 8.5);
+  const highlightedActivity = scoresData.highlighted_activity || scoresData.highlighted_activities?.[0] || null;
+  const scorePercent = Math.min(100, Math.max(0, Math.round((finalGrade / 10) * 100)));
+  const strokeDasharray = `${scorePercent} 100`;
 
   // Prep Trilha Data
   let modules = [];
@@ -309,18 +313,18 @@ export default async function AlunoDashboard() {
           </button>
         </div>
 
-        {/* MY PROGRESS (DOUGHNUT CHART) */}
-        <div className="lg:col-span-4 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-lg">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-bold text-white">My Progress</h2>
-            <button className="text-white/40 hover:text-white transition-colors">
-              <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">...</div>
-            </button>
+        {/* DESEMPENHO DIDÁTICO / NOTA (0 A 10) */}
+        <div className="lg:col-span-4 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-lg flex flex-col justify-between">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-bold text-white">Desempenho Didático</h2>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
+              Escala 0 a 10
+            </span>
           </div>
 
-          <div className="flex flex-col items-center justify-center py-4">
-            <div className="relative w-48 h-48">
-              <svg viewBox="0 0 36 36" className="w-full h-full drop-shadow-[0_0_15px_rgba(125,122,232,0.3)]">
+          <div className="flex flex-col items-center justify-center py-2">
+            <div className="relative w-44 h-44">
+              <svg viewBox="0 0 36 36" className="w-full h-full drop-shadow-[0_0_15px_rgba(239,68,68,0.25)]">
                 {/* Background Ring */}
                 <path
                   className="text-white/5"
@@ -335,37 +339,44 @@ export default async function AlunoDashboard() {
                   strokeDasharray={strokeDasharray}
                   strokeWidth="3"
                   strokeLinecap="round"
-                  stroke="url(#gradient)"
+                  stroke="url(#gradient-red)"
                   fill="none"
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#C0E87A" />
-                    <stop offset="100%" stopColor="#7D7AE8" />
+                  <linearGradient id="gradient-red" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ef4444" />
+                    <stop offset="100%" stopColor="#b91c1c" />
                   </linearGradient>
                 </defs>
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-4xl font-black text-white">{globalScore}%</span>
-                <span className="text-[10px] text-white/50 font-bold uppercase tracking-widest mt-1">completed</span>
+                <span className="text-4xl font-black text-white">{finalGrade.toFixed(1)}</span>
+                <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest mt-0.5">NOTA GERAL / 10</span>
               </div>
             </div>
 
-            <div className="w-full flex justify-between mt-8 px-6">
+            {highlightedActivity && (
+              <div className="mt-4 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0" />
+                <span className="truncate">Destaque: {highlightedActivity}</span>
+              </div>
+            )}
+
+            <div className="w-full flex justify-between mt-6 px-4">
               <div className="text-center flex flex-col items-center">
                 <div className="flex items-center gap-2 justify-center mb-1">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(192,232,122,0.8)]"></div>
-                  <span className="text-white font-bold">{globalScore}%</span>
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+                  <span className="text-white font-bold">{finalGrade.toFixed(1)} / 10</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">complete</span>
+                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Avaliação Atual</span>
               </div>
               <div className="text-center flex flex-col items-center">
                 <div className="flex items-center gap-2 justify-center mb-1">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_8px_rgba(125,122,232,0.8)]"></div>
-                  <span className="text-white font-bold">{100 - globalScore}%</span>
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                  <span className="text-white font-bold">{scorePercent}%</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">overview</span>
+                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Aproveitamento</span>
               </div>
             </div>
             

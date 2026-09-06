@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { ArrowLeft, Clock, Calendar as CalendarIcon, FileText, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar as CalendarIcon, FileText, CheckCircle2, Star } from 'lucide-react';
 import Link from 'next/link';
 import { CreateLessonButton } from './client-button';
 
@@ -68,7 +68,16 @@ export default async function TurmaPage({ params }: { params: Promise<{ id: stri
           <h1 className="text-3xl font-black text-white mb-2">{classData.name}</h1>
           <p className="text-gray-400">Histórico de aulas e registros desta turma.</p>
         </div>
-        <CreateLessonButton classId={classData.id} />
+        <div className="flex items-center gap-3 flex-wrap">
+          <Link
+            href={`/professor/avaliacoes/lancar?classId=${classData.id}`}
+            className="px-5 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-amber-500/10 active:scale-95"
+          >
+            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+            Lançar Avaliações
+          </Link>
+          <CreateLessonButton classId={classData.id} />
+        </div>
       </div>
 
       <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-8 mt-8 shadow-lg">
