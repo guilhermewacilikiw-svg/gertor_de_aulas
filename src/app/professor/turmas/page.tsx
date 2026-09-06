@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Users, Clock, ArrowRight, BookOpen, UserCircle2 } from 'lucide-react';
+import { Users, Clock, ArrowRight, BookOpen, UserCircle2, ChevronRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
@@ -97,49 +97,41 @@ export default function ProfessorTurmasPage() {
             const schedules = cls.class_schedules || [];
 
             return (
-              <Link href={`/professor/turmas/${cls.id}`} key={cls.id} className="group relative block">
-                <div className="h-full bg-[#0f0f0f] border border-white/5 group-hover:border-red-600/50 rounded-3xl p-6 transition-all duration-300 flex flex-col shadow-lg">
-                  
-                  {/* Badge & Course */}
-                  <div className="flex items-start justify-between mb-4">
-                    <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-red-500/20 text-red-500 border border-red-500/30">
-                      {cls.level || 'Todos os Níveis'}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-600/20 transition-colors">
-                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-red-500 transition-colors" />
+              <Link 
+                href={`/professor/turmas/${cls.id}`} 
+                key={cls.id} 
+                className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-all duration-300 group block"
+              >
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
+                      {cls.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-1">{cls.name}</h3>
+                      <p className="text-xs text-gray-500 font-mono mt-1">{courseName}</p>
                     </div>
                   </div>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-red-500/10 text-red-500 border-red-500/20">
+                    {cls.level || 'Geral'}
+                  </span>
+                </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-black text-white mb-1 group-hover:text-red-500 transition-colors">
-                    {cls.name}
-                  </h3>
-                  <div className="flex items-center gap-1.5 text-sm text-gray-400 mb-6 font-medium">
-                    <BookOpen className="w-4 h-4" />
-                    <span>{courseName}</span>
-                  </div>
-
-                  {/* Info Cards */}
-                  <div className="grid grid-cols-2 gap-3 mt-auto">
-                    <div className="bg-black/50 border border-white/5 rounded-xl p-3 flex flex-col gap-1">
-                      <div className="flex items-center gap-1.5 text-gray-500 text-xs font-semibold uppercase tracking-wider">
-                        <UserCircle2 className="w-3.5 h-3.5" />
-                        Alunos
-                      </div>
-                      <span className="text-white font-bold">{studentCount} matrículas</span>
+                <div className="space-y-3 mt-auto">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Horário & Frequência</div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
+                    <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
+                      <Clock className="w-4 h-4 text-red-500" />
                     </div>
-
-                    <div className="bg-black/50 border border-white/5 rounded-xl p-3 flex flex-col gap-1">
-                      <div className="flex items-center gap-1.5 text-gray-500 text-xs font-semibold uppercase tracking-wider">
-                        <Clock className="w-3.5 h-3.5" />
-                        Aulas
-                      </div>
-                      <div className="text-white font-bold text-sm truncate">
+                    <div className="flex-1 overflow-hidden">
+                      <p className="text-sm font-bold text-gray-200 truncate">
                         {schedules.length > 0 ? (
                           schedules.map((s: any) => `${getDayName(s.day_of_week)} ${s.start_time?.substring(0,5)}`).join(', ')
-                        ) : 'Sem horário'}
-                      </div>
+                        ) : 'Sem horário definido'}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">{studentCount} alunos matriculados</p>
                     </div>
+                    <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
                   </div>
                 </div>
               </Link>

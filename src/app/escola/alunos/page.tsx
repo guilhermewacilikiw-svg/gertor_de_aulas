@@ -112,64 +112,41 @@ export default async function AlunosPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {students && students.length > 0 ? (
           (students as any[]).map((student) => (
-            <Link href={`/escola/alunos/${student.id}`} key={student.id} className="group relative bg-[#0a0a0f] rounded-2xl border border-white/5 p-6 overflow-hidden hover:border-red-600/40 hover:shadow-[0_10px_40px_rgba(125,122,232,0.15)] transition-all duration-500 hover:-translate-y-1 block">
-              
-              <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-10 flex flex-col h-full">
-                {/* Header Card */}
-                <div className="flex justify-between items-start mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-red-900 p-[2px] shadow-lg shadow-red-600/20 group-hover:scale-110 transition-transform duration-500">
-                    <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-                      <span className="font-black text-2xl text-white">
-                        {student.name.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
+            <Link 
+              href={`/escola/alunos/${student.id}`} 
+              key={student.id} 
+              className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-all duration-300 group block"
+            >
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
+                    {student.name.charAt(0).toUpperCase()}
                   </div>
-                  
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-                    student.status === 'active' 
-                    ? 'bg-red-500/10 text-red-500 border-red-500/20' 
-                    : 'bg-white/5 text-gray-500 border-white/10'
-                  }`}>
-                    {student.status === 'active' ? 'Ativo' : 'Pendente'}
-                  </span>
-                </div>
-
-                {/* Info */}
-                <div className="flex-1">
-                  <h3 className="font-black text-white text-xl mb-1 group-hover:text-red-500 transition-colors line-clamp-1">{student.name}</h3>
-                  <p className="text-sm text-gray-500 flex items-center gap-2 mb-6">
-                    <Mail className="w-3.5 h-3.5" />
-                    <span className="truncate">{student.email || 'Não informado'}</span>
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className="bg-white/5 rounded-2xl p-3 border border-white/5">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Shield className="w-4 h-4 text-red-500" />
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Nível</span>
-                      </div>
-                      <p className="font-black text-white">{student.level || 1}</p>
-                    </div>
-                    <div className="bg-white/5 rounded-2xl p-3 border border-white/5">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Activity className="w-4 h-4 text-red-500" />
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">XP Global</span>
-                      </div>
-                      <p className="font-black text-white">{student.xp_points || 0}</p>
-                    </div>
+                  <div>
+                    <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-1">{student.name}</h3>
+                    <p className="text-xs text-gray-500 font-mono mt-1">ID: {student.student_code || student.id.substring(0, 8)}</p>
                   </div>
                 </div>
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                  student.status === 'active' 
+                  ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' 
+                  : 'bg-white/5 text-gray-400 border-white/10'
+                }`}>
+                  {student.status === 'active' ? 'Ativo' : 'Pendente'}
+                </span>
+              </div>
 
-                {/* Footer */}
-                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                    Desde {new Date(student.created_at).toLocaleDateString('pt-BR')}
-                  </span>
-                  <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600 transition-all duration-300">
-                    <ChevronRight className="w-4 h-4" />
+              <div className="space-y-3 mt-auto">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Dados de Aprendizado</div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
+                  <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
+                    <Shield className="w-4 h-4 text-red-500" />
                   </div>
+                  <div className="flex-1 overflow-hidden">
+                    <p className="text-sm font-bold text-gray-200 truncate">Nível {student.level || 1} • {student.xp_points || 0} XP</p>
+                    <p className="text-xs text-gray-500 truncate">{student.email || 'Sem e-mail'}</p>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
                 </div>
               </div>
             </Link>

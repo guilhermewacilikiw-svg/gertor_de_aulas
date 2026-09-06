@@ -1,4 +1,4 @@
-import { PlayCircle, BookOpen, Layers, ArrowRight } from 'lucide-react';
+import { PlayCircle, BookOpen, Layers, ArrowRight, ChevronRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { EmptyState } from '@/components/shared/EmptyState';
@@ -73,47 +73,44 @@ export default async function MinhasAulasPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {enrolledCourses.map((course) => (
-            <div
-              key={course.id}
-              className="bg-[#0e0e14] border border-white/10 rounded-2xl overflow-hidden shadow-xl group hover:border-red-600/40 transition-all flex flex-col justify-between"
+            <Link 
+              href={`/aluno/aulas/${course.id}`} 
+              key={course.id} 
+              className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-all duration-300 group block"
             >
-              {/* Header Banner */}
-              <div className="h-32 bg-gradient-to-br from-neutral-900 via-red-950 to-red-900 p-5 relative flex flex-col justify-between overflow-hidden">
-                <PlayCircle className="w-24 h-24 text-white/10 absolute -right-4 -bottom-4 rotate-12 group-hover:scale-110 transition-transform duration-500" />
-                
-                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/40 text-white backdrop-blur-md border border-white/10">
-                  {course.category} • {course.level}
-                </span>
-
-                <h3 className="text-xl font-black text-white relative z-10 drop-shadow-md line-clamp-1">
-                  {course.name}
-                </h3>
-              </div>
-
-              <div className="p-6 space-y-6 flex-1 flex flex-col justify-between">
-                <p className="text-xs text-gray-300 line-clamp-2 leading-relaxed">
-                  {course.description}
-                </p>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs p-3 rounded-2xl bg-white/5 border border-white/5">
-                    <span className="text-gray-400 flex items-center gap-1.5 font-medium">
-                      <Layers className="w-4 h-4 text-white" /> Conteúdo Digital
-                    </span>
-                    <span className="font-bold text-white">{course.modulesCount} Módulos</span>
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 shrink-0 group-hover:scale-105 transition-transform">
+                    <PlayCircle className="w-6 h-6 text-red-500" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-1">{course.name}</h3>
+                    <p className="text-xs text-gray-500 font-mono mt-1">{course.category} • {course.level}</p>
                   </div>
                 </div>
-
-                <Link
-                  href={`/aluno/aulas/${course.id}`}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-black text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 active:scale-95"
-                >
-                  <PlayCircle className="w-4 h-4 fill-white" />
-                  <span>ACESSAR MATERIAL</span>
-                  <ArrowRight className="w-4 h-4 ml-auto" />
-                </Link>
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-red-500/10 text-red-500 border-red-500/20">
+                  {course.level}
+                </span>
               </div>
-            </div>
+
+              <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-6">
+                {course.description}
+              </p>
+
+              <div className="space-y-3 mt-auto">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Acesso ao Material</div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
+                  <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
+                    <Layers className="w-4 h-4 text-red-500" />
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <p className="text-sm font-bold text-gray-200 truncate">{course.modulesCount} Módulos Disponíveis</p>
+                    <p className="text-xs text-gray-500 truncate">Vídeos, partituras e tarefas</p>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       )}

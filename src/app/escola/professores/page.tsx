@@ -101,57 +101,41 @@ export default async function ProfessoresPage() {
             const userName = teacher.users?.name || 'Professor Sem Nome';
             const userEmail = teacher.users?.email || 'Sem email';
             return (
-              <Link href={`/escola/professores/${teacher.id}`} key={teacher.id} className="group relative bg-[#0a0a0f] rounded-2xl border border-white/5 p-6 overflow-hidden hover:border-white/40 hover:shadow-[0_10px_40px_rgba(229,232,122,0.15)] transition-all duration-500 hover:-translate-y-1 block">
-                
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                <div className="relative z-10 flex flex-col h-full">
-                  {/* Header Card */}
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-white p-[2px] shadow-[0_0_20px_rgba(229,232,122,0.3)] group-hover:scale-110 transition-transform duration-500">
-                      <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-                        <span className="font-black text-2xl text-transparent bg-clip-text bg-gradient-to-br from-white to-white">
-                          {userName.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
+              <Link 
+                href={`/escola/professores/${teacher.id}`} 
+                key={teacher.id} 
+                className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-all duration-300 group block"
+              >
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
+                      {userName.charAt(0).toUpperCase()}
                     </div>
-                    
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border bg-white/10 text-white border-white/20">
-                      Ativo
-                    </span>
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex-1">
-                    <h3 className="font-black text-white text-xl mb-1 group-hover:text-white transition-colors line-clamp-1">{userName}</h3>
-                    <p className="text-sm text-gray-500 flex items-center gap-2 mb-6">
-                      <Mail className="w-3.5 h-3.5" />
-                      <span className="truncate">{userEmail}</span>
-                    </p>
-
-                    <div className="bg-white/5 rounded-2xl p-4 border border-white/5 mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center shrink-0">
-                        <BookOpen className="w-5 h-5 text-red-700" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Especialidade</span>
-                        <p className="font-bold text-white text-sm truncate">{teacher.specialty || 'Não definida'}</p>
-                      </div>
+                    <div>
+                      <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-1">{userName}</h3>
+                      <p className="text-xs text-gray-500 font-mono mt-1">Especialidade: {teacher.specialty || 'Geral'}</p>
                     </div>
                   </div>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-emerald-500/15 text-emerald-400 border-emerald-500/30">
+                    Docente
+                  </span>
+                </div>
 
-                  {/* Footer */}
-                  <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                      Desde {new Date(teacher.created_at).toLocaleDateString('pt-BR')}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 group-hover:bg-white group-hover:text-white group-hover:border-white transition-all duration-300">
-                      <ChevronRight className="w-4 h-4" />
+                <div className="space-y-3 mt-auto">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Contato & Disciplina</div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
+                    <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
+                      <BookOpen className="w-4 h-4 text-red-500" />
                     </div>
+                    <div className="flex-1 overflow-hidden">
+                      <p className="text-sm font-bold text-gray-200 truncate">{teacher.specialty || 'Música Geral'}</p>
+                      <p className="text-xs text-gray-500 truncate">{userEmail}</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
                   </div>
                 </div>
               </Link>
-            )
+            );
           })
         ) : (
           <div className="col-span-full w-full flex flex-col items-center justify-center py-24 bg-gradient-to-b from-white/5 to-transparent rounded-2xl border border-white/5 border-dashed">
