@@ -111,16 +111,9 @@ export default async function ProfessorCalendarioPage() {
 
   const formattedSchedules = (schedulesData || []).map(s => {
     const className = (s.classes as any)?.name || 'Turma';
-    const directParticipants = (s.schedule_participants || [])
+    const participants = (s.schedule_participants || [])
       .map((p: any) => p.students)
       .filter(Boolean);
-
-    const enrolledStudents = ((s.classes as any)?.enrollments || [])
-      .filter((e: any) => e.status !== 'inactive' && e.status !== 'cancelled')
-      .map((e: any) => e.students)
-      .filter(Boolean);
-
-    const participants = directParticipants.length > 0 ? directParticipants : enrolledStudents;
 
     return {
       id: s.id,

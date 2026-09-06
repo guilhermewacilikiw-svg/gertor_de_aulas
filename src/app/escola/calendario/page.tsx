@@ -117,17 +117,10 @@ export default async function EscolaCalendarioPage() {
     const className = (s.classes as any)?.name || 'Turma Indefinida';
     const teacherName = (s.classes as any)?.teachers?.users?.name || 'Prof. Indefinido';
     
-    const directParticipants = (s.schedule_participants || [])
+    // Alunos especificamente delimitados para este dia e horário da semana
+    const participants = (s.schedule_participants || [])
       .map((p: any) => p.students)
       .filter(Boolean);
-
-    const enrolledStudents = ((s.classes as any)?.enrollments || [])
-      .filter((e: any) => e.status !== 'inactive' && e.status !== 'cancelled')
-      .map((e: any) => e.students)
-      .filter(Boolean);
-
-    // Fallback: se não tiver participantes específicos alocados no horário, puxa os alunos matriculados na turma
-    const participants = directParticipants.length > 0 ? directParticipants : enrolledStudents;
     
     return {
       id: s.id,

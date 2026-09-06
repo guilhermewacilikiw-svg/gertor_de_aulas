@@ -112,28 +112,37 @@ export async function assignStudentToScheduleAction(scheduleId: string, studentI
 export async function assignStudentsToScheduleAction(scheduleId: string, studentIds: string[], classId: string) {
   const supabase = await createClient();
 
-  if (!studentIds || studentIds.length === 0) {
-    return { success: true };
+  // 1. Remover vínculos anteriores deste horário para garantir sincronização exata
+  const { error: delError } = await supabase
+    .from('schedule_participants')
+    .delete()
+    .eq('schedule_id', scheduleId);
+
+  if (delError) {
+    console.error('Error clearing schedule participants:', delError);
   }
 
-  const recordsToInsert = studentIds.map(studentId => ({
-    schedule_id: scheduleId,
-    student_id: studentId
-  }));
+  // 2. Inserir os alunos delimitados para este horário específico
+  if (studentIds && studentIds.length > 0) {
+    const recordsToInsert = studentIds.map(studentId => ({
+      schedule_id: scheduleId,
+      student_id: studentId
+    }));
 
-  // Insert or ignore if already linked
-  const { error } = await supabase
-    .from('schedule_participants')
-    .upsert(recordsToInsert, { onConflict: 'schedule_id,student_id', ignoreDuplicates: true });
+    const { error: insError } = await supabase
+      .from('schedule_participants')
+      .insert(recordsToInsert);
 
-  if (error) {
-    console.error('Error assigning students to schedule:', error);
-    throw new Error('Falha ao vincular alunos ao horário: ' + error.message);
+    if (insError) {
+      console.error('Error assigning students to schedule:', insError);
+      throw new Error('Falha ao vincular alunos ao horário: ' + insError.message);
+    }
   }
 
   revalidatePath(`/escola/turmas/${classId}`);
   revalidatePath(`/escola/calendario`);
   revalidatePath(`/professor/calendario`);
+  revalidatePath('/escola', 'layout');
   return { success: true };
 }
 
