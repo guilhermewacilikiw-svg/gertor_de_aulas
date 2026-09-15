@@ -144,51 +144,11 @@ export async function checkSchoolLimit(
   schoolId: string, 
   resource: 'students' | 'teachers'
 ): Promise<{ allowed: boolean; error?: string; current: number; max: number; planName: string }> {
-  const info = await getSchoolPlanAndUsage(schoolId);
-
-  if (!info) {
-    // Se não encontrou os dados da escola, permite por precaução para não quebrar a aplicação
-    return { allowed: true, current: 0, max: 9999, planName: 'Padrão' };
-  }
-
-  if (!info.isSubscriptionValid) {
-    return {
-      allowed: false,
-      error: 'O período de testes ou a assinatura da sua escola expirou. Regularize seu plano para continuar cadastrando novos registros.',
-      current: resource === 'students' ? info.usage.students : info.usage.teachers,
-      max: resource === 'students' ? info.limits.maxStudents : info.limits.maxTeachers,
-      planName: info.plan?.name || 'Wackoda'
-    };
-  }
-
-  if (resource === 'students') {
-    if (info.limits.maxStudents !== -1 && info.usage.students >= info.limits.maxStudents) {
-      return {
-        allowed: false,
-        error: `Você atingiu o limite de ${info.limits.maxStudents} alunos do seu plano ${info.plan?.name}. Faça upgrade para continuar expandindo sua escola.`,
-        current: info.usage.students,
-        max: info.limits.maxStudents,
-        planName: info.plan?.name || 'Solo'
-      };
-    }
-  }
-
-  if (resource === 'teachers') {
-    if (info.limits.maxTeachers !== -1 && info.usage.teachers >= info.limits.maxTeachers) {
-      return {
-        allowed: false,
-        error: `Você atingiu o limite de ${info.limits.maxTeachers} professores do seu plano ${info.plan?.name}. Faça upgrade para adicionar mais docentes.`,
-        current: info.usage.teachers,
-        max: info.limits.maxTeachers,
-        planName: info.plan?.name || 'Solo'
-      };
-    }
-  }
-
+  // Modo de teste: Acesso ilimitado e sem restrições de planos ou pagamento
   return {
     allowed: true,
-    current: resource === 'students' ? info.usage.students : info.usage.teachers,
-    max: resource === 'students' ? info.limits.maxStudents : info.limits.maxTeachers,
-    planName: info.plan?.name || 'Wackoda'
+    current: 0,
+    max: 99999,
+    planName: 'Ilimitado (Teste)'
   };
 }

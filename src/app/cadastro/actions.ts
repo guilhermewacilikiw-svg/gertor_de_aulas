@@ -79,13 +79,13 @@ export async function saasRegisterAction(formData: FormData) {
       .from('schools')
       .update({
         plan_id: planIdToAssign,
-        subscription_status: 'trialing',
-        trial_ends_at: trialEnd.toISOString(),
-        current_period_end: trialEnd.toISOString()
+        subscription_status: 'active',
+        trial_ends_at: null,
+        current_period_end: null
       })
       .eq('id', schoolId);
   } catch (err) {
-    console.warn('Erro não-bloqueante ao setar trial e plano:', err);
+    console.warn('Erro não-bloqueante ao ativar escola:', err);
   }
 
   // 4. Sign in immediately so session cookies are stored

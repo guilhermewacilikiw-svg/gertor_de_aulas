@@ -24,7 +24,7 @@ export function Footer() {
               href="/cadastro" 
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-black bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:border-red-600/50"
             >
-              Criar Conta Grátis
+              Criar Conta
               <ArrowRight className="w-4 h-4 text-red-500" />
             </Link>
           </div>
@@ -33,7 +33,6 @@ export function Footer() {
             <h4 className="text-white font-black uppercase tracking-widest text-xs mb-6 text-red-500">Produto</h4>
             <ul className="space-y-4 text-sm font-medium text-gray-400">
               <li><Link href="/#recursos" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Recursos</Link></li>
-              <li><Link href="/planos" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Preços</Link></li>
               <li><Link href="/login" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Entrar</Link></li>
             </ul>
           </div>

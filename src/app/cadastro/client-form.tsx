@@ -1,23 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Building2, User, Mail, Lock, Loader2, CreditCard, Phone, ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Building2, User, Mail, Lock, Loader2, Phone, ArrowRight, ShieldCheck } from 'lucide-react';
 import { saasRegisterAction } from './actions';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export function SaaSOnboardingForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const planParam = searchParams.get('plan');
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [accountType, setAccountType] = useState<'school' | 'solo'>(planParam === 'solo' ? 'solo' : 'school');
-  const [selectedPlan, setSelectedPlan] = useState<'solo' | 'stage' | 'festival'>(
-    planParam === 'solo' ? 'solo' : planParam === 'festival' ? 'festival' : 'stage'
-  );
+  const [accountType, setAccountType] = useState<'school' | 'solo'>('school');
   
   const [document, setDocument] = useState('');
   const [phone, setPhone] = useState('');
@@ -34,7 +29,7 @@ export function SaaSOnboardingForm() {
       value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     } else {
       // CNPJ Mask
-      value = value.substring(0, 14); // Limit 14 numbers
+      value = value.substring(0, 14);
       value = value.replace(/^(\d{2})(\d)/, '$1.$2');
       value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
       value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
@@ -79,9 +74,9 @@ export function SaaSOnboardingForm() {
     setLoading(true);
     setError(null);
     
-    formData.append('document', document.replace(/\D/g, '')); // Send numbers only
+    formData.append('document', document.replace(/\D/g, ''));
     formData.append('phone', phone.replace(/\D/g, ''));
-    formData.append('planCode', selectedPlan);
+    formData.append('planCode', 'stage');
     
     const res = await saasRegisterAction(formData);
     
@@ -100,14 +95,11 @@ export function SaaSOnboardingForm() {
       <div className="flex bg-black/40 border border-white/10 p-1 mb-6 cyber-clip">
         <button
           type="button"
-          onClick={() => {
-            setAccountType('school');
-            if (selectedPlan === 'solo') setSelectedPlan('stage');
-          }}
+          onClick={() => setAccountType('school')}
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
             accountType === 'school' 
-              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.3)]" 
+              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(239,68,68,0.3)]" 
               : "text-white/50 hover:text-white hover:bg-white/5"
           )}
         >
@@ -115,14 +107,11 @@ export function SaaSOnboardingForm() {
         </button>
         <button
           type="button"
-          onClick={() => {
-            setAccountType('solo');
-            setSelectedPlan('solo');
-          }}
+          onClick={() => setAccountType('solo')}
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
             accountType === 'solo' 
-              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.3)]" 
+              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(239,68,68,0.3)]" 
               : "text-white/50 hover:text-white hover:bg-white/5"
           )}
         >
@@ -135,83 +124,21 @@ export function SaaSOnboardingForm() {
           <h2 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
             {accountType === 'school' ? 'Crie a conta da sua Escola' : 'Sua Conta de Professor'}
           </h2>
-          <p className="text-red-500 text-xs font-mono uppercase tracking-widest">
-            14 DIAS DE ACESSO GRÁTIS • SEM CARTÃO
+          <p className="text-red-500 text-xs font-mono uppercase tracking-widest flex items-center justify-center gap-1">
+            <ShieldCheck className="w-3.5 h-3.5" /> ACESSO TOTAL LIBERADO
           </p>
         </div>
 
-        {/* Plan Selection Radios */}
-        <div className="mb-6 space-y-2">
-          <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1 block">
-            Escolha o Plano do seu Teste Grátis:
-          </label>
-          <div className="grid grid-cols-3 gap-2.5">
-            {/* Solo */}
-            <button
-              type="button"
-              onClick={() => setSelectedPlan('solo')}
-              className={cn(
-                "p-3 text-left transition-all border relative flex flex-col justify-between cyber-clip-btn",
-                selectedPlan === 'solo'
-                  ? "bg-red-950/60 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]"
-                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
-              )}
-            >
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider block">Solo</span>
-                <span className="text-xs font-black text-white">R$ 59/mês</span>
-              </div>
-              <span className="text-[9px] text-gray-400 block mt-1">Até 30 alunos</span>
-            </button>
-
-            {/* Stage */}
-            <button
-              type="button"
-              onClick={() => setSelectedPlan('stage')}
-              className={cn(
-                "p-3 text-left transition-all border relative flex flex-col justify-between cyber-clip-btn",
-                selectedPlan === 'stage'
-                  ? "bg-red-950/60 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]"
-                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
-              )}
-            >
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider block text-red-400">Stage Pro</span>
-                <span className="text-xs font-black text-white">R$ 169/mês</span>
-              </div>
-              <span className="text-[9px] text-gray-300 block mt-1">Até 150 alunos</span>
-            </button>
-
-            {/* Festival */}
-            <button
-              type="button"
-              onClick={() => setSelectedPlan('festival')}
-              className={cn(
-                "p-3 text-left transition-all border relative flex flex-col justify-between cyber-clip-btn",
-                selectedPlan === 'festival'
-                  ? "bg-red-950/60 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]"
-                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
-              )}
-            >
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider block">Festival</span>
-                <span className="text-xs font-black text-white">R$ 349/mês</span>
-              </div>
-              <span className="text-[9px] text-gray-400 block mt-1">Ilimitado</span>
-            </button>
+        {error && (
+          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/50 rounded-none cyber-clip-btn text-red-300 text-xs font-bold leading-relaxed animate-in fade-in">
+            {error}
           </div>
-        </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {error && (
-            <div className="p-4 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-sm font-bold shadow-md">
-              {error}
-            </div>
-          )}
-
           <div className="space-y-1.5">
             <label className="text-sm font-bold text-white/80 ml-1">
-              {accountType === 'school' ? 'Nome da Escola (Ou Razão Social)' : 'Como você chama suas aulas? (Ex: Aulas do João)'}
+              {accountType === 'school' ? 'Nome da Escola / Instituição' : 'Nome do Estúdio / Aulas'}
             </label>
             <div className="relative">
               <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
@@ -227,15 +154,14 @@ export function SaaSOnboardingForm() {
 
           <div className="space-y-1.5">
             <label className="text-sm font-bold text-white/80 ml-1">
-              {accountType === 'school' ? 'CNPJ' : 'CPF ou CNPJ'}
+              {accountType === 'school' ? 'CNPJ (opcional)' : 'CPF ou CNPJ (opcional)'}
             </label>
             <div className="relative">
-              <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
               <input
                 type="text"
                 value={document}
                 onChange={handleDocumentChange}
-                required
                 className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                 placeholder="00.000.000/0001-00"
               />
@@ -267,7 +193,6 @@ export function SaaSOnboardingForm() {
                   type="text"
                   value={phone}
                   onChange={handlePhoneChange}
-                  required
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                   placeholder="(11) 90000-0000"
                 />
@@ -285,7 +210,7 @@ export function SaaSOnboardingForm() {
                   name="adminEmail"
                   required
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="contato@empresa.com"
+                  placeholder="gestor@escola.com"
                 />
               </div>
             </div>
@@ -299,7 +224,7 @@ export function SaaSOnboardingForm() {
                   name="confirmAdminEmail"
                   required
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="contato@empresa.com"
+                  placeholder="gestor@escola.com"
                 />
               </div>
             </div>
@@ -307,7 +232,7 @@ export function SaaSOnboardingForm() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="space-y-1.5">
-              <label className="text-sm font-bold text-white/80 ml-1">Crie uma Senha Forte</label>
+              <label className="text-sm font-bold text-white/80 ml-1">Senha Segura</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                 <input
@@ -316,7 +241,7 @@ export function SaaSOnboardingForm() {
                   required
                   minLength={6}
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="••••••••"
+                  placeholder="Mínimo 6 caracteres"
                 />
               </div>
             </div>
@@ -331,41 +256,63 @@ export function SaaSOnboardingForm() {
                   required
                   minLength={6}
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="••••••••"
+                  placeholder="Mínimo 6 caracteres"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 mt-6">
-            <input
-              type="checkbox"
-              id="terms"
-              checked={acceptedTerms}
-              onChange={(e) => setAcceptedTerms(e.target.checked)}
-              className="mt-1 w-4 h-4 rounded-none border-white/20 bg-black/50 text-red-500 focus:ring-red-500/50 accent-red-500"
-            />
-            <label htmlFor="terms" className="text-xs font-mono text-white/60 leading-relaxed uppercase tracking-widest mt-1">
-              ACEITO OS <Link href="/legal/termos" target="_blank" className="text-red-500 hover:underline font-bold">TERMOS DE USO</Link> E <Link href="/legal/privacidade" target="_blank" className="text-red-500 hover:underline font-bold">PRIVACIDADE</Link>.
+          {/* Termos de Uso */}
+          <div className="pt-2">
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className="mt-1 rounded bg-black/40 border-white/20 text-red-600 focus:ring-red-500"
+              />
+              <span className="text-xs text-gray-400 leading-relaxed">
+                Li e concordo com os{' '}
+                <Link href="/legal/termos" target="_blank" className="text-white hover:text-red-400 underline font-bold">
+                  Termos de Uso
+                </Link>{' '}
+                e a{' '}
+                <Link href="/legal/privacidade" target="_blank" className="text-white hover:text-red-400 underline font-bold">
+                  Política de Privacidade
+                </Link>.
+              </span>
             </label>
           </div>
 
-          <button 
+          {/* Submit Button */}
+          <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 mt-4 bg-red-500 text-black font-black text-sm uppercase tracking-widest hover:brightness-110 shadow-[0_0_20px_rgba(192,232,122,0.3)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 cyber-clip-btn"
+            className="w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center justify-center gap-2 cyber-clip-btn disabled:opacity-50 disabled:cursor-not-allowed mt-4"
           >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+            {loading ? (
               <>
-                Criar Conta <ArrowRight className="w-5 h-5" />
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span>Criando Conta...</span>
+              </>
+            ) : (
+              <>
+                <span>CRIAR CONTA & ACESSAR</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        <p className="text-center text-xs font-mono uppercase tracking-widest text-white/50 mt-8">
-          JÁ POSSUI CADASTRO? <Link href="/login" className="text-red-500 font-bold hover:text-white transition-colors">ACESSAR SISTEMA</Link>
-        </p>
+        <div className="mt-8 text-center border-t border-white/5 pt-6">
+          <p className="text-xs text-gray-400">
+            Já possui uma conta ativa?{' '}
+            <Link href="/login" className="text-white hover:text-red-400 font-bold ml-1 transition-colors">
+              Fazer Login
+            </Link>
+          </p>
+        </div>
+
       </div>
     </div>
   );

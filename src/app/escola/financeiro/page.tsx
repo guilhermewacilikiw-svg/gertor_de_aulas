@@ -67,9 +67,6 @@ export default async function EscolaFinanceiroPage() {
             </div>
             
             <div className="flex gap-4 flex-col sm:flex-row">
-              <button className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs transition-all shadow-lg hover:shadow-xl flex items-center justify-center">
-                Ver Planos & Limites
-              </button>
               <CreateInvoiceModal students={studentList} />
             </div>
           </div>

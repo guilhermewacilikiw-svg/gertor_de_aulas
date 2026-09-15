@@ -44,20 +44,16 @@ export default async function EscolaLayout({
     { label: 'Cursos', href: '/escola/cursos', icon: <BookOpen className="w-4 h-4" /> },
     { label: 'Conteúdos', href: '/escola/conteudos', icon: <BookOpen className="w-4 h-4" /> },
     { label: 'Financeiro', href: '/escola/financeiro', icon: <CreditCard className="w-4 h-4" /> },
-    { label: 'Assinatura SaaS', href: '/escola/assinatura', icon: <Sparkles className="w-4 h-4 text-red-400" /> },
   ];
 
   return (
-    <>
-      <TrialBanner subscription={subInfo} />
-      <DashboardLayout
-        portalName="Portal da Escola"
-        userName={adminName}
-        links={links}
-        headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
-      >
-        {children}
-      </DashboardLayout>
-    </>
+    <DashboardLayout
+      portalName="Portal da Escola"
+      userName={adminName}
+      links={links}
+      headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
+    >
+      {children}
+    </DashboardLayout>
   );
 }

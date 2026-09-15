@@ -51,9 +51,9 @@ export default function TermosDeUso() {
             A Wakoda se esforça para manter a plataforma online com 99.9% de uptime. No entanto, não nos responsabilizamos por perdas de dados, lucros cessantes ou interrupções temporárias causadas por manutenções ou fatores externos (força maior).
           </p>
 
-          <h2 className="text-2xl font-bold mt-12 mb-4">6. Cancelamento e Modificações</h2>
+          <h2 className="text-2xl font-bold mt-12 mb-4">6. Encerramento e Modificações</h2>
           <p className="mb-6 leading-relaxed">
-            As Escolas assinantes podem cancelar seus planos a qualquer momento, respeitando as condições de faturamento do plano escolhido. A Wakoda reserva-se o direito de modificar, suspender ou descontinuar qualquer recurso da plataforma, notificando os usuários com antecedência razoável.
+            As Escolas e Professores podem encerrar o uso da plataforma a qualquer momento. A Wakoda reserva-se o direito de modificar, suspender ou aprimorar os recursos da plataforma, notificando os usuários com antecedência razoável.
           </p>
 
           <h2 className="text-2xl font-bold mt-12 mb-4">7. Contato</h2>

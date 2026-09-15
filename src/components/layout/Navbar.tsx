@@ -22,7 +22,6 @@ export function Navbar() {
           <Link href="/" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Início</Link>
           <Link href="/#recursos" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Recursos</Link>
           <Link href="/#beneficios" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Benefícios</Link>
-          <Link href="/#planos" className="text-sm font-bold text-gray-400 hover:text-white hover:-translate-y-0.5 transition-all">Planos</Link>
         </div>
         
         <div className="flex items-center gap-3">
@@ -30,7 +29,7 @@ export function Navbar() {
             Entrar
           </Link>
           <Link href="/cadastro" className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-sm font-black transition-all shadow-lg shadow-red-600/20 hover:shadow-xl hover:shadow-red-600/40 hidden sm:block">
-            Criar Conta Grátis
+            Criar Conta
           </Link>
           <button 
             className="md:hidden p-2 text-white/60 hover:text-white ml-2"
@@ -47,11 +46,10 @@ export function Navbar() {
           <div className="bg-[#12121A] border border-white/10 rounded-2xl p-4 flex flex-col gap-4 shadow-2xl">
             <Link href="/" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Início</Link>
             <Link href="/#recursos" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Recursos</Link>
-            <Link href="/#beneficios" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Benefícios</Link>
-            <Link href="/#planos" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2 border-b border-white/10 pb-4">Planos</Link>
+            <Link href="/#beneficios" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2 border-b border-white/10 pb-4">Benefícios</Link>
             <Link href="/login" onClick={() => setIsOpen(false)} className="text-sm font-bold text-gray-300 hover:text-white p-2">Entrar na minha conta</Link>
             <Link href="/cadastro" onClick={() => setIsOpen(false)} className="w-full text-center py-3 rounded-xl bg-red-600 text-white text-sm font-black mt-2">
-              Criar Conta Grátis
+              Criar Conta
             </Link>
           </div>
         </div>
