@@ -34,7 +34,7 @@ export function Footer() {
             <ul className="space-y-4 text-sm font-medium text-gray-400">
               <li><Link href="/#recursos" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Recursos</Link></li>
               <li><Link href="/planos" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Preços</Link></li>
-              <li><Link href="/login" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Novidades</Link></li>
+              <li><Link href="/login" className="hover:text-white transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-red-600 opacity-0 transition-opacity"></span>Entrar</Link></li>
             </ul>
           </div>
 
