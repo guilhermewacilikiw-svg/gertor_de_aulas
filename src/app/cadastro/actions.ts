@@ -90,18 +90,22 @@ export async function saasRegisterAction(formData: FormData) {
   }
 
   // 4. Sign in immediately so session cookies are stored
-  const { error: signInError } = await supabase.auth.signInWithPassword({
+  const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
     email: adminEmail,
     password: adminPassword
   });
 
-  if (signInError || !authData.session) {
-    return {
-      success: true,
-      needsConfirmation: true,
-      email: adminEmail,
-      message: 'Cadastro realizado com sucesso! Enviamos um link de confirmação para o seu e-mail.'
-    };
+  // Se o login falhou porque o e-mail precisa de confirmação
+  if (signInError) {
+    if (signInError.message.toLowerCase().includes('confirm')) {
+      return {
+        success: true,
+        needsConfirmation: true,
+        email: adminEmail,
+        message: 'Cadastro realizado com sucesso! Enviamos um link de confirmação para o seu e-mail.'
+      };
+    }
+    return { success: false, error: translateSupabaseError(signInError.message) };
   }
 
   return { success: true, redirect: '/escola/dashboard' };

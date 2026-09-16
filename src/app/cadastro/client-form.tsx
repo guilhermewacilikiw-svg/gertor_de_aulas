@@ -294,7 +294,7 @@ export function SaaSOnboardingForm() {
                   required
                   minLength={6}
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Ex: Senha@123 (maiúscula, número, símbolo)"
                 />
               </div>
             </div>
@@ -309,7 +309,7 @@ export function SaaSOnboardingForm() {
                   required
                   minLength={6}
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Repita sua senha"
                 />
               </div>
             </div>
