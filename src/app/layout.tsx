@@ -20,8 +20,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Wackoda Experience",
-  description: "A experiência completa da sua escola, em um só lugar.",
+  title: "Wakoda - Gestão Inteligente para Escolas de Música",
+  description: "A plataforma definitiva que conecta aulas presenciais, ensino EAD e engajamento para escolas de música modernas.",
+  icons: {
+    icon: [
+      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' }
+    ],
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({
