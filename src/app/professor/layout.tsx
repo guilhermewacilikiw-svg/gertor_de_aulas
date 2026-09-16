@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { LayoutDashboard, Users, Calendar, BookOpen, Star } from 'lucide-react';
-import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
 
 export default async function ProfessorLayout({
@@ -45,7 +44,6 @@ export default async function ProfessorLayout({
       portalName="Portal do Professor"
       userName={teacherName}
       links={links}
-      headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
     >
       {children}
     </DashboardLayout>

@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { LayoutDashboard, GraduationCap, Calendar, BarChart, CreditCard } from 'lucide-react';
-import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
 
 export default async function AlunoLayout({
@@ -44,7 +43,6 @@ export default async function AlunoLayout({
       portalName="Portal do Aluno"
       userName={userName}
       links={links}
-      headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
     >
       {children}
     </DashboardLayout>

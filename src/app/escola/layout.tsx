@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 import { LayoutDashboard, Users, CreditCard, BookOpen, Calendar } from 'lucide-react';
-import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
 import { getAuthenticatedSchool } from '@/lib/auth';
 
@@ -32,7 +31,6 @@ export default async function EscolaLayout({
       portalName="Portal da Escola"
       userName={adminName}
       links={links}
-      headerActions={<NotificationCenter userId={publicUserId} schoolId={schoolId} />}
     >
       {children}
     </DashboardLayout>

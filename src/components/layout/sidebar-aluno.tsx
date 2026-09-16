@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Home, Calendar, PlayCircle, BookOpen, User, LineChart, DollarSign } from 'lucide-react';
-import { NotificationBell } from '@/components/ui/notification-bell';
 
 export function AlunoSidebar() {
   return (
@@ -15,7 +14,6 @@ export function AlunoSidebar() {
             <span className="text-[10px] text-primary-foreground/70 uppercase tracking-wider">Experience</span>
           </div>
         </div>
-        <NotificationBell />
       </div>
 
       <div className="px-6 pb-4">
