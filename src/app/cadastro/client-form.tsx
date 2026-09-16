@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Building2, User, Mail, Lock, Loader2, Phone, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Building2, User, Mail, Lock, Loader2, Phone, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { saasRegisterAction } from './actions';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -12,6 +12,7 @@ export function SaaSOnboardingForm() {
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [confirmationSentEmail, setConfirmationSentEmail] = useState<string | null>(null);
   const [accountType, setAccountType] = useState<'school' | 'solo'>('school');
   
   const [document, setDocument] = useState('');
@@ -80,13 +81,65 @@ export function SaaSOnboardingForm() {
     
     const res = await saasRegisterAction(formData);
     
-    if (res.success && res.redirect) {
-      router.push(res.redirect);
+    if (res.success) {
+      if ((res as any).needsConfirmation) {
+        setConfirmationSentEmail((res as any).email || email);
+        setLoading(false);
+      } else if (res.redirect) {
+        router.push(res.redirect);
+      }
     } else {
       setError(res.error || 'Erro desconhecido');
       setLoading(false);
     }
   };
+
+  if (confirmationSentEmail) {
+    return (
+      <div className="w-full max-w-xl mx-auto">
+        <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip text-center border border-red-500/30">
+          <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-8 h-8 text-red-500 animate-pulse" />
+          </div>
+
+          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[11px] font-bold uppercase tracking-widest mb-4">
+            🎸 Quase lá! Backstage liberando...
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight mb-4">
+            Confirme seu E-mail
+          </h2>
+
+          <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+            Enviamos um e-mail de confirmação com visual exclusivo para:
+            <br />
+            <strong className="text-white font-mono bg-white/5 px-2 py-1 rounded mt-2 inline-block border border-white/10">
+              {confirmationSentEmail}
+            </strong>
+          </p>
+
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-left mb-8 text-xs text-gray-400 space-y-2">
+            <p className="flex items-center gap-2 text-white font-bold">
+              <span className="w-2 h-2 rounded-full bg-red-500"></span> Próximos passos:
+            </p>
+            <p>1. Abra sua caixa de entrada (verifique também a pasta de <em>Spam</em> ou <em>Promoções</em>).</p>
+            <p>2. Clique no botão vermelho <strong>Confirmar Meu Acesso</strong>.</p>
+            <p>3. Seu painel será liberado automaticamente!</p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-500 hover:bg-red-600 text-black font-black uppercase text-xs tracking-wider cyber-clip-btn transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+            >
+              Ir para o Login
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-xl mx-auto">

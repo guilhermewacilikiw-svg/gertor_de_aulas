@@ -24,7 +24,8 @@ export async function saasRegisterAction(formData: FormData) {
     options: {
       data: {
         name: adminName
-      }
+      },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://wakoda.com.br'}/escola/dashboard`
     }
   });
 
@@ -89,10 +90,19 @@ export async function saasRegisterAction(formData: FormData) {
   }
 
   // 4. Sign in immediately so session cookies are stored
-  await supabase.auth.signInWithPassword({
+  const { error: signInError } = await supabase.auth.signInWithPassword({
     email: adminEmail,
     password: adminPassword
   });
+
+  if (signInError || !authData.session) {
+    return {
+      success: true,
+      needsConfirmation: true,
+      email: adminEmail,
+      message: 'Cadastro realizado com sucesso! Enviamos um link de confirmação para o seu e-mail.'
+    };
+  }
 
   return { success: true, redirect: '/escola/dashboard' };
 }
