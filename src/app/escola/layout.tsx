@@ -1,39 +1,20 @@
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
-import { LayoutDashboard, Users, CreditCard, BookOpen, Calendar, Sparkles } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, BookOpen, Calendar } from 'lucide-react';
 import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
-import { TrialBanner } from '@/components/escola/TrialBanner';
-import { getSchoolPlanAndUsage } from '@/lib/saas/limits';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export default async function EscolaLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let publicUserId: string | undefined;
-  let schoolId: string | undefined;
-  let adminName = 'Administrador';
-
-  if (user) {
-    const { data: publicUser } = await supabase
-      .from('users')
-      .select('id, name, school_memberships(school_id)')
-      .eq('auth_user_id', user.id)
-      .maybeSingle();
-
-    if (publicUser) {
-      publicUserId = publicUser.id;
-      adminName = publicUser.name;
-      const memberships: any = publicUser.school_memberships;
-      schoolId = Array.isArray(memberships) ? memberships[0]?.school_id : memberships?.school_id;
-    }
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) {
+    redirect('/login');
   }
 
-  const subInfo = schoolId ? await getSchoolPlanAndUsage(schoolId) : null;
+  const { publicUserId, schoolId, adminName } = authContext;
 
   const links: DashboardLink[] = [
     { label: 'Painel', href: '/escola/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },

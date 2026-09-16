@@ -1,33 +1,17 @@
 import { createClient } from '@/lib/supabase/server';
 import { Search, Plus, BookOpen, Star, Mail, ChevronRight, GraduationCap } from 'lucide-react';
 import { redirect } from 'next/navigation';
-
 import Link from 'next/link';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export default async function ProfessoresPage() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId: SCHOOL_ID } = authContext;
   const supabase = await createClient();
-  
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
-
-  const { data: publicUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('auth_user_id', user.id)
-    .single();
-
-  if (!publicUser) redirect('/login');
-
-  const { data: membership } = await supabase
-    .from('school_memberships')
-    .select('school_id')
-    .eq('user_id', publicUser.id)
-    .single();
-
-  const SCHOOL_ID = membership?.school_id;
-  if (!SCHOOL_ID) redirect('/login');
 
   const { data: teachers, error } = await supabase
     .from('teachers')

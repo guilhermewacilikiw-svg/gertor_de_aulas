@@ -3,48 +3,36 @@ import { Search, MoreVertical, Users } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CreateClassModal } from './client-modal';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export default async function TurmasPage() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId: SCHOOL_ID } = authContext;
   const supabase = await createClient();
-  
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
 
-  const { data: publicUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('auth_user_id', user.id)
-    .single();
-
-  if (!publicUser) redirect('/login');
-
-  const { data: membership } = await supabase
-    .from('school_memberships')
-    .select('school_id')
-    .eq('user_id', publicUser.id)
-    .single();
-
-  const SCHOOL_ID = membership?.school_id;
-  if (!SCHOOL_ID) redirect('/login');
-
-  // Buscando turmas
-  const { data: classes, error } = await supabase
-    .from('classes')
-    .select('*, courses(name), teachers(users(name)), enrollments(id)')
-    .eq('school_id', SCHOOL_ID)
-    .order('name', { ascending: true });
-
-  // Buscando cursos e professores para o formulário
-  const { data: courses } = await supabase
-    .from('courses')
-    .select('id, name')
-    .eq('school_id', SCHOOL_ID)
-    .order('name', { ascending: true });
-
-  const { data: teachers } = await supabase
-    .from('teachers')
-    .select('id, specialty, users(name)')
-    .eq('school_id', SCHOOL_ID);
+  // Executar todas as consultas em paralelo
+  const [
+    { data: classes, error },
+    { data: courses },
+    { data: teachers }
+  ] = await Promise.all([
+    supabase
+      .from('classes')
+      .select('*, courses(name), teachers(users(name)), enrollments(id)')
+      .eq('school_id', SCHOOL_ID)
+      .order('name', { ascending: true }),
+    supabase
+      .from('courses')
+      .select('id, name')
+      .eq('school_id', SCHOOL_ID)
+      .order('name', { ascending: true }),
+    supabase
+      .from('teachers')
+      .select('id, specialty, users(name)')
+      .eq('school_id', SCHOOL_ID)
+  ]);
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">

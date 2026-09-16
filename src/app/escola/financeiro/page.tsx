@@ -3,42 +3,31 @@ import { Plus, Search, MoreVertical, DollarSign, TrendingUp, TrendingDown, Credi
 import { redirect } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { CreateInvoiceModal, UpdateInvoiceModal } from './client-modal';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export default async function EscolaFinanceiroPage() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId } = authContext;
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) redirect('/login');
-
-  const { data: publicUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('auth_user_id', user.id)
-    .single();
-
-  if (!publicUser) redirect('/login');
-
-  const { data: membership } = await supabase
-    .from('school_memberships')
-    .select('school_id')
-    .eq('user_id', publicUser.id)
-    .single();
-
-  const schoolId = membership?.school_id;
-  if (!schoolId) redirect('/login');
-
-  const { data: invoices } = await supabase
-    .from('student_invoices')
-    .select('*, students(name), student_finances(plan_name)')
-    .eq('school_id', schoolId)
-    .order('due_date', { ascending: false });
+  const [
+    { data: invoices },
+    { data: students }
+  ] = await Promise.all([
+    supabase
+      .from('student_invoices')
+      .select('*, students(name), student_finances(plan_name)')
+      .eq('school_id', schoolId)
+      .order('due_date', { ascending: false }),
+    supabase
+      .from('students')
+      .select('id, name')
+      .eq('school_id', schoolId)
+  ]);
 
   const invoiceList = invoices || [];
-
-  const { data: students } = await supabase
-    .from('students')
-    .select('id, name')
-    .eq('school_id', schoolId);
   const studentList = students || [];
 
   return (

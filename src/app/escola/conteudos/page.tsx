@@ -3,28 +3,14 @@ import { createClient } from '@/lib/supabase/server';
 import { BibliotecaMateriais } from './client-modal';
 import { FolderArchive, HardDrive, FileText, Link as LinkIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export default async function EscolaConteudosPage() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId } = authContext;
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) redirect('/login');
-
-  const { data: publicUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('auth_user_id', user.id)
-    .single();
-
-  let schoolId;
-  if (publicUser) {
-    const { data: membership } = await supabase
-      .from('school_memberships')
-      .select('school_id')
-      .eq('user_id', publicUser.id)
-      .single();
-    if (membership) schoolId = membership.school_id;
-  }
 
   // Fetch real materials
   let initialMaterials: any[] = [];

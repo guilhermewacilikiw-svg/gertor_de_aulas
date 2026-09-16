@@ -3,29 +3,14 @@ import { createClient } from '@/lib/supabase/server';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatCard } from '@/components/shared/StatCard';
 import { redirect } from 'next/navigation';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export default async function EscolaDashboard() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId, schoolName } = authContext;
   const supabase = await createClient();
-
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
-
-  const { data: publicUser } = await supabase
-    .from('users')
-    .select('id, name')
-    .eq('auth_user_id', user.id)
-    .single();
-
-  const { data: membership } = await supabase
-    .from('school_memberships')
-    .select('school_id, schools(name)')
-    .eq('user_id', publicUser?.id)
-    .single();
-
-  const schoolId = membership?.school_id;
-  const schoolName = Array.isArray(membership?.schools) ? (membership?.schools[0] as any)?.name : (membership?.schools as any)?.name || 'Sua Escola';
-
-  if (!schoolId) redirect('/login');
 
   // Real Counts and Data from Database using Promise.all for performance
   const [

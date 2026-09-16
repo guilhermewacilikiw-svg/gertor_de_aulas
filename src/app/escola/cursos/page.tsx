@@ -3,33 +3,14 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
 import Link from 'next/link';
+import { getAuthenticatedSchool } from '@/lib/auth';
 
 export default async function CursosPage() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId: SCHOOL_ID } = authContext;
   const supabase = await createClient();
-  
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let SCHOOL_ID = '11111111-1111-1111-1111-111111111111';
-
-  if (user) {
-    const { data: publicUser } = await supabase
-      .from('users')
-      .select('id')
-      .eq('auth_user_id', user.id)
-      .maybeSingle();
-
-    if (publicUser) {
-      const { data: membership } = await supabase
-        .from('school_memberships')
-        .select('school_id')
-        .eq('user_id', publicUser.id)
-        .maybeSingle();
-
-      if (membership) {
-        SCHOOL_ID = membership.school_id;
-      }
-    }
-  }
 
   // Fetch real courses from the database
   const { data: dbCourses } = await supabase

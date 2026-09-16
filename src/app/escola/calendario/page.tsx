@@ -1,26 +1,15 @@
 import { createClient } from '@/lib/supabase/server';
 import { SchoolCalendar, CalendarEvent } from '@/components/shared/SchoolCalendar';
 import { Calendar } from 'lucide-react';
+import { getAuthenticatedSchool } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 export default async function EscolaCalendarioPage() {
+  const authContext = await getAuthenticatedSchool();
+  if (!authContext) redirect('/login');
+
+  const { schoolId } = authContext;
   const supabase = await createClient();
-
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let schoolId = '11111111-1111-1111-1111-111111111111'; // Default seed
-
-  if (user) {
-    const { data: publicUser } = await supabase
-      .from('users')
-      .select('id, school_memberships(school_id)')
-      .eq('auth_user_id', user.id)
-      .maybeSingle();
-
-    if (publicUser) {
-      const memberships: any = publicUser.school_memberships;
-      schoolId = Array.isArray(memberships) ? memberships[0]?.school_id : memberships?.school_id;
-    }
-  }
 
   // Fetch lessons, events and schedules concurrently in parallel
   const [
