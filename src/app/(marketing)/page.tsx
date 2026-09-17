@@ -105,16 +105,16 @@ export default async function LandingPage() {
               className="group relative w-full sm:w-auto px-10 py-4 bg-red-500 text-black font-black text-sm transition-all flex items-center justify-center gap-3 skew-x-[-10deg] shadow-[0_0_30px_rgba(192,232,122,0.4)] hover:shadow-[0_0_50px_rgba(192,232,122,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
             >
               <span className="skew-x-[10deg] flex items-center gap-2">
-                Comece Grátis Agora
+                Cadastrar Escola Agora
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
             
             <Link 
-              href="/cadastro?type=solo" 
+              href="/#recursos" 
               className="w-full sm:w-auto px-10 py-4 bg-black text-white font-bold text-sm border border-white/20 hover:border-red-500 transition-all flex items-center justify-center skew-x-[-10deg] hover:bg-red-500/10"
             >
-              <span className="skew-x-[10deg]">Sou Professor Particular</span>
+              <span className="skew-x-[10deg]">Conhecer Recursos</span>
             </Link>
           </div>
         </div>
@@ -221,7 +221,7 @@ export default async function LandingPage() {
               <Video className="w-10 h-10 text-red-500 mb-6" />
               <h3 className="text-2xl font-black text-white mb-4">Portal do Aluno EAD</h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Forneça uma experiência de estudo em casa. Suba vídeos, partituras e crie uma "Netflix" particular da sua escola de música.
+                Forneça uma experiência de estudo em casa. Suba vídeos, partituras e crie o acervo digital exclusivo da sua escola de música.
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Hospedagem de vídeos privados</li>
@@ -249,7 +249,7 @@ export default async function LandingPage() {
             Eleve o nível da sua escola de música hoje.
           </h2>
           <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-            Junte-se a dezenas de escolas e professores particulares que estão digitalizando suas metodologias e aumentando suas receitas.
+            Junte-se a dezenas de escolas e institutos de música que estão digitalizando suas metodologias e profissionalizando sua gestão.
           </p>
           <Link 
             href="/cadastro" 

@@ -49,7 +49,7 @@ export async function saasRegisterAction(formData: FormData) {
 
   if (rpcError || !schoolId) {
     console.error('RPC Insert Error:', rpcError);
-    return { success: false, error: 'Erro ao criar o perfil da escola/professor. ' + (rpcError?.message || '') };
+    return { success: false, error: 'Erro ao criar o perfil da escola. ' + (rpcError?.message || '') };
   }
 
   // 3. Configurar Trial de 14 dias e vincular ao plano escolhido (Solo, Stage ou Festival)

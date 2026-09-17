@@ -13,7 +13,6 @@ export function SaaSOnboardingForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [confirmationSentEmail, setConfirmationSentEmail] = useState<string | null>(null);
-  const [accountType, setAccountType] = useState<'school' | 'solo'>('school');
   
   const [document, setDocument] = useState('');
   const [phone, setPhone] = useState('');
@@ -143,42 +142,13 @@ export function SaaSOnboardingForm() {
 
   return (
     <div className="w-full max-w-xl mx-auto">
-      
-      {/* Account Type Selector */}
-      <div className="flex bg-black/40 border border-white/10 p-1 mb-6 cyber-clip">
-        <button
-          type="button"
-          onClick={() => setAccountType('school')}
-          className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
-            accountType === 'school' 
-              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(239,68,68,0.3)]" 
-              : "text-white/50 hover:text-white hover:bg-white/5"
-          )}
-        >
-          <Building2 className="w-4 h-4" /> Escola de Música
-        </button>
-        <button
-          type="button"
-          onClick={() => setAccountType('solo')}
-          className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn",
-            accountType === 'solo' 
-              ? "bg-red-500 text-black shadow-[0_0_15px_rgba(239,68,68,0.3)]" 
-              : "text-white/50 hover:text-white hover:bg-white/5"
-          )}
-        >
-          <User className="w-4 h-4" /> Professor Autônomo
-        </button>
-      </div>
-
       <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
-            {accountType === 'school' ? 'Crie a conta da sua Escola' : 'Sua Conta de Professor'}
+            Crie a conta da sua Escola
           </h2>
           <p className="text-red-500 text-xs font-mono uppercase tracking-widest flex items-center justify-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5" /> ACESSO TOTAL LIBERADO
+            <ShieldCheck className="w-3.5 h-3.5" /> GESTÃO DE ESCOLAS & INSTITUTOS DE MÚSICA
           </p>
         </div>
 
@@ -191,7 +161,7 @@ export function SaaSOnboardingForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-1.5">
             <label className="text-sm font-bold text-white/80 ml-1">
-              {accountType === 'school' ? 'Nome da Escola / Instituição' : 'Nome do Estúdio / Aulas'}
+              Nome da Escola / Instituto de Música
             </label>
             <div className="relative">
               <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
@@ -200,15 +170,20 @@ export function SaaSOnboardingForm() {
                 name="schoolName"
                 required
                 className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                placeholder={accountType === 'school' ? 'Ex: Conservatório Mozart' : 'Ex: Aulas de Violão do João'}
+                placeholder="Ex: Conservatório Mozart ou Escola Ritmo Livre"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-bold text-white/80 ml-1">
-              {accountType === 'school' ? 'CNPJ (opcional)' : 'CPF ou CNPJ (opcional)'}
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-bold text-white/80 ml-1">
+                CPF ou CNPJ
+              </label>
+              <span className="text-[11px] text-gray-400 font-mono">
+                (Pessoa Física ou Jurídica)
+              </span>
+            </div>
             <div className="relative">
               <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
               <input
@@ -216,15 +191,18 @@ export function SaaSOnboardingForm() {
                 value={document}
                 onChange={handleDocumentChange}
                 className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                placeholder="00.000.000/0001-00"
+                placeholder="000.000.000-00 ou 00.000.000/0001-00"
               />
             </div>
+            <p className="text-[11px] text-gray-400 pl-1">
+              Aceita tanto o CPF do gestor/fundador quanto o CNPJ da instituição.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="space-y-1.5">
               <label className="text-sm font-bold text-white/80 ml-1">
-                {accountType === 'school' ? 'Seu Nome (Gestor)' : 'Seu Nome'}
+                Nome do Responsável / Gestor
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
@@ -233,7 +211,7 @@ export function SaaSOnboardingForm() {
                   name="adminName"
                   required
                   className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                  placeholder="Carlos Silva"
+                  placeholder="Ex: Carlos Silva"
                 />
               </div>
             </div>
@@ -350,7 +328,7 @@ export function SaaSOnboardingForm() {
               </>
             ) : (
               <>
-                <span>CRIAR CONTA & ACESSAR</span>
+                <span>CRIAR CONTA DA ESCOLA</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
