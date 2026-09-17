@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { translateSupabaseError } from '@/lib/utils';
+import { syncNewClientToSheet } from '@/lib/services/sheets';
 
 export async function saasRegisterAction(formData: FormData) {
   const supabase = await createClient();
@@ -89,7 +90,22 @@ export async function saasRegisterAction(formData: FormData) {
     console.warn('Erro não-bloqueante ao ativar escola:', err);
   }
 
-  // 4. Sign in immediately so session cookies are stored
+  // 4. Sincronizar novo cliente com o Google Sheets (não-bloqueante)
+  try {
+    const chosenPlanCode = (formData.get('planCode') as string) || 'stage';
+    syncNewClientToSheet({
+      schoolName,
+      adminName,
+      adminEmail,
+      phone,
+      document,
+      plan: chosenPlanCode,
+    }).catch(sheetErr => console.warn('[Sheets Sync Background Warning]:', sheetErr));
+  } catch (sheetSyncErr) {
+    console.warn('Erro ao disparar sync com Google Sheets:', sheetSyncErr);
+  }
+
+  // 5. Sign in immediately so session cookies are stored
   const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
     email: adminEmail,
     password: adminPassword
