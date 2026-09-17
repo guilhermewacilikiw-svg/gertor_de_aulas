@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Sparkles, CheckCircle2, Shield, Zap, Globe, HeartHandshake, Music, BookOpen, Layers, Users, Play, Calendar, DollarSign, Video, Check } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2, Shield, Zap, Globe, HeartHandshake, Music, BookOpen, Layers, Users, Play, Calendar, GraduationCap, Video, Check } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 
 export const revalidate = 60; // Revalidate every 60 seconds (ISR)
@@ -125,10 +125,10 @@ export default async function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
             <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
-              <DollarSign className="w-6 h-6 text-red-500" />
+              <GraduationCap className="w-6 h-6 text-red-500" />
             </div>
-            <h3 className="text-xl font-black text-white mb-3">Fim da Inadimplência</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Chega de cobrar alunos pelo WhatsApp. Nosso sistema organiza os vencimentos e te dá previsibilidade financeira real da sua escola.</p>
+            <h3 className="text-xl font-black text-white mb-3">Gestão Pedagógica Centralizada</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">Acompanhe frequência, diário de classe, plano de estudo e a evolução musical de cada aluno com agilidade.</p>
           </div>
           <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
             <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
@@ -159,31 +159,31 @@ export default async function LandingPage() {
         </div>
 
         <div className="space-y-6">
-          {/* Feature 1: Financeiro */}
+          {/* Feature 1: Gestão Pedagógica */}
           <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 cyber-clip overflow-hidden group hover:border-red-500/50 transition-colors">
             <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
-              <DollarSign className="w-10 h-10 text-red-500 mb-6" />
-              <h3 className="text-2xl font-black text-white mb-4">Gestão Financeira Descomplicada</h3>
+              <GraduationCap className="w-10 h-10 text-red-500 mb-6" />
+              <h3 className="text-2xl font-black text-white mb-4">Gestão Pedagógica e Diário de Classe</h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Tenha total controle sobre as mensalidades, reduza a inadimplência com cobranças organizadas e entenda a saúde do seu caixa de forma visual.
+                Tenha total controle sobre o progresso musical das turmas. Registre faltas, presenças, tarefas de prática e notas pedagógicas em tempo real.
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Dashboard de faturamento mensal</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Histórico de mensalidades por aluno</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Filtro rápido de pagamentos pendentes</li>
+                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Diário de bordo detalhado por aula</li>
+                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Controle digital de frequência e chamadas</li>
+                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Histórico de evolução e notas por aluno</li>
               </ul>
             </div>
             <div className="md:w-1/2 bg-[#232336] relative border-t md:border-t-0 md:border-l border-white/10 min-h-[300px] flex items-center justify-center p-8">
                <div className="absolute inset-0 cyber-grid opacity-30"></div>
                <div className="relative bg-[#12121A] border border-red-500/30 p-6 cyber-clip w-full shadow-[0_0_30px_rgba(162,122,232,0.1)]">
                  <div className="flex justify-between items-center mb-4">
-                   <div className="text-white text-sm font-bold">Faturamento (Mês)</div>
-                   <div className="text-red-500 font-mono font-black">+ R$ 12.450</div>
+                   <div className="text-white text-sm font-bold">Diário de Classe (Hoje)</div>
+                   <div className="text-red-500 font-mono font-black text-xs uppercase tracking-wider">100% Concluído</div>
                  </div>
                  <div className="space-y-3">
-                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-red-500 w-[80%] shadow-[0_0_10px_rgba(162,122,232,0.5)]"></div></div>
-                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-white/20 w-[40%]"></div></div>
-                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-white/20 w-[60%]"></div></div>
+                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-red-500 w-[92%] shadow-[0_0_10px_rgba(162,122,232,0.5)]"></div></div>
+                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-white/20 w-[65%]"></div></div>
+                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-white/20 w-[80%]"></div></div>
                  </div>
                </div>
             </div>

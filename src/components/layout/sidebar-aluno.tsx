@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Calendar, PlayCircle, BookOpen, User, LineChart, DollarSign } from 'lucide-react';
+import { Home, Calendar, PlayCircle, BookOpen, User, LineChart } from 'lucide-react';
 
 export function AlunoSidebar() {
   return (
@@ -41,10 +41,6 @@ export function AlunoSidebar() {
         <Link href="#" className="flex items-center gap-4 px-4 py-3 rounded-xl text-sidebar-foreground/80 hover:bg-white/5 hover:text-white transition-colors">
           <LineChart className="w-5 h-5" />
           <span>Progresso</span>
-        </Link>
-        <Link href="/aluno/financeiro" className="flex items-center gap-4 px-4 py-3 rounded-xl text-sidebar-foreground/80 hover:bg-white/5 hover:text-white transition-colors">
-          <DollarSign className="w-5 h-5" />
-          <span>Financeiro</span>
         </Link>
         <Link href="#" className="flex items-center gap-4 px-4 py-3 rounded-xl text-sidebar-foreground/80 hover:bg-white/5 hover:text-white transition-colors mt-auto">
           <User className="w-5 h-5" />

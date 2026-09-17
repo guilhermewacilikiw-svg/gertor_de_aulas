@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Users, GraduationCap, Calendar, BarChart3, CheckCircle2 } from 'lucide-react';
+import { Users, GraduationCap, Calendar, BookOpen, CheckCircle2 } from 'lucide-react';
 
 export default function RecursosPage() {
   const [activeTab, setActiveTab] = useState('alunos');
@@ -57,15 +57,15 @@ export default function RecursosPage() {
             </button>
 
             <button 
-              onClick={() => setActiveTab('financeiro')}
-              className={`flex items-center gap-4 px-6 py-5 rounded-2xl text-left transition-all min-w-[200px] lg:min-w-0 ${activeTab === 'financeiro' ? 'bg-white/10 border-white/20 border text-white' : 'hover:bg-white/5 border border-transparent text-gray-400 hover:text-gray-200'}`}
+              onClick={() => setActiveTab('cursos')}
+              className={`flex items-center gap-4 px-6 py-5 rounded-2xl text-left transition-all min-w-[200px] lg:min-w-0 ${activeTab === 'cursos' ? 'bg-red-600/10 border-red-500/20 border text-white' : 'hover:bg-white/5 border border-transparent text-gray-400 hover:text-gray-200'}`}
             >
-              <div className={`p-2 rounded-xl ${activeTab === 'financeiro' ? 'bg-red-600/30' : 'bg-white/5'}`}>
-                <BarChart3 className={`w-5 h-5 ${activeTab === 'financeiro' ? 'text-white' : 'text-gray-500'}`} />
+              <div className={`p-2 rounded-xl ${activeTab === 'cursos' ? 'bg-red-600/30' : 'bg-white/5'}`}>
+                <BookOpen className={`w-5 h-5 ${activeTab === 'cursos' ? 'text-white' : 'text-gray-500'}`} />
               </div>
               <div>
-                <h4 className="font-semibold text-base">Financeiro</h4>
-                <p className="text-xs opacity-70 hidden sm:block mt-1">Cobranças e relatórios</p>
+                <h4 className="font-semibold text-base">Cursos & Métodos</h4>
+                <p className="text-xs opacity-70 hidden sm:block mt-1">Módulos e repertórios</p>
               </div>
             </button>
           </div>
@@ -80,10 +80,10 @@ export default function RecursosPage() {
                   <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] -mr-20 -mt-20" />
                   <h3 className="text-3xl font-bold text-white mb-4">Gestão Completa de Alunos</h3>
                   <p className="text-gray-400 leading-relaxed text-lg mb-8 max-w-xl">
-                    Acompanhe o desenvolvimento, presenças, histórico e mensalidades de cada aluno de forma simplificada. Tenha uma visão 360º de cada matrícula em um único painel.
+                    Acompanhe o desenvolvimento, presenças, histórico e evolução musical de cada aluno de forma simplificada. Tenha uma visão 360º de cada matrícula em um único painel.
                   </p>
                   <ul className="space-y-4">
-                    {['Histórico de aulas e notas musicais', 'Controle de inadimplência automatizado', 'Relatórios de evolução do aluno'].map((item, i) => (
+                    {['Histórico de aulas e notas musicais', 'Controle digital de frequência e presenças', 'Relatórios de evolução do aluno'].map((item, i) => (
                       <li key={i} className="flex items-center gap-3 text-base text-gray-300">
                         <CheckCircle2 className="w-5 h-5 text-red-500 shrink-0" />
                         {item}
@@ -131,24 +131,22 @@ export default function RecursosPage() {
                 </div>
               )}
 
-              {/* Content: Financeiro */}
-              {activeTab === 'financeiro' && (
+              {/* Content: Cursos */}
+              {activeTab === 'cursos' && (
                 <div className="animate-in fade-in zoom-in-95 duration-500">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] -mr-20 -mt-20" />
-                  <h3 className="text-3xl font-bold text-white mb-4">Financeiro Descomplicado</h3>
+                  <h3 className="text-3xl font-bold text-white mb-4">Estruturação de Cursos & Repertório</h3>
                   <p className="text-gray-400 leading-relaxed text-lg mb-8 max-w-xl">
-                    Métricas em tempo real. Saiba exatamente qual o seu faturamento, custos com professores e projete o crescimento da sua escola de forma visual e intuitiva.
+                    Crie a grade curricular da sua escola musical. Defina módulos didáticos por nível, centralize partituras, exercícios e referências de estudo para as turmas.
                   </p>
-                  <div className="w-full max-w-md bg-[#0a0514] border border-white/10 rounded-2xl p-4 shadow-2xl relative mb-6">
-                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/5">
-                        <div className="h-4 w-24 bg-white/10 rounded-full"></div>
-                        <div className="h-4 w-12 bg-white/10 rounded-full"></div>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-8 w-full bg-gradient-to-r from-red-600/20 to-transparent rounded-lg"></div>
-                      <div className="h-8 w-3/4 bg-gradient-to-r from-red-600/20 to-transparent rounded-lg"></div>
-                    </div>
-                  </div>
+                  <ul className="space-y-4">
+                    {['Organização de cursos por módulos didáticos', 'Acervo compartilhado de partituras e métodos', 'Acompanhamento do plano de aula por turma'].map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-base text-gray-300">
+                        <CheckCircle2 className="w-5 h-5 text-red-500 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>

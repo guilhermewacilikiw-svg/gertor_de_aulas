@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { LayoutDashboard, GraduationCap, Calendar, BarChart, CreditCard } from 'lucide-react';
+import { LayoutDashboard, GraduationCap, Calendar, BarChart } from 'lucide-react';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
 
 export default async function AlunoLayout({
@@ -35,7 +35,6 @@ export default async function AlunoLayout({
     { label: 'Minhas Aulas', href: '/aluno/aulas', icon: <GraduationCap className="w-4 h-4" /> },
     { label: 'Calendário', href: '/aluno/calendario', icon: <Calendar className="w-4 h-4" /> },
     { label: 'Desempenho', href: '/aluno/desempenho', icon: <BarChart className="w-4 h-4" /> },
-    { label: 'Financeiro', href: '/aluno/financeiro', icon: <CreditCard className="w-4 h-4" /> },
   ];
 
   return (
