@@ -26,15 +26,6 @@ export default function TermosDeUso() {
         {/* Content */}
         <div className="space-y-10 text-sm leading-relaxed text-gray-300">
           
-          {/* Preâmbulo */}
-          <section className="bg-white/5 border border-white/10 p-6 rounded-2xl">
-            <p className="text-gray-200">
-              O presente instrumento estabelece as cláusulas e condições que regulam a disponibilização, o acesso e a utilização dos serviços e recursos de software disponibilizados pela plataforma <strong>WAKODA</strong>, doravante denominada simplesmente <strong>"LICENCIANTE"</strong> ou <strong>"PLATAFORMA"</strong>, à pessoa jurídica ou à pessoa física devidamente qualificada no ato do cadastro, doravante denominada <strong>"CONTRATANTE"</strong> ou <strong>"ESCOLA"</strong>.
-            </p>
-            <p className="text-gray-400 text-xs mt-3">
-              A adesão a este instrumento se dá mediante a confirmação eletrônica no ato de cadastro ou utilização reiterada da Plataforma, momento em que a CONTRATANTE expressa sua plena concordância, irretratabilidade e submissão aos termos aqui pactuados, nos termos do Código Civil Brasileiro e da legislação especial de regência.
-            </p>
-          </section>
 
           {/* 1. Definições */}
           <section>
