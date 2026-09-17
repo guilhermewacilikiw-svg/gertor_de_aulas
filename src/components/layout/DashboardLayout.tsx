@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { BetaNoticeModal } from '@/components/shared/BetaNoticeModal';
 
 export interface DashboardLink {
   label: string;
@@ -27,6 +28,7 @@ export function DashboardLayout({ children, portalName, userName, links, headerA
 
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col p-0 lg:p-4 bg-[#08080c] font-sans">
+      <BetaNoticeModal />
       
       {/* Main Glass Panel Container */}
       <div className="relative z-10 w-full min-h-[100dvh] lg:min-h-0 lg:h-[calc(100vh-2rem)] rounded-none lg:rounded-2xl flex overflow-hidden border-0 lg:border lg:border-white/10 bg-[#0a0a0f] shadow-2xl">
