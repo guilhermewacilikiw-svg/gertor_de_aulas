@@ -22,7 +22,6 @@ export default async function EscolaLayout({
     { label: 'Professores', href: '/escola/professores', icon: <Users className="w-4 h-4" /> },
     { label: 'Turmas', href: '/escola/turmas', icon: <Users className="w-4 h-4" /> },
     { label: 'Cursos', href: '/escola/cursos', icon: <BookOpen className="w-4 h-4" /> },
-    { label: 'Conteúdos', href: '/escola/conteudos', icon: <BookOpen className="w-4 h-4" /> },
   ];
 
   return (

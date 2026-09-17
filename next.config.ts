@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         destination: '/aluno/dashboard',
         permanent: false,
       },
+      {
+        source: '/escola/conteudos',
+        destination: '/escola/cursos',
+        permanent: false,
+      },
     ];
   },
 };
