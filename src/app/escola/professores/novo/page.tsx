@@ -5,12 +5,14 @@ import { Loader2, Mail, Lock, User, BookOpen, Phone, Calendar, FileText, ArrowLe
 import { createTeacherAction } from '../actions';
 import confetti from 'canvas-confetti';
 import Link from 'next/link';
+import { TempPasswordNotice } from '@/components/shared/TempPasswordNotice';
 import { useRouter } from 'next/navigation';
 
 export default function NovoProfessorPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [created, setCreated] = useState<{ name?: string; email: string; password: string } | null>(null);
 
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
@@ -40,21 +42,35 @@ export default function NovoProfessorPage() {
     const formData = new FormData(e.currentTarget);
     const res = await createTeacherAction(formData);
     
-    if (res.success) {
+    if (res.success && res.tempPassword && res.email) {
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 }
       });
-      setTimeout(() => {
-        router.push('/escola/professores');
-      }, 1500);
+      setCreated({ name: res.name, email: res.email, password: res.tempPassword });
     } else {
       setError(res.error || 'Erro desconhecido');
     }
     
     setLoading(false);
   };
+
+  if (created) {
+    return (
+      <div className="max-w-xl mx-auto pt-8">
+        <div className="rounded-2xl border border-white/10 bg-[#0a0a0a]">
+          <TempPasswordNotice
+            name={created.name}
+            email={created.email}
+            password={created.password}
+            doneLabel="Voltar para a lista"
+            onDone={() => router.push('/escola/professores')}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 max-w-3xl mx-auto pb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -168,7 +184,7 @@ export default function NovoProfessorPage() {
               <div className="p-4 bg-white/5 border border-white/10 rounded-2xl">
                 <p className="text-sm font-bold text-white mb-1">Senha de Acesso</p>
                 <p className="text-xs text-gray-400">
-                  O professor receberá a senha temporária <span className="text-red-400 font-mono font-black">senha123</span> e será obrigado a trocá-la no primeiro acesso.
+                  Uma senha temporária aleatória será gerada e exibida na próxima tela. A pessoa deverá trocá-la no primeiro acesso.
                 </p>
               </div>
             </div>

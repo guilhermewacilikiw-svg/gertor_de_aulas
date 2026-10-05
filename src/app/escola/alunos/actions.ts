@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { translateSupabaseError } from '@/lib/utils';
+import { generateTempPassword } from '@/lib/password';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { checkSchoolLimit } from '@/lib/saas/limits';
 
 export async function createStudentAction(formData: FormData) {
@@ -46,7 +48,7 @@ export async function createStudentAction(formData: FormData) {
 
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
-  const password = 'senha123'; // Senha padrão
+  const password = generateTempPassword();
   
   // New fields
   const cpfRaw = formData.get('cpf') as string;
@@ -81,22 +83,27 @@ export async function createStudentAction(formData: FormData) {
     return { success: false, error: translateSupabaseError(data.error) };
   }
 
-  // Set requires_password_change metadata
-  const { data: createdUser } = await supabase
-    .from('users')
-    .select('auth_user_id')
-    .eq('email', email)
-    .single();
+  // Exige troca de senha no primeiro acesso (precisa da chave de serviço)
+  const admin = createAdminClient();
+  if (!admin) {
+    console.error('SUPABASE_SERVICE_ROLE_KEY ausente: troca de senha obrigatória não aplicada');
+  } else {
+    const { data: createdUser } = await supabase
+      .from('users')
+      .select('auth_user_id')
+      .eq('email', email)
+      .single();
 
-  if (createdUser?.auth_user_id) {
-    await supabase.auth.admin.updateUserById(createdUser.auth_user_id, {
-      user_metadata: { requires_password_change: true }
-    });
+    if (createdUser?.auth_user_id) {
+      await admin.auth.admin.updateUserById(createdUser.auth_user_id, {
+        user_metadata: { requires_password_change: true }
+      });
+    }
   }
 
   revalidatePath('/escola/alunos');
-  
-  return { success: true };
+
+  return { success: true, tempPassword: password, email, name };
 }
 
 export async function importStudentsAction(students: { name: string, email: string, password?: string }[]) {
@@ -128,15 +135,17 @@ export async function importStudentsAction(students: { name: string, email: stri
   }
 
   let successCount = 0;
-  let errors = [];
+  const errors: string[] = [];
+  const credentials: { email: string; password: string }[] = [];
 
   for (const student of students) {
     if (!student.name || !student.email) continue;
     
+    const password = student.password || generateTempPassword();
     const { data, error } = await supabase.rpc('admin_create_student', {
       p_name: student.name,
       p_email: student.email,
-      p_password: student.password || 'Mudar@123',
+      p_password: password,
       p_school_id: membership.school_id
     });
 
@@ -145,6 +154,7 @@ export async function importStudentsAction(students: { name: string, email: stri
       errors.push(`Erro ao importar ${student.email}: ${translateSupabaseError(msg)}`);
     } else {
       successCount++;
+      credentials.push({ email: student.email, password });
     }
   }
 
@@ -152,7 +162,8 @@ export async function importStudentsAction(students: { name: string, email: stri
   
   return { 
     success: true, 
-    successCount, 
-    errors 
+    successCount,
+    errors,
+    credentials
   };
 }

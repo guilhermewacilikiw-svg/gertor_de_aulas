@@ -3,9 +3,12 @@ import { Page, expect } from '@playwright/test';
 export async function login(page: Page) {
   await page.goto('/login');
   
-  // Try to use environment variables for testing, otherwise fallback
-  const email = process.env.TEST_EMAIL || 'admin@wakoda.com';
-  const password = process.env.TEST_PASSWORD || 'senha123';
+  // Credenciais de teste vêm do ambiente (nunca do código)
+  const email = process.env.TEST_EMAIL;
+  const password = process.env.TEST_PASSWORD;
+  if (!email || !password) {
+    throw new Error('Defina TEST_EMAIL e TEST_PASSWORD para rodar os testes e2e.');
+  }
   
   await page.fill('input[type="email"]', email);
   await page.fill('input[type="password"]', password);

@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { translateSupabaseError } from '@/lib/utils';
+import { generateTempPassword } from '@/lib/password';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { checkSchoolLimit } from '@/lib/saas/limits';
 
 export async function createTeacherAction(formData: FormData) {
@@ -46,7 +48,7 @@ export async function createTeacherAction(formData: FormData) {
 
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
-  const password = 'senha123'; // Senha padrão
+  const password = generateTempPassword();
   const specialty = formData.get('specialty') as string;
 
   // New fields
@@ -83,20 +85,25 @@ export async function createTeacherAction(formData: FormData) {
     return { success: false, error: translateSupabaseError(data.error) };
   }
 
-  // Set requires_password_change metadata
-  const { data: createdUser } = await supabase
-    .from('users')
-    .select('auth_user_id')
-    .eq('email', email)
-    .single();
+  // Exige troca de senha no primeiro acesso (precisa da chave de serviço)
+  const admin = createAdminClient();
+  if (!admin) {
+    console.error('SUPABASE_SERVICE_ROLE_KEY ausente: troca de senha obrigatória não aplicada');
+  } else {
+    const { data: createdUser } = await supabase
+      .from('users')
+      .select('auth_user_id')
+      .eq('email', email)
+      .single();
 
-  if (createdUser?.auth_user_id) {
-    await supabase.auth.admin.updateUserById(createdUser.auth_user_id, {
-      user_metadata: { requires_password_change: true }
-    });
+    if (createdUser?.auth_user_id) {
+      await admin.auth.admin.updateUserById(createdUser.auth_user_id, {
+        user_metadata: { requires_password_change: true }
+      });
+    }
   }
 
   revalidatePath('/escola/professores');
-  
-  return { success: true };
+
+  return { success: true, tempPassword: password, email, name };
 }

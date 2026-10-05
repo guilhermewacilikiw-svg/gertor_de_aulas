@@ -22,8 +22,8 @@ export async function changePasswordAction(formData: FormData) {
     return { success: false, error: 'As senhas não coincidem.' };
   }
 
-  if (password.length < 6) {
-    return { success: false, error: 'A senha deve ter no mínimo 6 caracteres.' };
+  if (password.length < 8) {
+    return { success: false, error: 'A senha deve ter no mínimo 8 caracteres.' };
   }
 
   const { error } = await supabase.auth.updateUser({

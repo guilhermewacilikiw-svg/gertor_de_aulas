@@ -1,5 +1,4 @@
-import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
+import { requireRole } from '@/lib/auth';
 import { LayoutDashboard, Users, Calendar, BookOpen, Star } from 'lucide-react';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
 
@@ -8,27 +7,8 @@ export default async function ProfessorLayout({
 }: {
   children: React.ReactNode
 }) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  let publicUserId: string | undefined;
-  let schoolId: string | undefined;
-  let teacherName = 'Professor';
-
-  if (user) {
-    const { data: publicUser } = await supabase
-      .from('users')
-      .select('id, name, school_memberships(school_id)')
-      .eq('auth_user_id', user.id)
-      .maybeSingle();
-
-    if (publicUser) {
-      publicUserId = publicUser.id;
-      teacherName = publicUser.name;
-      const memberships: any = publicUser.school_memberships;
-      schoolId = Array.isArray(memberships) ? memberships[0]?.school_id : memberships?.school_id;
-    }
-  }
+  const authContext = await requireRole(['TEACHER']);
+  const teacherName = authContext.userName || 'Professor';
 
   const links: DashboardLink[] = [
     { label: 'Painel', href: '/professor/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },

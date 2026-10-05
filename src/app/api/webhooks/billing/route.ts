@@ -1,17 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { timingSafeEqual } from 'node:crypto';
+import { createAdminClient } from '@/lib/supabase/admin';
+
+function tokenIsValid(received: string | null, expected: string) {
+  if (!received) return false;
+  const a = Buffer.from(received);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
 
 export async function POST(req: NextRequest) {
+  // Autenticação: o gateway deve enviar o segredo configurado em BILLING_WEBHOOK_SECRET
+  // (Asaas: cabeçalho "asaas-access-token"; outros: "x-webhook-secret").
+  const secret = process.env.BILLING_WEBHOOK_SECRET;
+  if (!secret) {
+    console.error('[Billing Webhook]: BILLING_WEBHOOK_SECRET não configurado');
+    return NextResponse.json({ error: 'Webhook não configurado' }, { status: 503 });
+  }
+  const received = req.headers.get('asaas-access-token') || req.headers.get('x-webhook-secret');
+  if (!tokenIsValid(received, secret)) {
+    return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+  }
+
+  const supabase = createAdminClient();
+  if (!supabase) {
+    console.error('[Billing Webhook]: SUPABASE_SERVICE_ROLE_KEY não configurada');
+    return NextResponse.json({ error: 'Servidor não configurado' }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
-    console.log('[SaaS Billing Webhook Received]:', JSON.stringify(body, null, 2));
 
-    const supabase = await createClient();
-
-    // 1. Identificar evento do Asaas ou Stripe
-    // Padrão Asaas: { event: 'PAYMENT_RECEIVED' | 'PAYMENT_CONFIRMED' | 'PAYMENT_OVERDUE', payment: { customer, externalReference, value, ... } }
-    // Padrão Stripe: { type: 'invoice.paid' | 'customer.subscription.updated', data: { object: { customer, metadata, ... } } }
-
+    // Padrão Asaas: { event, payment: { customer, externalReference, value, id } }
+    // Padrão Stripe: { type, data: { object: { customer, metadata, ... } } }
     const eventType = body.event || body.type;
     const paymentData = body.payment || body.data?.object;
 
@@ -19,96 +40,78 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true, note: 'Ignored: No event structure found' });
     }
 
-    // Identificar a Escola pelo externalReference, metadata.school_id ou customer_id
-    const schoolId = paymentData.externalReference || paymentData.metadata?.school_id;
     const customerId = paymentData.customer || paymentData.customer_id;
-
-    let targetSchoolId = schoolId;
+    let targetSchoolId = paymentData.externalReference || paymentData.metadata?.school_id;
 
     if (!targetSchoolId && customerId) {
       const { data: foundSchool } = await supabase
         .from('schools')
         .select('id')
         .eq('gateway_customer_id', customerId)
-        .single();
-      
+        .maybeSingle();
       targetSchoolId = foundSchool?.id;
     }
 
     if (!targetSchoolId) {
-      console.warn('[Billing Webhook]: Escola não encontrada para o pagamento:', customerId);
+      console.warn('[Billing Webhook]: Escola não encontrada para o cliente', customerId);
       return NextResponse.json({ received: true, warning: 'School not matched' });
     }
 
-    // 2. Processar Pagamento Aprovado / Renovação
     if (
       eventType === 'PAYMENT_RECEIVED' ||
       eventType === 'PAYMENT_CONFIRMED' ||
       eventType === 'invoice.paid' ||
       eventType === 'checkout.session.completed'
     ) {
-      const nextPeriod = new Date();
-      nextPeriod.setDate(nextPeriod.getDate() + 30); // 30 dias para ciclo mensal
+      const transactionId = paymentData.id || `TX-${Date.now()}`;
 
-      await supabase
-        .from('schools')
-        .update({
-          subscription_status: 'active',
-          current_period_start: new Date().toISOString(),
-          current_period_end: nextPeriod.toISOString(),
-          gateway_customer_id: customerId || undefined
-        })
-        .eq('id', targetSchoolId);
+      // Idempotência: gateways reenviam eventos; não renove duas vezes o mesmo pagamento
+      const { data: already } = await supabase
+        .from('payments')
+        .select('id')
+        .eq('school_id', targetSchoolId)
+        .eq('transaction_id', transactionId)
+        .maybeSingle();
 
-      // Registrar o pagamento na tabela de auditoria/financeiro do SaaS
-      try {
-        await supabase.from('payments').insert({
+      if (!already) {
+        const now = new Date();
+        const nextPeriod = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+        const { error: updateErr } = await supabase
+          .from('schools')
+          .update({
+            subscription_status: 'active',
+            current_period_start: now.toISOString(),
+            current_period_end: nextPeriod.toISOString(),
+            gateway_customer_id: customerId || undefined,
+          })
+          .eq('id', targetSchoolId);
+        if (updateErr) throw updateErr;
+
+        const { error: payErr } = await supabase.from('payments').insert({
           school_id: targetSchoolId,
           amount: paymentData.value || (paymentData.amount_paid ? paymentData.amount_paid / 100 : 0),
           payment_method: paymentData.billingType || paymentData.payment_method_types?.[0] || 'GATEWAY',
           status: 'paid',
-          transaction_id: paymentData.id || `TX-${Date.now()}`
+          transaction_id: transactionId,
         });
-      } catch (logErr) {
-        console.warn('Erro ao salvar log de pagamento:', logErr);
+        if (payErr) console.warn('[Billing Webhook]: erro ao salvar pagamento', payErr.message);
       }
-
-      console.log(`[Billing Webhook]: Assinatura da escola ${targetSchoolId} renovada com sucesso até ${nextPeriod.toLocaleDateString('pt-BR')}`);
     }
 
-    // 3. Processar Inadimplência / Pagamento Atrasado
-    if (
-      eventType === 'PAYMENT_OVERDUE' ||
-      eventType === 'invoice.payment_failed'
-    ) {
-      await supabase
-        .from('schools')
-        .update({
-          subscription_status: 'past_due'
-        })
-        .eq('id', targetSchoolId);
-
-      console.log(`[Billing Webhook]: Assinatura da escola ${targetSchoolId} marcada como PAST_DUE.`);
+    if (eventType === 'PAYMENT_OVERDUE' || eventType === 'invoice.payment_failed') {
+      const { error } = await supabase.from('schools').update({ subscription_status: 'past_due' }).eq('id', targetSchoolId);
+      if (error) throw error;
     }
 
-    // 4. Processar Cancelamento
-    if (
-      eventType === 'SUBSCRIPTION_CANCELED' ||
-      eventType === 'customer.subscription.deleted'
-    ) {
-      await supabase
-        .from('schools')
-        .update({
-          subscription_status: 'canceled'
-        })
-        .eq('id', targetSchoolId);
-
-      console.log(`[Billing Webhook]: Assinatura da escola ${targetSchoolId} CANCELADA.`);
+    if (eventType === 'SUBSCRIPTION_CANCELED' || eventType === 'customer.subscription.deleted') {
+      const { error } = await supabase.from('schools').update({ subscription_status: 'canceled' }).eq('id', targetSchoolId);
+      if (error) throw error;
     }
 
     return NextResponse.json({ received: true, success: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error('[Billing Webhook Error]:', error);
-    return NextResponse.json({ error: error.message || 'Internal error' }, { status: 500 });
+    return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
   }
 }

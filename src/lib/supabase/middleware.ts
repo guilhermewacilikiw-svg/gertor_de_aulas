@@ -1,10 +1,11 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// Áreas que exigem login. O papel (aluno/professor/escola) é validado nos layouts.
+const PROTECTED_PREFIXES = ['/escola', '/professor', '/aluno', '/master', '/ativacao']
+
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,10 +16,8 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+          supabaseResponse = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           )
@@ -27,37 +26,29 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
+  // Não rode código entre createServerClient e getUser(): isso pode derrubar sessões.
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Routing logic based on auth and role
-  const isPublicRoute = request.nextUrl.pathname === '/' || request.nextUrl.pathname.startsWith('/login')
-  
-  if (!user && !isPublicRoute) {
-    // no user, potentially respond by redirecting the user to the login page
+  const { pathname } = request.nextUrl
+  const isProtected = PROTECTED_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(prefix + '/')
+  )
+
+  if (!user && isProtected) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
+    url.search = ''
     return NextResponse.redirect(url)
   }
-  
-  if (user && isPublicRoute) {
-      // Fetch user role if logged in
-      const { data: roleData } = await supabase
-        .from('school_memberships')
-        .select('role, school_id')
-        .eq('user_id', user.id) // This assumes user_id and auth_user_id mapping exists or we use auth_user_id directly in policies
-        .limit(1)
-        .single()
-        
-      // For now, redirect to /escola/dashboard if they log in. 
-      // Later we will route based on 'roleData.role'
-      const url = request.nextUrl.clone()
-      url.pathname = '/escola/dashboard'
-      return NextResponse.redirect(url)
+
+  // Quem ainda não trocou a senha temporária só pode acessar /ativacao
+  if (user?.user_metadata?.requires_password_change && isProtected && !pathname.startsWith('/ativacao')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/ativacao'
+    url.search = ''
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse

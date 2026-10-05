@@ -3,12 +3,14 @@
 import { useState, ChangeEvent } from 'react';
 import { Plus, X, Loader2, Mail, Lock, User, Sparkles, Upload, Phone, Calendar, FileText } from 'lucide-react';
 import { createStudentAction, importStudentsAction } from './actions';
+import { TempPasswordNotice } from '@/components/shared/TempPasswordNotice';
 import confetti from 'canvas-confetti';
 
 export function InviteStudentModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [created, setCreated] = useState<{ name?: string; email: string; password: string } | null>(null);
 
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
@@ -38,8 +40,8 @@ export function InviteStudentModal() {
     const formData = new FormData(e.currentTarget);
     const res = await createStudentAction(formData);
     
-    if (res.success) {
-      setIsOpen(false);
+    if (res.success && res.tempPassword && res.email) {
+      setCreated({ name: res.name, email: res.email, password: res.tempPassword });
       confetti({
         particleCount: 100,
         spread: 70,
@@ -81,6 +83,14 @@ export function InviteStudentModal() {
               </button>
             </div>
 
+            {created ? (
+              <TempPasswordNotice
+                name={created.name}
+                email={created.email}
+                password={created.password}
+                onDone={() => { setCreated(null); setIsOpen(false); }}
+              />
+            ) : (
             <form onSubmit={handleSubmit} className="pt-6 space-y-4 relative z-10">
               {error && (
                 <div className="p-3 bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl text-xs font-bold">
@@ -159,20 +169,6 @@ export function InviteStudentModal() {
                   </div>
                 </div>
 
-                <div className="space-y-1.5 md:col-span-2">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Senha Inicial</label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                    <input
-                      type="text"
-                      name="password"
-                      required
-                      defaultValue="Mudar@123"
-                      className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
-                    />
-                  </div>
-                  <p className="text-xs text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
-                </div>
               </div>
 
               <div className="pt-4 flex gap-3">
@@ -186,12 +182,13 @@ export function InviteStudentModal() {
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 bg-red-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-red-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(229,9,20,0.3)] flex items-center justify-center gap-2"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Acesso'}
                 </button>
               </div>
             </form>
+            )}
 
           </div>
         </div>
@@ -204,7 +201,7 @@ export function ImportStudentsModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [results, setResults] = useState<{ successCount: number, errors: string[] } | null>(null);
+  const [results, setResults] = useState<{ successCount: number, errors: string[], credentials: { email: string, password: string }[] } | null>(null);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -235,7 +232,7 @@ export function ImportStudentsModal() {
         const res = await importStudentsAction(students);
         
         if (res.success) {
-          setResults({ successCount: res.successCount || 0, errors: res.errors || [] });
+          setResults({ successCount: res.successCount || 0, errors: res.errors || [], credentials: res.credentials || [] });
           if (res.successCount && res.successCount > 0) {
              confetti({ particleCount: 150, spread: 80 });
           }
@@ -299,6 +296,24 @@ export function ImportStudentsModal() {
                         {results.errors.map((e, i) => <li key={i}>- {e}</li>)}
                       </ul>
                    </div>
+                )}
+                {results.credentials.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const linhas = results.credentials.map(c => `${c.email},${c.password}`);
+                      const csv = ['email,senha_temporaria', ...linhas].join('\n');
+                      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'acessos-alunos.csv';
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-sm transition-colors"
+                  >
+                    Baixar senhas temporárias (CSV)
+                  </button>
                 )}
                 <button 
                   onClick={() => setIsOpen(false)}

@@ -1,19 +1,14 @@
-import { redirect } from 'next/navigation';
 import { LayoutDashboard, Users, BookOpen, Calendar, GraduationCap, Layers } from 'lucide-react';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
-import { getAuthenticatedSchool } from '@/lib/auth';
+import { requireRole } from '@/lib/auth';
 
 export default async function EscolaLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const authContext = await getAuthenticatedSchool();
-  if (!authContext) {
-    redirect('/login');
-  }
-
-  const { publicUserId, schoolId, adminName } = authContext;
+  const authContext = await requireRole(['SCHOOL_ADMIN', 'MANAGER', 'SUPER_ADMIN']);
+  const { adminName } = authContext;
 
   const links: DashboardLink[] = [
     { label: 'Painel', href: '/escola/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
