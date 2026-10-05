@@ -12,7 +12,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 p-4 animate-in fade-in slide-in-from-top-4 duration-700">
       <div className="max-w-6xl mx-auto bg-black/40 backdrop-blur-2xl border border-white/5 rounded-3xl p-3 px-6 flex items-center justify-between shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition-all hover:bg-black/60">
         <Link href="/" className="flex items-center gap-4 group">
-          <div className="w-[90px] h-[90px] overflow-hidden rounded-2xl p-[1px] border border-white/10 shadow-[0_0_15px_rgba(162,122,232,0.4)] group-hover:shadow-[0_0_20px_rgba(192,232,122,0.5)] transition-all">
+          <div className="w-[90px] h-[90px] overflow-hidden rounded-2xl p-[1px] border border-white/10 shadow-[0_0_15px_rgba(229,9,20,0.35)] group-hover:shadow-[0_0_20px_rgba(192,232,122,0.5)] transition-all">
             <Image src="/logo-rock.jpg" alt="Wakoda Logo" width={90} height={90} priority={true} className="w-full h-full object-cover" />
           </div>
           <span className="font-bebas text-white text-2xl tracking-tight">Wakoda</span>

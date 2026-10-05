@@ -11,7 +11,7 @@ export function AlunoSidebar() {
           </div>
           <div>
             <h1 className="font-bold text-lg leading-tight">Wackoda</h1>
-            <span className="text-[10px] text-primary-foreground/70 uppercase tracking-wider">Experience</span>
+            <span className="text-xs text-primary-foreground/70 uppercase tracking-wider">Experience</span>
           </div>
         </div>
       </div>

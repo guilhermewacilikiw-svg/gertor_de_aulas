@@ -175,7 +175,7 @@ export function AvaliarAlunoModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-[#0e0e14] border border-white/10 rounded-3xl p-6 shadow-2xl text-white space-y-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-[#101010] border border-white/10 rounded-3xl p-6 shadow-2xl text-white space-y-6 max-h-[90vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
@@ -245,7 +245,7 @@ export function AvaliarAlunoModal({
                         {c.name}
                       </span>
                       {c.isHighlighted && (
-                        <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-black">
+                        <span className="text-xs uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-black">
                           Destaque
                         </span>
                       )}
@@ -258,7 +258,7 @@ export function AvaliarAlunoModal({
                       <button
                         type="button"
                         onClick={() => handleRemoveActivity(c.id)}
-                        className="w-6 h-6 rounded-lg text-gray-500 hover:text-red-400 flex items-center justify-center transition-colors"
+                        className="w-6 h-6 rounded-lg text-gray-400 hover:text-red-400 flex items-center justify-center transition-colors"
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
@@ -286,7 +286,7 @@ export function AvaliarAlunoModal({
                 onChange={(e) => setNewActivityName(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddActivity(); }}}
                 placeholder="Adicionar nova atividade..."
-                className="flex-1 px-3 py-2 bg-black/60 border border-white/10 rounded-xl text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-red-500"
+                className="flex-1 px-3 py-2 bg-black/60 border border-white/10 rounded-xl text-xs text-white placeholder:text-gray-400 focus:outline-none focus:border-red-500"
               />
               <button
                 type="button"

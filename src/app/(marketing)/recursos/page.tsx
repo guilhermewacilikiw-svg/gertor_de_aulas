@@ -22,7 +22,7 @@ export default function RecursosPage() {
               className={`flex items-center gap-4 px-6 py-5 rounded-2xl text-left transition-all min-w-[200px] lg:min-w-0 ${activeTab === 'alunos' ? 'bg-red-600/10 border-red-500/20 border text-white' : 'hover:bg-white/5 border border-transparent text-gray-400 hover:text-gray-200'}`}
             >
               <div className={`p-2 rounded-xl ${activeTab === 'alunos' ? 'bg-red-600/10' : 'bg-white/5'}`}>
-                <Users className={`w-5 h-5 ${activeTab === 'alunos' ? 'text-red-500' : 'text-gray-500'}`} />
+                <Users className={`w-5 h-5 ${activeTab === 'alunos' ? 'text-red-500' : 'text-gray-400'}`} />
               </div>
               <div>
                 <h4 className="font-semibold text-base">Alunos</h4>
@@ -35,7 +35,7 @@ export default function RecursosPage() {
               className={`flex items-center gap-4 px-6 py-5 rounded-2xl text-left transition-all min-w-[200px] lg:min-w-0 ${activeTab === 'professores' ? 'bg-red-500/10 border-red-500/20 border text-white' : 'hover:bg-white/5 border border-transparent text-gray-400 hover:text-gray-200'}`}
             >
               <div className={`p-2 rounded-xl ${activeTab === 'professores' ? 'bg-red-500/20' : 'bg-white/5'}`}>
-                <GraduationCap className={`w-5 h-5 ${activeTab === 'professores' ? 'text-red-500' : 'text-gray-500'}`} />
+                <GraduationCap className={`w-5 h-5 ${activeTab === 'professores' ? 'text-red-500' : 'text-gray-400'}`} />
               </div>
               <div>
                 <h4 className="font-semibold text-base">Professores</h4>
@@ -48,7 +48,7 @@ export default function RecursosPage() {
               className={`flex items-center gap-4 px-6 py-5 rounded-2xl text-left transition-all min-w-[200px] lg:min-w-0 ${activeTab === 'agenda' ? 'bg-red-500/10 border-white/20 border text-white' : 'hover:bg-white/5 border border-transparent text-gray-400 hover:text-gray-200'}`}
             >
               <div className={`p-2 rounded-xl ${activeTab === 'agenda' ? 'bg-red-600/30' : 'bg-white/5'}`}>
-                <Calendar className={`w-5 h-5 ${activeTab === 'agenda' ? 'text-white' : 'text-gray-500'}`} />
+                <Calendar className={`w-5 h-5 ${activeTab === 'agenda' ? 'text-white' : 'text-gray-400'}`} />
               </div>
               <div>
                 <h4 className="font-semibold text-base">Agenda</h4>
@@ -61,7 +61,7 @@ export default function RecursosPage() {
               className={`flex items-center gap-4 px-6 py-5 rounded-2xl text-left transition-all min-w-[200px] lg:min-w-0 ${activeTab === 'cursos' ? 'bg-red-600/10 border-red-500/20 border text-white' : 'hover:bg-white/5 border border-transparent text-gray-400 hover:text-gray-200'}`}
             >
               <div className={`p-2 rounded-xl ${activeTab === 'cursos' ? 'bg-red-600/30' : 'bg-white/5'}`}>
-                <BookOpen className={`w-5 h-5 ${activeTab === 'cursos' ? 'text-white' : 'text-gray-500'}`} />
+                <BookOpen className={`w-5 h-5 ${activeTab === 'cursos' ? 'text-white' : 'text-gray-400'}`} />
               </div>
               <div>
                 <h4 className="font-semibold text-base">Cursos & Métodos</h4>

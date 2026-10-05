@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function TermosDeUso() {
   return (
-    <div className="bg-[#0a0a0f] min-h-screen pt-32 pb-24 selection:bg-red-600/30 relative overflow-hidden text-gray-300">
+    <div className="bg-[#0a0a0a] min-h-screen pt-32 pb-24 selection:bg-red-600/30 relative overflow-hidden text-gray-300">
       <div className="absolute inset-0 cyber-grid opacity-30 pointer-events-none"></div>
       <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
         

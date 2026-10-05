@@ -77,7 +77,7 @@ export default function ProfessorDashboard() {
   };
 
   return (
-    <div className="bg-[#0a0a0f] min-h-screen pb-12 w-full text-white animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="bg-[#0a0a0a] min-h-screen pb-12 w-full text-white animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header Hero Padronizado */}
@@ -149,7 +149,7 @@ export default function ProfessorDashboard() {
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-red-600/20 text-red-500">
+                      <span className="text-xs font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-red-600/20 text-red-500">
                         {courseName} • {className}
                       </span>
                       <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
@@ -179,7 +179,7 @@ export default function ProfessorDashboard() {
             })}
             
             {lessons.length === 0 && (
-              <div className="text-center py-12 text-gray-500">
+              <div className="text-center py-12 text-gray-400">
                 <Calendar className="w-12 h-12 mx-auto mb-3 opacity-20" />
                 <p className="font-medium">Nenhuma aula encontrada para hoje.</p>
               </div>
@@ -216,7 +216,7 @@ function MetricCard({ title, value, icon, color, glowColor, textColor = "text-wh
       </div>
       <div className="relative z-10 flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">{title}</span>
+          <span className="text-gray-400 font-bold text-xs uppercase tracking-widest">{title}</span>
           <div className={cn(`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300`, textColor)}>
             {icon}
           </div>

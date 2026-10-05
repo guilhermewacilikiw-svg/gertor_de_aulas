@@ -62,7 +62,7 @@ export default function ProfessorMateriaisPage() {
         
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input 
               type="text" 
               placeholder="Buscar material..." 
@@ -119,11 +119,11 @@ export default function ProfessorMateriaisPage() {
                   )}
                   
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-black/60 text-white backdrop-blur-md border border-white/10">
+                    <span className="text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-black/60 text-white backdrop-blur-md border border-white/10">
                       {content.type === 'link' ? 'VÍDEO (LINK)' : content.type.toUpperCase()}
                     </span>
                     {content.status === 'published' && (
-                      <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-500/20 text-red-500 backdrop-blur-md border border-red-500/30">
+                      <span className="text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-500/20 text-red-500 backdrop-blur-md border border-red-500/30">
                         PÚBLICO
                       </span>
                     )}
@@ -136,7 +136,7 @@ export default function ProfessorMateriaisPage() {
                     <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-2">
                       {content.title}
                     </h3>
-                    <button className="text-gray-500 hover:text-white transition-colors shrink-0">
+                    <button className="text-gray-400 hover:text-white transition-colors shrink-0">
                       <MoreVertical className="w-5 h-5" />
                     </button>
                   </div>
@@ -146,7 +146,7 @@ export default function ProfessorMateriaisPage() {
                   </p>
 
                   <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs text-gray-500 font-medium">
+                    <span className="text-xs text-gray-400 font-medium">
                       {new Date(content.created_at).toLocaleDateString('pt-BR')}
                     </span>
                     <button className="text-red-500 text-xs font-bold hover:underline flex items-center gap-1">

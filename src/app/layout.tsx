@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const bebas = Bebas_Neue({
   weight: '400',
   subsets: ['latin'],
-  variable: '--font-bebas',
+  variable: '--font-bebas-neue',
 });
 
 const spaceGrotesk = Space_Grotesk({

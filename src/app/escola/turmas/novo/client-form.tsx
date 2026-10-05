@@ -100,7 +100,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
                     defaultValue=""
                     className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none cursor-pointer"
                   >
-                    <option value="" disabled className="bg-[#12121A] text-gray-500">
+                    <option value="" disabled className="bg-[#12121A] text-gray-400">
                       Selecione um curso...
                     </option>
                     {courses.map((c) => (
@@ -154,7 +154,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
                   placeholder="30"
                 />
               </div>
-              <p className="text-[11px] text-gray-500 ml-1">
+              <p className="text-xs text-gray-400 ml-1">
                 Limite máximo de alunos que podem ser matriculados simultaneamente nesta turma.
               </p>
             </div>

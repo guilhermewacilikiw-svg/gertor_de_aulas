@@ -18,28 +18,27 @@ export function StatCard({
   color = 'from-red-600/20 to-transparent'
 }: StatCardProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-[#0e0e14] border border-white/10 p-6 shadow-xl hover:border-red-600/40 transition-all duration-300 group">
-      {/* Background Gradient Accent */}
-      <div 
-        className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500`} 
+    <div className="relative overflow-hidden rounded-2xl bg-[#101010] border border-white/10 p-6 hover:border-red-600/40 transition-colors duration-200 group">
+      <div
+        className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} rounded-full blur-2xl pointer-events-none`}
       />
 
       <div className="relative z-10 flex items-start justify-between">
         <div>
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
+          <span className="text-sm font-medium text-gray-300 block mb-2">
             {title}
           </span>
-          <span className="text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-sm">
+          <span className="text-3xl md:text-4xl font-bold text-white tracking-tight">
             {value}
           </span>
           {subtitle && (
-            <p className="text-xs text-gray-500 mt-2 font-medium">
+            <p className="text-xs text-gray-400 mt-2">
               {subtitle}
             </p>
           )}
         </div>
 
-        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 shadow-md">
+        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-colors duration-200">
           {icon}
         </div>
       </div>

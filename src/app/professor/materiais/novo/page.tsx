@@ -171,7 +171,7 @@ export default function NovoMaterialPage() {
                 required
                 className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
               />
-              <p className="text-xs text-gray-500 mt-2">Dica: Use vídeos "Não Listados" no YouTube para manter exclusividade ou links do Google Drive com permissão de leitura.</p>
+              <p className="text-xs text-gray-400 mt-2">Dica: Use vídeos "Não Listados" no YouTube para manter exclusividade ou links do Google Drive com permissão de leitura.</p>
             </div>
 
             <div>

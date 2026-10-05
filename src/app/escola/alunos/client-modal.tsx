@@ -64,7 +64,7 @@ export function InviteStudentModal() {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
-          <div className="bg-[#050505] w-full max-w-md max-h-[90vh] overflow-y-auto rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
+          <div className="bg-[#050505] w-full max-w-md max-h-[90vh] overflow-y-auto rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden animate-in fade-in zoom-in duration-200">
             
             <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
@@ -75,7 +75,7 @@ export function InviteStudentModal() {
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="p-2 border border-white/10 hover:bg-white/5 text-white/50 hover:text-white transition-colors cyber-clip-btn"
+                className="p-2 border border-white/10 hover:bg-white/5 text-white/50 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -171,7 +171,7 @@ export function InviteStudentModal() {
                       className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                     />
                   </div>
-                  <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
+                  <p className="text-xs text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
                 </div>
               </div>
 
@@ -179,14 +179,14 @@ export function InviteStudentModal() {
                 <button 
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 py-3 bg-black/40 border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-colors cyber-clip-btn"
+                  className="flex-1 py-3 bg-black/40 border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-colors"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 bg-red-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
+                  className="flex-1 py-3 bg-red-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Acesso'}
                 </button>
@@ -266,7 +266,7 @@ export function ImportStudentsModal() {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95">
-          <div className="bg-[#050505] w-full max-w-md rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden cyber-clip animate-in fade-in zoom-in duration-200">
+          <div className="bg-[#050505] w-full max-w-md rounded-none shadow-[0_0_50px_rgba(0,0,0,1)] border border-white/10 relative overflow-hidden animate-in fade-in zoom-in duration-200">
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div>
@@ -324,9 +324,9 @@ export function ImportStudentsModal() {
                      </div>
                   ) : (
                      <div className="flex flex-col items-center justify-center">
-                        <Upload className="w-8 h-8 text-gray-500 mb-2" />
+                        <Upload className="w-8 h-8 text-gray-400 mb-2" />
                         <span className="text-sm font-bold text-gray-300">Clique ou arraste o CSV aqui</span>
-                        <span className="text-xs text-gray-500 mt-1">Primeira linha deve ser o cabeçalho</span>
+                        <span className="text-xs text-gray-400 mt-1">Primeira linha deve ser o cabeçalho</span>
                      </div>
                   )}
                 </div>

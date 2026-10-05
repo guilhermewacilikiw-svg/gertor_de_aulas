@@ -358,7 +358,7 @@ export default function LancarAvaliacaoClient() {
   if (!classId) return <div className="text-center text-gray-400 py-12">Turma não especificada.</div>;
   if (loading) return <div className="text-center text-gray-400 py-12">Carregando lista de alunos...</div>;
   if (success) return (
-    <div className="bg-[#0e0e14] border border-red-500/30 rounded-3xl p-12 text-center flex flex-col items-center max-w-xl mx-auto my-12 shadow-2xl animate-in zoom-in-95 duration-300">
+    <div className="bg-[#101010] border border-red-500/30 rounded-3xl p-12 text-center flex flex-col items-center max-w-xl mx-auto my-12 shadow-2xl animate-in zoom-in-95 duration-300">
       <div className="w-20 h-20 rounded-2xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-500 mb-6 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
         <CheckCircle2 className="w-10 h-10" />
       </div>
@@ -391,7 +391,7 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Class Header Banner */}
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-[#101010] border border-white/5 rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white shadow-lg shadow-red-600/20 shrink-0">
             <Star className="w-7 h-7 fill-white/20" />
@@ -401,7 +401,7 @@ export default function LancarAvaliacaoClient() {
               <span className="text-xs font-black uppercase tracking-wider text-red-500">
                 {classInfo?.courses?.name || 'Curso'}
               </span>
-              <span className="text-xs text-gray-500">•</span>
+              <span className="text-xs text-gray-400">•</span>
               <span className="text-xs text-gray-400">{students.length} Alunos Matriculados</span>
             </div>
             <h1 className="text-2xl font-black text-white mt-0.5">{classInfo?.name}</h1>
@@ -410,7 +410,7 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Configuration Section: Title & Activities */}
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
+      <div className="bg-[#101010] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
         
         {/* Assessment Title */}
         <div>
@@ -474,7 +474,7 @@ export default function LancarAvaliacaoClient() {
                       {act.name}
                     </p>
                     {act.isHighlighted && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-400">
+                      <span className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-amber-400">
                         ⭐ Em Destaque
                       </span>
                     )}
@@ -485,7 +485,7 @@ export default function LancarAvaliacaoClient() {
                   type="button"
                   onClick={() => handleRemoveActivity(act.id)}
                   title="Remover atividade"
-                  className="w-7 h-7 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-500/10 flex items-center justify-center transition-colors shrink-0"
+                  className="w-7 h-7 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/10 flex items-center justify-center transition-colors shrink-0"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -527,7 +527,7 @@ export default function LancarAvaliacaoClient() {
 
           {/* Quick presets tags */}
           <div className="flex items-center gap-2 flex-wrap pt-1">
-            <span className="text-xs text-gray-500 font-medium">Sugestões rápidas:</span>
+            <span className="text-xs text-gray-400 font-medium">Sugestões rápidas:</span>
             {PRESET_ACTIVITIES.map((preset) => {
               const alreadyAdded = activities.some(a => a.name.toLowerCase() === preset.toLowerCase());
               if (alreadyAdded) return null;
@@ -550,7 +550,7 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Student Grades Entry Table */}
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="bg-[#101010] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-white/5">
           <div>
@@ -568,7 +568,7 @@ export default function LancarAvaliacaoClient() {
         </div>
 
         {students.length === 0 ? (
-          <div className="text-center text-gray-500 py-12">Nenhum aluno ativo nesta turma.</div>
+          <div className="text-center text-gray-400 py-12">Nenhum aluno ativo nesta turma.</div>
         ) : (
           <div className="space-y-4">
             {students.map((student) => {
@@ -591,7 +591,7 @@ export default function LancarAvaliacaoClient() {
                       </div>
                       <div className="truncate">
                         <p className="font-black text-white text-base truncate">{student.name}</p>
-                        <p className="text-xs text-gray-500 font-mono">ID: {student.student_code || '---'}</p>
+                        <p className="text-xs text-gray-400 font-mono">ID: {student.student_code || '---'}</p>
                       </div>
                     </div>
 
@@ -613,7 +613,7 @@ export default function LancarAvaliacaoClient() {
                                 {act.isHighlighted ? '⭐ ' : ''}{act.name}
                               </span>
                               {act.isHighlighted && (
-                                <span className="text-[9px] font-black uppercase text-amber-400 bg-amber-500/20 px-1.5 py-0.5 rounded">
+                                <span className="text-xs font-black uppercase text-amber-400 bg-amber-500/20 px-1.5 py-0.5 rounded">
                                   Destaque
                                 </span>
                               )}
@@ -633,7 +633,7 @@ export default function LancarAvaliacaoClient() {
                                     : 'border-white/10 focus:border-red-500'
                                 }`}
                               />
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-xs pointer-events-none">
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xs pointer-events-none">
                                 /10
                               </span>
                             </div>
@@ -644,13 +644,13 @@ export default function LancarAvaliacaoClient() {
 
                     {/* Student Average Pill */}
                     <div className="flex items-center lg:flex-col items-end justify-between lg:justify-center border-t lg:border-t-0 pt-3 lg:pt-0 border-white/5 lg:pl-4">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 lg:mb-1">
+                      <span className="text-xs font-bold uppercase tracking-widest text-gray-400 lg:mb-1">
                         Média Final
                       </span>
                       <div className="flex items-center gap-2">
                         <div className={`px-3 py-1.5 rounded-xl border text-sm font-black flex items-center gap-1.5 ${badge.bg}`}>
                           <span>{average.toFixed(1)}</span>
-                          <span className="text-[10px] opacity-75">/ 10</span>
+                          <span className="text-xs opacity-75">/ 10</span>
                         </div>
                       </div>
                     </div>
@@ -677,7 +677,7 @@ export default function LancarAvaliacaoClient() {
                           value={notes[student.id] || ''}
                           onChange={(e) => setNotes(prev => ({ ...prev, [student.id]: e.target.value }))}
                           placeholder={`Observações pedagógicas para ${student.name} (ex: excelente evolução no solo, focar no ritmo)...`}
-                          className="w-full px-3 py-2 bg-black/60 border border-white/10 rounded-xl text-white text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-gray-600"
+                          className="w-full px-3 py-2 bg-black/60 border border-white/10 rounded-xl text-white text-xs focus:outline-none focus:border-red-500 transition-all placeholder:text-gray-500"
                         />
                       </div>
                     )}
@@ -692,7 +692,7 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Save Action Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0e0e14] border border-white/5 rounded-3xl p-6 shadow-xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#101010] border border-white/5 rounded-3xl p-6 shadow-xl">
         <div className="text-xs text-gray-400">
           Certifique-se de preencher as notas de todos os alunos antes de publicar.
         </div>

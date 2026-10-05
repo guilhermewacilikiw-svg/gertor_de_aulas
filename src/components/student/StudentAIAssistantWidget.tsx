@@ -49,10 +49,10 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
             <h3 className="text-sm font-black text-white flex items-center gap-1.5">
               Wackoda AI <Sparkles className="w-3 h-3 text-white" />
             </h3>
-            <p className="text-[10px] text-gray-400">Assistente de Aprendizagem Isolado por Tenant</p>
+            <p className="text-xs text-gray-400">Assistente de Aprendizagem Isolado por Tenant</p>
           </div>
         </div>
-        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
+        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
           Online
         </span>
       </div>

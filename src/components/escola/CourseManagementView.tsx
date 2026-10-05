@@ -353,7 +353,7 @@ export function CourseManagementView({
                     </button>
                     <button
                       onClick={() => handleDeleteModule(m.id)}
-                      className="p-1.5 rounded-lg text-gray-500 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+                      className="p-1.5 rounded-lg text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-colors"
                       title="Excluir Módulo"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -365,7 +365,7 @@ export function CourseManagementView({
                 <div className="p-4 flex flex-col gap-2">
                   {(!m.contents || m.contents.length === 0) ? (
                     <div className="py-4 text-center border border-dashed border-white/10 rounded-xl bg-white/[0.02]">
-                      <p className="text-xs text-gray-500">Este módulo ainda não possui aulas.</p>
+                      <p className="text-xs text-gray-400">Este módulo ainda não possui aulas.</p>
                     </div>
                   ) : (
                     m.contents.map((content, cIdx) => (
@@ -376,7 +376,7 @@ export function CourseManagementView({
                           </div>
                           <div>
                             <p className="text-sm font-semibold text-gray-200 group-hover:text-white transition-colors">{content.title}</p>
-                            <p className="text-[10px] text-gray-500 uppercase tracking-wider">{content.type}</p>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider">{content.type}</p>
                           </div>
                         </div>
                         <button className="opacity-0 group-hover:opacity-100 p-1.5 text-gray-400 hover:text-white transition-all">
@@ -503,7 +503,7 @@ export function CourseManagementView({
                     placeholder="https://..."
                     className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                   />
-                  <p className="text-[10px] text-gray-500">Cole o link do vídeo hospedado externamente.</p>
+                  <p className="text-xs text-gray-400">Cole o link do vídeo hospedado externamente.</p>
                 </div>
               )}
 

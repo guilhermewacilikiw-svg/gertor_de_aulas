@@ -146,7 +146,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
+              <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
                 <Activity className="w-12 h-12 opacity-20 mb-2" />
                 <p className="text-sm">Sem dados suficientes.</p>
               </div>
@@ -178,7 +178,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-               <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
+               <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
                 <TrendingUp className="w-12 h-12 opacity-20 mb-2" />
                 <p className="text-sm">Aguardando mais dados.</p>
               </div>
@@ -217,19 +217,19 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
 
                 <div className="shrink-0 flex sm:justify-end">
                   {act.type === 'attendance' && (
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
                       act.status === 'present' ? 'bg-red-600/10 text-white border-white/20' : 'bg-red-600/10 text-red-500 border-red-500/20'
                     }`}>
                       {act.status === 'present' ? 'Presente' : 'Falta'}
                     </span>
                   )}
                   {act.type === 'content' && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
                       Assistido
                     </span>
                   )}
                   {act.type === 'exercise' && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
                       Entregue
                     </span>
                   )}
@@ -237,7 +237,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
               </div>
             ))
           ) : (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-gray-400">
               <p className="text-sm">Nenhuma atividade recente encontrada.</p>
             </div>
           )}

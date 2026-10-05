@@ -89,13 +89,13 @@ export default function ProfessorAlunosPage() {
         subtitle="Visão geral de todos os alunos matriculados nas suas turmas ativas."
         action={
           <div className="relative w-full md:w-72">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input 
               type="text" 
               placeholder="Buscar aluno por nome ou ID..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-[#0e0e14] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-gray-600"
+              className="w-full pl-10 pr-4 py-2.5 bg-[#101010] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-gray-500"
             />
           </div>
         }
@@ -119,12 +119,12 @@ export default function ProfessorAlunosPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors">{student.name}</h3>
-                  <p className="text-xs text-gray-500 font-mono mt-1">ID: {student.student_code || 'N/A'}</p>
+                  <p className="text-xs text-gray-400 font-mono mt-1">ID: {student.student_code || 'N/A'}</p>
                 </div>
               </div>
 
               <div className="space-y-3 mt-auto">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Turmas Matriculadas</div>
+                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Turmas Matriculadas</div>
                 {student.enrolledClasses.map((cls: any) => (
                   <Link href={`/professor/turmas/${cls.id}`} key={cls.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5">
                     <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
@@ -132,9 +132,9 @@ export default function ProfessorAlunosPage() {
                     </div>
                     <div className="flex-1 overflow-hidden">
                       <p className="text-sm font-bold text-gray-200 truncate">{cls.name}</p>
-                      <p className="text-xs text-gray-500 truncate">{cls.courses?.name}</p>
+                      <p className="text-xs text-gray-400 truncate">{cls.courses?.name}</p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-600" />
+                    <ChevronRight className="w-4 h-4 text-gray-500" />
                   </Link>
                 ))}
               </div>

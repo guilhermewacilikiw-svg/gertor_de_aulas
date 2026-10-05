@@ -68,7 +68,7 @@ export default async function CursosPage() {
           <div className="flex gap-4 flex-col sm:flex-row">
             <Link 
               href="/escola/cursos/novo"
-              className="bg-red-500 text-black px-5 py-2.5 rounded-xl font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/25 flex items-center gap-2 group"
+              className="bg-red-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/25 flex items-center gap-2 group"
             >
               <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
               Novo Curso
@@ -104,10 +104,10 @@ export default async function CursosPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-1">{course.name}</h3>
-                  <p className="text-xs text-gray-500 font-mono mt-1">{course.category} • {course.level}</p>
+                  <p className="text-xs text-gray-400 font-mono mt-1">{course.category} • {course.level}</p>
                 </div>
               </div>
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-red-500/10 text-red-500 border-red-500/20">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider border bg-red-500/10 text-red-500 border-red-500/20">
                 {course.level}
               </span>
             </div>
@@ -117,16 +117,16 @@ export default async function CursosPage() {
             </p>
 
             <div className="space-y-3 mt-auto">
-              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Estrutura Curricular</div>
+              <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Estrutura Curricular</div>
               <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
                 <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
                   <Layers className="w-4 h-4 text-red-500" />
                 </div>
                 <div className="flex-1 overflow-hidden">
                   <p className="text-sm font-bold text-gray-200 truncate">{course.modulesCount} Módulos Pedagógicos</p>
-                  <p className="text-xs text-gray-500 truncate">Gerenciar aulas e materiais</p>
+                  <p className="text-xs text-gray-400 truncate">Gerenciar aulas e materiais</p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
+                <ChevronRight className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
               </div>
             </div>
           </Link>

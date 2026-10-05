@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { LayoutDashboard, Users, BookOpen, Calendar } from 'lucide-react';
+import { LayoutDashboard, Users, BookOpen, Calendar, GraduationCap, Layers } from 'lucide-react';
 import { DashboardLayout, DashboardLink } from '@/components/layout/DashboardLayout';
 import { getAuthenticatedSchool } from '@/lib/auth';
 
@@ -19,8 +19,8 @@ export default async function EscolaLayout({
     { label: 'Painel', href: '/escola/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
     { label: 'Calendário', href: '/escola/calendario', icon: <Calendar className="w-4 h-4" /> },
     { label: 'Alunos', href: '/escola/alunos', icon: <Users className="w-4 h-4" /> },
-    { label: 'Professores', href: '/escola/professores', icon: <Users className="w-4 h-4" /> },
-    { label: 'Turmas', href: '/escola/turmas', icon: <Users className="w-4 h-4" /> },
+    { label: 'Professores', href: '/escola/professores', icon: <GraduationCap className="w-4 h-4" /> },
+    { label: 'Turmas', href: '/escola/turmas', icon: <Layers className="w-4 h-4" /> },
     { label: 'Cursos', href: '/escola/cursos', icon: <BookOpen className="w-4 h-4" /> },
   ];
 

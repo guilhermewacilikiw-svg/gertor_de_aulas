@@ -177,7 +177,7 @@ export default async function AlunoDashboard() {
   const progressPercentage = modules.length > 0 ? 35 : 0;
 
   return (
-    <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 bg-[#0a0a0f] min-h-screen text-white">
+    <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 bg-[#0a0a0a] min-h-screen text-white">
       
       {/* Header Padronizado */}
       <PageHeader
@@ -281,7 +281,7 @@ export default async function AlunoDashboard() {
                 <h4 className="text-sm font-bold text-white truncate">Exercício: Prática Diária</h4>
                 <p className="text-xs text-white/40 mt-0.5">{formattedNextDate}</p>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-white shrink-0 bg-white/10 px-2 py-1 rounded-md">Now</span>
+              <span className="text-xs font-black uppercase tracking-widest text-white shrink-0 bg-white/10 px-2 py-1 rounded-md">Now</span>
             </div>
 
             <div className="flex items-center gap-4 bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
@@ -292,7 +292,7 @@ export default async function AlunoDashboard() {
                 <h4 className="text-sm font-bold text-white truncate">Gravação: {nextCourseName}</h4>
                 <p className="text-xs text-white/40 mt-0.5">Next lesson</p>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-red-500 shrink-0 bg-red-500/10 px-2 py-1 rounded-md">New</span>
+              <span className="text-xs font-black uppercase tracking-widest text-red-500 shrink-0 bg-red-500/10 px-2 py-1 rounded-md">New</span>
             </div>
 
             {lastRecord?.practice_instructions && (
@@ -352,7 +352,7 @@ export default async function AlunoDashboard() {
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-4xl font-black text-white">{finalGrade.toFixed(1)}</span>
-                <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest mt-0.5">NOTA GERAL / 10</span>
+                <span className="text-xs text-red-400 font-bold uppercase tracking-widest mt-0.5">NOTA GERAL / 10</span>
               </div>
             </div>
 
@@ -369,14 +369,14 @@ export default async function AlunoDashboard() {
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
                   <span className="text-white font-bold">{finalGrade.toFixed(1)} / 10</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Avaliação Atual</span>
+                <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Avaliação Atual</span>
               </div>
               <div className="text-center flex flex-col items-center">
                 <div className="flex items-center gap-2 justify-center mb-1">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
                   <span className="text-white font-bold">{scorePercent}%</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Aproveitamento</span>
+                <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Aproveitamento</span>
               </div>
             </div>
             
@@ -405,7 +405,7 @@ export default async function AlunoDashboard() {
               </div>
               <div className="min-w-0 flex-1">
                 <h4 className="text-sm font-bold text-white truncate">{nextTeacherName}</h4>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white mt-0.5">Current Instructor</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-white mt-0.5">Current Instructor</p>
               </div>
             </div>
 
@@ -417,7 +417,7 @@ export default async function AlunoDashboard() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <h4 className="text-sm font-bold text-white truncate">{(lastLesson.teachers as any)?.users?.name || 'Mentor'}</h4>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mt-0.5">Past Instructor</p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-white/40 mt-0.5">Past Instructor</p>
                 </div>
               </div>
             )}
@@ -429,7 +429,7 @@ export default async function AlunoDashboard() {
               </div>
               <div className="min-w-0 flex-1">
                 <h4 className="text-sm font-bold text-white truncate">Support Team</h4>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mt-0.5">Always available</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-white/40 mt-0.5">Always available</p>
               </div>
             </div>
           </div>

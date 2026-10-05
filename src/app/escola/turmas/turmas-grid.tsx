@@ -24,13 +24,13 @@ export function TurmasGrid({ initialClasses }: TurmasGridProps) {
       {/* TOOLBAR */}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white/5 border border-white/5 rounded-3xl p-4 backdrop-blur-sm shadow-lg">
         <div className="relative w-full sm:w-[400px]">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar turma, curso ou professor..."
-            className="w-full bg-black/40 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all text-white font-medium placeholder:text-gray-600"
+            className="w-full bg-black/40 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all text-white font-medium placeholder:text-gray-500"
           />
         </div>
         
@@ -79,7 +79,7 @@ export function TurmasGrid({ initialClasses }: TurmasGridProps) {
                       </div>
                     </div>
 
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-red-600/10 text-red-400 border border-red-600/20 shrink-0">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-red-600/10 text-red-400 border border-red-600/20 shrink-0">
                       {cls.status === 'active' || cls.is_active !== false ? 'Ativa' : 'Inativa'}
                     </span>
                   </div>
@@ -90,7 +90,7 @@ export function TurmasGrid({ initialClasses }: TurmasGridProps) {
                       {teacherName.charAt(0)}
                     </div>
                     <div className="overflow-hidden">
-                      <span className="text-[10px] uppercase font-bold text-gray-500 tracking-wider block">Professor Responsável</span>
+                      <span className="text-xs uppercase font-bold text-gray-400 tracking-wider block">Professor Responsável</span>
                       <span className="text-xs font-bold text-white truncate block">{teacherName}</span>
                     </div>
                   </div>
@@ -103,7 +103,7 @@ export function TurmasGrid({ initialClasses }: TurmasGridProps) {
                         Ocupação
                       </span>
                       <span className="font-black text-white">
-                        {enrolledCount} <span className="text-gray-500 font-normal">/ {capacity} alunos</span>
+                        {enrolledCount} <span className="text-gray-400 font-normal">/ {capacity} alunos</span>
                       </span>
                     </div>
                     <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5">
@@ -125,7 +125,7 @@ export function TurmasGrid({ initialClasses }: TurmasGridProps) {
           })
         ) : (
           <div className="col-span-full bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 text-center">
-            <Users className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+            <Users className="w-12 h-12 text-gray-500 mx-auto mb-4" />
             <h3 className="text-lg font-bold text-white mb-2">
               {searchTerm ? 'Nenhuma turma encontrada para a busca' : 'Nenhuma turma cadastrada ainda'}
             </h3>

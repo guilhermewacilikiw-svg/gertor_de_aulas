@@ -200,13 +200,13 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
             <div className="flex bg-[#12121A] rounded-xl border border-white/10 p-1 shadow-inner">
               <button 
                 onClick={() => setViewMode('week')}
-                className={cn("flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all", viewMode === 'week' ? "bg-white/10 text-white shadow-md" : "text-gray-500 hover:text-gray-300")}
+                className={cn("flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all", viewMode === 'week' ? "bg-white/10 text-white shadow-md" : "text-gray-400 hover:text-gray-300")}
               >
                 <Grid3X3 className="w-4 h-4" /> Semana
               </button>
               <button 
                 onClick={() => setViewMode('month')}
-                className={cn("flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all", viewMode === 'month' ? "bg-white/10 text-white shadow-md" : "text-gray-500 hover:text-gray-300")}
+                className={cn("flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all", viewMode === 'month' ? "bg-white/10 text-white shadow-md" : "text-gray-400 hover:text-gray-300")}
               >
                 <List className="w-4 h-4" /> Mês
               </button>
@@ -225,10 +225,10 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
         {/* CONTENT - MONTH VIEW */}
         {viewMode === 'month' && (
-          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0f]/50 overflow-y-auto styled-scrollbar">
-            <div className="grid grid-cols-7 border-b border-white/5 sticky top-0 bg-[#0a0a0f]/90 backdrop-blur-md z-20">
+          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0a]/50 overflow-y-auto styled-scrollbar">
+            <div className="grid grid-cols-7 border-b border-white/5 sticky top-0 bg-[#0a0a0a]/90 backdrop-blur-md z-20">
               {weekDays.map(day => (
-                <div key={day} className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-red-600">
+                <div key={day} className="py-4 text-center text-xs font-black uppercase tracking-widest text-red-600">
                   {day}
                 </div>
               ))}
@@ -250,7 +250,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                   >
                     <div className={cn(
                       "w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mb-1 shrink-0 transition-all",
-                      isToday(date) ? "bg-gradient-to-r from-red-600 to-red-500 text-black shadow-[0_0_20px_rgba(192,232,122,0.4)]" : "text-gray-400 group-hover:text-white"
+                      isToday(date) ? "bg-gradient-to-r from-red-600 to-red-500 text-black shadow-[0_0_20px_rgba(229,9,20,0.35)]" : "text-gray-400 group-hover:text-white"
                     )}>
                       {date.getDate()}
                     </div>
@@ -258,7 +258,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <div className="w-full flex-1 overflow-hidden space-y-1 hidden sm:block">
                       {dayEvents.slice(0, 3).map((e, idx) => (
                         <div key={idx} className={cn(
-                          "text-[10px] px-1.5 py-0.5 rounded border truncate font-bold flex items-center gap-1",
+                          "text-xs px-1.5 py-0.5 rounded border truncate font-bold flex items-center gap-1",
                           e.type === 'holiday' 
                             ? "bg-amber-500/20 text-amber-300 border-amber-500/30" 
                             : e.type === 'lesson' 
@@ -269,14 +269,14 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                             <span className="truncate">🎉 {e.title}</span>
                           ) : (
                             <>
-                              {e.startTime && <span className="opacity-80 font-mono text-[9px] shrink-0">{e.startTime}</span>}
+                              {e.startTime && <span className="opacity-80 font-mono text-xs shrink-0">{e.startTime}</span>}
                               <span className="truncate">{e.title}</span>
                             </>
                           )}
                         </div>
                       ))}
                       {dayEvents.length > 3 && (
-                        <div className="text-[9px] text-gray-400 font-bold pl-1 uppercase tracking-wider">
+                        <div className="text-xs text-gray-400 font-bold pl-1 uppercase tracking-wider">
                           + {dayEvents.length - 3} mais
                         </div>
                       )}
@@ -302,13 +302,13 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
         {/* CONTENT - WEEK VIEW */}
         {viewMode === 'week' && (
-          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0f]/50 overflow-auto max-h-[800px] styled-scrollbar">
+          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0a]/50 overflow-auto max-h-[800px] styled-scrollbar">
             <div className="min-w-[800px]">
               {/* Week Header */}
-              <div className="grid grid-cols-[60px_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b border-white/5 sticky top-0 bg-[#0a0a0f]/90 backdrop-blur-md z-30">
+              <div className="grid grid-cols-[60px_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b border-white/5 sticky top-0 bg-[#0a0a0a]/90 backdrop-blur-md z-30">
                 <div className="py-4 border-r border-white/5"></div>
                 {weekDays.map((day, i) => (
-                  <div key={day} className="py-4 text-center text-[10px] font-black uppercase tracking-widest text-red-600 border-r border-white/5">
+                  <div key={day} className="py-4 text-center text-xs font-black uppercase tracking-widest text-red-600 border-r border-white/5">
                     {day}
                   </div>
                 ))}
@@ -319,7 +319,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
               {/* Background horizontal lines for hours */}
               {hours.map(hour => (
                 <div key={hour} className="grid grid-cols-[60px_1fr] border-b border-white/5 h-[60px]">
-                  <div className="text-[10px] font-bold text-gray-500 text-right pr-3 -translate-y-2">
+                  <div className="text-xs font-bold text-gray-400 text-right pr-3 -translate-y-2">
                     {hour.toString().padStart(2, '0')}:00
                   </div>
                   <div className="grid grid-cols-7 h-full">
@@ -350,17 +350,17 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                                 : "bg-[#12121A]/80 backdrop-blur-md text-gray-300 hover:bg-red-600/20 hover:border-red-600/50 z-10"
                             )}
                           >
-                            <div className="text-[10px] font-black tracking-widest uppercase mb-0.5 opacity-80">
+                            <div className="text-xs font-black tracking-widest uppercase mb-0.5 opacity-80">
                               {schedule.startTime} - {schedule.endTime}
                             </div>
                             <div className={cn("text-xs font-bold leading-tight truncate", selectedSchedule?.id === schedule.id ? "text-white" : "text-red-400")}>
                               {schedule.title}
                             </div>
-                            <div className="text-[10px] truncate opacity-70">{schedule.subtitle}</div>
+                            <div className="text-xs truncate opacity-70">{schedule.subtitle}</div>
                             
                             {/* Alunos participantes do horário */}
                             {schedule.participants && schedule.participants.length > 0 && (
-                              <div className="mt-1 pt-1 border-t border-white/10 flex items-center gap-1 text-[10px] font-bold text-gray-300 truncate">
+                              <div className="mt-1 pt-1 border-t border-white/10 flex items-center gap-1 text-xs font-bold text-gray-300 truncate">
                                 <Users className="w-3 h-3 text-red-400 shrink-0" />
                                 <span className="truncate">
                                   {schedule.participants.map(p => p.name).join(', ')}
@@ -396,7 +396,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
             <div className="flex-1 p-6 overflow-y-auto space-y-4 styled-scrollbar">
               {selectedEvents.length === 0 ? (
-                <div className="text-center py-12 text-gray-500">
+                <div className="text-center py-12 text-gray-400">
                   <CalendarIcon className="w-12 h-12 mx-auto mb-3 opacity-20" />
                   <p className="font-medium">Nenhum evento ou aula para este dia.</p>
                 </div>
@@ -410,7 +410,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                             <PartyPopper className="w-4 h-4" />
                           </div>
                           <div>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">Feriado Nacional</span>
+                            <span className="text-xs font-black uppercase tracking-widest text-amber-400">Feriado Nacional</span>
                             <h4 className="text-base font-black text-white mt-0.5">{event.title}</h4>
                             <p className="text-xs text-amber-200/70 mt-0.5">Sem expediente / data comemorativa oficial</p>
                           </div>
@@ -423,7 +423,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <div key={event.id} className="bg-[#12121A]/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 hover:border-white/20 transition-all shadow-lg hover:-translate-y-1 space-y-3">
                       <div>
                         <span className={cn(
-                          "text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md",
+                          "text-xs font-black uppercase tracking-widest px-2 py-0.5 rounded-md",
                           event.type === 'lesson' ? "bg-red-600/20 text-red-400 border border-red-500/30" : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
                         )}>
                           {event.type === 'lesson' ? 'Aula Regular' : 'Evento'}
@@ -450,18 +450,18 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                       {/* Lista de Alunos Participantes da Aula */}
                       {event.participants && event.participants.length > 0 && (
                         <div className="pt-3 border-t border-white/10 space-y-2">
-                          <div className="flex items-center justify-between text-[11px] font-bold text-gray-300">
+                          <div className="flex items-center justify-between text-xs font-bold text-gray-300">
                             <span className="flex items-center gap-1.5 text-red-400">
                               <Users className="w-3.5 h-3.5" /> Alunos nesta aula:
                             </span>
-                            <span className="text-[10px] text-gray-400 font-mono">
+                            <span className="text-xs text-gray-400 font-mono">
                               {event.participants.length}
                             </span>
                           </div>
                           <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 styled-scrollbar">
                             {event.participants.map((p, idx) => (
                               <div key={p.id || idx} className="flex items-center gap-2 p-1.5 rounded-lg bg-white/5 text-xs text-white">
-                                <div className="w-5 h-5 rounded-full bg-red-600/30 flex items-center justify-center text-[10px] font-bold text-red-300 shrink-0">
+                                <div className="w-5 h-5 rounded-full bg-red-600/30 flex items-center justify-center text-xs font-bold text-red-300 shrink-0">
                                   {p.name.charAt(0)}
                                 </div>
                                 <span className="truncate font-medium">{p.name}</span>
@@ -494,7 +494,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <Clock className="w-5 h-5 text-red-500" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Horário</p>
+                    <p className="text-xs font-black uppercase tracking-widest text-gray-400">Horário</p>
                     <p className="text-sm font-bold text-white mt-1">{selectedSchedule.startTime} - {selectedSchedule.endTime}</p>
                     <p className="text-xs text-gray-400">Toda {weekDays[selectedSchedule.dayOfWeek]}</p>
                   </div>
@@ -505,7 +505,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <MapPin className="w-5 h-5 text-red-600" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Local</p>
+                    <p className="text-xs font-black uppercase tracking-widest text-gray-400">Local</p>
                     <p className="text-sm font-bold text-white mt-1">{selectedSchedule.location}</p>
                   </div>
                 </div>
@@ -515,7 +515,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <Users className="w-5 h-5 text-red-500" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">Professor</p>
+                    <p className="text-xs font-black uppercase tracking-widest text-gray-400">Professor</p>
                     <p className="text-sm font-bold text-white mt-1">{selectedSchedule.subtitle}</p>
                   </div>
                 </div>
@@ -528,7 +528,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                     <Users className="w-4 h-4 text-red-400" />
                     <span className="text-xs font-black uppercase tracking-wider text-white">Alunos Nesta Aula</span>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-600/20 text-red-400 border border-red-500/30">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-red-600/20 text-red-400 border border-red-500/30">
                     {selectedSchedule.participants?.length || 0} {selectedSchedule.participants?.length === 1 ? 'aluno' : 'alunos'}
                   </span>
                 </div>
@@ -542,13 +542,13 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
                         </div>
                         <div className="truncate">
                           <p className="text-xs font-bold text-white truncate">{p.name}</p>
-                          {p.email && <p className="text-[10px] text-gray-500 truncate">{p.email}</p>}
+                          {p.email && <p className="text-xs text-gray-400 truncate">{p.email}</p>}
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-xs text-gray-500 italic py-2 text-center">
+                  <p className="text-xs text-gray-400 italic py-2 text-center">
                     Nenhum aluno vinculado a este horário ainda.
                   </p>
                 )}
@@ -556,7 +556,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
             </div>
           </div>
         ) : (
-          <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center p-8 text-gray-500">
+          <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center p-8 text-gray-400">
             <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/5 shadow-inner">
               {viewMode === 'month' ? (
                 <CalendarIcon className="w-10 h-10 opacity-30 text-red-600" />

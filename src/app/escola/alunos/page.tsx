@@ -56,7 +56,7 @@ export default async function AlunosPage() {
               <span className="text-5xl font-black text-white drop-shadow-md">
                 {students?.length || 0}
               </span>
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Alunos Ativos</span>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2">Alunos Ativos</span>
             </div>
           </div>
         </div>
@@ -65,11 +65,11 @@ export default async function AlunosPage() {
       {/* TOOLBAR */}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white/5 border border-white/5 rounded-3xl p-4 backdrop-blur-sm shadow-lg">
         <div className="relative w-full sm:w-[400px]">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
             placeholder="Buscar aluno por nome..."
-            className="w-full bg-black/40 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all text-white font-medium placeholder:text-gray-600"
+            className="w-full bg-black/40 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all text-white font-medium placeholder:text-gray-500"
           />
         </div>
         
@@ -78,7 +78,7 @@ export default async function AlunosPage() {
             <button className="px-6 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl bg-white/10 text-white shadow-sm transition-all">
               Todos
             </button>
-            <button className="px-6 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl text-gray-500 hover:text-white hover:bg-white/5 transition-all">
+            <button className="px-6 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all">
               Inativos
             </button>
           </div>
@@ -109,10 +109,10 @@ export default async function AlunosPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-1">{student.name}</h3>
-                    <p className="text-xs text-gray-500 font-mono mt-1">ID: {student.student_code || student.id.substring(0, 8)}</p>
+                    <p className="text-xs text-gray-400 font-mono mt-1">ID: {student.student_code || student.id.substring(0, 8)}</p>
                   </div>
                 </div>
-                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${
                   student.status === 'active' 
                   ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' 
                   : 'bg-white/5 text-gray-400 border-white/10'
@@ -122,16 +122,16 @@ export default async function AlunosPage() {
               </div>
 
               <div className="space-y-3 mt-auto">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Dados de Aprendizado</div>
+                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Dados de Aprendizado</div>
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
                   <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
                     <Shield className="w-4 h-4 text-red-500" />
                   </div>
                   <div className="flex-1 overflow-hidden">
                     <p className="text-sm font-bold text-gray-200 truncate">Nível {student.level || 1} • {student.xp_points || 0} XP</p>
-                    <p className="text-xs text-gray-500 truncate">{student.email || 'Sem e-mail'}</p>
+                    <p className="text-xs text-gray-400 truncate">{student.email || 'Sem e-mail'}</p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
                 </div>
               </div>
             </Link>

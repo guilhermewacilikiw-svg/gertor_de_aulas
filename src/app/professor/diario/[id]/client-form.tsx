@@ -88,7 +88,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
                   </div>
                   <div>
                     <p className="font-bold text-white">{student.name}</p>
-                    <p className="text-xs text-gray-500 font-mono mt-0.5">ID: {student.student_code || 'N/A'}</p>
+                    <p className="text-xs text-gray-400 font-mono mt-0.5">ID: {student.student_code || 'N/A'}</p>
                   </div>
                 </div>
                 
@@ -144,7 +144,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
           placeholder="Ex: Hoje revisamos a escala pentatônica. O João teve um pouco de dificuldade com a pestana..."
-          className="w-full min-h-[150px] p-5 rounded-2xl border border-white/10 bg-black text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 resize-y transition-colors placeholder:text-gray-600"
+          className="w-full min-h-[150px] p-5 rounded-2xl border border-white/10 bg-black text-white focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 resize-y transition-colors placeholder:text-gray-500"
         />
       </div>
 

@@ -19,7 +19,7 @@ export function EmptyState({
   onAction
 }: EmptyStateProps) {
   return (
-    <div className="rounded-2xl bg-[#0e0e14] border border-white/10 p-12 md:p-16 flex flex-col items-center justify-center text-center shadow-xl">
+    <div className="rounded-2xl bg-[#101010] border border-white/10 p-12 md:p-16 flex flex-col items-center justify-center text-center shadow-xl">
       <div className="w-16 h-16 rounded-2xl bg-red-600/10 border border-red-600/20 flex items-center justify-center text-red-500 mb-5 shadow-[0_0_25px_rgba(239,68,68,0.15)]">
         {icon}
       </div>

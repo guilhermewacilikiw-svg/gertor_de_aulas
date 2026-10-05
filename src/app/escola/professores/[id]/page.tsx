@@ -80,7 +80,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
               <Star className="w-4 h-4 text-white" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
+              <span className="text-xs font-black uppercase tracking-widest text-white/80">
                 Professor Titular
               </span>
             </div>
@@ -99,7 +99,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 min-w-[140px] flex items-center gap-3">
               <BookOpen className="w-6 h-6 text-red-500" />
               <div>
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Especialidade</p>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Especialidade</p>
                 <p className="font-bold text-white text-sm">{teacher.specialty || 'Geral'}</p>
               </div>
             </div>
@@ -116,7 +116,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
 
         {!classes || classes.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 bg-black/20 rounded-2xl border border-white/5 border-dashed">
-            <Users className="w-12 h-12 text-gray-600 mb-4" />
+            <Users className="w-12 h-12 text-gray-500 mb-4" />
             <p className="text-gray-400 font-bold">Este professor ainda não foi atribuído a nenhuma turma.</p>
           </div>
         ) : (
@@ -131,14 +131,14 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
                   
                   <div className="flex-1 relative z-10">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
+                      <span className={`px-3 py-1 rounded-lg text-xs font-black uppercase tracking-widest border ${
                         turma.status === 'active' 
                         ? 'bg-red-500/10 text-red-500 border-red-500/20' 
-                        : 'bg-white/5 text-gray-500 border-white/10'
+                        : 'bg-white/5 text-gray-400 border-white/10'
                       }`}>
                         {turma.status === 'active' ? 'Ativa' : 'Inativa'}
                       </span>
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{turma.courses?.name}</span>
+                      <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{turma.courses?.name}</span>
                     </div>
                     
                     <h3 className="font-black text-white text-2xl mb-4">{turma.name}</h3>
@@ -151,7 +151,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
 
                   {schedules.length > 0 && (
                     <div className="md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 relative z-10 flex flex-col justify-center space-y-3">
-                      <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Horários da Turma</p>
+                      <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Horários da Turma</p>
                       {schedules.map((schedule: any) => (
                         <div key={schedule.id} className="flex flex-col gap-1 bg-white/5 p-3 rounded-xl border border-white/5">
                           <div className="flex items-center gap-2 text-white">
@@ -170,7 +170,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
                   )}
                   
                   {schedules.length === 0 && (
-                    <div className="md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 relative z-10 flex items-center justify-center text-gray-500 text-sm">
+                    <div className="md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 relative z-10 flex items-center justify-center text-gray-400 text-sm">
                       Nenhum horário definido.
                     </div>
                   )}

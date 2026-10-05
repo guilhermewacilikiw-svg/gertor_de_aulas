@@ -157,7 +157,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                   </div>
                 ) : (
                   <div className="text-center p-12">
-                    <Video className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                    <Video className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                     <h3 className="text-xl font-bold mb-2">Conteúdo Indisponível</h3>
                     <p className="text-gray-400">O link do material não foi fornecido pelo professor.</p>
                   </div>
@@ -187,7 +187,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
 
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-gray-500 min-h-[50vh]">
+            <div className="flex-1 flex flex-col items-center justify-center text-gray-400 min-h-[50vh]">
               <PlayCircle className="w-16 h-16 mb-4 opacity-20" />
               <p>Selecione uma aula no menu lateral para começar.</p>
             </div>
@@ -223,7 +223,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                   className="w-full p-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                 >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Módulo {mIdx + 1}</span>
+                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Módulo {mIdx + 1}</span>
                     <h3 className="text-sm font-bold text-gray-200 line-clamp-2">{module.title}</h3>
                   </div>
                   {isExpanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
@@ -250,13 +250,13 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                             <p className={`text-sm font-medium line-clamp-2 ${isActive ? 'text-white' : 'text-gray-300'}`}>
                               {cIdx + 1}. {content.title}
                             </p>
-                            <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">{content.type}</p>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider mt-1">{content.type}</p>
                           </div>
                         </button>
                       );
                     })}
                     {module.contents.length === 0 && (
-                      <p className="text-xs text-gray-500 pl-6 py-2">Nenhuma aula cadastrada.</p>
+                      <p className="text-xs text-gray-400 pl-6 py-2">Nenhuma aula cadastrada.</p>
                     )}
                   </div>
                 )}

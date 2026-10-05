@@ -44,7 +44,7 @@ export function AvaliacaoProgressCard({
         {/* Media Score Badge */}
         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-neutral-800/20 to-neutral-900/20 border border-red-500/20 text-red-500">
           <span className="text-2xl font-black">{averageScore}</span>
-          <span className="text-[10px] font-bold uppercase tracking-wider">Média</span>
+          <span className="text-xs font-bold uppercase tracking-wider">Média</span>
         </div>
       </div>
 

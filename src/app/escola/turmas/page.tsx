@@ -50,7 +50,7 @@ export default async function TurmasPage() {
               <span className="text-5xl font-black text-white drop-shadow-md">
                 {classes?.length || 0}
               </span>
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-2">Turmas</span>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2">Turmas</span>
             </div>
           </div>
         </div>

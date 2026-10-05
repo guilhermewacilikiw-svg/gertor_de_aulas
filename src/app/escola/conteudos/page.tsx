@@ -44,7 +44,7 @@ export default async function EscolaConteudosPage() {
   }
 
   return (
-    <div className="bg-[#0a0a0f] min-h-screen text-white w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="bg-[#0a0a0a] min-h-screen text-white w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="space-y-8 max-w-6xl mx-auto pb-12 pt-4">
         
         {/* HEADER HERO */}
@@ -123,7 +123,7 @@ function MetricCard({ title, value, subtitle, subtitleColor, icon, color, glowCo
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex justify-between items-start">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{title}</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-400">{title}</p>
             <h3 className="text-4xl font-black text-white mt-1 tracking-tight">{value}</h3>
           </div>
           <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300`}>

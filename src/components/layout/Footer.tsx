@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-white/5 bg-[#0a0a0f] pt-20 pb-10 text-gray-200 overflow-hidden">
+    <footer className="relative border-t border-white/5 bg-[#0a0a0a] pt-20 pb-10 text-gray-200 overflow-hidden">
       {/* Decorative Glows */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2"></div>
       
@@ -12,7 +12,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="col-span-1 md:col-span-5">
             <div className="flex items-center gap-4 mb-6 group cursor-pointer w-max">
-               <div className="w-[90px] h-[90px] overflow-hidden rounded-2xl p-[1px] border border-white/10 group-hover:shadow-[0_0_15px_rgba(162,122,232,0.4)] transition-all">
+               <div className="w-[90px] h-[90px] overflow-hidden rounded-2xl p-[1px] border border-white/10 group-hover:shadow-[0_0_15px_rgba(229,9,20,0.35)] transition-all">
                  <Image src="/logo-rock.jpg" alt="Wakoda Logo" width={90} height={90} className="w-full h-full object-cover" />
                </div>
                <span className="font-bebas text-3xl text-white tracking-tight">Wakoda</span>
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
         </div>
         
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-bold text-gray-600 uppercase tracking-widest">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-bold text-gray-500 uppercase tracking-widest">
           <p>&copy; {new Date().getFullYear()} Wakoda. Todos os direitos reservados.</p>
           <div className="flex gap-6">
             <Link href="https://twitter.com/Wakoda" target="_blank" className="hover:text-red-500 transition-colors">Twitter</Link>

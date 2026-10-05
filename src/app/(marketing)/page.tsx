@@ -40,33 +40,18 @@ export default async function LandingPage() {
       
       {/* Global CSS for custom animations */}
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes cyber-glitch {
-          0%, 100% { transform: translate(0); }
-          20% { transform: translate(-2px, 2px); }
-          40% { transform: translate(-2px, -2px); }
-          60% { transform: translate(2px, 2px); }
-          80% { transform: translate(2px, -2px); }
-        }
-        @keyframes scanline {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100vh); }
-        }
-        .animate-glitch:hover { animation: cyber-glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite; }
         .cyber-grid {
           background-size: 50px 50px;
           background-image: 
             linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
-        .cyber-clip { clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); }
-        .cyber-clip-reverse { clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 10% 100%, 0 70%); }
       `}} />
 
       {/* Background Cyber Grid & Scanline */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 cyber-grid opacity-50 sm:opacity-100"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D15] via-transparent to-[#0D0D15]"></div>
-        <div className="absolute top-0 w-full h-[5px] bg-red-500/30 blur-sm animate-[scanline_8s_linear_infinite]"></div>
         <div className="absolute top-0 right-[15%] w-[1px] h-full bg-gradient-to-b from-transparent via-red-500/40 to-transparent hidden sm:block"></div>
         <div className="absolute top-0 left-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-red-500/40 to-transparent hidden sm:block"></div>
         {/* Mobile Ambient Glows (Brighter) */}
@@ -102,7 +87,7 @@ export default async function LandingPage() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-6 pt-6 font-bold">
             <Link 
               href="/cadastro" 
-              className="group relative w-full sm:w-auto px-10 py-4 bg-red-500 text-black font-black text-sm transition-all flex items-center justify-center gap-3 skew-x-[-10deg] shadow-[0_0_30px_rgba(192,232,122,0.4)] hover:shadow-[0_0_50px_rgba(192,232,122,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
+              className="group relative w-full sm:w-auto px-10 py-4 bg-red-600 text-white font-black text-sm transition-all flex items-center justify-center gap-3 skew-x-[-10deg] shadow-[0_0_30px_rgba(229,9,20,0.35)] hover:shadow-[0_0_50px_rgba(192,232,122,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
             >
               <span className="skew-x-[10deg] flex items-center gap-2">
                 Cadastrar Escola Agora
@@ -123,21 +108,21 @@ export default async function LandingPage() {
       {/* DORES QUE RESOLVEMOS / BENEFÍCIOS */}
       <section id="beneficios" className="relative z-20 max-w-6xl mx-auto px-4 mt-12 mb-32">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
+          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 hover:border-red-500/50 transition-colors">
             <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
               <GraduationCap className="w-6 h-6 text-red-500" />
             </div>
             <h3 className="text-xl font-black text-white mb-3">Gestão Pedagógica Centralizada</h3>
             <p className="text-gray-400 text-sm leading-relaxed">Acompanhe frequência, diário de classe, plano de estudo e a evolução musical de cada aluno com agilidade.</p>
           </div>
-          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
+          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 hover:border-red-500/50 transition-colors">
             <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
               <Calendar className="w-6 h-6 text-red-500" />
             </div>
             <h3 className="text-xl font-black text-white mb-3">Adeus aos Conflitos</h3>
             <p className="text-gray-400 text-sm leading-relaxed">Elimine o choque de horários e salas. O calendário centraliza as grades dos professores e notifica os alunos sobre reposições.</p>
           </div>
-          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
+          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 hover:border-red-500/50 transition-colors">
             <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
               <Sparkles className="w-6 h-6 text-red-500" />
             </div>
@@ -160,7 +145,7 @@ export default async function LandingPage() {
 
         <div className="space-y-6">
           {/* Feature 1: Gestão Pedagógica */}
-          <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 cyber-clip overflow-hidden group hover:border-red-500/50 transition-colors">
+          <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 overflow-hidden group hover:border-red-500/50 transition-colors">
             <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
               <GraduationCap className="w-10 h-10 text-red-500 mb-6" />
               <h3 className="text-2xl font-black text-white mb-4">Gestão Pedagógica e Diário de Classe</h3>
@@ -175,7 +160,7 @@ export default async function LandingPage() {
             </div>
             <div className="md:w-1/2 bg-[#232336] relative border-t md:border-t-0 md:border-l border-white/10 min-h-[300px] flex items-center justify-center p-8">
                <div className="absolute inset-0 cyber-grid opacity-30"></div>
-               <div className="relative bg-[#12121A] border border-red-500/30 p-6 cyber-clip w-full shadow-[0_0_30px_rgba(162,122,232,0.1)]">
+               <div className="relative bg-[#12121A] border border-red-500/30 p-6 w-full shadow-[0_0_30px_rgba(162,122,232,0.1)]">
                  <div className="flex justify-between items-center mb-4">
                    <div className="text-white text-sm font-bold">Diário de Classe (Hoje)</div>
                    <div className="text-red-500 font-mono font-black text-xs uppercase tracking-wider">100% Concluído</div>
@@ -190,7 +175,7 @@ export default async function LandingPage() {
           </div>
 
           {/* Feature 2: Calendário */}
-          <div className="flex flex-col md:flex-row-reverse bg-[#1A1A24]/70 border border-white/10 cyber-clip-reverse overflow-hidden group hover:border-red-500/50 transition-colors">
+          <div className="flex flex-col md:flex-row-reverse bg-[#1A1A24]/70 border border-white/10 overflow-hidden group hover:border-red-500/50 transition-colors">
             <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
               <Calendar className="w-10 h-10 text-red-500 mb-6" />
               <h3 className="text-2xl font-black text-white mb-4">Calendário Inteligente</h3>
@@ -208,7 +193,7 @@ export default async function LandingPage() {
                <div className="relative grid grid-cols-3 gap-2 w-full">
                  {[1,2,3,4,5,6].map(i => (
                    <div key={i} className={`h-16 border border-white/5 flex flex-col justify-end p-2 ${i === 3 ? 'bg-red-500/10 border-red-500/30 shadow-[0_0_15px_rgba(192,232,122,0.2)]' : 'bg-black/50'}`}>
-                     {i === 3 && <div className="text-[10px] text-red-500 font-bold uppercase tracking-wider">Aula de Canto</div>}
+                     {i === 3 && <div className="text-xs text-red-500 font-bold uppercase tracking-wider">Aula de Canto</div>}
                    </div>
                  ))}
                </div>
@@ -216,7 +201,7 @@ export default async function LandingPage() {
           </div>
 
           {/* Feature 3: EAD / Conteúdos */}
-          <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 cyber-clip overflow-hidden group hover:border-red-500/50 transition-colors">
+          <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 overflow-hidden group hover:border-red-500/50 transition-colors">
             <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
               <Video className="w-10 h-10 text-red-500 mb-6" />
               <h3 className="text-2xl font-black text-white mb-4">Portal do Aluno EAD</h3>
@@ -231,7 +216,7 @@ export default async function LandingPage() {
             </div>
             <div className="md:w-1/2 bg-[#232336] relative border-t md:border-t-0 md:border-l border-white/10 min-h-[300px] flex items-center justify-center p-8">
                <div className="absolute inset-0 cyber-grid opacity-30"></div>
-               <div className="relative bg-[#12121A] border border-red-500/30 cyber-clip w-full h-40 flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(162,122,232,0.2)] transition-shadow cursor-pointer">
+               <div className="relative bg-[#12121A] border border-red-500/30 w-full h-40 flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(162,122,232,0.2)] transition-shadow cursor-pointer">
                  <div className="w-14 h-14 bg-red-500 rounded-full flex items-center justify-center pl-1 shadow-[0_0_20px_rgba(162,122,232,0.6)]">
                    <Play className="w-6 h-6 text-black" />
                  </div>
@@ -244,7 +229,7 @@ export default async function LandingPage() {
 
       {/* CALL TO ACTION FINAL */}
       <section className="max-w-4xl mx-auto px-4 mb-32 relative z-10 text-center">
-        <div className="bg-gradient-to-b from-[#1A1A24] to-[#0D0D15] border border-red-500/30 p-12 cyber-clip shadow-[0_0_50px_rgba(229,9,20,0.1)]">
+        <div className="bg-gradient-to-b from-[#1A1A24] to-[#0D0D15] border border-red-500/30 p-12 shadow-[0_0_50px_rgba(229,9,20,0.1)]">
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-6">
             Eleve o nível da sua escola de música hoje.
           </h2>
@@ -253,7 +238,7 @@ export default async function LandingPage() {
           </p>
           <Link 
             href="/cadastro" 
-            className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-red-500 text-black font-black text-lg transition-all skew-x-[-10deg] shadow-[0_0_30px_rgba(229,9,20,0.4)] hover:shadow-[0_0_50px_rgba(229,9,20,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
+            className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-red-600 text-white font-black text-lg transition-all skew-x-[-10deg] shadow-[0_0_30px_rgba(229,9,20,0.4)] hover:shadow-[0_0_50px_rgba(229,9,20,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
           >
             <span className="skew-x-[10deg] flex items-center gap-2">
               Começar Teste Gratuito

@@ -67,7 +67,7 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
               <span className={`w-2 h-2 rounded-full animate-ping ${student.status === 'active' ? 'bg-red-500' : 'bg-red-400'}`}></span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
+              <span className="text-xs font-black uppercase tracking-widest text-white/80">
                 {student.status === 'active' ? 'Aluno Ativo' : 'Aluno Pendente'}
               </span>
             </div>
@@ -85,12 +85,12 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
           <div className="shrink-0 flex gap-4">
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-[100px]">
               <Shield className="w-6 h-6 text-red-500 mx-auto mb-2" />
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Nível</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Nível</p>
               <p className="text-2xl font-black text-white">{student.level || 1}</p>
             </div>
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-[100px]">
               <Activity className="w-6 h-6 text-red-500 mx-auto mb-2" />
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">XP</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">XP</p>
               <p className="text-2xl font-black text-white">{student.xp_points || 0}</p>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
 
         {enrollments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 bg-black/20 rounded-2xl border border-white/5 border-dashed">
-            <GraduationCap className="w-12 h-12 text-gray-600 mb-4" />
+            <GraduationCap className="w-12 h-12 text-gray-500 mb-4" />
             <p className="text-gray-400 font-bold">Este aluno ainda não está matriculado em nenhum curso ou turma.</p>
           </div>
         ) : (
@@ -117,10 +117,10 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
                 
                 <div className="relative z-10 flex justify-between items-start mb-4">
                   <div>
-                    <span className="text-[10px] font-bold text-white uppercase tracking-widest mb-1 block">Curso</span>
+                    <span className="text-xs font-bold text-white uppercase tracking-widest mb-1 block">Curso</span>
                     <h3 className="font-black text-white text-xl">{enr.courses?.name || 'Curso Desconhecido'}</h3>
                   </div>
-                  <span className="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest bg-red-500/10 text-red-500 border border-red-500/20">
+                  <span className="px-3 py-1 rounded-lg text-xs font-black uppercase tracking-widest bg-red-500/10 text-red-500 border border-red-500/20">
                     {enr.status === 'active' ? 'Cursando' : 'Inativo'}
                   </span>
                 </div>

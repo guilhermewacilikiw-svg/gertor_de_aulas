@@ -79,12 +79,12 @@ export default function NovoCursoPage() {
               <label className="text-sm font-bold text-gray-400 uppercase tracking-widest ml-1">Nome do Curso</label>
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
-                <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-white transition-colors z-10" />
+                <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-white transition-colors z-10" />
                 <input
                   type="text"
                   name="name"
                   required
-                  className="relative w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all text-white font-medium placeholder:text-gray-600"
+                  className="relative w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all text-white font-medium placeholder:text-gray-500"
                   placeholder="Ex: Inglês Intermediário"
                 />
               </div>
@@ -94,10 +94,10 @@ export default function NovoCursoPage() {
               <label className="text-sm font-bold text-gray-400 uppercase tracking-widest ml-1">Descrição</label>
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
-                <AlignLeft className="absolute left-4 top-4 w-5 h-5 text-gray-500 group-focus-within:text-white transition-colors z-10" />
+                <AlignLeft className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-white transition-colors z-10" />
                 <textarea
                   name="description"
-                  className="relative w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all text-white font-medium placeholder:text-gray-600 min-h-[120px] resize-none"
+                  className="relative w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all text-white font-medium placeholder:text-gray-500 min-h-[120px] resize-none"
                   placeholder="Descrição opcional do curso..."
                 />
               </div>

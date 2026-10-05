@@ -50,7 +50,7 @@ export default function ProfessorAvaliacoesPage() {
         subtitle="Lance notas de 0 a 10, gerencie atividades didáticas e destaque critérios principais para suas turmas."
       />
 
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl">
+      <div className="bg-[#101010] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-xl font-bold text-white">Selecione uma Turma</h2>
@@ -85,8 +85,8 @@ export default function ProfessorAvaliacoesPage() {
                     <h3 className="font-bold text-white text-lg leading-tight mb-1 group-hover:text-red-400 transition-colors">
                       {cls.name}
                     </h3>
-                    <p className="text-sm text-gray-500 font-medium mb-6 flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5 text-gray-600" />
+                    <p className="text-sm text-gray-400 font-medium mb-6 flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-gray-500" />
                       <span>{cls.courses?.name || 'Curso'}</span>
                     </p>
 

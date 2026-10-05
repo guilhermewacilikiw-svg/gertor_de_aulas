@@ -44,7 +44,7 @@ export function LeadCaptureForm() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#12121A] to-[#0a0a0f] border border-white/10 rounded-2xl p-8 sm:p-12 space-y-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl relative overflow-hidden">
+    <div className="bg-gradient-to-br from-[#12121A] to-[#0a0a0a] border border-white/10 rounded-2xl p-8 sm:p-12 space-y-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl relative overflow-hidden">
       
       {/* Decorative Glows */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3"></div>
@@ -73,45 +73,45 @@ export function LeadCaptureForm() {
       <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Seu Nome Completo</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400">Seu Nome Completo</label>
             <input
               type="text"
               required
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
               placeholder="Ex: Gabriel Santos"
-              className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-gray-600 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
+              className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">E-mail Principal</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400">E-mail Principal</label>
             <input
               type="email"
               required
               value={formData.email}
               onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
               placeholder="seu.melhor@email.com"
-              className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-gray-600 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
+              className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">WhatsApp</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400">WhatsApp</label>
             <input
               type="tel"
               required
               value={formData.phone}
               onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
               placeholder="(11) 99999-9999"
-              className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-gray-600 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
+              className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Curso Desejado</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400">Curso Desejado</label>
             <select
               value={formData.courseInterest}
               onChange={(e) => setFormData(prev => ({ ...prev, courseInterest: e.target.value }))}
@@ -126,7 +126,7 @@ export function LeadCaptureForm() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Disponibilidade</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400">Disponibilidade</label>
             <select
               value={formData.preferredTime}
               onChange={(e) => setFormData(prev => ({ ...prev, preferredTime: e.target.value }))}

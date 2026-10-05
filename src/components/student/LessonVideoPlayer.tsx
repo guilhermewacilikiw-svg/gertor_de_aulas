@@ -17,7 +17,7 @@ export function LessonVideoPlayer({ videoUrl, thumbnailUrl, title, progress = 0 
   // If no video URL is provided, we just show an empty/disabled state
   if (!videoUrl) {
     return (
-      <div className="relative w-full h-48 sm:h-56 rounded-2xl bg-gradient-to-br from-[#12121A] to-[#0a0a0f] border border-white/5 overflow-hidden flex flex-col items-center justify-center mb-6 group">
+      <div className="relative w-full h-48 sm:h-56 rounded-2xl bg-gradient-to-br from-[#12121A] to-[#0a0a0a] border border-white/5 overflow-hidden flex flex-col items-center justify-center mb-6 group">
         <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-3">
           <Play className="w-5 h-5 text-white/20 ml-1 fill-current" />
         </div>

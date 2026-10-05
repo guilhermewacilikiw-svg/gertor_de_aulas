@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 
 export default function CadastroPage() {
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col bg-[#0a0a0f] text-gray-200">
+    <div className="min-h-screen relative overflow-hidden flex flex-col bg-[#0a0a0a] text-gray-200">
       
       {/* Background Cyber Grid */}
       <div className="absolute inset-0 cyber-grid opacity-40 pointer-events-none" />
@@ -17,17 +17,17 @@ export default function CadastroPage() {
       <header className="w-full border-b border-white/5 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto p-4 px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-4 group hover:opacity-80 transition-opacity">
-            <div className="w-[60px] h-[60px] overflow-hidden p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all cyber-clip">
+            <div className="w-[60px] h-[60px] overflow-hidden p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all">
               <Image src="/logo-rock.jpg" alt="Wakoda Logo" width={60} height={60} priority className="w-full h-full object-cover" />
             </div>
             <div>
               <span className="font-bebas text-2xl text-white tracking-tight drop-shadow-md uppercase">Wakoda</span>
-              <span className="block text-[10px] font-mono text-red-500 uppercase tracking-widest font-bold">Gestor de Aulas de Música</span>
+              <span className="block text-xs font-mono text-red-500 uppercase tracking-widest font-bold">Gestor de Aulas de Música</span>
             </div>
           </Link>
           
           <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-400 hover:text-white transition-colors cyber-clip-btn border border-red-500/20 bg-red-500/5 px-4 py-2">
+            <Link href="/" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-400 hover:text-white transition-colors border border-red-500/20 bg-red-500/5 px-4 py-2">
               <ArrowLeft className="w-4 h-4" /> Voltar ao Início
             </Link>
           </div>

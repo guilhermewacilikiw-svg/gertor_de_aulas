@@ -97,7 +97,7 @@ export function TrilhaAprendizagemCard({
                   <span className="text-xs font-bold text-white">Concluído</span>
                 )}
                 {isLocked && (
-                  <span className="text-xs font-semibold text-gray-500">Bloqueado</span>
+                  <span className="text-xs font-semibold text-gray-400">Bloqueado</span>
                 )}
               </div>
             </div>

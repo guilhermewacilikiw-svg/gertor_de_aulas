@@ -37,7 +37,7 @@ export default async function AlunoDesempenhoPage() {
   let totalPresent = 0;
   let totalAbsent = 0;
   
-  attendanceData?.forEach(a => {
+  attendanceData?.forEach((a, i) => {
     if (a.status === 'present') totalPresent++;
     if (a.status === 'absent' || a.status === 'justified') totalAbsent++;
   });
@@ -54,7 +54,7 @@ export default async function AlunoDesempenhoPage() {
   let completedContents = 0; // video, link
   let completedExercises = 0; // pdf, document
 
-  progressData?.filter(p => p.status === 'completed').forEach(p => {
+  progressData?.filter(p => p.status === 'completed').forEach((p, i) => {
     const type = (p.contents as any)?.type;
     if (type === 'pdf' || type === 'document') {
       completedExercises++;
@@ -69,9 +69,9 @@ export default async function AlunoDesempenhoPage() {
   // 3. Build Recent Activities Feed
   const recentActivities: PerformanceData['recentActivities'] = [];
 
-  attendanceData?.forEach(a => {
+  attendanceData?.forEach((a, i) => {
     recentActivities.push({
-      id: `att-${Math.random()}`,
+      id: `att-${i}`,
       date: new Date(a.created_at),
       type: 'attendance',
       title: (a.lessons as any)?.topic || 'Aula ao vivo',
@@ -79,12 +79,12 @@ export default async function AlunoDesempenhoPage() {
     });
   });
 
-  progressData?.filter(p => p.status === 'completed').forEach(p => {
+  progressData?.filter(p => p.status === 'completed').forEach((p, i) => {
     const type = (p.contents as any)?.type;
     const isExercise = type === 'pdf' || type === 'document';
 
     recentActivities.push({
-      id: `prog-${Math.random()}`,
+      id: `prog-${i}`,
       date: new Date(p.created_at),
       type: isExercise ? 'exercise' : 'content',
       title: (p.contents as any)?.title || 'Material Digital',

@@ -77,7 +77,7 @@ export function BibliotecaMateriais({
         <h3 className="font-bold text-white text-lg">Acervo Recente</h3>
         <button 
           onClick={() => setIsOpen(true)}
-          className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(229,9,20,0.35)] transition-all flex items-center gap-2 group"
         >
           <Upload className="w-4 h-4 stroke-[3] group-hover:-translate-y-1 transition-transform" />
           Novo Material
@@ -102,7 +102,7 @@ export function BibliotecaMateriais({
 
         <div className="overflow-x-auto relative z-10">
           <table className="w-full text-left text-sm text-gray-300">
-            <thead className="bg-black/40 text-[10px] uppercase font-black tracking-widest text-gray-500 border-b border-white/5">
+            <thead className="bg-black/40 text-xs uppercase font-black tracking-widest text-gray-400 border-b border-white/5">
               <tr>
                 <th className="p-5 pl-6">Material</th>
                 <th className="p-5">Público Alvo</th>
@@ -121,17 +121,17 @@ export function BibliotecaMateriais({
                       </div>
                       <div>
                         <div className="font-bold text-white text-sm group-hover:text-red-500 transition-colors">{mat.title}</div>
-                        <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-0.5">{mat.type}</div>
+                        <div className="text-xs text-gray-400 font-black uppercase tracking-widest mt-0.5">{mat.type}</div>
                       </div>
                     </div>
                   </td>
                   <td className="p-5">
-                    <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 text-gray-300">
+                    <span className="px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest border border-white/10 bg-white/5 text-gray-300">
                       {mat.target === 'all' ? 'Escola' : (mat.target.includes('module_') ? 'Módulo' : (mat.target.includes('student_') ? 'Aluno Específico' : mat.target))}
                     </span>
                   </td>
                   <td className="p-5 text-xs font-bold text-red-500">{mat.size}</td>
-                  <td className="p-5 text-xs font-medium text-gray-500">{mat.uploadedAt}</td>
+                  <td className="p-5 text-xs font-medium text-gray-400">{mat.uploadedAt}</td>
                   <td className="p-5 text-right pr-6">
                     <div className="flex items-center justify-end gap-2">
                       <a href={mat.url} target="_blank" rel="noreferrer" className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-red-500 transition-colors" title="Acessar Link">
@@ -146,7 +146,7 @@ export function BibliotecaMateriais({
               ))}
               {filteredMaterials.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="p-12 text-center text-gray-500">
+                  <td colSpan={5} className="p-12 text-center text-gray-400">
                     <Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
                     <p className="font-bold text-sm">Nenhum material encontrado.</p>
                   </td>
@@ -160,7 +160,7 @@ export function BibliotecaMateriais({
       {/* MODAL DE UPLOAD */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
+          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
             
             <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
@@ -185,14 +185,14 @@ export function BibliotecaMateriais({
               {errorMsg && (
                 <div className="p-3 border-l-4 border-red-500 bg-red-500/10 flex items-start gap-2">
                   <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                  <p className="text-[10px] font-mono text-red-400 uppercase">{errorMsg}</p>
+                  <p className="text-xs font-mono text-red-400 uppercase">{errorMsg}</p>
                 </div>
               )}
 
               <div className="space-y-1">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Título do Material</label>
                 <div className="relative">
-                  <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="text"
                     name="title"
@@ -243,7 +243,7 @@ export function BibliotecaMateriais({
               <div className="space-y-1">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Link do Conteúdo (URL)</label>
                 <div className="relative">
-                  <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="url"
                     name="url"
@@ -267,7 +267,7 @@ export function BibliotecaMateriais({
                 <button 
                   type="submit"
                   disabled={isPending}
-                  className="flex-1 py-3.5 rounded-xl bg-red-500 text-white font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 py-3.5 rounded-xl bg-red-500 text-white font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(229,9,20,0.35)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Upload className="w-4 h-4 stroke-[3]" /> {isPending ? 'SALVANDO...' : 'CADASTRAR LINK'}
                 </button>

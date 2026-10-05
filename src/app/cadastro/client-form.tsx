@@ -96,12 +96,12 @@ export function SaaSOnboardingForm() {
   if (confirmationSentEmail) {
     return (
       <div className="w-full max-w-xl mx-auto">
-        <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip text-center border border-red-500/30">
+        <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl text-center border border-red-500/30">
           <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-8 h-8 text-red-500 animate-pulse" />
           </div>
 
-          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[11px] font-bold uppercase tracking-widest mb-4">
+          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-xs font-bold uppercase tracking-widest mb-4">
             🎸 Quase lá! Backstage liberando...
           </div>
 
@@ -129,7 +129,7 @@ export function SaaSOnboardingForm() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/login"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-500 hover:bg-red-600 text-black font-black uppercase text-xs tracking-wider cyber-clip-btn transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-500 hover:bg-red-600 text-black font-black uppercase text-xs tracking-wider transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)]"
             >
               Ir para o Login
               <ArrowRight className="w-4 h-4" />
@@ -142,7 +142,7 @@ export function SaaSOnboardingForm() {
 
   return (
     <div className="w-full max-w-xl mx-auto">
-      <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip">
+      <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
             Crie a conta da sua Escola
@@ -153,7 +153,7 @@ export function SaaSOnboardingForm() {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/50 rounded-none cyber-clip-btn text-red-300 text-xs font-bold leading-relaxed animate-in fade-in">
+          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/50 rounded-none text-red-300 text-xs font-bold leading-relaxed animate-in fade-in">
             {error}
           </div>
         )}
@@ -180,7 +180,7 @@ export function SaaSOnboardingForm() {
               <label className="text-sm font-bold text-white/80 ml-1">
                 CPF ou CNPJ
               </label>
-              <span className="text-[11px] text-gray-400 font-mono">
+              <span className="text-xs text-gray-400 font-mono">
                 (Pessoa Física ou Jurídica)
               </span>
             </div>
@@ -194,7 +194,7 @@ export function SaaSOnboardingForm() {
                 placeholder="000.000.000-00 ou 00.000.000/0001-00"
               />
             </div>
-            <p className="text-[11px] text-gray-400 pl-1">
+            <p className="text-xs text-gray-400 pl-1">
               Aceita tanto o CPF do gestor/fundador quanto o CNPJ da instituição.
             </p>
           </div>
@@ -319,7 +319,7 @@ export function SaaSOnboardingForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center justify-center gap-2 cyber-clip-btn disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+            className="w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
           >
             {loading ? (
               <>

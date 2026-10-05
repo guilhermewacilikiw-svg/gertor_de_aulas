@@ -15,9 +15,15 @@ export default async function EscolaDashboard() {
   const { schoolId, schoolName } = authContext;
   const supabase = await createClient();
 
+  // Limites de "hoje" no fuso de Brasília (UTC-3, sem horário de verão)
+  const hoje = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());
+  const inicioDoDia = new Date(`${hoje}T00:00:00-03:00`);
+  const fimDoDia = new Date(inicioDoDia.getTime() + 24 * 60 * 60 * 1000);
+
   // Consultas paralelas otimizadas para alta escala
   const [
     { count: totalStudents },
+    { count: activeStudents },
     { count: totalTeachers },
     { count: totalClasses },
     { count: totalLessonsToday },
@@ -25,9 +31,15 @@ export default async function EscolaDashboard() {
     { data: topClasses }
   ] = await Promise.all([
     supabase.from('students').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase.from('students').select('id', { count: 'exact', head: true }).eq('school_id', schoolId).eq('status', 'active'),
     supabase.from('teachers').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
     supabase.from('classes').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
-    supabase.from('lessons').select('id', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase
+      .from('lessons')
+      .select('id', { count: 'exact', head: true })
+      .eq('school_id', schoolId)
+      .gte('scheduled_start', inicioDoDia.toISOString())
+      .lt('scheduled_start', fimDoDia.toISOString()),
     supabase
       .from('students')
       .select('id, name, email, status, created_at, enrollments(classes(name), courses(name))')
@@ -52,11 +64,11 @@ export default async function EscolaDashboard() {
         title="Dashboard"
         subtitle={`Visão consolidada da gestão acadêmica, turmas, corpo docente e alunos da ${schoolName}.`}
         action={
-          <div className="relative bg-[#0e0e14] border border-white/10 p-4 px-6 rounded-2xl flex flex-col items-center justify-center min-w-[140px] shadow-xl">
+          <div className="relative bg-[#101010] border border-white/10 p-4 px-6 rounded-2xl flex flex-col items-center justify-center min-w-[140px] shadow-xl">
             <span className="text-4xl font-black text-white drop-shadow-md">
-              {totalStudents || 0}
+              {activeStudents || 0}
             </span>
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Alunos Ativos</span>
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Alunos Ativos</span>
           </div>
         }
       />
@@ -84,13 +96,13 @@ export default async function EscolaDashboard() {
         <StatCard 
           title="Aulas do Dia" 
           value={totalLessonsToday || 0} 
-          subtitle="Agendadas no calendário" 
+          subtitle="Agendadas para hoje" 
           icon={<Calendar className="w-5 h-5" />} 
         />
       </div>
 
       {/* Atalhos Rápidos de Escalabilidade (Quick Actions) */}
-      <div className="bg-[#0f0f15] border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-[#101010] border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h3 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
             <Plus className="w-4 h-4 text-red-500" />
@@ -135,7 +147,7 @@ export default async function EscolaDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* TABELA DE ALUNOS MATRICULADOS ESCALÁVEL (8 Colunas) */}
-        <div className="lg:col-span-8 bg-[#0a0a0f] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between">
+        <div className="lg:col-span-8 bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between">
           <div>
             <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-black/40">
               <div>
@@ -159,7 +171,7 @@ export default async function EscolaDashboard() {
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm text-gray-300 whitespace-nowrap">
-                <thead className="bg-black/30 text-[10px] uppercase tracking-wider text-gray-400 border-b border-white/5">
+                <thead className="bg-black/30 text-xs uppercase tracking-wider text-gray-400 border-b border-white/5">
                   <tr>
                     <th className="p-4 px-6 font-black">Aluno</th>
                     <th className="p-4 font-black">Turma / Curso</th>
@@ -191,7 +203,7 @@ export default async function EscolaDashboard() {
                                 <span className="font-bold text-white group-hover:text-red-500 transition-colors block">
                                   {studentName}
                                 </span>
-                                <span className="text-xs text-gray-500 font-mono block">
+                                <span className="text-xs text-gray-400 font-mono block">
                                   {student.email || 'Sem e-mail informado'}
                                 </span>
                               </div>
@@ -210,10 +222,10 @@ export default async function EscolaDashboard() {
                           </td>
 
                           <td className="p-4">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${
                               student.status === 'active' 
                                 ? 'bg-red-500/10 text-red-400 border-red-500/20' 
-                                : 'bg-white/5 text-gray-500 border-white/10'
+                                : 'bg-white/5 text-gray-400 border-white/10'
                             }`}>
                               <span className={`w-1.5 h-1.5 rounded-full ${student.status === 'active' ? 'bg-red-500' : 'bg-gray-500'}`} />
                               {student.status === 'active' ? 'Ativo' : 'Inativo'}
@@ -234,10 +246,10 @@ export default async function EscolaDashboard() {
                     })
                   ) : (
                     <tr>
-                      <td colSpan={5} className="p-12 text-center text-gray-500">
-                        <Users className="w-10 h-10 text-gray-600 mx-auto mb-3 opacity-50" />
+                      <td colSpan={5} className="p-12 text-center text-gray-400">
+                        <Users className="w-10 h-10 text-gray-500 mx-auto mb-3 opacity-50" />
                         <p className="font-bold text-white text-base mb-1">Nenhum aluno cadastrado ainda</p>
-                        <p className="text-xs text-gray-500 mb-4">Comece adicionando seu primeiro aluno para acompanhar no dashboard.</p>
+                        <p className="text-xs text-gray-400 mb-4">Comece adicionando seu primeiro aluno para acompanhar no dashboard.</p>
                         <Link
                           href="/escola/alunos/novo"
                           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
@@ -253,7 +265,7 @@ export default async function EscolaDashboard() {
             </div>
           </div>
 
-          <div className="p-4 px-6 border-t border-white/5 bg-black/20 flex items-center justify-between text-xs text-gray-500">
+          <div className="p-4 px-6 border-t border-white/5 bg-black/20 flex items-center justify-between text-xs text-gray-400">
             <span>Exibindo os alunos mais recentes</span>
             <Link href="/escola/alunos" className="text-red-500 font-bold hover:underline flex items-center gap-1">
               Ver lista completa com busca e filtros &rarr;
@@ -262,7 +274,7 @@ export default async function EscolaDashboard() {
         </div>
 
         {/* PAINEL DE OCUPAÇÃO & VAGAS DE TURMAS (4 Colunas) */}
-        <div className="lg:col-span-4 bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
               <h3 className="text-base font-black uppercase text-white flex items-center gap-2">
@@ -294,7 +306,7 @@ export default async function EscolaDashboard() {
                         <span className="font-bold text-white text-sm group-hover:text-red-500 transition-colors line-clamp-1">
                           {cls.name}
                         </span>
-                        <span className="text-[10px] font-black uppercase tracking-wider text-red-400 bg-red-600/10 px-2 py-0.5 rounded-full border border-red-600/20 shrink-0">
+                        <span className="text-xs font-black uppercase tracking-wider text-red-400 bg-red-600/10 px-2 py-0.5 rounded-full border border-red-600/20 shrink-0">
                           {percent}%
                         </span>
                       </div>
@@ -314,7 +326,7 @@ export default async function EscolaDashboard() {
                   );
                 })
               ) : (
-                <div className="p-8 text-center text-gray-500 bg-white/[0.02] rounded-2xl border border-white/5">
+                <div className="p-8 text-center text-gray-400 bg-white/[0.02] rounded-2xl border border-white/5">
                   <p className="text-xs font-medium mb-3">Nenhuma turma cadastrada ainda.</p>
                   <Link
                     href="/escola/turmas/novo"
