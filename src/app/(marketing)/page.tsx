@@ -1,268 +1,150 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, Sparkles, CheckCircle2, Shield, Zap, Globe, HeartHandshake, Music, BookOpen, Layers, Users, Play, Calendar, GraduationCap, Video, Check } from 'lucide-react';
-import { createClient } from '@/lib/supabase/server';
+import { ArrowRight, Calendar, GraduationCap, Video, Check, Users } from 'lucide-react';
 
-export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+const BENEFICIOS = [
+  {
+    icone: GraduationCap,
+    titulo: 'Diário de classe sem papel',
+    texto: 'Registre presença, o que foi ensinado em cada aula e a evolução de cada aluno.',
+  },
+  {
+    icone: Calendar,
+    titulo: 'Agenda sem conflitos',
+    texto: 'Veja os horários de todos os professores e turmas em uma só tela.',
+  },
+  {
+    icone: Video,
+    titulo: 'Portal para o aluno estudar em casa',
+    texto: 'O aluno acessa vídeos, PDFs e o histórico das próprias aulas.',
+  },
+];
 
-export default async function LandingPage() {
-  const supabase = await createClient();
-  
-  // Fetch real-time counts with resilient timeout fallback
-  let totalStudents = 1420;
-  let totalClasses = 86;
-  let totalSchools = 42;
+const RECURSOS = [
+  {
+    icone: GraduationCap,
+    titulo: 'Gestão pedagógica',
+    texto: 'Acompanhe o progresso musical de cada turma sem planilhas espalhadas.',
+    itens: [
+      'Diário de aula com resumo do que foi feito',
+      'Controle de presença e faltas',
+      'Avaliações com notas de 0 a 10 por critério',
+    ],
+  },
+  {
+    icone: Calendar,
+    titulo: 'Calendário da escola',
+    texto: 'Organize as grades dos professores e saiba quem dá aula, quando e em qual sala.',
+    itens: [
+      'Horários semanais por turma',
+      'Visão da semana e do mês, com feriados nacionais',
+      'Agenda própria para professor e aluno',
+    ],
+  },
+  {
+    icone: Users,
+    titulo: 'Alunos, professores e turmas',
+    texto: 'Cadastre quem faz parte da escola e organize em turmas e cursos.',
+    itens: [
+      'Cadastro individual ou importação por planilha (CSV)',
+      'Turmas com limite de vagas e professor responsável',
+      'Cursos organizados em módulos e aulas',
+    ],
+  },
+];
 
-  try {
-    const counts = await Promise.race([
-      Promise.all([
-        supabase.from('students').select('*', { count: 'exact', head: true }),
-        supabase.from('classes').select('*', { count: 'exact', head: true }),
-        supabase.from('organizations').select('*', { count: 'exact', head: true })
-      ]),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB Timeout')), 1200))
-    ]);
-    if (counts && Array.isArray(counts)) {
-      if (counts[0]?.count) totalStudents = counts[0].count;
-      if (counts[1]?.count) totalClasses = counts[1].count;
-      if (counts[2]?.count) totalSchools = counts[2].count;
-    }
-  } catch {
-    // Resilient fallback: keeps landing page ultra fast and online even if DB is paused or unreachable
-  }
-
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('pt-BR').format(num);
-  };
-
+export default function LandingPage() {
   return (
-    <div className="bg-[#0D0D15] min-h-screen selection:bg-red-500/30 overflow-hidden relative font-sans">
-      
-      {/* Global CSS for custom animations */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes cyber-glitch {
-          0%, 100% { transform: translate(0); }
-          20% { transform: translate(-2px, 2px); }
-          40% { transform: translate(-2px, -2px); }
-          60% { transform: translate(2px, 2px); }
-          80% { transform: translate(2px, -2px); }
-        }
-        @keyframes scanline {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100vh); }
-        }
-        .animate-glitch:hover { animation: cyber-glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite; }
-        .cyber-grid {
-          background-size: 50px 50px;
-          background-image: 
-            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-        .cyber-clip { clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); }
-        .cyber-clip-reverse { clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 10% 100%, 0 70%); }
-      `}} />
-
-      {/* Background Cyber Grid & Scanline */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 cyber-grid opacity-50 sm:opacity-100"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D15] via-transparent to-[#0D0D15]"></div>
-        <div className="absolute top-0 w-full h-[5px] bg-red-500/30 blur-sm animate-[scanline_8s_linear_infinite]"></div>
-        <div className="absolute top-0 right-[15%] w-[1px] h-full bg-gradient-to-b from-transparent via-red-500/40 to-transparent hidden sm:block"></div>
-        <div className="absolute top-0 left-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-red-500/40 to-transparent hidden sm:block"></div>
-        {/* Mobile Ambient Glows (Brighter) */}
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[150vw] h-[150vw] bg-red-500/40 rounded-full blur-[120px] sm:hidden"></div>
-        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 w-[150vw] h-[150vw] bg-red-500/20 rounded-full blur-[120px] sm:hidden"></div>
-        <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-[150vw] h-[150vw] bg-red-500/35 rounded-full blur-[120px] sm:hidden"></div>
-      </div>
-
-      {/* HERO SECTION */}
-      <section className="relative pt-40 pb-20 px-4 min-h-[90vh] flex flex-col items-center justify-center text-center">
-        
-        {/* Floating Cyber Elements Behind Text */}
-
-
-        <div className="relative z-10 max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          
-          <div className="inline-flex items-center gap-3 px-6 py-2 bg-black/60 border border-white/10 mx-auto hover:border-red-500/50 transition-colors cursor-pointer group rounded-none skew-x-[-15deg]">
-            <Sparkles className="w-4 h-4 text-red-500 skew-x-[15deg]" />
-            <span className="text-xs font-black tracking-widest text-white/90 skew-x-[15deg]">A PLATAFORMA DEFINITIVA PARA ESCOLAS DE MÚSICA</span>
-          </div>
-
-          <h1 className="text-5xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 tracking-tight leading-[1.1]">
-            O Sistema Completo para <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-500 drop-shadow-[0_0_15px_rgba(162,122,232,0.5)]">
-              Professores e Escolas.
-            </span>
+    <div className="bg-[#0a0a0f] min-h-screen selection:bg-red-500/30 font-sans text-white">
+      {/* Início */}
+      <section className="pt-32 sm:pt-40 pb-16 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-sm text-red-400 mb-4">Para escolas de música e professores</p>
+          <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.1]">
+            Organize sua escola de música em um só lugar
           </h1>
-
-          <p className="text-lg sm:text-xl text-gray-100 sm:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4 font-medium drop-shadow-lg">
-            Centralize suas mensalidades, organize a agenda dos professores e ofereça um portal EAD premium para os seus alunos estudarem em casa. Esqueça as planilhas.
+          <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
+            Cadastre alunos, monte as turmas, controle a agenda dos professores e registre cada aula.
+            O aluno ganha um portal para estudar em casa.
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 pt-6 font-bold">
-            <Link 
-              href="/cadastro" 
-              className="group relative w-full sm:w-auto px-10 py-4 bg-red-500 text-black font-black text-sm transition-all flex items-center justify-center gap-3 skew-x-[-10deg] shadow-[0_0_30px_rgba(192,232,122,0.4)] hover:shadow-[0_0_50px_rgba(192,232,122,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
+          <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-3">
+            <Link
+              href="/cadastro"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 min-h-12 rounded-lg bg-red-600 hover:bg-red-500 text-white font-medium transition-colors"
             >
-              <span className="skew-x-[10deg] flex items-center gap-2">
-                Cadastrar Escola Agora
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
+              Criar conta grátis
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
-            
-            <Link 
-              href="/#recursos" 
-              className="w-full sm:w-auto px-10 py-4 bg-black text-white font-bold text-sm border border-white/20 hover:border-red-500 transition-all flex items-center justify-center skew-x-[-10deg] hover:bg-red-500/10"
+            <Link
+              href="/#recursos"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 min-h-12 rounded-lg border border-white/15 text-white hover:bg-white/5 transition-colors"
             >
-              <span className="skew-x-[10deg]">Conhecer Recursos</span>
+              Ver o que o sistema faz
             </Link>
           </div>
+          <p className="mt-4 text-sm text-gray-400">Sem cartão de crédito durante o período de testes.</p>
         </div>
       </section>
 
-      {/* DORES QUE RESOLVEMOS / BENEFÍCIOS */}
-      <section id="beneficios" className="relative z-20 max-w-6xl mx-auto px-4 mt-12 mb-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
-            <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
-              <GraduationCap className="w-6 h-6 text-red-500" />
+      {/* Benefícios */}
+      <section id="beneficios" className="px-4 py-16 border-t border-white/10">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+          {BENEFICIOS.map(({ icone: Icone, titulo, texto }) => (
+            <div key={titulo}>
+              <Icone className="w-6 h-6 text-red-500 mb-4" aria-hidden="true" />
+              <h2 className="text-lg font-medium">{titulo}</h2>
+              <p className="mt-2 text-gray-400">{texto}</p>
             </div>
-            <h3 className="text-xl font-black text-white mb-3">Gestão Pedagógica Centralizada</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Acompanhe frequência, diário de classe, plano de estudo e a evolução musical de cada aluno com agilidade.</p>
-          </div>
-          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
-            <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
-              <Calendar className="w-6 h-6 text-red-500" />
-            </div>
-            <h3 className="text-xl font-black text-white mb-3">Adeus aos Conflitos</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Elimine o choque de horários e salas. O calendário centraliza as grades dos professores e notifica os alunos sobre reposições.</p>
-          </div>
-          <div className="bg-[#1A1A24]/70 border border-white/10 p-8 cyber-clip hover:border-red-500/50 transition-colors">
-            <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
-              <Sparkles className="w-6 h-6 text-red-500" />
-            </div>
-            <h3 className="text-xl font-black text-white mb-3">Agregue Valor</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Diferencie sua escola da concorrência oferecendo um portal online onde o aluno acessa vídeos, partituras e o próprio diário de classe.</p>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* DETAILED FEATURES */}
-      <section id="recursos" className="max-w-6xl mx-auto px-4 mb-32 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4">
-            Tudo o que sua escola precisa
-          </h2>
-          <p className="text-gray-200 sm:text-gray-300 max-w-2xl mx-auto text-lg px-4 font-medium">
-            Substitua dezenas de ferramentas paralelas por um ecossistema único e focado no ensino musical.
+      {/* Recursos */}
+      <section id="recursos" className="px-4 py-16 border-t border-white/10">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">O que você encontra no sistema</h2>
+          <p className="mt-3 text-gray-400 max-w-2xl">
+            Cada perfil vê só o que precisa: a escola administra, o professor registra as aulas e o aluno acompanha o seu estudo.
           </p>
-        </div>
 
-        <div className="space-y-6">
-          {/* Feature 1: Gestão Pedagógica */}
-          <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 cyber-clip overflow-hidden group hover:border-red-500/50 transition-colors">
-            <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
-              <GraduationCap className="w-10 h-10 text-red-500 mb-6" />
-              <h3 className="text-2xl font-black text-white mb-4">Gestão Pedagógica e Diário de Classe</h3>
-              <p className="text-gray-300 leading-relaxed mb-6">
-                Tenha total controle sobre o progresso musical das turmas. Registre faltas, presenças, tarefas de prática e notas pedagógicas em tempo real.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Diário de bordo detalhado por aula</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Controle digital de frequência e chamadas</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Histórico de evolução e notas por aluno</li>
-              </ul>
-            </div>
-            <div className="md:w-1/2 bg-[#232336] relative border-t md:border-t-0 md:border-l border-white/10 min-h-[300px] flex items-center justify-center p-8">
-               <div className="absolute inset-0 cyber-grid opacity-30"></div>
-               <div className="relative bg-[#12121A] border border-red-500/30 p-6 cyber-clip w-full shadow-[0_0_30px_rgba(162,122,232,0.1)]">
-                 <div className="flex justify-between items-center mb-4">
-                   <div className="text-white text-sm font-bold">Diário de Classe (Hoje)</div>
-                   <div className="text-red-500 font-mono font-black text-xs uppercase tracking-wider">100% Concluído</div>
-                 </div>
-                 <div className="space-y-3">
-                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-red-500 w-[92%] shadow-[0_0_10px_rgba(162,122,232,0.5)]"></div></div>
-                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-white/20 w-[65%]"></div></div>
-                   <div className="h-2 bg-white/5 w-full"><div className="h-full bg-white/20 w-[80%]"></div></div>
-                 </div>
-               </div>
-            </div>
+          <div className="mt-12 divide-y divide-white/10 border-t border-white/10">
+            {RECURSOS.map(({ icone: Icone, titulo, texto, itens }) => (
+              <div key={titulo} className="py-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+                <div>
+                  <Icone className="w-6 h-6 text-red-500 mb-4" aria-hidden="true" />
+                  <h3 className="text-2xl font-semibold">{titulo}</h3>
+                  <p className="mt-3 text-gray-400">{texto}</p>
+                </div>
+                <ul className="space-y-3 self-center">
+                  {itens.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-gray-300">
+                      <Check className="w-5 h-5 text-red-500 shrink-0 mt-0.5" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-
-          {/* Feature 2: Calendário */}
-          <div className="flex flex-col md:flex-row-reverse bg-[#1A1A24]/70 border border-white/10 cyber-clip-reverse overflow-hidden group hover:border-red-500/50 transition-colors">
-            <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
-              <Calendar className="w-10 h-10 text-red-500 mb-6" />
-              <h3 className="text-2xl font-black text-white mb-4">Calendário Inteligente</h3>
-              <p className="text-gray-300 leading-relaxed mb-6">
-                Organize as grades de professores e evite conflitos. O aluno acessa a plataforma e sabe exatamente a hora e sala da próxima aula presencial.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Alocação de salas e professores</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Agenda individual do aluno e do instrutor</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Visualização unificada da semana</li>
-              </ul>
-            </div>
-            <div className="md:w-1/2 bg-[#232336] relative border-t md:border-t-0 md:border-r border-white/10 min-h-[300px] flex items-center justify-center p-8">
-               <div className="absolute inset-0 cyber-grid opacity-30"></div>
-               <div className="relative grid grid-cols-3 gap-2 w-full">
-                 {[1,2,3,4,5,6].map(i => (
-                   <div key={i} className={`h-16 border border-white/5 flex flex-col justify-end p-2 ${i === 3 ? 'bg-red-500/10 border-red-500/30 shadow-[0_0_15px_rgba(192,232,122,0.2)]' : 'bg-black/50'}`}>
-                     {i === 3 && <div className="text-xs text-red-500 font-bold uppercase tracking-wider">Aula de Canto</div>}
-                   </div>
-                 ))}
-               </div>
-            </div>
-          </div>
-
-          {/* Feature 3: EAD / Conteúdos */}
-          <div className="flex flex-col md:flex-row bg-[#1A1A24]/70 border border-white/10 cyber-clip overflow-hidden group hover:border-red-500/50 transition-colors">
-            <div className="p-8 sm:p-10 md:w-1/2 flex flex-col justify-center">
-              <Video className="w-10 h-10 text-red-500 mb-6" />
-              <h3 className="text-2xl font-black text-white mb-4">Portal do Aluno EAD</h3>
-              <p className="text-gray-300 leading-relaxed mb-6">
-                Forneça uma experiência de estudo em casa. Suba vídeos, partituras e crie o acervo digital exclusivo da sua escola de música.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Hospedagem de vídeos privados</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Diário de bordo após cada aula</li>
-                <li className="flex items-center gap-3 text-sm text-gray-300"><Check className="w-4 h-4 text-red-500" /> Anexos e arquivos em PDF / Áudio</li>
-              </ul>
-            </div>
-            <div className="md:w-1/2 bg-[#232336] relative border-t md:border-t-0 md:border-l border-white/10 min-h-[300px] flex items-center justify-center p-8">
-               <div className="absolute inset-0 cyber-grid opacity-30"></div>
-               <div className="relative bg-[#12121A] border border-red-500/30 cyber-clip w-full h-40 flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(162,122,232,0.2)] transition-shadow cursor-pointer">
-                 <div className="w-14 h-14 bg-red-500 rounded-full flex items-center justify-center pl-1 shadow-[0_0_20px_rgba(162,122,232,0.6)]">
-                   <Play className="w-6 h-6 text-black" />
-                 </div>
-               </div>
-            </div>
-          </div>
-
         </div>
       </section>
 
-      {/* CALL TO ACTION FINAL */}
-      <section className="max-w-4xl mx-auto px-4 mb-32 relative z-10 text-center">
-        <div className="bg-gradient-to-b from-[#1A1A24] to-[#0D0D15] border border-red-500/30 p-12 cyber-clip shadow-[0_0_50px_rgba(229,9,20,0.1)]">
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-6">
-            Eleve o nível da sua escola de música hoje.
-          </h2>
-          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-            Junte-se a dezenas de escolas e institutos de música que estão digitalizando suas metodologias e profissionalizando sua gestão.
+      {/* Chamada final */}
+      <section className="px-4 py-20 border-t border-white/10">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">Pronto para testar na sua escola?</h2>
+          <p className="mt-4 text-gray-300">
+            Crie a conta, cadastre a primeira turma e veja como fica a rotina com tudo organizado.
           </p>
-          <Link 
-            href="/cadastro" 
-            className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-red-500 text-black font-black text-lg transition-all skew-x-[-10deg] shadow-[0_0_30px_rgba(229,9,20,0.4)] hover:shadow-[0_0_50px_rgba(229,9,20,0.8)] border border-red-500 hover:bg-black hover:text-red-500"
+          <Link
+            href="/cadastro"
+            className="mt-8 inline-flex items-center justify-center gap-2 px-8 min-h-12 rounded-lg bg-red-600 hover:bg-red-500 text-white font-medium transition-colors"
           >
-            <span className="skew-x-[10deg] flex items-center gap-2">
-              Começar Teste Gratuito
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </span>
+            Criar conta grátis
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Link>
         </div>
       </section>
-
     </div>
   );
 }
