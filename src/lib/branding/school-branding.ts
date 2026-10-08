@@ -4,7 +4,7 @@ import { SchoolBranding } from '@/types/database';
 export const DEFAULT_BRANDING: SchoolBranding = {
   id: 'default',
   school_id: '11111111-1111-1111-1111-111111111111',
-  app_name: 'Wackoda Experience',
+  app_name: 'Wakoda Experience',
   primary_color: '#4F46E5',
   secondary_color: '#06B6D4',
   background_color: '#0F172A',

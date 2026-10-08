@@ -25,14 +25,14 @@ export function TrilhaAprendizagemCard({
   ]
 }: TrilhaAprendizagemProps) {
   return (
-    <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-6">
+    <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-6">
       
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div className="flex items-center gap-2">
           <Compass className="w-5 h-5 text-white" />
           <div>
-            <h3 className="text-lg font-black text-white">Trilha de Aprendizagem</h3>
+            <h3 className="text-lg font-semibold text-white">Trilha de Aprendizagem</h3>
             <p className="text-xs text-gray-400">{courseName}</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ export function TrilhaAprendizagemCard({
               key={mod.id}
               className={`relative z-10 p-4 rounded-2xl border transition-all flex items-center justify-between gap-4 ${
                 isCurrent
-                  ? 'bg-gradient-to-r from-red-600/20 to-red-900/20 border-red-500/20 shadow-lg'
+                  ? 'bg-gradient-to-r from-red-600/20 to-red-900/20 border-red-500/20'
                   : isCompleted
                   ? 'bg-red-600/10 border-white/20'
                   : 'bg-white/5 border-white/5 opacity-60'
@@ -89,7 +89,7 @@ export function TrilhaAprendizagemCard({
 
               <div>
                 {isCurrent && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-red-600 text-slate-950 font-black text-xs shadow-md">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-red-600 text-slate-950 font-semibold text-xs shadow-md">
                     Atual <ChevronRight className="w-3 h-3" />
                   </span>
                 )}

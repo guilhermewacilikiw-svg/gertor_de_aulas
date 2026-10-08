@@ -135,7 +135,7 @@ export default async function ProfessorCalendarioPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Meu Calendário</h1>
+        <h1 className="text-3xl font-semibold text-white tracking-tight">Meu Calendário</h1>
         <p className="text-sm text-gray-400 mt-1">Visualize suas aulas agendadas e os próximos eventos da instituição.</p>
       </div>
 

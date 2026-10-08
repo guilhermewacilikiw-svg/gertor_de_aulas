@@ -78,7 +78,7 @@ export default function ProfessorTurmasPage() {
       <PageHeader
         badgeIcon={<Users className="w-4 h-4" />}
         badgeText="Pedagógico"
-        title="Minhas Turmas"
+        title="Minhas turmas"
         subtitle="Acesse suas turmas para fazer o diário de classe e acompanhar a frequência dos alunos."
       />
 
@@ -100,11 +100,11 @@ export default function ProfessorTurmasPage() {
               <Link 
                 href={`/professor/turmas/${cls.id}`} 
                 key={cls.id} 
-                className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-all duration-300 group block"
+                className="bg-[#0f0f0f] border border-white/5 rounded-xl p-6 flex flex-col hover:border-red-600/30 transition-all duration-300 group block"
               >
                 <div className="flex items-start justify-between gap-4 mb-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
+                    <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-semibold text-xl shrink-0 group-hover:scale-105 transition-transform">
                       {cls.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -112,13 +112,13 @@ export default function ProfessorTurmasPage() {
                       <p className="text-xs text-gray-500 font-mono mt-1">{courseName}</p>
                     </div>
                   </div>
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-red-500/10 text-red-500 border-red-500/20">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-red-500/10 text-red-500 border-red-500/20">
                     {cls.level || 'Geral'}
                   </span>
                 </div>
 
                 <div className="space-y-3 mt-auto">
-                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Horário & Frequência</div>
+                  <div className="text-xs font-semibold text-gray-500 mb-1">Horário e frequência</div>
                   <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
                     <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
                       <Clock className="w-4 h-4 text-red-500" />

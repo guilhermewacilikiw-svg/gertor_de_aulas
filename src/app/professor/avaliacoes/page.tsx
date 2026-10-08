@@ -50,7 +50,7 @@ export default function ProfessorAvaliacoesPage() {
         subtitle="Lance notas de 0 a 10, gerencie atividades didáticas e destaque critérios principais para suas turmas."
       />
 
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl">
+      <div className="bg-[#0e0e14] border border-white/5 rounded-xl p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-xl font-bold text-white">Selecione uma Turma</h2>
@@ -71,7 +71,7 @@ export default function ProfessorAvaliacoesPage() {
               const studentsCount = cls.enrollments?.[0]?.count || 0;
               return (
                 <Link href={`/professor/avaliacoes/lancar?classId=${cls.id}`} key={cls.id} className="group relative block">
-                  <div className="bg-black/40 border border-white/5 rounded-2xl p-6 hover:border-red-500/40 hover:shadow-[0_0_25px_rgba(239,68,68,0.15)] transition-all shadow-lg flex flex-col h-full">
+                  <div className="bg-black/40 border border-white/5 rounded-2xl p-6 hover:border-red-500/40 hover:shadow-[0_0_25px_rgba(239,68,68,0.15)] transition-all flex flex-col h-full">
                     
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white shadow-md shadow-red-600/20 group-hover:scale-105 transition-transform">

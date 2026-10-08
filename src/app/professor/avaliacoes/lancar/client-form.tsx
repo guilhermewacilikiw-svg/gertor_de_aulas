@@ -358,15 +358,15 @@ export default function LancarAvaliacaoClient() {
   if (!classId) return <div className="text-center text-gray-400 py-12">Turma não especificada.</div>;
   if (loading) return <div className="text-center text-gray-400 py-12">Carregando lista de alunos...</div>;
   if (success) return (
-    <div className="bg-[#0e0e14] border border-red-500/30 rounded-3xl p-12 text-center flex flex-col items-center max-w-xl mx-auto my-12 shadow-2xl animate-in zoom-in-95 duration-300">
+    <div className="bg-[#0e0e14] border border-red-500/30 rounded-xl p-12 text-center flex flex-col items-center max-w-xl mx-auto my-12 animate-in zoom-in-95 duration-300">
       <div className="w-20 h-20 rounded-2xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-500 mb-6 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
         <CheckCircle2 className="w-10 h-10" />
       </div>
-      <h2 className="text-2xl font-black text-white">Avaliações Salvas com Sucesso!</h2>
+      <h2 className="text-2xl font-semibold text-white">Avaliações Salvas com Sucesso!</h2>
       <p className="text-gray-400 mt-2 text-sm max-w-md">
         As notas de 0 a 10 e atividades destacadas foram salvas e enviadas aos alunos da turma.
       </p>
-      <div className="mt-6 flex items-center gap-2 text-xs font-bold text-red-400 uppercase tracking-widest">
+      <div className="mt-6 flex items-center gap-2 text-xs font-bold text-red-400">
         <Loader2 className="w-4 h-4 animate-spin" />
         Redirecionando...
       </div>
@@ -391,30 +391,30 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Class Header Banner */}
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-[#0e0e14] border border-white/5 rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white shadow-lg shadow-red-600/20 shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white shrink-0">
             <Star className="w-7 h-7 fill-white/20" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-black uppercase tracking-wider text-red-500">
+              <span className="text-xs font-semibold text-red-500">
                 {classInfo?.courses?.name || 'Curso'}
               </span>
               <span className="text-xs text-gray-500">•</span>
               <span className="text-xs text-gray-400">{students.length} Alunos Matriculados</span>
             </div>
-            <h1 className="text-2xl font-black text-white mt-0.5">{classInfo?.name}</h1>
+            <h1 className="text-2xl font-semibold text-white mt-0.5">{classInfo?.name}</h1>
           </div>
         </div>
       </div>
 
       {/* Configuration Section: Title & Activities */}
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
+      <div className="bg-[#0e0e14] border border-white/5 rounded-xl p-6 sm:p-8 space-y-8">
         
         {/* Assessment Title */}
         <div>
-          <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-gray-400 mb-2">
             Título da Avaliação
           </label>
           <input 
@@ -432,7 +432,7 @@ export default function LancarAvaliacaoClient() {
             <div>
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-white">
                   Atividades & Critérios Avaliados (Notas de 0 a 10)
                 </h3>
               </div>
@@ -463,7 +463,7 @@ export default function LancarAvaliacaoClient() {
                     title={act.isHighlighted ? 'Remover destaque' : 'Destacar esta atividade'}
                     className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all ${
                       act.isHighlighted
-                        ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/30 scale-105'
+                        ? 'bg-amber-500 text-black scale-105'
                         : 'bg-white/5 text-gray-400 hover:text-amber-400 hover:bg-white/10'
                     }`}
                   >
@@ -474,7 +474,7 @@ export default function LancarAvaliacaoClient() {
                       {act.name}
                     </p>
                     {act.isHighlighted && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-400">
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-400">
                         ⭐ Em Destaque
                       </span>
                     )}
@@ -518,7 +518,7 @@ export default function LancarAvaliacaoClient() {
               type="button"
               onClick={() => handleAddActivity()}
               disabled={!newActivityName.trim()}
-              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shrink-0"
+              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shrink-0"
             >
               <Plus className="w-4 h-4" />
               Adicionar Atividade
@@ -550,11 +550,11 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Student Grades Entry Table */}
-      <div className="bg-[#0e0e14] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="bg-[#0e0e14] border border-white/5 rounded-xl p-6 sm:p-8 space-y-6">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-white/5">
           <div>
-            <h2 className="text-lg font-black text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
               <Award className="w-5 h-5 text-red-500" />
               Lançamento de Notas dos Alunos
             </h2>
@@ -586,11 +586,11 @@ export default function LancarAvaliacaoClient() {
                     
                     {/* Student Info */}
                     <div className="flex items-center gap-3 min-w-[220px]">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-black text-base shrink-0 shadow-md">
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-semibold text-base shrink-0 shadow-md">
                         {student.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="truncate">
-                        <p className="font-black text-white text-base truncate">{student.name}</p>
+                        <p className="font-semibold text-white text-base truncate">{student.name}</p>
                         <p className="text-xs text-gray-500 font-mono">ID: {student.student_code || '---'}</p>
                       </div>
                     </div>
@@ -613,7 +613,7 @@ export default function LancarAvaliacaoClient() {
                                 {act.isHighlighted ? '⭐ ' : ''}{act.name}
                               </span>
                               {act.isHighlighted && (
-                                <span className="text-[9px] font-black uppercase text-amber-400 bg-amber-500/20 px-1.5 py-0.5 rounded">
+                                <span className="text-xs font-semibold text-amber-400 bg-amber-500/20 px-1.5 py-0.5 rounded">
                                   Destaque
                                 </span>
                               )}
@@ -627,7 +627,7 @@ export default function LancarAvaliacaoClient() {
                                 step="0.1" 
                                 value={actScore}
                                 onChange={(e) => handleScoreChange(student.id, act.id, e.target.value)}
-                                className={`w-full pl-3 pr-10 py-1.5 bg-black border rounded-lg text-white font-black text-right focus:outline-none transition-colors text-base ${
+                                className={`w-full pl-3 pr-10 py-1.5 bg-black border rounded-lg text-white font-semibold text-right focus:outline-none transition-colors text-base ${
                                   act.isHighlighted
                                     ? 'border-amber-500/50 focus:border-amber-400 text-amber-300'
                                     : 'border-white/10 focus:border-red-500'
@@ -644,13 +644,13 @@ export default function LancarAvaliacaoClient() {
 
                     {/* Student Average Pill */}
                     <div className="flex items-center lg:flex-col items-end justify-between lg:justify-center border-t lg:border-t-0 pt-3 lg:pt-0 border-white/5 lg:pl-4">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 lg:mb-1">
+                      <span className="text-xs font-bold text-gray-500 lg:mb-1">
                         Média Final
                       </span>
                       <div className="flex items-center gap-2">
-                        <div className={`px-3 py-1.5 rounded-xl border text-sm font-black flex items-center gap-1.5 ${badge.bg}`}>
+                        <div className={`px-3 py-1.5 rounded-xl border text-sm font-semibold flex items-center gap-1.5 ${badge.bg}`}>
                           <span>{average.toFixed(1)}</span>
-                          <span className="text-[10px] opacity-75">/ 10</span>
+                          <span className="text-xs opacity-75">/ 10</span>
                         </div>
                       </div>
                     </div>
@@ -692,7 +692,7 @@ export default function LancarAvaliacaoClient() {
       </div>
 
       {/* Save Action Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0e0e14] border border-white/5 rounded-3xl p-6 shadow-xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0e0e14] border border-white/5 rounded-xl p-6">
         <div className="text-xs text-gray-400">
           Certifique-se de preencher as notas de todos os alunos antes de publicar.
         </div>
@@ -709,7 +709,7 @@ export default function LancarAvaliacaoClient() {
             type="button"
             onClick={handleSave}
             disabled={saving || students.length === 0}
-            className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white px-8 py-3.5 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-red-600/30 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-initial"
+            className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white px-8 py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-initial"
           >
             {saving ? (
               <>

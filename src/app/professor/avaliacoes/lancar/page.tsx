@@ -12,7 +12,7 @@ export default function LancarAvaliacaoPage() {
       </Link>
 
       <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Lançar Evolução Mensal</h1>
+        <h1 className="text-3xl font-semibold text-white tracking-tight">Lançar Evolução Mensal</h1>
         <p className="text-sm text-gray-400 mt-1">
           Avalie o desempenho geral dos alunos desta turma.
         </p>

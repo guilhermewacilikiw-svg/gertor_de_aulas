@@ -32,8 +32,8 @@ export default async function ProfessorLayout({
 
   const links: DashboardLink[] = [
     { label: 'Painel', href: '/professor/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { label: 'Minhas Turmas', href: '/professor/turmas', icon: <Users className="w-4 h-4" /> },
-    { label: 'Meus Alunos', href: '/professor/alunos', icon: <Users className="w-4 h-4" /> },
+    { label: 'Minhas turmas', href: '/professor/turmas', icon: <Users className="w-4 h-4" /> },
+    { label: 'Meus alunos', href: '/professor/alunos', icon: <Users className="w-4 h-4" /> },
     { label: 'Materiais', href: '/professor/materiais', icon: <BookOpen className="w-4 h-4" /> },
     { label: 'Avaliações', href: '/professor/avaliacoes', icon: <Star className="w-4 h-4" /> },
     { label: 'Calendário', href: '/professor/calendario', icon: <Calendar className="w-4 h-4" /> },
@@ -41,7 +41,7 @@ export default async function ProfessorLayout({
 
   return (
     <DashboardLayout
-      portalName="Portal do Professor"
+      portalName="Portal do professor"
       userName={teacherName}
       links={links}
     >

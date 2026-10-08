@@ -40,7 +40,7 @@ export default async function TurmaPage({ params }: { params: Promise<{ id: stri
       <div className="max-w-4xl mx-auto py-12 text-center">
         <h2 className="text-2xl font-bold mb-4 text-white">Turma não encontrada</h2>
         <Link href="/professor/turmas" className="text-red-500 hover:underline">
-          &larr; Voltar para Minhas Turmas
+          &larr; Voltar para Minhas turmas
         </Link>
       </div>
     );
@@ -57,31 +57,31 @@ export default async function TurmaPage({ params }: { params: Promise<{ id: stri
     <div className="max-w-5xl mx-auto space-y-6 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <Link href="/professor/turmas" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-medium">
         <ArrowLeft className="w-4 h-4" />
-        Voltar para Turmas
+        Voltar para turmas
       </Link>
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <div className="flex items-center gap-3 text-sm text-red-500 font-semibold mb-2 uppercase tracking-wider">
+          <div className="flex items-center gap-3 text-sm text-red-500 font-semibold mb-2">
             {classData.courses?.name}
           </div>
-          <h1 className="text-3xl font-black text-white mb-2">{classData.name}</h1>
+          <h1 className="text-3xl font-semibold text-white mb-2">{classData.name}</h1>
           <p className="text-gray-400">Histórico de aulas e registros desta turma.</p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <Link
             href={`/professor/avaliacoes/lancar?classId=${classData.id}`}
-            className="px-5 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-amber-500/10 active:scale-95"
+            className="px-5 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-sm font-bold flex items-center gap-2 transition-all active:scale-95"
           >
             <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            Lançar Avaliações
+            Lançar avaliações
           </Link>
           <CreateLessonButton classId={classData.id} />
         </div>
       </div>
 
-      <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-8 mt-8 shadow-lg">
-        <h2 className="text-xl font-bold text-white mb-6">Aulas Registradas</h2>
+      <div className="bg-[#0f0f0f] border border-white/5 rounded-xl p-8 mt-8">
+        <h2 className="text-xl font-bold text-white mb-6">Aulas registradas</h2>
         
         <div className="space-y-4">
           {(!lessons || lessons.length === 0) && (

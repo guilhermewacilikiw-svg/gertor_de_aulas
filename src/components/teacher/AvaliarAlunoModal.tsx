@@ -175,16 +175,16 @@ export function AvaliarAlunoModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-[#0e0e14] border border-white/10 rounded-3xl p-6 shadow-2xl text-white space-y-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-[#0e0e14] border border-white/10 rounded-xl p-6 text-white space-y-6 max-h-[90vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-red-400 uppercase tracking-wider">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-red-400">
               <Award className="w-4 h-4" />
               Avaliação Pedagógica (Notas 0 a 10)
             </div>
-            <h2 className="text-xl font-black text-white mt-0.5">{studentName}</h2>
+            <h2 className="text-xl font-semibold text-white mt-0.5">{studentName}</h2>
             <p className="text-xs text-gray-400">{categoryName}</p>
           </div>
           <button
@@ -208,7 +208,7 @@ export function AvaliarAlunoModal({
           {/* Criteria & Activities list */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
+              <label className="text-xs font-bold text-gray-300 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
                 Atividades & Notas (0 a 10)
               </label>
@@ -241,18 +241,18 @@ export function AvaliarAlunoModal({
                       >
                         <Star className={`w-3.5 h-3.5 ${c.isHighlighted ? 'fill-black' : ''}`} />
                       </button>
-                      <span className={`truncate ${c.isHighlighted ? 'text-amber-300 font-black' : 'text-gray-200'}`}>
+                      <span className={`truncate ${c.isHighlighted ? 'text-amber-300 font-semibold' : 'text-gray-200'}`}>
                         {c.name}
                       </span>
                       {c.isHighlighted && (
-                        <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-black">
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold">
                           Destaque
                         </span>
                       )}
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className={`text-sm font-black ${c.isHighlighted ? 'text-amber-300' : 'text-white'}`}>
+                      <span className={`text-sm font-semibold ${c.isHighlighted ? 'text-amber-300' : 'text-white'}`}>
                         {c.score.toFixed(1)}
                       </span>
                       <button
@@ -302,7 +302,7 @@ export function AvaliarAlunoModal({
 
           {/* Feedback Notes */}
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-300">
+            <label className="text-xs font-bold text-gray-300">
               Observações & Recomendações
             </label>
             <textarea
@@ -318,7 +318,7 @@ export function AvaliarAlunoModal({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-black text-sm shadow-xl shadow-red-600/20 transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50"
+            className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

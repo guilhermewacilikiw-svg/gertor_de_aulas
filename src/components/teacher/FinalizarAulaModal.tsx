@@ -85,13 +85,13 @@ export function FinalizarAulaModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl bg-neutral-900 border border-slate-800 rounded-3xl p-6 shadow-2xl text-white space-y-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-xl bg-neutral-900 border border-slate-800 rounded-xl p-6 text-white space-y-6 max-h-[90vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div>
-            <span className="text-xs font-bold text-white uppercase tracking-wider">Finalização Rápida</span>
-            <h2 className="text-xl font-black text-white">{className}</h2>
+            <span className="text-xs font-bold text-white">Finalização Rápida</span>
+            <h2 className="text-xl font-semibold text-white">{className}</h2>
             <p className="text-xs text-gray-400 mt-0.5">{lessonTopic}</p>
           </div>
           <button
@@ -120,7 +120,7 @@ export function FinalizarAulaModal({
           
           {/* STEP 1: Presença */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
+            <label className="text-xs font-bold text-gray-300 flex items-center gap-2">
               <UserCheck className="w-4 h-4 text-white" />
               1. Confirmar Presença
             </label>
@@ -151,7 +151,7 @@ export function FinalizarAulaModal({
 
           {/* STEP 2: Conteúdo e Resumo */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
+            <label className="text-xs font-bold text-gray-300 flex items-center gap-2">
               <FileText className="w-4 h-4 text-red-500" />
               2. Resumo do Conteúdo Trabalhado
             </label>
@@ -167,7 +167,7 @@ export function FinalizarAulaModal({
 
           {/* STEP 3: Orientação para Prática */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
+            <label className="text-xs font-bold text-gray-300 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-white" />
               3. Orientação de Prática para o Aluno
             </label>
@@ -182,7 +182,7 @@ export function FinalizarAulaModal({
 
           {/* STEP 4: Vídeo da Aula */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
+            <label className="text-xs font-bold text-gray-300 flex items-center gap-2">
               <Video className="w-4 h-4 text-red-500" />
               4. Vídeo da Aula (Gravada)
             </label>
@@ -209,7 +209,7 @@ export function FinalizarAulaModal({
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 text-white font-extrabold text-base shadow-xl transition-all flex items-center justify-center gap-2 active:scale-98"
+              className="w-full py-3.5 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 text-white font-extrabold text-base transition-all flex items-center justify-center gap-2 active:scale-98"
             >
               {loading ? (
                 <>

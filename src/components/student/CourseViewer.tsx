@@ -139,7 +139,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
             <div className="w-full space-y-6">
               
               {/* Media Player Area */}
-              <div className="w-full aspect-video bg-neutral-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative flex items-center justify-center">
+              <div className="w-full aspect-video bg-neutral-900 rounded-xl overflow-hidden border border-white/10 relative flex items-center justify-center">
                 {(activeContent.type === 'video' || activeContent.type === 'link') && activeContent.url ? (
                   <iframe 
                     src={getEmbedUrl(activeContent.url)}
@@ -165,16 +165,16 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
               </div>
 
               {/* Title & Actions */}
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 bg-neutral-900/30 p-6 rounded-3xl border border-white/10">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 bg-neutral-900/30 p-6 rounded-xl border border-white/10">
                 <div>
-                  <h2 className="text-2xl font-black">{activeContent.title}</h2>
+                  <h2 className="text-2xl font-semibold">{activeContent.title}</h2>
                   <p className="text-sm text-white mt-1 font-medium">{activeModule?.title}</p>
                 </div>
 
                 <button 
                   onClick={handleMarkComplete}
                   disabled={isMarking}
-                  className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2 shadow-lg border whitespace-nowrap active:scale-95 ${
+                  className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all flex items-center gap-2 border whitespace-nowrap active:scale-95 ${
                     activeContent.completed 
                     ? 'bg-red-600/10 text-white border-white/20 hover:bg-white/10' 
                     : 'bg-white text-white border-transparent hover:brightness-110'
@@ -198,7 +198,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
       {/* RIGHT AREA: PLAYLIST (ACCORDION) */}
       <div className="w-full md:w-80 lg:w-96 bg-neutral-900 border-l border-white/10 flex flex-col h-[50vh] md:h-full shrink-0">
         <div className="p-6 border-b border-white/10 shrink-0 bg-black/20">
-          <h2 className="text-lg font-black text-white">Conteúdo do Curso</h2>
+          <h2 className="text-lg font-semibold text-white">Conteúdo do Curso</h2>
           <div className="mt-2 w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
             <div 
               className="bg-red-600 h-full rounded-full transition-all duration-1000" 
@@ -223,7 +223,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                   className="w-full p-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                 >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Módulo {mIdx + 1}</span>
+                    <span className="text-xs font-bold text-gray-500">Módulo {mIdx + 1}</span>
                     <h3 className="text-sm font-bold text-gray-200 line-clamp-2">{module.title}</h3>
                   </div>
                   {isExpanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
@@ -250,7 +250,7 @@ export function CourseViewer({ courseId, courseName, modules, studentId, schoolI
                             <p className={`text-sm font-medium line-clamp-2 ${isActive ? 'text-white' : 'text-gray-300'}`}>
                               {cIdx + 1}. {content.title}
                             </p>
-                            <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">{content.type}</p>
+                            <p className="text-xs text-gray-500 mt-1">{content.type}</p>
                           </div>
                         </button>
                       );

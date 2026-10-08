@@ -54,7 +54,7 @@ export default function ProfessorMateriaisPage() {
       
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Materiais e Cursos</h1>
+          <h1 className="text-3xl font-semibold text-white tracking-tight">Materiais e Cursos</h1>
           <p className="text-sm text-gray-400 mt-1">
             Gerencie os vídeos complementares e PDFs disponibilizados para seus alunos.
           </p>
@@ -73,7 +73,7 @@ export default function ProfessorMateriaisPage() {
           </div>
           <Link 
             href="/professor/materiais/novo"
-            className="w-full sm:w-auto bg-red-600 hover:bg-red-600/90 text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-600/90 text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
           >
             <Plus className="w-5 h-5" />
             Novo Material
@@ -84,7 +84,7 @@ export default function ProfessorMateriaisPage() {
       {loading ? (
         <div className="p-12 text-center text-gray-400">Carregando seus materiais...</div>
       ) : filteredContents.length === 0 ? (
-        <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-12 flex flex-col items-center justify-center text-center shadow-lg">
+        <div className="bg-[#0f0f0f] border border-white/5 rounded-xl p-12 flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 bg-red-700/10 rounded-full flex items-center justify-center mb-4">
             <Video className="w-8 h-8 text-red-700" />
           </div>
@@ -104,7 +104,7 @@ export default function ProfessorMateriaisPage() {
           {filteredContents.map((content) => {
             const isVideo = content.type === 'video' || content.type === 'link';
             return (
-              <div key={content.id} className="bg-[#0f0f0f] border border-white/5 rounded-3xl overflow-hidden flex flex-col shadow-lg hover:border-red-600/30 transition-all group">
+              <div key={content.id} className="bg-[#0f0f0f] border border-white/5 rounded-xl overflow-hidden flex flex-col hover:border-red-600/30 transition-all group">
                 {/* Thumbnail Area */}
                 <div className="aspect-video bg-black relative flex items-center justify-center overflow-hidden">
                   {content.cover_image ? (
@@ -119,11 +119,11 @@ export default function ProfessorMateriaisPage() {
                   )}
                   
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-black/60 text-white backdrop-blur-md border border-white/10">
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-black/60 text-white backdrop-blur-md border border-white/10">
                       {content.type === 'link' ? 'VÍDEO (LINK)' : content.type.toUpperCase()}
                     </span>
                     {content.status === 'published' && (
-                      <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-500/20 text-red-500 backdrop-blur-md border border-red-500/30">
+                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-red-500/20 text-red-500 backdrop-blur-md border border-red-500/30">
                         PÚBLICO
                       </span>
                     )}

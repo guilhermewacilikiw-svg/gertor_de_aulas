@@ -137,7 +137,7 @@ export default function NovoMaterialPage() {
       </Link>
 
       <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Novo Material Complementar</h1>
+        <h1 className="text-3xl font-semibold text-white tracking-tight">Novo Material Complementar</h1>
         <p className="text-sm text-gray-400 mt-1">
           Adicione um vídeo ou documento de apoio para seus alunos estudarem em casa.
         </p>
@@ -146,7 +146,7 @@ export default function NovoMaterialPage() {
       {loadingInitial ? (
         <div className="p-12 text-center text-gray-400">Carregando turmas...</div>
       ) : (
-        <form onSubmit={handleSubmit} className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-8 shadow-lg space-y-6">
+        <form onSubmit={handleSubmit} className="bg-[#0f0f0f] border border-white/5 rounded-xl p-8 space-y-6">
           
           <div className="space-y-4 pt-4">
             <div>
@@ -209,7 +209,7 @@ export default function NovoMaterialPage() {
             <button 
               type="submit"
               disabled={loading}
-              className="bg-red-600 hover:bg-red-600/90 text-white px-8 py-3.5 rounded-xl font-black flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50"
+              className="bg-red-600 hover:bg-red-600/90 text-white px-8 py-3.5 rounded-xl font-semibold flex items-center gap-2 transition-all active:scale-95 disabled:opacity-50"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle2 className="w-5 h-5" />}
               Salvar e Publicar

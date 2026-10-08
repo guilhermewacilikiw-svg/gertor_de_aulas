@@ -58,7 +58,7 @@ export default function ProfessorDashboard() {
             const { count: classesCount } = await supabase
               .from('classes')
               .select('id', { count: 'exact', head: true })
-              .eq('school_id', teacherRecord.school_id)
+              .eq('teacher_id', teacherRecord.id)
               .eq('status', 'active');
               
             setActiveClassesCount(classesCount || 0);
@@ -83,17 +83,17 @@ export default function ProfessorDashboard() {
         {/* Header Hero Padronizado */}
         <PageHeader
           badgeIcon={<Users className="w-4 h-4" />}
-          badgeText="Portal do Professor"
+          badgeText="Portal do professor"
           title={`Olá, Prof. ${teacherName || 'Docente'}`}
           subtitle="Acompanhe suas aulas do dia, lance diários e controle presenças da sua turma."
           action={
             lessons.length > 0 ? (
               <button
                 onClick={() => openFinalize(lessons[0])}
-                className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.35)] transition-all flex items-center justify-center gap-2 active:scale-95"
+                className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-xs shadow-[0_0_20px_rgba(239,68,68,0.35)] transition-all flex items-center justify-center gap-2 active:scale-95"
               >
                 <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
-                <span>Finalizar Aula Atual</span>
+                <span>Finalizar aula atual</span>
               </button>
             ) : undefined
           }
@@ -102,19 +102,19 @@ export default function ProfessorDashboard() {
         {/* Grid Stats Padronizado */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard 
-            title="Aulas Agendadas" 
+            title="Aulas agendadas" 
             value={lessons.filter(l => l.status === 'scheduled').length} 
             subtitle="Para os próximos períodos"
             icon={<Calendar className="w-6 h-6" />} 
           />
           <StatCard 
-            title="Aulas Concluídas" 
+            title="Aulas concluídas" 
             value={lessons.filter(l => l.status === 'completed').length} 
             subtitle="Diários registrados"
             icon={<CheckCircle2 className="w-6 h-6" />} 
           />
           <StatCard 
-            title="Turmas Ativas" 
+            title="Turmas ativas" 
             value={activeClassesCount} 
             subtitle="Sob sua regência"
             icon={<Users className="w-6 h-6" />} 
@@ -122,7 +122,7 @@ export default function ProfessorDashboard() {
         </div>
 
         {/* Lista de Aulas */}
-        <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+        <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl p-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
 
           <div className="flex items-center justify-between mb-8 relative z-10">
@@ -130,9 +130,9 @@ export default function ProfessorDashboard() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600/20 to-transparent flex items-center justify-center border border-red-600/30">
                 <Clock className="w-5 h-5 text-red-500" />
               </div>
-              <h2 className="text-xl font-bold text-white">Aulas de Hoje & Próximas</h2>
+              <h2 className="text-xl font-bold text-white">Aulas de hoje e próximas</h2>
             </div>
-            <span className="text-xs text-white font-black uppercase tracking-widest bg-white/10 px-3 py-1.5 rounded-lg">{lessons.length} Aulas</span>
+            <span className="text-xs text-white font-semibold bg-white/10 px-3 py-1.5 rounded-lg">{lessons.length} Aulas</span>
           </div>
 
           <div className="space-y-4 relative z-10">
@@ -149,7 +149,7 @@ export default function ProfessorDashboard() {
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-red-600/20 text-red-500">
+                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-red-600/20 text-red-500">
                         {courseName} • {className}
                       </span>
                       <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
@@ -210,18 +210,18 @@ export default function ProfessorDashboard() {
 
 function MetricCard({ title, value, icon, color, glowColor, textColor = "text-white" }: { title: string; value: string; icon: React.ReactNode; color: string, glowColor: string, textColor?: string }) {
   return (
-    <div className="bg-[#12121A]/80 backdrop-blur-xl p-6 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/20 transition-all shadow-lg hover:-translate-y-1">
+    <div className="bg-[#12121A]/80 backdrop-blur-xl p-6 rounded-xl border border-white/5 relative overflow-hidden group hover:border-white/20 transition-all hover:-translate-y-1">
       <div className={`absolute top-0 right-0 p-4 opacity-20 transform translate-x-4 -translate-y-4 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500`}>
         <div className={`w-32 h-32 ${glowColor} rounded-full blur-[50px]`}></div>
       </div>
       <div className="relative z-10 flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">{title}</span>
-          <div className={cn(`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300`, textColor)}>
+          <span className="text-gray-400 font-bold text-xs">{title}</span>
+          <div className={cn(`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300`, textColor)}>
             {icon}
           </div>
         </div>
-        <div className="text-4xl font-black tracking-tight text-white">{value}</div>
+        <div className="text-4xl font-semibold tracking-tight text-white">{value}</div>
       </div>
     </div>
   );

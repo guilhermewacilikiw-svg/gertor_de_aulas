@@ -85,7 +85,7 @@ export default function ProfessorAlunosPage() {
       <PageHeader
         badgeIcon={<Users className="w-4 h-4" />}
         badgeText="Alunos"
-        title="Meus Alunos"
+        title="Meus alunos"
         subtitle="Visão geral de todos os alunos matriculados nas suas turmas ativas."
         action={
           <div className="relative w-full md:w-72">
@@ -112,19 +112,19 @@ export default function ProfessorAlunosPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStudents.map((student) => (
-            <div key={student.id} className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-colors group">
+            <div key={student.id} className="bg-[#0f0f0f] border border-white/5 rounded-xl p-6 flex flex-col hover:border-red-600/30 transition-colors group">
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-xl shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-semibold text-xl shrink-0 group-hover:scale-105 transition-transform">
                   {student.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg leading-tight group-hover:text-red-500 transition-colors">{student.name}</h3>
-                  <p className="text-xs text-gray-500 font-mono mt-1">ID: {student.student_code || 'N/A'}</p>
+                  {student.student_code && <p className="text-sm text-gray-400 mt-1">Matrícula: {student.student_code}</p>}
                 </div>
               </div>
 
               <div className="space-y-3 mt-auto">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Turmas Matriculadas</div>
+                <div className="text-xs font-semibold text-gray-500 mb-2">Turmas matriculadas</div>
                 {student.enrolledClasses.map((cls: any) => (
                   <Link href={`/professor/turmas/${cls.id}`} key={cls.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5">
                     <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">

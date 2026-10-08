@@ -38,17 +38,17 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
       {/* 1. TOP STATS CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Attendance Card */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-red-500/20 transition-all">
+        <div className="bg-neutral-900/40 border border-white/10 rounded-xl p-6 relative overflow-hidden group hover:border-red-500/20 transition-all">
           <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 text-white mb-4">
               <div className="p-2 rounded-xl bg-red-600/10">
                 <Target className="w-5 h-5" />
               </div>
-              <h3 className="font-bold uppercase tracking-wider text-xs">Aulas Presenciais</h3>
+              <h3 className="font-bold text-xs">Aulas Presenciais</h3>
             </div>
             <div className="flex items-end gap-2">
-              <span className="text-4xl font-black text-white">{data.attendanceRate}%</span>
+              <span className="text-4xl font-semibold text-white">{data.attendanceRate}%</span>
               <span className="text-sm font-medium text-gray-400 mb-1">presença geral</span>
             </div>
             <div className="mt-4 flex gap-4 text-xs font-medium">
@@ -59,17 +59,17 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
         </div>
 
         {/* Digital Content Card */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-red-500/20 transition-all">
+        <div className="bg-neutral-900/40 border border-white/10 rounded-xl p-6 relative overflow-hidden group hover:border-red-500/20 transition-all">
           <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 text-red-500 mb-4">
               <div className="p-2 rounded-xl bg-red-500/10">
                 <Zap className="w-5 h-5" />
               </div>
-              <h3 className="font-bold uppercase tracking-wider text-xs">Materiais e Vídeos</h3>
+              <h3 className="font-bold text-xs">Materiais e Vídeos</h3>
             </div>
             <div className="flex items-end gap-2">
-              <span className="text-4xl font-black text-white">{contentProgressPercent}%</span>
+              <span className="text-4xl font-semibold text-white">{contentProgressPercent}%</span>
               <span className="text-sm font-medium text-gray-400 mb-1">concluído</span>
             </div>
             <div className="mt-4 w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
@@ -85,17 +85,17 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
         </div>
 
         {/* Exercises Card */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6 relative overflow-hidden group hover:border-white/20 transition-all">
+        <div className="bg-neutral-900/40 border border-white/10 rounded-xl p-6 relative overflow-hidden group hover:border-white/20 transition-all">
           <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 rounded-full blur-2xl group-hover:bg-white/10 transition-all" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 text-white mb-4">
               <div className="p-2 rounded-xl bg-red-600/10">
                 <CheckCircle className="w-5 h-5" />
               </div>
-              <h3 className="font-bold uppercase tracking-wider text-xs">Exercícios Complementares</h3>
+              <h3 className="font-bold text-xs">Exercícios Complementares</h3>
             </div>
             <div className="flex items-end gap-2">
-              <span className="text-4xl font-black text-white">{data.completedExercises}</span>
+              <span className="text-4xl font-semibold text-white">{data.completedExercises}</span>
               <span className="text-sm font-medium text-gray-400 mb-1">entregues</span>
             </div>
             <div className="mt-4 w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
@@ -115,7 +115,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Pie Chart: Distribution */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6">
+        <div className="bg-neutral-900/40 border border-white/10 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-6">
             <PieChartIcon className="w-5 h-5 text-white" />
             <h3 className="font-bold text-lg text-white">Distribuição de Participação</h3>
@@ -155,7 +155,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
         </div>
 
         {/* Bar Chart: Evolution */}
-        <div className="bg-neutral-900/40 border border-white/10 rounded-3xl p-6">
+        <div className="bg-neutral-900/40 border border-white/10 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-5 h-5 text-red-500" />
             <h3 className="font-bold text-lg text-white">Engajamento Mensal</h3>
@@ -189,7 +189,7 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
       </div>
 
       {/* 3. RECENT ACTIVITY FEED */}
-      <div className="bg-neutral-900/40 border border-white/10 rounded-3xl overflow-hidden">
+      <div className="bg-neutral-900/40 border border-white/10 rounded-xl overflow-hidden">
         <div className="p-6 border-b border-white/10 bg-black/20 flex items-center justify-between">
           <h3 className="font-bold text-lg text-white">Histórico de Engajamento</h3>
         </div>
@@ -217,19 +217,19 @@ export function PerformanceDashboard({ data }: { data: PerformanceData }) {
 
                 <div className="shrink-0 flex sm:justify-end">
                   {act.type === 'attendance' && (
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
                       act.status === 'present' ? 'bg-red-600/10 text-white border-white/20' : 'bg-red-600/10 text-red-500 border-red-500/20'
                     }`}>
                       {act.status === 'present' ? 'Presente' : 'Falta'}
                     </span>
                   )}
                   {act.type === 'content' && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-red-600/10 text-white border border-white/20">
                       Assistido
                     </span>
                   )}
                   {act.type === 'exercise' && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-600/10 text-white border border-white/20">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-red-600/10 text-white border border-white/20">
                       Entregue
                     </span>
                   )}

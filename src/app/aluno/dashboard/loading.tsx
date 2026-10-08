@@ -14,8 +14,8 @@ export default function Loading() {
         
         {/* Simple skeleton grid to show structure */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full mt-8 max-w-5xl">
-          <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-3xl h-64 animate-pulse"></div>
-          <div className="lg:col-span-7 bg-white/5 border border-white/10 rounded-3xl h-64 animate-pulse"></div>
+          <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-xl h-64 animate-pulse"></div>
+          <div className="lg:col-span-7 bg-white/5 border border-white/10 rounded-xl h-64 animate-pulse"></div>
         </div>
       </div>
     </div>

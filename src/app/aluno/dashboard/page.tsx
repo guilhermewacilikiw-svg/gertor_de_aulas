@@ -191,10 +191,10 @@ export default async function AlunoDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* CURRENT COURSE / LATEST RECORDING */}
-        <div className="lg:col-span-5 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 group shadow-lg">
+        <div className="lg:col-span-5 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl p-6 group">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <p className="text-xs text-red-500 font-black uppercase tracking-widest mb-1">Última Aula Gravada</p>
+              <p className="text-xs text-red-500 font-semibold mb-1">Última Aula Gravada</p>
               <h2 className="text-xl font-bold text-white truncate max-w-xs">{videoTitle}</h2>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default async function AlunoDashboard() {
         </div>
 
         {/* RECOMMENDED FOR YOU */}
-        <div className="lg:col-span-7 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-lg">
+        <div className="lg:col-span-7 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-bold text-white">Recommended for You</h2>
             <button className="text-white/40 hover:text-white transition-colors">
@@ -238,10 +238,10 @@ export default async function AlunoDashboard() {
                 extraMaterials.map((mat: any, idx: number) => (
                   <Link href={mat.url || '#'} target="_blank" key={mat.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors flex flex-col h-[260px] group relative overflow-hidden">
                     <div className="w-full flex-1 rounded-xl bg-gradient-to-br from-red-600/20 to-red-500/10 mb-4 relative flex items-center justify-center overflow-hidden border border-white/5 group-hover:border-red-600/30 transition-colors">
-                      <div className="absolute inset-0 flex items-center justify-center text-8xl opacity-5 blur-[2px] font-black">
+                      <div className="absolute inset-0 flex items-center justify-center text-8xl opacity-5 blur-[2px] font-semibold">
                         {idx + 1}
                       </div>
-                      <button className="relative z-10 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-red-600/50 transition-all shadow-lg">
+                      <button className="relative z-10 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-red-600/50 transition-all">
                         <Play className="w-5 h-5 text-white ml-1 fill-white" />
                       </button>
                     </div>
@@ -250,7 +250,7 @@ export default async function AlunoDashboard() {
                     
                     <div className="mt-4 space-y-2">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="text-white/40 font-medium uppercase tracking-widest">{mat.type === 'video' ? 'Vídeo' : 'Link Externo'}</span>
+                        <span className="text-white/40 font-medium">{mat.type === 'video' ? 'Vídeo' : 'Link Externo'}</span>
                       </div>
                     </div>
                   </Link>
@@ -264,7 +264,7 @@ export default async function AlunoDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-6 pb-12">
         
         {/* UPCOMING ASSIGNMENTS */}
-        <div className="lg:col-span-5 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-lg flex flex-col">
+        <div className="lg:col-span-5 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-bold text-white">Upcoming Assignments</h2>
             <button className="text-white/40 hover:text-white transition-colors">
@@ -281,7 +281,7 @@ export default async function AlunoDashboard() {
                 <h4 className="text-sm font-bold text-white truncate">Exercício: Prática Diária</h4>
                 <p className="text-xs text-white/40 mt-0.5">{formattedNextDate}</p>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-white shrink-0 bg-white/10 px-2 py-1 rounded-md">Now</span>
+              <span className="text-xs font-semibold text-white shrink-0 bg-white/10 px-2 py-1 rounded-md">Now</span>
             </div>
 
             <div className="flex items-center gap-4 bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors cursor-pointer group">
@@ -292,7 +292,7 @@ export default async function AlunoDashboard() {
                 <h4 className="text-sm font-bold text-white truncate">Gravação: {nextCourseName}</h4>
                 <p className="text-xs text-white/40 mt-0.5">Next lesson</p>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-red-500 shrink-0 bg-red-500/10 px-2 py-1 rounded-md">New</span>
+              <span className="text-xs font-semibold text-red-500 shrink-0 bg-red-500/10 px-2 py-1 rounded-md">New</span>
             </div>
 
             {lastRecord?.practice_instructions && (
@@ -308,13 +308,13 @@ export default async function AlunoDashboard() {
             )}
           </div>
 
-          <button className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-black text-sm shadow-[0_0_20px_rgba(125,122,232,0.4)] hover:shadow-[0_0_30px_rgba(125,122,232,0.6)] hover:scale-[1.02] transition-all">
+          <button className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold text-sm shadow-[0_0_20px_rgba(125,122,232,0.4)] hover:shadow-[0_0_30px_rgba(125,122,232,0.6)] hover:scale-[1.02] transition-all">
             Show all
           </button>
         </div>
 
         {/* DESEMPENHO DIDÁTICO / NOTA (0 A 10) */}
-        <div className="lg:col-span-4 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-lg flex flex-col justify-between">
+        <div className="lg:col-span-4 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-bold text-white">Desempenho Didático</h2>
             <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
@@ -351,8 +351,8 @@ export default async function AlunoDashboard() {
                 </defs>
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-4xl font-black text-white">{finalGrade.toFixed(1)}</span>
-                <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest mt-0.5">NOTA GERAL / 10</span>
+                <span className="text-4xl font-semibold text-white">{finalGrade.toFixed(1)}</span>
+                <span className="text-xs text-red-400 font-bold mt-0.5">NOTA GERAL / 10</span>
               </div>
             </div>
 
@@ -369,14 +369,14 @@ export default async function AlunoDashboard() {
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
                   <span className="text-white font-bold">{finalGrade.toFixed(1)} / 10</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Avaliação Atual</span>
+                <span className="text-xs font-bold text-white/40">Avaliação Atual</span>
               </div>
               <div className="text-center flex flex-col items-center">
                 <div className="flex items-center gap-2 justify-center mb-1">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
                   <span className="text-white font-bold">{scorePercent}%</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Aproveitamento</span>
+                <span className="text-xs font-bold text-white/40">Aproveitamento</span>
               </div>
             </div>
             
@@ -392,7 +392,7 @@ export default async function AlunoDashboard() {
         </div>
 
         {/* RECENT MENTORS */}
-        <div className="lg:col-span-3 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl p-6 shadow-lg">
+        <div className="lg:col-span-3 md:col-span-1 bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-bold text-white">Recent Mentors</h2>
           </div>
@@ -400,36 +400,36 @@ export default async function AlunoDashboard() {
           <div className="space-y-6 mt-4">
             <div className="flex items-center gap-4 group cursor-pointer">
               <span className="text-xs font-bold text-white/20 w-4 group-hover:text-white/60 transition-colors">1</span>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-black text-lg border border-white/10 shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-semibold text-lg border border-white/10 shrink-0 group-hover:scale-110 transition-transform">
                 {nextTeacherName.charAt(0)}
               </div>
               <div className="min-w-0 flex-1">
                 <h4 className="text-sm font-bold text-white truncate">{nextTeacherName}</h4>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white mt-0.5">Current Instructor</p>
+                <p className="text-xs font-bold text-white mt-0.5">Current Instructor</p>
               </div>
             </div>
 
             {lastLesson && (
               <div className="flex items-center gap-4 group cursor-pointer">
                 <span className="text-xs font-bold text-white/20 w-4 group-hover:text-white/60 transition-colors">2</span>
-                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-red-500 to-white flex items-center justify-center text-white font-black text-lg border border-white/10 shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-red-500 to-white flex items-center justify-center text-white font-semibold text-lg border border-white/10 shrink-0 group-hover:scale-110 transition-transform">
                   {((lastLesson.teachers as any)?.users?.name || 'M').charAt(0)}
                 </div>
                 <div className="min-w-0 flex-1">
                   <h4 className="text-sm font-bold text-white truncate">{(lastLesson.teachers as any)?.users?.name || 'Mentor'}</h4>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mt-0.5">Past Instructor</p>
+                  <p className="text-xs font-bold text-white/40 mt-0.5">Past Instructor</p>
                 </div>
               </div>
             )}
             
             <div className="flex items-center gap-4 opacity-50 hover:opacity-100 transition-opacity group cursor-pointer">
               <span className="text-xs font-bold text-white/20 w-4 group-hover:text-white/60 transition-colors">3</span>
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white/60 font-black text-lg shrink-0 border border-white/5 group-hover:bg-white/20 transition-all">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white/60 font-semibold text-lg shrink-0 border border-white/5 group-hover:bg-white/20 transition-all">
                 S
               </div>
               <div className="min-w-0 flex-1">
                 <h4 className="text-sm font-bold text-white truncate">Support Team</h4>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mt-0.5">Always available</p>
+                <p className="text-xs font-bold text-white/40 mt-0.5">Always available</p>
               </div>
             </div>
           </div>

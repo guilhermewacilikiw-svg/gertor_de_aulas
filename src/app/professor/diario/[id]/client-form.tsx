@@ -65,7 +65,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
   return (
     <div className="space-y-8">
       {/* Lista de Chamada */}
-      <div className="bg-[#0f0f0f] rounded-3xl border border-white/5 shadow-lg overflow-hidden">
+      <div className="bg-[#0f0f0f] rounded-xl border border-white/5 overflow-hidden">
         <div className="p-6 border-b border-white/5 flex justify-between items-center">
           <div>
             <h3 className="font-bold text-white text-lg">Lista de Presença</h3>
@@ -83,7 +83,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
             return (
               <div key={student.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 hover:bg-white/5 transition-colors gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-black text-lg">
+                  <div className="w-12 h-12 rounded-2xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 font-semibold text-lg">
                     {student.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
@@ -96,14 +96,14 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
                   <button 
                     disabled={isCompleted}
                     onClick={() => handleToggle(student.id, true)}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${isPresent ? 'bg-red-500 text-white shadow-lg shadow-red-500/20 scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${isPresent ? 'bg-red-500 text-white scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
                   >
                     <Check className="w-4 h-4" /> Presente
                   </button>
                   <button 
                     disabled={isCompleted}
                     onClick={() => handleToggle(student.id, false)}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${!isPresent ? 'bg-red-700 text-white shadow-lg shadow-red-700/20 scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${!isPresent ? 'bg-red-700 text-white scale-105' : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'} ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'active:scale-95'}`}
                   >
                     <X className="w-4 h-4" /> Falta
                   </button>
@@ -115,7 +115,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
       </div>
 
       {/* Módulo Relacionado */}
-      <div className="bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 shadow-lg space-y-4">
+      <div className="bg-[#0f0f0f] rounded-xl p-8 border border-white/5 space-y-4">
         <div>
           <h3 className="font-bold text-white text-lg">Módulo da Aula</h3>
           <p className="text-sm text-gray-400">Qual módulo do curso foi ministrado hoje?</p>
@@ -134,7 +134,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
       </div>
 
       {/* Resumo da Aula */}
-      <div className="bg-[#0f0f0f] rounded-3xl p-8 border border-white/5 shadow-lg space-y-4">
+      <div className="bg-[#0f0f0f] rounded-xl p-8 border border-white/5 space-y-4">
         <div>
           <h3 className="font-bold text-white text-lg">Diário e Assunto da Aula</h3>
           <p className="text-sm text-gray-400">O que foi ensinado hoje? Como foi o desempenho geral da turma?</p>
@@ -154,7 +154,7 @@ export function ClassDiaryForm({ lessonId, students, isCompleted, initialSummary
           <button 
             disabled={loading}
             onClick={handleFinish}
-            className="bg-red-600 text-white px-8 py-4 rounded-2xl font-black hover:bg-red-600/90 transition-all shadow-lg active:scale-95 flex items-center gap-2 text-lg disabled:opacity-50 disabled:pointer-events-none"
+            className="bg-red-600 text-white px-8 py-4 rounded-2xl font-semibold hover:bg-red-600/90 transition-all active:scale-95 flex items-center gap-2 text-lg disabled:opacity-50 disabled:pointer-events-none"
           >
             {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-6 h-6" />}
             Salvar Diário e Finalizar Aula

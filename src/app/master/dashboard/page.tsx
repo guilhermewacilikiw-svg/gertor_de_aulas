@@ -37,7 +37,7 @@ export default async function MasterDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* Tabela de Escolas */}
-        <div className="bg-[#111] rounded-2xl border border-gray-800 shadow-xl overflow-hidden">
+        <div className="bg-[#111] rounded-2xl border border-gray-800 overflow-hidden">
           <div className="p-6 border-b border-gray-800 flex justify-between items-center bg-gradient-to-r from-[#111] to-[#151515]">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Building2 className="w-5 h-5 text-blue-400" />
@@ -48,9 +48,9 @@ export default async function MasterDashboard() {
             <table className="min-w-full divide-y divide-gray-800">
               <thead className="bg-[#0a0a0a]">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Escola</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Membros</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Escola</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Membros</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
@@ -79,7 +79,7 @@ export default async function MasterDashboard() {
         </div>
 
         {/* Tabela de Usuários */}
-        <div className="bg-[#111] rounded-2xl border border-gray-800 shadow-xl overflow-hidden">
+        <div className="bg-[#111] rounded-2xl border border-gray-800 overflow-hidden">
           <div className="p-6 border-b border-gray-800 flex justify-between items-center bg-gradient-to-r from-[#111] to-[#151515]">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Users className="w-5 h-5 text-red-500" />
@@ -90,9 +90,9 @@ export default async function MasterDashboard() {
             <table className="min-w-full divide-y divide-gray-800">
               <thead className="bg-[#0a0a0a]">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuário</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Perfil</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Escola</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Usuário</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Perfil</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Escola</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
@@ -124,18 +124,18 @@ export default async function MasterDashboard() {
 
 function MetricCard({ title, value, icon, color }: { title: string, value: string, icon: React.ReactNode, color: string }) {
   return (
-    <div className="bg-[#111] rounded-2xl p-6 border border-gray-800 shadow-xl relative overflow-hidden group">
+    <div className="bg-[#111] rounded-2xl p-6 border border-gray-800 relative overflow-hidden group">
       <div className={`absolute top-0 right-0 p-4 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500`}>
         <div className={`w-24 h-24 bg-gradient-to-br ${color} rounded-full blur-2xl`}></div>
       </div>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <span className="text-gray-400 font-medium text-sm">{title}</span>
-          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg`}>
+          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white`}>
             {icon}
           </div>
         </div>
-        <div className="text-3xl font-black tracking-tight text-white">{value}</div>
+        <div className="text-3xl font-semibold tracking-tight text-white">{value}</div>
       </div>
     </div>
   )

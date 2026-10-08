@@ -28,7 +28,7 @@ export function LessonVideoPlayer({ videoUrl, thumbnailUrl, title, progress = 0 
 
   return (
     <>
-      <div className="relative w-full h-48 sm:h-56 rounded-2xl bg-gradient-to-br from-red-600/20 to-red-900/10 border border-white/10 overflow-hidden flex items-center justify-center mb-6 group transition-all shadow-lg cursor-pointer hover:border-white/20" onClick={() => setIsPlaying(true)}>
+      <div className="relative w-full h-48 sm:h-56 rounded-2xl bg-gradient-to-br from-red-600/20 to-red-900/10 border border-white/10 overflow-hidden flex items-center justify-center mb-6 group transition-all cursor-pointer hover:border-white/20" onClick={() => setIsPlaying(true)}>
         
         {/* Dynamic Thumbnail or Gradient */}
         {thumbnailUrl ? (
@@ -43,7 +43,7 @@ export function LessonVideoPlayer({ videoUrl, thumbnailUrl, title, progress = 0 
         
         {/* Play Button */}
         <button className="relative z-10 w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:scale-110 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
-          <Play className="w-6 h-6 text-white ml-1 fill-white drop-shadow-md" />
+          <Play className="w-6 h-6 text-white ml-1 fill-white" />
         </button>
 
         {/* Progress Bar Override inside thumbnail */}
@@ -61,7 +61,7 @@ export function LessonVideoPlayer({ videoUrl, thumbnailUrl, title, progress = 0 
             
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 border-b border-white/10 bg-black/40">
-              <h3 className="text-lg font-black text-white">{title}</h3>
+              <h3 className="text-lg font-semibold text-white">{title}</h3>
               <button 
                 onClick={() => setIsPlaying(false)}
                 className="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors"

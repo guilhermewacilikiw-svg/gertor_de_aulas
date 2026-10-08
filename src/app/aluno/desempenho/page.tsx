@@ -135,7 +135,7 @@ export default async function AlunoDesempenhoPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Análise de Engajamento</h1>
+        <h1 className="text-3xl font-semibold text-white tracking-tight">Análise de Engajamento</h1>
         <p className="text-sm text-gray-400 mt-1">Acompanhe sua frequência, participação e materiais complementares concluídos.</p>
       </div>
 

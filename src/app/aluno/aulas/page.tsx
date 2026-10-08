@@ -76,7 +76,7 @@ export default async function MinhasAulasPage() {
             <Link 
               href={`/aluno/aulas/${course.id}`} 
               key={course.id} 
-              className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col shadow-lg hover:border-red-600/30 transition-all duration-300 group block"
+              className="bg-[#0f0f0f] border border-white/5 rounded-xl p-6 flex flex-col hover:border-red-600/30 transition-all duration-300 group block"
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div className="flex items-start gap-4">
@@ -88,7 +88,7 @@ export default async function MinhasAulasPage() {
                     <p className="text-xs text-gray-500 font-mono mt-1">{course.category} • {course.level}</p>
                   </div>
                 </div>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border bg-red-500/10 text-red-500 border-red-500/20">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-red-500/10 text-red-500 border-red-500/20">
                   {course.level}
                 </span>
               </div>
@@ -98,7 +98,7 @@ export default async function MinhasAulasPage() {
               </p>
 
               <div className="space-y-3 mt-auto">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Acesso ao Material</div>
+                <div className="text-xs font-semibold text-gray-500 mb-1">Acesso ao Material</div>
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors border border-white/5">
                   <div className="w-8 h-8 rounded-lg bg-black/50 flex items-center justify-center text-gray-400">
                     <Layers className="w-4 h-4 text-red-500" />

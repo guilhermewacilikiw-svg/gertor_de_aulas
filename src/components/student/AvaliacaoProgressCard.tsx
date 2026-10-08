@@ -28,23 +28,23 @@ export function AvaliacaoProgressCard({
     : '8.8';
 
   return (
-    <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-5">
+    <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-5">
       
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-white">
             <Award className="w-4 h-4" />
             Avaliação Pedagógica
           </div>
-          <h3 className="text-lg font-black text-white mt-0.5">{categoryName}</h3>
+          <h3 className="text-lg font-semibold text-white mt-0.5">{categoryName}</h3>
           <p className="text-xs text-gray-400">Avaliador: Prof. {evaluatorName} • {evaluatedAt}</p>
         </div>
 
         {/* Media Score Badge */}
         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-neutral-800/20 to-neutral-900/20 border border-red-500/20 text-red-500">
-          <span className="text-2xl font-black">{averageScore}</span>
-          <span className="text-[10px] font-bold uppercase tracking-wider">Média</span>
+          <span className="text-2xl font-semibold">{averageScore}</span>
+          <span className="text-xs font-bold">Média</span>
         </div>
       </div>
 

@@ -11,7 +11,7 @@ interface Message {
 
 export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11111111-1111-1111-1111-111111111111' }) {
   const [messages, setMessages] = useState<Message[]>([
-    { sender: 'ai', text: `Olá, ${studentName}! Sou seu assistente de estudos Wackoda AI. Como posso te ajudar com a sua aula de hoje?` }
+    { sender: 'ai', text: `Olá, ${studentName}! Sou seu assistente de estudos Wakoda AI. Como posso te ajudar com a sua aula de hoje?` }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
   };
 
   return (
-    <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-4">
+    <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-4">
       
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -46,13 +46,13 @@ export function StudentAIAssistantWidget({ studentName = 'João', schoolId = '11
             <Bot className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-white flex items-center gap-1.5">
-              Wackoda AI <Sparkles className="w-3 h-3 text-white" />
+            <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
+              Wakoda AI <Sparkles className="w-3 h-3 text-white" />
             </h3>
-            <p className="text-[10px] text-gray-400">Assistente de Aprendizagem Isolado por Tenant</p>
+            <p className="text-xs text-gray-400">Assistente de Aprendizagem Isolado por Tenant</p>
           </div>
         </div>
-        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
+        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
           Online
         </span>
       </div>

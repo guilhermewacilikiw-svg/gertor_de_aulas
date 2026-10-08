@@ -59,11 +59,11 @@ export default async function ProfessorDiarioPage({ params }: { params: Promise<
       </Link>
 
       <div>
-        <div className="flex items-center gap-3 text-sm text-red-500 font-semibold mb-2 uppercase tracking-wider">
+        <div className="flex items-center gap-3 text-sm text-red-500 font-semibold mb-2">
           <BookOpen className="w-4 h-4" />
           {lesson.classes?.courses?.name} &bull; {lesson.classes?.name}
         </div>
-        <h1 className="text-3xl font-black text-white mb-4">Diário de Classe</h1>
+        <h1 className="text-3xl font-semibold text-white mb-4">Diário de Classe</h1>
         
         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
           <span className="flex items-center gap-1.5 bg-red-500/10 text-red-500 px-3 py-1.5 rounded-lg border border-red-500/20">
