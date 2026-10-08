@@ -135,121 +135,62 @@ export function ClassManagementView({
   const capacity = turma.capacity || 15;
   const enrolledCount = enrollments.length;
   const occupancyPercentage = Math.min(100, Math.round((enrolledCount / capacity) * 100));
-  const strokeDasharray = `${occupancyPercentage} 100`;
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-8 animate-in fade-in duration-500">
       
-      {/* 1. HERO HEADER */}
-      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden p-8 md:p-12">
-        {/* Animated Background Spheres */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-500/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-red-500/10 rounded-full blur-[60px] animate-pulse mix-blend-screen -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: '4s' }}></div>
-
-        <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10">
-          
-          <div className="flex-1 w-full text-center lg:text-left">
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(125,122,232,0.15)] mb-6">
-              <span className={`w-2 h-2 rounded-full animate-ping ${turma.status === 'active' ? 'bg-red-500' : 'bg-red-400'}`}></span>
-              <span className="text-xs font-semibold text-white/80">
-                {turma.status === 'active' ? 'Turma Ativa' : 'Turma Inativa'}
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-6">
-              {turma.name}
-            </h1>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">
-              <div className="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-2xl border border-white/5 backdrop-blur-sm">
-                <div className="w-8 h-8 rounded-full bg-red-600/20 flex items-center justify-center border border-red-600/30">
-                  <GraduationCap className="w-4 h-4 text-red-700" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 font-bold">Curso Vinculado</p>
-                  <p className="text-sm font-bold text-white">{turma.courses?.name}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-2xl border border-white/5 backdrop-blur-sm">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-red-500/20 to-white/20 flex items-center justify-center border border-red-500/30">
-                  <Users className="w-4 h-4 text-red-500" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 font-bold">Professor Resp.</p>
-                  <p className="text-sm font-bold text-white">Prof. {turma.teachers?.users?.name || 'Indefinido'}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="shrink-0 flex items-center justify-center relative">
-            <div className="relative w-48 h-48 drop-shadow-[0_0_30px_rgba(125,122,232,0.3)]">
-              <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
-                {/* Background Ring */}
-                <path
-                  className="text-white/5"
-                  strokeWidth="3"
-                  stroke="currentColor"
-                  fill="none"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                {/* Progress Ring */}
-                <path
-                  className={`${occupancyPercentage >= 100 ? 'text-red-400' : 'text-red-500'} transition-all duration-1000 ease-out`}
-                  strokeDasharray={strokeDasharray}
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  stroke="url(#occupancy-gradient)"
-                  fill="none"
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <defs>
-                  <linearGradient id="occupancy-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor={occupancyPercentage >= 100 ? "#F87171" : "#7D7AE8"} />
-                    <stop offset="100%" stopColor={occupancyPercentage >= 100 ? "#DC2626" : "#A27AE8"} />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className={`text-4xl font-semibold ${occupancyPercentage >= 100 ? 'text-red-400' : 'text-white'}`}>
-                  {enrolledCount}
-                </span>
-                <span className="text-xs text-white/50 font-bold mt-1">/ {capacity} Vagas</span>
-              </div>
-            </div>
+      {/* 1. CABEÇALHO */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl font-semibold text-white">{turma.name}</h1>
+            <span className={`text-xs px-2 py-1 rounded-md ${turma.status === 'active' ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'}`}>
+              {turma.status === 'active' ? 'Ativa' : 'Inativa'}
+            </span>
             {occupancyPercentage >= 100 && (
-              <div className="absolute -bottom-2 bg-red-500/20 text-red-400 px-4 py-1.5 rounded-full text-xs font-semibold border border-red-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-bounce">
-                Turma Lotada
-              </div>
+              <span className="text-xs px-2 py-1 rounded-md bg-red-500/15 text-red-300">Turma lotada</span>
             )}
+          </div>
+          <p className="text-sm text-gray-400 mt-2 flex flex-wrap items-center gap-x-6 gap-y-1">
+            <span className="inline-flex items-center gap-2"><GraduationCap className="w-4 h-4" aria-hidden="true" />{turma.courses?.name}</span>
+            <span className="inline-flex items-center gap-2"><Users className="w-4 h-4" aria-hidden="true" />Prof. {turma.teachers?.users?.name || 'não definido'}</span>
+          </p>
+        </div>
+
+        <div className="rounded-xl bg-white/[0.04] p-4 md:min-w-56">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-gray-400">Vagas ocupadas</span>
+            <span className="text-white"><span className="text-2xl font-semibold">{enrolledCount}</span> / {capacity}</span>
+          </div>
+          <div
+            className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden"
+            role="progressbar"
+            aria-valuenow={Math.min(100, occupancyPercentage)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Ocupação da turma"
+          >
+            <div className="h-full rounded-full bg-red-500" style={{ width: `${Math.min(100, occupancyPercentage)}%` }} />
           </div>
         </div>
       </div>
 
-      {/* 2. MODERN TABS */}
-      <div className="flex items-center justify-center md:justify-start gap-4">
-        <button 
-          onClick={() => setActiveTab('schedules')}
-          className={`px-8 py-4 rounded-2xl font-semibold text-sm transition-all duration-300 ${
-            activeTab === 'schedules'
-            ? 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-[0_10px_30px_rgba(125,122,232,0.4)] scale-105'
-            : 'bg-white/5 text-gray-500 hover:bg-white/10 hover:text-white hover:scale-105 border border-white/5'
-          }`}
-        >
-          Horários das Aulas
-        </button>
-        <button 
-          onClick={() => setActiveTab('students')}
-          className={`px-8 py-4 rounded-2xl font-semibold text-sm transition-all duration-300 ${
-            activeTab === 'students'
-            ? 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-[0_10px_30px_rgba(125,122,232,0.4)] scale-105'
-            : 'bg-white/5 text-gray-500 hover:bg-white/10 hover:text-white hover:scale-105 border border-white/5'
-          }`}
-        >
-          Alunos Matriculados
-        </button>
+      {/* 2. ABAS */}
+      <div className="flex items-center gap-1 border-b border-white/10">
+        {([['schedules', 'Horários das aulas'], ['students', 'Alunos matriculados']] as const).map(([chave, rotulo]) => (
+          <button
+            key={chave}
+            onClick={() => setActiveTab(chave)}
+            aria-pressed={activeTab === chave}
+            className={`px-4 min-h-11 text-sm transition-colors -mb-px border-b-2 ${
+              activeTab === chave
+                ? 'border-red-500 text-white'
+                : 'border-transparent text-gray-400 hover:text-white'
+            }`}
+          >
+            {rotulo}
+          </button>
+        ))}
       </div>
 
       {/* 3. SCHEDULES CONTENT */}
@@ -262,15 +203,15 @@ export function ClassManagementView({
             </div>
             <button 
               onClick={() => setIsScheduleModalOpen(true)}
-              className="px-6 py-3 bg-white/10 border border-white/20 rounded-2xl text-white font-bold text-sm hover:bg-white/20 hover:border-white/40 transition-all flex items-center justify-center gap-2 hover:shadow-xl hover:-translate-y-1"
+              className="px-6 py-3 bg-white/10 border border-white/20 rounded-2xl text-white font-bold text-sm hover:bg-white/20 hover:border-white/40 transition-all flex items-center justify-center gap-2"
             >
               <Plus className="w-5 h-5" /> Novo Horário
             </button>
           </div>
 
           {schedules.length === 0 ? (
-            <div className="w-full flex flex-col items-center justify-center py-20 bg-gradient-to-b from-white/5 to-transparent rounded-xl border border-white/5 border-dashed">
-              <div className="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center mb-6 animate-float shadow-[0_0_30px_rgba(125,122,232,0.3)]">
+            <div className="w-full flex flex-col items-center justify-center py-20 bg-white/[0.03] rounded-xl border border-white/5 border-dashed">
+              <div className="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center mb-6">
                 <Calendar className="w-10 h-10 text-red-500" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Sem horários definidos</h3>
@@ -279,7 +220,7 @@ export function ClassManagementView({
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {schedules.map((schedule) => (
-                <div key={schedule.id} className="relative group bg-[#1A1A24] rounded-xl border border-white/5 overflow-hidden hover:border-red-600/50 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(125,122,232,0.15)] hover:-translate-y-1">
+                <div key={schedule.id} className="relative group bg-[#1A1A24] rounded-xl border border-white/5 overflow-hidden hover:border-red-600/50 transition-all duration-300">
                   <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
                   <div className="p-6 relative z-10">
@@ -291,7 +232,7 @@ export function ClassManagementView({
                       <button 
                         onClick={() => handleRemoveSchedule(schedule.id)}
                         disabled={isPending}
-                        className="w-10 h-10 flex items-center justify-center bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white hover:shadow-[0_0_15px_rgba(239,68,68,0.5)] rounded-xl transition-all duration-300 disabled:opacity-50"
+                        className="w-10 h-10 flex items-center justify-center bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-xl transition-all duration-300 disabled:opacity-50"
                         title="Excluir Horário"
                       >
                         <Trash2 className="w-5 h-5" />
@@ -300,7 +241,7 @@ export function ClassManagementView({
                     
                     <div className="space-y-3">
                       <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/5">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(125,122,232,0.4)]">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center shrink-0">
                           <Clock className="w-5 h-5 text-white" />
                         </div>
                         <div>
@@ -394,15 +335,15 @@ export function ClassManagementView({
             <button 
               onClick={() => setIsStudentModalOpen(true)}
               disabled={occupancyPercentage >= 100}
-              className="px-6 py-3 bg-red-600 hover:bg-red-500 rounded-2xl text-white font-semibold text-sm hover:shadow-[0_10px_30px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+              className="px-6 py-3 bg-red-600 hover:bg-red-500 rounded-2xl text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               <Plus className="w-5 h-5" /> Adicionar Aluno
             </button>
           </div>
 
           {enrollments.length === 0 ? (
-            <div className="w-full flex flex-col items-center justify-center py-20 bg-gradient-to-b from-white/5 to-transparent rounded-xl border border-white/5 border-dashed">
-              <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center mb-6 animate-float shadow-[0_0_30px_rgba(192,232,122,0.3)]">
+            <div className="w-full flex flex-col items-center justify-center py-20 bg-white/[0.03] rounded-xl border border-white/5 border-dashed">
+              <div className="w-24 h-24 bg-red-500/20 rounded-full flex items-center justify-center mb-6">
                 <Users className="w-10 h-10 text-red-500" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Turma Vazia</h3>
@@ -411,8 +352,8 @@ export function ClassManagementView({
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {enrollments.map((enr) => (
-                <div key={enr.id} className="glass-card group flex flex-col sm:flex-row items-center p-4 gap-4 overflow-hidden border border-white/5 hover:border-white/20 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-red-900 p-[2px] shrink-0 shadow-[0_0_15px_rgba(125,122,232,0.3)] group-hover:scale-110 transition-transform duration-500">
+                <div key={enr.id} className="glass-card group flex flex-col sm:flex-row items-center p-4 gap-4 overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-red-900 p-[2px] shrink-0 group-hover:scale-110 transition-transform duration-500">
                     <div className="w-full h-full bg-[#0f0f0f] rounded-full flex items-center justify-center">
                       <span className="font-semibold text-xl text-white">
                         {enr.students?.name?.charAt(0) || '-'}
@@ -447,7 +388,7 @@ export function ClassManagementView({
                         setTransferEnrollmentId(enr.id);
                         setIsTransferModalOpen(true);
                       }}
-                      className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600/20 hover:border-red-600/40 hover:shadow-[0_0_15px_rgba(125,122,232,0.3)] transition-all duration-300 group-hover:scale-110"
+                      className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600/20 hover:border-red-600/40 transition-all duration-300 group-hover:scale-110"
                       title="Transferir de Turma"
                     >
                       <ArrowRightLeft className="w-5 h-5" />
@@ -455,7 +396,7 @@ export function ClassManagementView({
                     <button 
                       onClick={() => handleRemoveStudent(enr.id)}
                       disabled={isPending}
-                      className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 hover:border-red-500/40 hover:shadow-[0_0_15px_rgba(239,68,68,0.3)] transition-all duration-300 group-hover:scale-110 disabled:opacity-50"
+                      className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 group-hover:scale-110 disabled:opacity-50"
                       title="Desvincular Aluno"
                     >
                       <Trash2 className="w-5 h-5" />
@@ -544,7 +485,7 @@ export function ClassManagementView({
               <button 
                 onClick={handleAddSchedule}
                 disabled={isPending || !scheduleStart || !scheduleEnd}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-semibold text-sm hover:shadow-[0_10px_30px_rgba(125,122,232,0.5)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-red-600 text-white rounded-2xl font-semibold text-sm transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Salvando...' : 'Adicionar Horário'}
               </button>
@@ -605,7 +546,7 @@ export function ClassManagementView({
                     onClick={() => setSelectedStudentId(student.id)}
                     className={`w-full text-left flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${
                       selectedStudentId === student.id 
-                      ? 'bg-gradient-to-r from-red-500/20 to-transparent border-red-500/50 shadow-[0_0_20px_rgba(192,232,122,0.15)] scale-[1.02]' 
+                      ? 'bg-gradient-to-r from-red-500/20 to-transparent border-red-500/50 scale-[1.02]' 
                       : 'bg-white/5 border-white/5 hover:border-white/20 hover:bg-white/10'
                     }`}
                   >
@@ -641,7 +582,7 @@ export function ClassManagementView({
               <button 
                 onClick={handleEnrollStudent}
                 disabled={isPending || !selectedStudentId}
-                className="w-full sm:w-auto px-8 py-4 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-semibold text-sm hover:shadow-[0_10px_30px_rgba(192,232,122,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-semibold text-sm transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Vinculando...' : 'Matricular Aluno Selecionado'}
               </button>
@@ -705,7 +646,7 @@ export function ClassManagementView({
               <button 
                 onClick={handleTransferStudent}
                 disabled={isPending || !selectedTransferClassId}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-neutral-900 text-white rounded-2xl font-semibold text-sm hover:shadow-[0_10px_30px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-neutral-900 text-white rounded-2xl font-semibold text-sm transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Confirmando...' : 'Confirmar Transferência'}
               </button>
@@ -788,7 +729,7 @@ export function ClassManagementView({
                               }}
                               className={`p-4 rounded-xl cursor-pointer transition-all border flex items-center justify-between ${
                                 isSelected 
-                                  ? 'bg-red-500/15 border-red-500/60 text-white shadow-[0_0_15px_rgba(239,68,68,0.15)]' 
+                                  ? 'bg-red-500/15 border-red-500/60 text-white' 
                                   : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                               }`}
                             >
@@ -802,7 +743,7 @@ export function ClassManagementView({
                               </div>
                               
                               <div className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-all ${
-                                isSelected ? 'border-red-500 bg-red-500 text-black shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/20 bg-white/5'
+                                isSelected ? 'border-red-500 bg-red-500 text-black' : 'border-white/20 bg-white/5'
                               }`}>
                                 {isSelected && (
                                   <Check className="w-4 h-4 text-white stroke-[3]" />
@@ -834,7 +775,7 @@ export function ClassManagementView({
               <button 
                 onClick={handleAssignStudentToSchedule}
                 disabled={isPending || assignStudentIds.length === 0}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-semibold text-sm hover:shadow-[0_10px_30px_rgba(220,38,38,0.4)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                className="w-full sm:w-auto px-8 py-4 bg-red-600 text-white rounded-2xl font-semibold text-sm transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {isPending ? 'Confirmando...' : `Confirmar Vínculo (${assignStudentIds.length})`}
               </button>

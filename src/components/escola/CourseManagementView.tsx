@@ -221,7 +221,7 @@ export function CourseManagementView({
         </Link>
         {savedSuccess && (
           <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">
-            ✓ Alterações salvas com sucesso!
+            Alterações salvas
           </span>
         )}
       </div>
@@ -229,56 +229,56 @@ export function CourseManagementView({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-white">Gestão do Curso & Plano de Aulas</span>
-          <h1 className="text-3xl font-semibold text-white tracking-tight">{courseName}</h1>
+          <span className="text-sm text-gray-400">Gestão do curso e plano de aulas</span>
+          <h1 className="text-2xl font-semibold text-white">{courseName}</h1>
         </div>
 
         <button
           onClick={handleSaveCourse}
           disabled={savingCourse}
-          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 via-indigo-600 to-red-900 hover:brightness-110 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 active:scale-95"
+          className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-500 text-white font-medium text-sm min-h-11 transition-all flex items-center justify-center gap-2"
         >
           {savingCourse ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-          <span>SALVAR NÍVEL & DETALHES</span>
+          <span>Salvar alterações</span>
         </button>
       </div>
 
       {/* Course Main Details Panel */}
-      <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-6">
+      <div className="rounded-xl bg-white/[0.03] p-6 space-y-6">
         <div className="flex items-center gap-2 border-b border-white/10 pb-3">
           <BookOpen className="w-5 h-5 text-red-500" />
-          <h2 className="text-lg font-bold text-white">Informações Gerais do Curso</h2>
+          <h2 className="text-lg font-bold text-white">Informações gerais do curso</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-300">Nome do Curso</label>
+            <label className="text-sm text-gray-300">Nome do Curso</label>
             <input
               type="text"
               value={courseName}
               onChange={(e) => setCourseName(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-300">Categoria</label>
+              <label className="text-sm text-gray-300">Categoria</label>
               <input
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 placeholder="Ex: Música, Dança, Idiomas..."
-                className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-300">Nível</label>
+              <label className="text-sm text-gray-300">Nível</label>
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+                className="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
               >
                 <option value="Iniciante">Iniciante</option>
                 <option value="Intermediário">Intermediário</option>
@@ -288,34 +288,34 @@ export function CourseManagementView({
           </div>
 
           <div className="md:col-span-2 space-y-2">
-            <label className="text-xs font-bold text-gray-300">Descrição do Curso & Objetivos</label>
+            <label className="text-sm text-gray-300">Descrição e objetivos do curso</label>
             <textarea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
             />
           </div>
         </div>
       </div>
 
       {/* PLANO DE AULAS & MÓDULOS */}
-      <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-6">
+      <div className="rounded-xl bg-white/[0.03] p-6 space-y-6">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2">
             <Layers className="w-5 h-5 text-white" />
             <div>
-              <h2 className="text-lg font-semibold text-white">Grade Curricular & Planos de Aula</h2>
+              <h2 className="text-lg font-semibold text-white">Grade curricular e planos de aula</h2>
               <p className="text-xs text-gray-400">Monte a sequência pedagógica adicionando módulos e criando aulas (vídeos, PDFs, etc).</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsModuleModalOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 active:scale-95"
+            className="px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-medium text-sm min-h-11 transition-all flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
-            Novo Módulo
+            Novo módulo
           </button>
         </div>
 
@@ -327,7 +327,7 @@ export function CourseManagementView({
             modules.map((m, idx) => (
               <div
                 key={m.id}
-                className="rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all overflow-hidden"
+                className="rounded-lg bg-white/5 border border-white/5 hover:border-white/10 transition-all overflow-hidden"
               >
                 {/* Module Header */}
                 <div className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-black/20">
@@ -412,32 +412,32 @@ export function CourseManagementView({
 
             <form onSubmit={handleAddModule} className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-300">Título do Módulo</label>
+                <label className="text-sm text-gray-300">Título do Módulo</label>
                 <input
                   type="text"
                   required
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder="Ex: Módulo 4: Acordes com Pestana"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-white/20"
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-white/20"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-300">Descrição (Opcional)</label>
+                <label className="text-sm text-gray-300">Descrição (Opcional)</label>
                 <textarea
                   rows={3}
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
                   placeholder="Descreva o objetivo das aulas..."
-                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-white/20"
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-white/20"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 font-semibold text-sm transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-lg bg-white text-white font-medium font-semibold text-sm transition-all flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                 <span>SALVAR MÓDULO</span>
@@ -467,11 +467,11 @@ export function CourseManagementView({
 
             <form onSubmit={handleAddContent} className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-300">Tipo de Aula/Conteúdo</label>
+                <label className="text-sm text-gray-300">Tipo de Aula/Conteúdo</label>
                 <select
                   value={contentType}
                   onChange={(e: any) => setContentType(e.target.value)}
-                  className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+                  className="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                 >
                   <option value="video">Vídeo Aula</option>
                   <option value="pdf">Material em PDF</option>
@@ -482,26 +482,26 @@ export function CourseManagementView({
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-300">Título da Aula</label>
+                <label className="text-sm text-gray-300">Título da Aula</label>
                 <input
                   type="text"
                   required
                   value={contentTitle}
                   onChange={(e) => setContentTitle(e.target.value)}
                   placeholder="Ex: Aula 01 - Postura e Afinação"
-                  className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                 />
               </div>
 
               {(contentType === 'video' || contentType === 'link' || contentType === 'audio') && (
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-gray-300">URL do Material (Youtube, Drive, etc)</label>
+                  <label className="text-sm text-gray-300">URL do Material (Youtube, Drive, etc)</label>
                   <input
                     type="url"
                     value={contentUrl}
                     onChange={(e) => setContentUrl(e.target.value)}
                     placeholder="https://..."
-                    className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
+                    className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                   />
                   <p className="text-xs text-gray-500">Cole o link do vídeo hospedado externamente.</p>
                 </div>
@@ -510,7 +510,7 @@ export function CourseManagementView({
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Check className="w-5 h-5" />}
                 <span>SALVAR AULA</span>
