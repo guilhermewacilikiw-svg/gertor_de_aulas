@@ -47,18 +47,18 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
       
       <Link href="/escola/alunos" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
         <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm font-bold uppercase tracking-wider">Voltar para Alunos</span>
+        <span className="text-sm font-bold">Voltar para Alunos</span>
       </Link>
 
       {/* Profile Header */}
-      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden p-8 md:p-12">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-500/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
           <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-600 to-red-900 p-1 shadow-[0_0_30px_rgba(125,122,232,0.3)] shrink-0">
             <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-              <span className="font-black text-5xl text-white">
+              <span className="font-semibold text-5xl text-white">
                 {student.name.charAt(0).toUpperCase()}
               </span>
             </div>
@@ -67,12 +67,12 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
               <span className={`w-2 h-2 rounded-full animate-ping ${student.status === 'active' ? 'bg-red-500' : 'bg-red-400'}`}></span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
+              <span className="text-xs font-semibold text-white/80">
                 {student.status === 'active' ? 'Aluno Ativo' : 'Aluno Pendente'}
               </span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md mb-2">
+            <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-2">
               {student.name}
             </h1>
             
@@ -85,21 +85,21 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
           <div className="shrink-0 flex gap-4">
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-[100px]">
               <Shield className="w-6 h-6 text-red-500 mx-auto mb-2" />
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Nível</p>
-              <p className="text-2xl font-black text-white">{student.level || 1}</p>
+              <p className="text-xs font-bold text-gray-500">Nível</p>
+              <p className="text-2xl font-semibold text-white">{student.level || 1}</p>
             </div>
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-[100px]">
               <Activity className="w-6 h-6 text-red-500 mx-auto mb-2" />
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">XP</p>
-              <p className="text-2xl font-black text-white">{student.xp_points || 0}</p>
+              <p className="text-xs font-bold text-gray-500">XP</p>
+              <p className="text-2xl font-semibold text-white">{student.xp_points || 0}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Enrollments Section */}
-      <div className="bg-white/5 border border-white/5 rounded-3xl p-8 backdrop-blur-sm shadow-lg">
-        <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+      <div className="bg-white/5 border border-white/5 rounded-xl p-8 backdrop-blur-sm">
+        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
           <Book className="w-6 h-6 text-red-500" />
           Matrículas Ativas
         </h2>
@@ -117,10 +117,10 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
                 
                 <div className="relative z-10 flex justify-between items-start mb-4">
                   <div>
-                    <span className="text-[10px] font-bold text-white uppercase tracking-widest mb-1 block">Curso</span>
-                    <h3 className="font-black text-white text-xl">{enr.courses?.name || 'Curso Desconhecido'}</h3>
+                    <span className="text-xs font-bold text-white mb-1 block">Curso</span>
+                    <h3 className="font-semibold text-white text-xl">{enr.courses?.name || 'Curso Desconhecido'}</h3>
                   </div>
-                  <span className="px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest bg-red-500/10 text-red-500 border border-red-500/20">
+                  <span className="px-3 py-1 rounded-lg text-xs font-semibold bg-red-500/10 text-red-500 border border-red-500/20">
                     {enr.status === 'active' ? 'Cursando' : 'Inativo'}
                   </span>
                 </div>

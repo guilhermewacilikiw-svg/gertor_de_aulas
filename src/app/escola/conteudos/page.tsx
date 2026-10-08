@@ -48,7 +48,7 @@ export default async function EscolaConteudosPage() {
       <div className="space-y-8 max-w-6xl mx-auto pb-12 pt-4">
         
         {/* HEADER HERO */}
-        <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12 mb-8">
+        <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden p-8 md:p-12 mb-8">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#F59E0B]/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#D97706]/20 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3" style={{ animationDelay: '2s' }}></div>
 
@@ -56,11 +56,11 @@ export default async function EscolaConteudosPage() {
             <div>
               <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(245,158,11,0.15)] mb-6">
                 <FolderArchive className="w-4 h-4 text-[#F59E0B]" />
-                <span className="text-xs font-black uppercase tracking-widest text-white/80">
+                <span className="text-xs font-semibold text-white/80">
                   Material
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-xl mb-4">
+              <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-4">
                 Conteúdos
               </h1>
               <p className="text-gray-400 max-w-xl text-lg">
@@ -116,17 +116,17 @@ export default async function EscolaConteudosPage() {
 
 function MetricCard({ title, value, subtitle, subtitleColor, icon, color, glowColor }: { title: string; value: string; subtitle: string; subtitleColor: string; icon: React.ReactNode; color: string, glowColor: string }) {
   return (
-    <div className="bg-[#12121A]/80 backdrop-blur-xl p-6 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/20 transition-all shadow-lg hover:-translate-y-1">
+    <div className="bg-[#12121A]/80 backdrop-blur-xl p-6 rounded-xl border border-white/5 relative overflow-hidden group hover:border-white/20 transition-all hover:-translate-y-1">
       <div className={`absolute top-0 right-0 p-4 opacity-20 transform translate-x-4 -translate-y-4 group-hover:scale-110 group-hover:opacity-30 transition-all duration-500`}>
         <div className={`w-32 h-32 ${glowColor} rounded-full blur-[40px]`}></div>
       </div>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex justify-between items-start">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{title}</p>
-            <h3 className="text-4xl font-black text-white mt-1 tracking-tight">{value}</h3>
+            <p className="text-xs font-bold text-gray-400">{title}</p>
+            <h3 className="text-4xl font-semibold text-white mt-1 tracking-tight">{value}</h3>
           </div>
-          <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300`}>
+          <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300`}>
             {icon}
           </div>
         </div>

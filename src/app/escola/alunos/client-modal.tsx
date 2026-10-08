@@ -56,7 +56,7 @@ export function InviteStudentModal() {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 hover:scale-105 text-white font-black text-xs shadow-lg shadow-red-600/20 transition-all flex items-center gap-2 group"
+        className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 hover:scale-105 text-white font-semibold text-xs transition-all flex items-center gap-2 group"
       >
         <Plus className="w-4 h-4 stroke-[3] group-hover:rotate-90 transition-transform" />
         Novo Aluno
@@ -70,8 +70,8 @@ export function InviteStudentModal() {
 
             <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/40">
               <div>
-                <h3 className="font-black text-xl text-white uppercase tracking-tight">Novo Aluno</h3>
-                <p className="text-xs text-red-500 font-mono uppercase tracking-widest mt-1">INICIALIZAR ACESSO DISCENTE</p>
+                <h3 className="font-semibold text-xl text-white tracking-tight">Novo Aluno</h3>
+                <p className="text-xs text-red-500 font-mono mt-1">INICIALIZAR ACESSO DISCENTE</p>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
@@ -90,7 +90,7 @@ export function InviteStudentModal() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5 md:col-span-2">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Nome Completo</label>
+                  <label className="text-xs font-bold text-white/80 ml-1">Nome Completo</label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                     <input
@@ -104,7 +104,7 @@ export function InviteStudentModal() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">CPF</label>
+                  <label className="text-xs font-bold text-white/80 ml-1">CPF</label>
                   <div className="relative">
                     <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                     <input
@@ -119,7 +119,7 @@ export function InviteStudentModal() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Data de Nasc.</label>
+                  <label className="text-xs font-bold text-white/80 ml-1">Data de Nasc.</label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                     <input
@@ -131,7 +131,7 @@ export function InviteStudentModal() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Telefone (WhatsApp)</label>
+                  <label className="text-xs font-bold text-white/80 ml-1">Telefone (WhatsApp)</label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                     <input
@@ -146,7 +146,7 @@ export function InviteStudentModal() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">E-mail de Acesso</label>
+                  <label className="text-xs font-bold text-white/80 ml-1">E-mail de Acesso</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                     <input
@@ -160,7 +160,7 @@ export function InviteStudentModal() {
                 </div>
 
                 <div className="space-y-1.5 md:col-span-2">
-                  <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">Senha Inicial</label>
+                  <label className="text-xs font-bold text-white/80 ml-1">Senha Inicial</label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                     <input
@@ -171,7 +171,7 @@ export function InviteStudentModal() {
                       className="w-full bg-black/50 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
                     />
                   </div>
-                  <p className="text-[10px] text-white/50 ml-1 font-mono uppercase">O aluno poderá alterar a senha depois.</p>
+                  <p className="text-xs text-white/50 ml-1 font-mono">O aluno poderá alterar a senha depois.</p>
                 </div>
               </div>
 
@@ -179,14 +179,14 @@ export function InviteStudentModal() {
                 <button 
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 py-3 bg-black/40 border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-colors cyber-clip-btn"
+                  className="flex-1 py-3 bg-black/40 border border-white/10 text-white font-bold text-xs hover:bg-white/5 transition-colors cyber-clip-btn"
                 >
                   Cancelar
                 </button>
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 bg-red-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
+                  className="flex-1 py-3 bg-red-500 text-white font-semibold text-xs hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,232,122,0.3)] flex items-center justify-center gap-2 cyber-clip-btn"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Criar Acesso'}
                 </button>
@@ -270,7 +270,7 @@ export function ImportStudentsModal() {
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div>
-                <h2 className="text-xl font-black text-white">Importar Alunos</h2>
+                <h2 className="text-xl font-semibold text-white">Importar Alunos</h2>
                 <p className="text-xs text-gray-400 mt-0.5">Faça upload de um arquivo CSV (Nome, Email, Senha Opcional).</p>
               </div>
               <button
@@ -290,7 +290,7 @@ export function ImportStudentsModal() {
             {results ? (
               <div className="space-y-4">
                 <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-center">
-                   <h3 className="text-red-500 font-black text-lg">{results.successCount} Alunos Importados!</h3>
+                   <h3 className="text-red-500 font-semibold text-lg">{results.successCount} Alunos Importados!</h3>
                 </div>
                 {results.errors.length > 0 && (
                    <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">

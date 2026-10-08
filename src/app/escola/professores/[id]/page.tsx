@@ -60,18 +60,18 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
       
       <Link href="/escola/professores" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
         <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm font-bold uppercase tracking-wider">Voltar para Professores</span>
+        <span className="text-sm font-bold">Voltar para Professores</span>
       </Link>
 
       {/* Profile Header */}
-      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden shadow-2xl p-8 md:p-12">
+      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden p-8 md:p-12">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-600/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
           <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white to-red-900 p-1 shadow-[0_0_30px_rgba(229,232,122,0.3)] shrink-0">
             <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-              <span className="font-black text-5xl text-white">
+              <span className="font-semibold text-5xl text-white">
                 {userName.charAt(0).toUpperCase()}
               </span>
             </div>
@@ -80,12 +80,12 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
               <Star className="w-4 h-4 text-white" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
+              <span className="text-xs font-semibold text-white/80">
                 Professor Titular
               </span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-md mb-2">
+            <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-2">
               {userName}
             </h1>
             
@@ -99,7 +99,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 min-w-[140px] flex items-center gap-3">
               <BookOpen className="w-6 h-6 text-red-500" />
               <div>
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Especialidade</p>
+                <p className="text-xs font-bold text-gray-500">Especialidade</p>
                 <p className="font-bold text-white text-sm">{teacher.specialty || 'Geral'}</p>
               </div>
             </div>
@@ -108,8 +108,8 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
       </div>
 
       {/* Classes Section */}
-      <div className="bg-white/5 border border-white/5 rounded-3xl p-8 backdrop-blur-sm shadow-lg">
-        <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
+      <div className="bg-white/5 border border-white/5 rounded-xl p-8 backdrop-blur-sm">
+        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
           <GraduationCap className="w-6 h-6 text-white" />
           Turmas Atribuídas
         </h2>
@@ -131,17 +131,17 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
                   
                   <div className="flex-1 relative z-10">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
+                      <span className={`px-3 py-1 rounded-lg text-xs font-semibold border ${
                         turma.status === 'active' 
                         ? 'bg-red-500/10 text-red-500 border-red-500/20' 
                         : 'bg-white/5 text-gray-500 border-white/10'
                       }`}>
                         {turma.status === 'active' ? 'Ativa' : 'Inativa'}
                       </span>
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{turma.courses?.name}</span>
+                      <span className="text-xs font-bold text-gray-500">{turma.courses?.name}</span>
                     </div>
                     
-                    <h3 className="font-black text-white text-2xl mb-4">{turma.name}</h3>
+                    <h3 className="font-semibold text-white text-2xl mb-4">{turma.name}</h3>
                     
                     <div className="flex items-center gap-2 text-gray-400 bg-black/50 w-fit px-4 py-2 rounded-xl border border-white/5">
                       <Users className="w-4 h-4 text-red-500" />
@@ -151,7 +151,7 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
 
                   {schedules.length > 0 && (
                     <div className="md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 relative z-10 flex flex-col justify-center space-y-3">
-                      <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Horários da Turma</p>
+                      <p className="text-xs font-bold text-gray-500 mb-1">Horários da Turma</p>
                       {schedules.map((schedule: any) => (
                         <div key={schedule.id} className="flex flex-col gap-1 bg-white/5 p-3 rounded-xl border border-white/5">
                           <div className="flex items-center gap-2 text-white">

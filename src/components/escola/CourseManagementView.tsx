@@ -229,14 +229,14 @@ export function CourseManagementView({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold text-white uppercase tracking-wider">Gestão do Curso & Plano de Aulas</span>
-          <h1 className="text-3xl font-black text-white tracking-tight">{courseName}</h1>
+          <span className="text-xs font-bold text-white">Gestão do Curso & Plano de Aulas</span>
+          <h1 className="text-3xl font-semibold text-white tracking-tight">{courseName}</h1>
         </div>
 
         <button
           onClick={handleSaveCourse}
           disabled={savingCourse}
-          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 via-indigo-600 to-red-900 hover:brightness-110 text-white font-extrabold text-xs shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
+          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 via-indigo-600 to-red-900 hover:brightness-110 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 active:scale-95"
         >
           {savingCourse ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
           <span>SALVAR NÍVEL & DETALHES</span>
@@ -244,7 +244,7 @@ export function CourseManagementView({
       </div>
 
       {/* Course Main Details Panel */}
-      <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-6">
+      <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-6">
         <div className="flex items-center gap-2 border-b border-white/10 pb-3">
           <BookOpen className="w-5 h-5 text-red-500" />
           <h2 className="text-lg font-bold text-white">Informações Gerais do Curso</h2>
@@ -252,7 +252,7 @@ export function CourseManagementView({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase text-gray-300">Nome do Curso</label>
+            <label className="text-xs font-bold text-gray-300">Nome do Curso</label>
             <input
               type="text"
               value={courseName}
@@ -263,7 +263,7 @@ export function CourseManagementView({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-gray-300">Categoria</label>
+              <label className="text-xs font-bold text-gray-300">Categoria</label>
               <input
                 type="text"
                 value={category}
@@ -274,7 +274,7 @@ export function CourseManagementView({
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-gray-300">Nível</label>
+              <label className="text-xs font-bold text-gray-300">Nível</label>
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
@@ -288,7 +288,7 @@ export function CourseManagementView({
           </div>
 
           <div className="md:col-span-2 space-y-2">
-            <label className="text-xs font-bold uppercase text-gray-300">Descrição do Curso & Objetivos</label>
+            <label className="text-xs font-bold text-gray-300">Descrição do Curso & Objetivos</label>
             <textarea
               rows={3}
               value={description}
@@ -300,12 +300,12 @@ export function CourseManagementView({
       </div>
 
       {/* PLANO DE AULAS & MÓDULOS */}
-      <div className="bg-neutral-900/30 border border-neutral-800 rounded-3xl p-6 border border-white/10 shadow-xl space-y-6">
+      <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-6 border border-white/10 space-y-6">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2">
             <Layers className="w-5 h-5 text-white" />
             <div>
-              <h2 className="text-lg font-black text-white">Grade Curricular & Planos de Aula</h2>
+              <h2 className="text-lg font-semibold text-white">Grade Curricular & Planos de Aula</h2>
               <p className="text-xs text-gray-400">Monte a sequência pedagógica adicionando módulos e criando aulas (vídeos, PDFs, etc).</p>
             </div>
           </div>
@@ -332,7 +332,7 @@ export function CourseManagementView({
                 {/* Module Header */}
                 <div className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-black/20">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600/20 to-red-900/20 text-white font-black text-sm flex items-center justify-center border border-red-500/20 shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600/20 to-red-900/20 text-white font-semibold text-sm flex items-center justify-center border border-red-500/20 shrink-0">
                       #{idx + 1}
                     </div>
                     <div className="space-y-1">
@@ -376,7 +376,7 @@ export function CourseManagementView({
                           </div>
                           <div>
                             <p className="text-sm font-semibold text-gray-200 group-hover:text-white transition-colors">{content.title}</p>
-                            <p className="text-[10px] text-gray-500 uppercase tracking-wider">{content.type}</p>
+                            <p className="text-xs text-gray-500">{content.type}</p>
                           </div>
                         </div>
                         <button className="opacity-0 group-hover:opacity-100 p-1.5 text-gray-400 hover:text-white transition-all">
@@ -395,12 +395,12 @@ export function CourseManagementView({
       {/* CREATE MODULE MODAL */}
       {isModuleModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg bg-neutral-900 border border-slate-800 rounded-3xl p-6 shadow-2xl text-white space-y-6">
+          <div className="relative w-full max-w-lg bg-neutral-900 border border-slate-800 rounded-xl p-6 text-white space-y-6">
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
-                <span className="text-xs font-bold text-white uppercase tracking-wider">Novo Plano</span>
-                <h3 className="text-xl font-black text-white">Adicionar Módulo</h3>
+                <span className="text-xs font-bold text-white">Novo Plano</span>
+                <h3 className="text-xl font-semibold text-white">Adicionar Módulo</h3>
               </div>
               <button
                 onClick={() => setIsModuleModalOpen(false)}
@@ -412,7 +412,7 @@ export function CourseManagementView({
 
             <form onSubmit={handleAddModule} className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-gray-300">Título do Módulo</label>
+                <label className="text-xs font-bold text-gray-300">Título do Módulo</label>
                 <input
                   type="text"
                   required
@@ -424,7 +424,7 @@ export function CourseManagementView({
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-gray-300">Descrição (Opcional)</label>
+                <label className="text-xs font-bold text-gray-300">Descrição (Opcional)</label>
                 <textarea
                   rows={3}
                   value={newDescription}
@@ -437,7 +437,7 @@ export function CourseManagementView({
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-2xl bg-white text-white font-medium hover:brightness-110 font-semibold text-sm transition-all flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                 <span>SALVAR MÓDULO</span>
@@ -450,12 +450,12 @@ export function CourseManagementView({
       {/* ADD CONTENT MODAL */}
       {isContentModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg bg-neutral-900 border border-slate-800 rounded-3xl p-6 shadow-2xl text-white space-y-6">
+          <div className="relative w-full max-w-lg bg-neutral-900 border border-slate-800 rounded-xl p-6 text-white space-y-6">
             
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
-                <span className="text-xs font-bold text-red-500 uppercase tracking-wider">Nova Aula</span>
-                <h3 className="text-xl font-black text-white">Adicionar Conteúdo</h3>
+                <span className="text-xs font-bold text-red-500">Nova Aula</span>
+                <h3 className="text-xl font-semibold text-white">Adicionar Conteúdo</h3>
               </div>
               <button
                 onClick={() => setIsContentModalOpen(false)}
@@ -467,7 +467,7 @@ export function CourseManagementView({
 
             <form onSubmit={handleAddContent} className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-gray-300">Tipo de Aula/Conteúdo</label>
+                <label className="text-xs font-bold text-gray-300">Tipo de Aula/Conteúdo</label>
                 <select
                   value={contentType}
                   onChange={(e: any) => setContentType(e.target.value)}
@@ -482,7 +482,7 @@ export function CourseManagementView({
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-gray-300">Título da Aula</label>
+                <label className="text-xs font-bold text-gray-300">Título da Aula</label>
                 <input
                   type="text"
                   required
@@ -495,7 +495,7 @@ export function CourseManagementView({
 
               {(contentType === 'video' || contentType === 'link' || contentType === 'audio') && (
                 <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase text-gray-300">URL do Material (Youtube, Drive, etc)</label>
+                  <label className="text-xs font-bold text-gray-300">URL do Material (Youtube, Drive, etc)</label>
                   <input
                     type="url"
                     value={contentUrl}
@@ -503,14 +503,14 @@ export function CourseManagementView({
                     placeholder="https://..."
                     className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-red-500/20"
                   />
-                  <p className="text-[10px] text-gray-500">Cole o link do vídeo hospedado externamente.</p>
+                  <p className="text-xs text-gray-500">Cole o link do vídeo hospedado externamente.</p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-black text-sm shadow-xl shadow-pink-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-900 hover:brightness-110 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Check className="w-5 h-5" />}
                 <span>SALVAR AULA</span>

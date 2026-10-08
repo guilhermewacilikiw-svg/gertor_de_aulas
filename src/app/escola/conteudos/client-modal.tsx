@@ -77,14 +77,14 @@ export function BibliotecaMateriais({
         <h3 className="font-bold text-white text-lg">Acervo Recente</h3>
         <button 
           onClick={() => setIsOpen(true)}
-          className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:scale-105 text-white font-black text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-700 hover:scale-105 text-white font-semibold text-xs shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all flex items-center gap-2 group"
         >
           <Upload className="w-4 h-4 stroke-[3] group-hover:-translate-y-1 transition-transform" />
           Novo Material
         </button>
       </div>
 
-      <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-3xl shadow-xl overflow-hidden relative mb-8">
+      <div className="bg-[#12121A]/80 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden relative mb-8">
         <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/5 relative z-10">
@@ -102,7 +102,7 @@ export function BibliotecaMateriais({
 
         <div className="overflow-x-auto relative z-10">
           <table className="w-full text-left text-sm text-gray-300">
-            <thead className="bg-black/40 text-[10px] uppercase font-black tracking-widest text-gray-500 border-b border-white/5">
+            <thead className="bg-black/40 text-xs font-semibold text-gray-500 border-b border-white/5">
               <tr>
                 <th className="p-5 pl-6">Material</th>
                 <th className="p-5">Público Alvo</th>
@@ -121,12 +121,12 @@ export function BibliotecaMateriais({
                       </div>
                       <div>
                         <div className="font-bold text-white text-sm group-hover:text-red-500 transition-colors">{mat.title}</div>
-                        <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-0.5">{mat.type}</div>
+                        <div className="text-xs text-gray-500 font-semibold mt-0.5">{mat.type}</div>
                       </div>
                     </div>
                   </td>
                   <td className="p-5">
-                    <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 text-gray-300">
+                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold border border-white/10 bg-white/5 text-gray-300">
                       {mat.target === 'all' ? 'Escola' : (mat.target.includes('module_') ? 'Módulo' : (mat.target.includes('student_') ? 'Aluno Específico' : mat.target))}
                     </span>
                   </td>
@@ -160,16 +160,16 @@ export function BibliotecaMateriais({
       {/* MODAL DE UPLOAD */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl text-white">
+          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0a0a0f] border border-white/10 rounded-xl p-6 text-white">
             
             <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
             <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
               <div>
-                <span className="text-xs font-bold text-red-500 uppercase tracking-wider flex items-center gap-1">
+                <span className="text-xs font-bold text-red-500 flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> Biblioteca
                 </span>
-                <h2 className="text-xl font-black text-white">Upload de Material</h2>
+                <h2 className="text-xl font-semibold text-white">Upload de Material</h2>
                 <p className="text-xs text-gray-400 mt-0.5">Envie arquivos para os alunos e professores.</p>
               </div>
               <button 
@@ -185,12 +185,12 @@ export function BibliotecaMateriais({
               {errorMsg && (
                 <div className="p-3 border-l-4 border-red-500 bg-red-500/10 flex items-start gap-2">
                   <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                  <p className="text-[10px] font-mono text-red-400 uppercase">{errorMsg}</p>
+                  <p className="text-xs font-mono text-red-400">{errorMsg}</p>
                 </div>
               )}
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Título do Material</label>
+                <label className="text-xs font-bold text-gray-400 ml-1">Título do Material</label>
                 <div className="relative">
                   <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input
@@ -205,7 +205,7 @@ export function BibliotecaMateriais({
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Público Alvo (Acesso)</label>
+                <label className="text-xs font-bold text-gray-400 ml-1">Público Alvo (Acesso)</label>
                 <select
                   name="target"
                   required
@@ -227,7 +227,7 @@ export function BibliotecaMateriais({
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Vincular a uma Aula (Opcional)</label>
+                <label className="text-xs font-bold text-gray-400 ml-1">Vincular a uma Aula (Opcional)</label>
                 <select
                   name="lesson_id"
                   disabled={isPending}
@@ -241,7 +241,7 @@ export function BibliotecaMateriais({
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Link do Conteúdo (URL)</label>
+                <label className="text-xs font-bold text-gray-400 ml-1">Link do Conteúdo (URL)</label>
                 <div className="relative">
                   <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input
@@ -267,7 +267,7 @@ export function BibliotecaMateriais({
                 <button 
                   type="submit"
                   disabled={isPending}
-                  className="flex-1 py-3.5 rounded-xl bg-red-500 text-white font-black text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 py-3.5 rounded-xl bg-red-500 text-white font-semibold text-sm hover:brightness-110 shadow-[0_0_15px_rgba(192,232,122,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Upload className="w-4 h-4 stroke-[3]" /> {isPending ? 'SALVANDO...' : 'CADASTRAR LINK'}
                 </button>
