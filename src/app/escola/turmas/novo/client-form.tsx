@@ -46,20 +46,19 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
       {/* Header com Botão Voltar */}
       <div className="flex items-center gap-4">
         <Link 
-          href="/escola/turmas" 
+          href="/escola/turmas" aria-label="Voltar"
           className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl transition-colors text-white border border-white/10 hover:border-white/20"
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Nova Turma</h1>
-          <p className="text-sm text-red-500 font-mono uppercase tracking-widest mt-1">VINCULAR CURSO, PROFESSOR E VAGAS</p>
+          <h1 className="text-2xl font-semibold text-white">Nova turma</h1>
+          <p className="text-sm text-gray-400 mt-1">Vincule curso, professor e vagas</p>
         </div>
       </div>
 
       {/* Card do Formulário */}
-      <div className="bg-[#12121A] border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+      <div className="bg-[#12121A] border border-white/10 rounded-xl p-8 md:p-12 relative overflow-hidden">
 
         <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
           {error && (
@@ -71,7 +70,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
           <div className="space-y-6">
             {/* Nome da Turma */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">
+              <label className="text-sm text-gray-300">
                 Nome da Turma <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -80,7 +79,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
                   type="text"
                   name="name"
                   required
-                  className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-white/30"
+                  className="w-full bg-white/[0.04] border border-white/10 rounded-lg min-h-11 py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-white/30"
                   placeholder="Ex: Guitarra Iniciante - Turma Terça 19h"
                 />
               </div>
@@ -89,7 +88,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Curso Vinculado */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">
+                <label className="text-sm text-gray-300">
                   Curso Vinculado <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -98,7 +97,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
                     name="course_id"
                     required
                     defaultValue=""
-                    className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none cursor-pointer"
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-lg min-h-11 py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none cursor-pointer"
                   >
                     <option value="" disabled className="bg-[#12121A] text-gray-500">
                       Selecione um curso...
@@ -114,7 +113,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
 
               {/* Professor Responsável */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">
+                <label className="text-sm text-gray-300">
                   Professor Responsável
                 </label>
                 <div className="relative">
@@ -122,7 +121,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
                   <select
                     name="teacher_id"
                     defaultValue=""
-                    className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none cursor-pointer"
+                    className="w-full bg-white/[0.04] border border-white/10 rounded-lg min-h-11 py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all appearance-none cursor-pointer"
                   >
                     <option value="" className="bg-[#12121A] text-gray-400">
                       Nenhum professor (Definir depois)
@@ -139,7 +138,7 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
 
             {/* Capacidade de Vagas */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-white/80 ml-1 uppercase tracking-wider">
+              <label className="text-sm text-gray-300">
                 Capacidade Máxima de Vagas
               </label>
               <div className="relative">
@@ -150,11 +149,11 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
                   min="1"
                   max="100"
                   defaultValue={30}
-                  className="w-full bg-black/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-white/30"
+                  className="w-full bg-white/[0.04] border border-white/10 rounded-lg min-h-11 py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder:text-white/30"
                   placeholder="30"
                 />
               </div>
-              <p className="text-[11px] text-gray-500 ml-1">
+              <p className="text-xs text-gray-500 ml-1">
                 Limite máximo de alunos que podem ser matriculados simultaneamente nesta turma.
               </p>
             </div>
@@ -172,10 +171,10 @@ export function NovoTurmaForm({ courses, teachers }: NovoTurmaFormProps) {
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-4 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-xs uppercase tracking-widest shadow-lg shadow-red-600/30 hover:shadow-red-600/50 hover:scale-105 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
+              className="px-8 py-4 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-semibold text-xs hover:shadow-red-600/50 hover:scale-105 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              {loading ? 'Salvando Turma...' : 'Salvar Turma'}
+              {loading ? 'Salvando Turma...' : 'Salvar turma'}
             </button>
           </div>
         </form>
