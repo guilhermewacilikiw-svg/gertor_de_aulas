@@ -128,7 +128,7 @@ export default async function EscolaDashboard() {
                         <p className="text-sm text-white truncate">{nome}</p>
                         <p className="text-sm text-gray-400 truncate">{turma}</p>
                       </div>
-                      <span className={`text-xs px-2 py-1 rounded-md ${ativo ? 'bg-emerald-500/15 text-emerald-300' : 'bg-white/5 text-gray-400'}`}>
+                      <span className={`text-xs px-2 py-1 rounded-md ${ativo ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'}`}>
                         {ativo ? 'Ativo' : 'Inativo'}
                       </span>
                     </Link>

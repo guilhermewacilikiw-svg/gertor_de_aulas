@@ -62,7 +62,7 @@ export function TurmasGrid({ initialClasses }: TurmasGridProps) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="text-sm text-white truncate">{cls.name}</p>
-                      <span className={`text-xs px-2 py-0.5 rounded-md shrink-0 ${ativa ? 'bg-emerald-500/15 text-emerald-300' : 'bg-white/5 text-gray-400'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-md shrink-0 ${ativa ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'}`}>
                         {ativa ? 'Ativa' : 'Inativa'}
                       </span>
                     </div>

@@ -82,7 +82,7 @@ export default async function AlunosPage() {
                   Nível {student.level || 1} · {student.xp_points || 0} XP
                 </span>
                 <span className={`text-xs px-2 py-1 rounded-md shrink-0 ${
-                  student.status === 'active' ? 'bg-emerald-500/15 text-emerald-300' : 'bg-white/5 text-gray-400'
+                  student.status === 'active' ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'
                 }`}>
                   {student.status === 'active' ? 'Ativo' : 'Pendente'}
                 </span>
