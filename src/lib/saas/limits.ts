@@ -144,11 +144,42 @@ export async function checkSchoolLimit(
   schoolId: string, 
   resource: 'students' | 'teachers'
 ): Promise<{ allowed: boolean; error?: string; current: number; max: number; planName: string }> {
-  // Modo de teste: Acesso ilimitado e sem restrições de planos ou pagamento
+  // Enquanto BILLING_ENFORCED não for 'true' (período de testes), não há limites nem cobrança.
+  if (process.env.BILLING_ENFORCED !== 'true') {
+    return {
+      allowed: true,
+      current: 0,
+      max: 99999,
+      planName: 'Ilimitado (Teste)'
+    };
+  }
+
+  const info = await getSchoolPlanAndUsage(schoolId);
+  if (!info) {
+    return { allowed: false, error: 'Não foi possível verificar o plano da escola. Tente novamente.', current: 0, max: 0, planName: '' };
+  }
+
+  const planName = info.plan?.name || '';
+  const current = resource === 'students' ? info.usage.students : info.usage.teachers;
+  const max = resource === 'students' ? info.limits.maxStudents : info.limits.maxTeachers;
+  const allowed = resource === 'students' ? info.limits.canAddStudent : info.limits.canAddTeacher;
+
+  if (allowed) {
+    return { allowed: true, current, max, planName };
+  }
+
+  if (!info.isSubscriptionValid) {
+    return {
+      allowed: false,
+      error: 'Sua assinatura não está ativa. Regularize o pagamento para cadastrar novos registros.',
+      current, max, planName
+    };
+  }
+
+  const rotulo = resource === 'students' ? 'alunos' : 'professores';
   return {
-    allowed: true,
-    current: 0,
-    max: 99999,
-    planName: 'Ilimitado (Teste)'
+    allowed: false,
+    error: `Você chegou ao limite de ${max} ${rotulo} do plano ${planName}. Mude de plano para cadastrar mais.`,
+    current, max, planName
   };
 }
