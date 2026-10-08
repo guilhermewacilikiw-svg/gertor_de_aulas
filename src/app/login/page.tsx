@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from 'react'
 import { login } from './actions'
-import { ArrowRight, Lock, Users, GraduationCap, Building2, AlertCircle, ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Building2, GraduationCap, Users, AlertCircle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -11,196 +11,130 @@ const initialState = {
   error: null as string | null,
 }
 
+type Perfil = 'escola' | 'professor' | 'aluno'
+
+const PERFIS: { id: Perfil; rotulo: string; icone: typeof Building2 }[] = [
+  { id: 'escola', rotulo: 'Escola', icone: Building2 },
+  { id: 'professor', rotulo: 'Professor', icone: GraduationCap },
+  { id: 'aluno', rotulo: 'Aluno', icone: Users },
+]
+
 export default function LoginPage() {
-  const [activeTab, setActiveTab] = useState<'aluno' | 'professor' | 'escola'>('escola')
-  
+  const [activeTab, setActiveTab] = useState<Perfil>('escola')
+
   // useActionState do React 19 / Next.js 15+
   const [state, formAction, isPending] = useActionState(login as any, initialState)
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-[#0a0a0f] font-sans">
-      
-      {/* Global CSS for custom animations */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes scanline {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100vh); }
-        }
-        .cyber-grid {
-          background-size: 50px 50px;
-          background-image: 
-            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-        .cyber-clip { clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
-        .cyber-clip-btn { clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
-      `}} />
-
-      {/* Background Cyber Grid & Scanline */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 cyber-grid"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f]"></div>
-        <div className="absolute top-0 w-full h-[5px] bg-red-500/30 blur-sm animate-[scanline_8s_linear_infinite]"></div>
-      </div>
-
-      <div className="absolute top-6 left-6 z-50">
-        <Link href="/" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-500 hover:text-white transition-colors cyber-clip-btn border border-red-500/20 bg-red-500/5 px-4 py-2">
-          <ArrowLeft className="w-4 h-4" /> Voltar
+    <div className="min-h-screen flex flex-col bg-[#0a0a0f] font-sans">
+      <header className="p-4 sm:p-6">
+        <Link href="/" className="inline-flex items-center gap-2 min-h-11 text-sm text-gray-400 hover:text-white transition-colors">
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" /> Voltar para o início
         </Link>
-      </div>
+      </header>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="flex justify-center mb-6">
-          <Link href="/" className="flex items-center gap-4 group">
-            <div className="w-[90px] h-[90px] overflow-hidden rounded-2xl p-[1px] border border-white/10 group-hover:shadow-[0_0_20px_rgba(162,122,232,0.4)] transition-all">
-              <Image src="/logo-rock.jpg" alt="Wakoda Logo" width={90} height={90} className="w-full h-full object-cover" />
-            </div>
-            <span className="font-bebas tracking-tight text-3xl text-white">Wakoda</span>
-          </Link>
-        </div>
-        <h2 className="mt-6 text-center text-3xl font-black tracking-tight text-white uppercase drop-shadow-md">
-          Acesso ao Sistema
-        </h2>
-        <p className="mt-2 text-center text-xs font-mono text-white/50 uppercase tracking-widest">
-          Selecione seu perfil para entrar
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        
-        {/* Tabs de Seleção */}
-        <div className="flex bg-black/50 border border-white/10 p-1 mb-6 cyber-clip">
-          <button
-            onClick={() => setActiveTab('escola')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn ${
-              activeTab === 'escola' 
-                ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(162,122,232,0.4)]' 
-                : 'text-white/50 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Building2 className="w-4 h-4" /> Escola
-          </button>
-          
-          <button
-            onClick={() => setActiveTab('professor')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn ${
-              activeTab === 'professor' 
-                ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.4)]' 
-                : 'text-white/50 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <GraduationCap className="w-4 h-4" /> Prof
-          </button>
-          
-          <button
-            onClick={() => setActiveTab('aluno')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-black uppercase tracking-widest transition-all cyber-clip-btn ${
-              activeTab === 'aluno' 
-                ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(192,232,122,0.4)]' 
-                : 'text-white/50 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Users className="w-4 h-4" /> Aluno
-          </button>
-        </div>
-
-        <div className="bg-black/80 border-t-4 border-red-500 py-8 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-10 relative">
-          
-          {/* Corner tech details */}
-          <div className="absolute top-0 right-0 p-2 border-b border-l border-white/10 bg-white/5 text-xs font-black font-mono text-gray-500 tracking-widest">
-            SECURE_LOGIN
+      <main className="flex-1 flex items-center justify-center px-4 pb-12">
+        <div className="w-full max-w-sm">
+          <div className="flex flex-col items-center text-center mb-8">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <span className="w-12 h-12 overflow-hidden rounded-xl border border-white/10">
+                <Image src="/logo-rock.jpg" alt="" width={48} height={48} className="w-full h-full object-cover" />
+              </span>
+              <span className="font-bebas text-3xl text-white">Wakoda</span>
+            </Link>
+            <h1 className="text-2xl font-semibold text-white">Entrar na sua conta</h1>
+            <p className="text-sm text-gray-400 mt-1">Escolha como você usa o sistema.</p>
           </div>
 
-          <form className="space-y-6" action={formAction}>
-            
+          <div className="inline-flex w-full p-1 rounded-lg bg-white/[0.04] mb-6" role="group" aria-label="Tipo de conta">
+            {PERFIS.map(({ id, rotulo, icone: Icone }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setActiveTab(id)}
+                aria-pressed={activeTab === id}
+                className={`flex-1 inline-flex items-center justify-center gap-2 min-h-11 rounded-md text-sm transition-colors ${
+                  activeTab === id ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <Icone className="w-4 h-4" aria-hidden="true" /> {rotulo}
+              </button>
+            ))}
+          </div>
+
+          <form className="space-y-5" action={formAction}>
             <input type="hidden" name="loginType" value={activeTab} />
 
             {state?.error && (
-              <div className="p-4 border-l-4 border-red-500 bg-red-500/10 flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-                <p className="text-xs font-mono text-red-400 uppercase">{state.error}</p>
+              <div role="alert" className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-400 shrink-0" aria-hidden="true" />
+                <p className="text-sm text-red-300">{state.error}</p>
               </div>
             )}
-            
+
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-xs font-black uppercase tracking-widest text-white/80">
-                E-mail
-              </label>
-              <div className="relative">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full py-3 px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all font-mono text-sm rounded-none"
-                  placeholder="seu@email.com"
-                />
-              </div>
+              <label htmlFor="email" className="block text-sm text-gray-300">E-mail</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="block w-full min-h-11 px-3 rounded-lg bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-500 transition-colors text-sm"
+                placeholder="seu@email.com"
+              />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-xs font-black uppercase tracking-widest text-white/80">
-                Senha
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-4 w-4 text-red-500" />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full py-3 pl-10 pr-4 bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all font-mono text-sm rounded-none"
-                  placeholder="••••••••"
-                />
-              </div>
+              <label htmlFor="password" className="block text-sm text-gray-300">Senha</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="block w-full min-h-11 px-3 rounded-lg bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-500 transition-colors text-sm"
+                placeholder="Sua senha"
+              />
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+            <div className="flex items-center justify-between text-sm">
+              <label htmlFor="remember-me" className="inline-flex items-center gap-2 min-h-11 text-gray-300">
                 <input
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 border-white/10 bg-white/5 text-red-500 focus:ring-red-500 focus:ring-offset-[#0a0a0f] rounded-none"
+                  className="h-4 w-4 rounded border-white/20 bg-white/5 accent-red-600"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-xs font-mono uppercase text-white/60">
-                  Lembrar de mim
-                </label>
-              </div>
-
-              <div className="text-xs font-mono uppercase">
-                <a href="#" className="font-bold text-red-500 hover:text-red-500 transition-colors">
-                  Esqueci minha senha
-                </a>
-              </div>
-            </div>
-
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={isPending}
-                className="w-full flex justify-center items-center gap-3 py-4 px-4 text-sm font-black uppercase tracking-widest text-black bg-red-500 hover:bg-black hover:text-red-500 border border-red-500 shadow-[0_0_20px_rgba(192,232,122,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed skew-x-[-10deg] group"
+                Lembrar de mim
+              </label>
+              <a
+                href="mailto:suporte@wakoda.com.br?subject=Esqueci%20minha%20senha"
+                className="inline-flex items-center min-h-11 text-gray-300 hover:text-white underline-offset-4 hover:underline"
               >
-                <span className="skew-x-[10deg] flex items-center gap-2">
-                  {isPending ? 'ENTRANDO...' : 'ENTRAR'}
-                  {!isPending && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
-                </span>
-              </button>
+                Esqueci minha senha
+              </a>
             </div>
+
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full inline-flex justify-center items-center gap-2 min-h-12 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {isPending ? (<><Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> Entrando…</>) : 'Entrar'}
+            </button>
           </form>
+
+          <p className="mt-8 text-center text-sm text-gray-400">
+            Ainda não tem conta?{' '}
+            <Link href="/cadastro" className="text-white underline underline-offset-4 hover:text-red-400">Cadastre sua escola</Link>
+          </p>
+          <p className="mt-2 text-center text-sm text-gray-400">
+            Precisa de ajuda?{' '}
+            <a href="mailto:suporte@wakoda.com.br" className="text-white underline underline-offset-4 hover:text-red-400">Fale com o suporte</a>
+          </p>
         </div>
-        
-        <p className="mt-8 text-center text-xs font-mono uppercase text-white/50">
-          Não tem uma conta? <Link href="/cadastro" className="text-red-500 font-bold hover:text-white transition-colors">Cadastre sua escola</Link>
-        </p>
-        <p className="mt-4 text-center text-xs font-mono uppercase text-white/50">
-          Precisa de ajuda? <a href="mailto:suporte@wakoda.com.br" className="text-white/80 hover:text-red-500 transition-colors">Fale com o suporte</a>
-        </p>
-      </div>
+      </main>
     </div>
   )
 }
