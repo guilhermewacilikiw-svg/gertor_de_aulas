@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { ArrowLeft, Mail, BookOpen, Users, GraduationCap, MapPin, Clock, Star } from 'lucide-react';
+import { ArrowLeft, Mail, Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -56,131 +56,86 @@ export default async function ProfessorProfilePage({ params }: { params: Promise
   const userName = teacher.users?.name || 'Professor';
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      
-      <Link href="/escola/professores" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm font-bold">Voltar para Professores</span>
+    <div className="space-y-8 max-w-4xl mx-auto pb-20 animate-in fade-in duration-500">
+      <Link href="/escola/professores" className="inline-flex items-center gap-2 min-h-11 text-sm text-gray-400 hover:text-white transition-colors">
+        <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+        Voltar para professores
       </Link>
 
-      {/* Profile Header */}
-      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden p-8 md:p-12">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-600/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3"></div>
-
-        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white to-red-900 p-1 shadow-[0_0_30px_rgba(229,232,122,0.3)] shrink-0">
-            <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-              <span className="font-semibold text-5xl text-white">
-                {userName.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
-              <Star className="w-4 h-4 text-white" />
-              <span className="text-xs font-semibold text-white/80">
-                Professor Titular
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-2">
-              {userName}
-            </h1>
-            
-            <p className="text-gray-400 text-lg flex items-center justify-center md:justify-start gap-2">
-              <Mail className="w-4 h-4" />
-              {teacher.users?.email || 'E-mail não informado'}
-            </p>
-          </div>
-
-          <div className="shrink-0 flex flex-col gap-4">
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 min-w-[140px] flex items-center gap-3">
-              <BookOpen className="w-6 h-6 text-red-500" />
-              <div>
-                <p className="text-xs font-bold text-gray-500">Especialidade</p>
-                <p className="font-bold text-white text-sm">{teacher.specialty || 'Geral'}</p>
-              </div>
-            </div>
-          </div>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="w-16 h-16 rounded-full bg-red-600/20 text-red-400 flex items-center justify-center text-2xl font-medium shrink-0">
+          {userName.charAt(0).toUpperCase()}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl font-semibold text-white truncate">{userName}</h1>
+          <p className="text-sm text-gray-400 flex items-center gap-2 mt-1">
+            <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span className="truncate">{teacher.users?.email || 'E-mail não informado'}</span>
+          </p>
+        </div>
+        <div className="rounded-xl bg-white/[0.04] px-4 py-3">
+          <p className="text-sm text-gray-400">Especialidade</p>
+          <p className="text-white">{teacher.specialty || 'Geral'}</p>
         </div>
       </div>
 
-      {/* Classes Section */}
-      <div className="bg-white/5 border border-white/5 rounded-xl p-8 backdrop-blur-sm">
-        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
-          <GraduationCap className="w-6 h-6 text-white" />
-          Turmas Atribuídas
-        </h2>
+      <section>
+        <h2 className="text-base font-medium text-white border-b border-white/10 pb-3">Turmas deste professor</h2>
 
         {!classes || classes.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 bg-black/20 rounded-2xl border border-white/5 border-dashed">
-            <Users className="w-12 h-12 text-gray-600 mb-4" />
-            <p className="text-gray-400 font-bold">Este professor ainda não foi atribuído a nenhuma turma.</p>
+          <div className="py-12 text-center">
+            <p className="text-white font-medium">Nenhuma turma atribuída</p>
+            <p className="text-sm text-gray-400 mt-1">Vincule o professor a uma turma na tela de turmas.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6">
+          <ul className="divide-y divide-white/5">
             {classes.map((turma: any) => {
               const enrolledCount = Array.isArray(turma.enrollments) ? turma.enrollments.length : (turma.enrollments?.count || 0);
               const schedules = Array.isArray(turma.class_schedules) ? turma.class_schedules : [];
+              const ativa = turma.status === 'active';
 
               return (
-                <div key={turma.id} className="bg-[#1A1A24] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-white/50 transition-all duration-300 flex flex-col md:flex-row gap-6">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/10 transition-all duration-500"></div>
-                  
-                  <div className="flex-1 relative z-10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className={`px-3 py-1 rounded-lg text-xs font-semibold border ${
-                        turma.status === 'active' 
-                        ? 'bg-red-500/10 text-red-500 border-red-500/20' 
-                        : 'bg-white/5 text-gray-500 border-white/10'
-                      }`}>
-                        {turma.status === 'active' ? 'Ativa' : 'Inativa'}
+                <li key={turma.id} className="py-4 flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link href={`/escola/turmas/${turma.id}`} className="text-white hover:underline">{turma.name}</Link>
+                      <span className={`text-xs px-2 py-0.5 rounded-md ${ativa ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'}`}>
+                        {ativa ? 'Ativa' : 'Inativa'}
                       </span>
-                      <span className="text-xs font-bold text-gray-500">{turma.courses?.name}</span>
                     </div>
-                    
-                    <h3 className="font-semibold text-white text-2xl mb-4">{turma.name}</h3>
-                    
-                    <div className="flex items-center gap-2 text-gray-400 bg-black/50 w-fit px-4 py-2 rounded-xl border border-white/5">
-                      <Users className="w-4 h-4 text-red-500" />
-                      <span className="font-bold text-gray-300">{enrolledCount} / {turma.capacity || 0} Vagas Ocupadas</span>
-                    </div>
+                    <p className="text-sm text-gray-400 mt-1">
+                      {turma.courses?.name} · {enrolledCount} / {turma.capacity || 0} vagas ocupadas
+                    </p>
                   </div>
 
-                  {schedules.length > 0 && (
-                    <div className="md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 relative z-10 flex flex-col justify-center space-y-3">
-                      <p className="text-xs font-bold text-gray-500 mb-1">Horários da Turma</p>
-                      {schedules.map((schedule: any) => (
-                        <div key={schedule.id} className="flex flex-col gap-1 bg-white/5 p-3 rounded-xl border border-white/5">
-                          <div className="flex items-center gap-2 text-white">
-                            <Clock className="w-3.5 h-3.5 text-white" />
-                            <span className="text-sm font-bold">{DAYS_OF_WEEK[schedule.day_of_week]} - {schedule.start_time.slice(0,5)} às {schedule.end_time.slice(0,5)}</span>
-                          </div>
-                          {schedule.room && (
-                            <div className="flex items-center gap-2 text-gray-400">
-                              <MapPin className="w-3 h-3" />
-                              <span className="text-xs">{schedule.room}</span>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  
-                  {schedules.length === 0 && (
-                    <div className="md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 relative z-10 flex items-center justify-center text-gray-500 text-sm">
-                      Nenhum horário definido.
-                    </div>
-                  )}
-                </div>
+                  <div className="md:w-72 shrink-0">
+                    {schedules.length > 0 ? (
+                      <ul className="space-y-2">
+                        {schedules.map((schedule: any) => (
+                          <li key={schedule.id} className="text-sm text-gray-300">
+                            <span className="flex items-center gap-2">
+                              <Clock className="w-4 h-4 text-gray-400 shrink-0" aria-hidden="true" />
+                              {DAYS_OF_WEEK[schedule.day_of_week]}, {schedule.start_time.slice(0, 5)} às {schedule.end_time.slice(0, 5)}
+                            </span>
+                            {schedule.room && (
+                              <span className="flex items-center gap-2 text-gray-400 mt-0.5">
+                                <MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />
+                                {schedule.room}
+                              </span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-gray-400">Nenhum horário definido.</p>
+                    )}
+                  </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         )}
-      </div>
-
+      </section>
     </div>
   );
 }

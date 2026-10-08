@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { ArrowLeft, Mail, Shield, Activity, Calendar, Book, GraduationCap, Users } from 'lucide-react';
+import { ArrowLeft, Mail } from 'lucide-react';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -42,109 +42,73 @@ export default async function AlunoProfilePage({ params }: { params: Promise<{ i
 
   const enrollments = Array.isArray(student.enrollments) ? student.enrollments : (student.enrollments ? [student.enrollments] : []);
 
+  const ativo = student.status === 'active';
+
   return (
-    <div className="space-y-8 max-w-6xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      
-      <Link href="/escola/alunos" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4">
-        <ArrowLeft className="w-4 h-4" />
-        <span className="text-sm font-bold">Voltar para Alunos</span>
+    <div className="space-y-8 max-w-4xl mx-auto pb-20 animate-in fade-in duration-500">
+      <Link href="/escola/alunos" className="inline-flex items-center gap-2 min-h-11 text-sm text-gray-400 hover:text-white transition-colors">
+        <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+        Voltar para alunos
       </Link>
 
-      {/* Profile Header */}
-      <div className="relative w-full rounded-2xl bg-[#0a0a0a] border border-white/5 overflow-hidden p-8 md:p-12">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/20 rounded-full blur-[100px] animate-pulse mix-blend-screen translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-500/10 rounded-full blur-[80px] animate-pulse mix-blend-screen -translate-x-1/3 translate-y-1/3"></div>
-
-        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-600 to-red-900 p-1 shadow-[0_0_30px_rgba(125,122,232,0.3)] shrink-0">
-            <div className="w-full h-full bg-[#12121A] rounded-full flex items-center justify-center">
-              <span className="font-semibold text-5xl text-white">
-                {student.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="w-16 h-16 rounded-full bg-red-600/20 text-red-400 flex items-center justify-center text-2xl font-medium shrink-0">
+          {student.name.charAt(0).toUpperCase()}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl font-semibold text-white truncate">{student.name}</h1>
+            <span className={`text-xs px-2 py-1 rounded-md ${ativo ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'}`}>
+              {ativo ? 'Ativo' : 'Pendente'}
+            </span>
           </div>
-
-          <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-4">
-              <span className={`w-2 h-2 rounded-full animate-ping ${student.status === 'active' ? 'bg-red-500' : 'bg-red-400'}`}></span>
-              <span className="text-xs font-semibold text-white/80">
-                {student.status === 'active' ? 'Aluno Ativo' : 'Aluno Pendente'}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-2">
-              {student.name}
-            </h1>
-            
-            <p className="text-gray-400 text-lg flex items-center justify-center md:justify-start gap-2">
-              <Mail className="w-4 h-4" />
-              {student.email || 'E-mail não informado'}
-            </p>
-          </div>
-
-          <div className="shrink-0 flex gap-4">
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-[100px]">
-              <Shield className="w-6 h-6 text-red-500 mx-auto mb-2" />
-              <p className="text-xs font-bold text-gray-500">Nível</p>
-              <p className="text-2xl font-semibold text-white">{student.level || 1}</p>
-            </div>
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-[100px]">
-              <Activity className="w-6 h-6 text-red-500 mx-auto mb-2" />
-              <p className="text-xs font-bold text-gray-500">XP</p>
-              <p className="text-2xl font-semibold text-white">{student.xp_points || 0}</p>
-            </div>
-          </div>
+          <p className="text-sm text-gray-400 flex items-center gap-2 mt-1">
+            <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span className="truncate">{student.email || 'E-mail não informado'}</span>
+          </p>
         </div>
       </div>
 
-      {/* Enrollments Section */}
-      <div className="bg-white/5 border border-white/5 rounded-xl p-8 backdrop-blur-sm">
-        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
-          <Book className="w-6 h-6 text-red-500" />
-          Matrículas Ativas
-        </h2>
-
-        {enrollments.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 bg-black/20 rounded-2xl border border-white/5 border-dashed">
-            <GraduationCap className="w-12 h-12 text-gray-600 mb-4" />
-            <p className="text-gray-400 font-bold">Este aluno ainda não está matriculado em nenhum curso ou turma.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {enrollments.map((enr: any) => (
-              <div key={enr.id} className="bg-[#1A1A24] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-red-600/50 transition-all duration-300">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-red-600/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2 group-hover:bg-red-600/20 transition-all duration-500"></div>
-                
-                <div className="relative z-10 flex justify-between items-start mb-4">
-                  <div>
-                    <span className="text-xs font-bold text-white mb-1 block">Curso</span>
-                    <h3 className="font-semibold text-white text-xl">{enr.courses?.name || 'Curso Desconhecido'}</h3>
-                  </div>
-                  <span className="px-3 py-1 rounded-lg text-xs font-semibold bg-red-500/10 text-red-500 border border-red-500/20">
-                    {enr.status === 'active' ? 'Cursando' : 'Inativo'}
-                  </span>
-                </div>
-
-                <div className="space-y-3 relative z-10">
-                  <div className="flex items-center gap-3 bg-black/40 p-3 rounded-xl border border-white/5">
-                    <Users className="w-4 h-4 text-red-500" />
-                    <span className="text-sm font-bold text-gray-300">
-                      Turma: <span className="text-white">{enr.classes?.name || 'Apenas EAD (Sem Turma)'}</span>
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 bg-black/40 p-3 rounded-xl border border-white/5">
-                    <Calendar className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm font-bold text-gray-300">
-                      Início: <span className="text-white">{new Date(enr.start_date).toLocaleDateString('pt-BR')}</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="grid grid-cols-2 gap-3 max-w-sm">
+        <div className="rounded-xl bg-white/[0.04] p-4">
+          <p className="text-sm text-gray-400">Nível</p>
+          <p className="text-3xl font-semibold text-white mt-1">{student.level || 1}</p>
+        </div>
+        <div className="rounded-xl bg-white/[0.04] p-4">
+          <p className="text-sm text-gray-400">Pontos (XP)</p>
+          <p className="text-3xl font-semibold text-white mt-1">{student.xp_points || 0}</p>
+        </div>
       </div>
 
+      <section>
+        <h2 className="text-base font-medium text-white border-b border-white/10 pb-3">Matrículas</h2>
+
+        {enrollments.length === 0 ? (
+          <div className="py-12 text-center">
+            <p className="text-white font-medium">Nenhuma matrícula ainda</p>
+            <p className="text-sm text-gray-400 mt-1">Este aluno não está em nenhum curso ou turma.</p>
+          </div>
+        ) : (
+          <ul className="divide-y divide-white/5">
+            {enrollments.map((enr: any) => (
+              <li key={enr.id} className="py-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-white">{enr.courses?.name || 'Curso não identificado'}</p>
+                  <p className="text-sm text-gray-400">
+                    Turma: {enr.classes?.name || 'Somente online (sem turma)'}
+                  </p>
+                </div>
+                <p className="text-sm text-gray-400">
+                  Início: {enr.start_date ? new Date(enr.start_date).toLocaleDateString('pt-BR') : 'não informado'}
+                </p>
+                <span className={`text-xs px-2 py-1 rounded-md self-start sm:self-auto ${enr.status === 'active' ? 'bg-green-500/15 text-green-300' : 'bg-white/5 text-gray-400'}`}>
+                  {enr.status === 'active' ? 'Cursando' : 'Inativa'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
