@@ -96,23 +96,23 @@ export function SaaSOnboardingForm() {
   if (confirmationSentEmail) {
     return (
       <div className="w-full max-w-xl mx-auto">
-        <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip text-center border border-red-500/30">
+        <div className="rounded-xl bg-white/[0.03] border border-white/10 p-6 sm:p-10 text-center">
           <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-8 h-8 text-red-500 animate-pulse" />
+            <CheckCircle2 className="w-8 h-8 text-red-500" />
           </div>
 
-          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold mb-4">
             🎸 Quase lá! Backstage liberando...
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
             Confirme seu E-mail
           </h2>
 
           <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
             Enviamos um e-mail de confirmação com visual exclusivo para:
             <br />
-            <strong className="text-white font-mono bg-white/5 px-2 py-1 rounded mt-2 inline-block border border-white/10">
+            <strong className="text-white bg-white/5 px-2 py-1 rounded mt-2 inline-block border border-white/10">
               {confirmationSentEmail}
             </strong>
           </p>
@@ -129,7 +129,7 @@ export function SaaSOnboardingForm() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/login"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-500 hover:bg-red-600 text-black font-black uppercase text-xs tracking-wider cyber-clip-btn transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-600 hover:bg-red-500 text-white font-semibold text-xs transition-all"
             >
               Ir para o Login
               <ArrowRight className="w-4 h-4" />
@@ -142,18 +142,18 @@ export function SaaSOnboardingForm() {
 
   return (
     <div className="w-full max-w-xl mx-auto">
-      <div className="glass-card rounded-none p-8 sm:p-10 shadow-2xl cyber-clip">
+      <div className="rounded-xl bg-white/[0.03] border border-white/10 p-6 sm:p-10">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
-            Crie a conta da sua Escola
+          <h2 className="text-2xl font-semibold text-white mb-2 tracking-tight">
+            Dados da escola
           </h2>
-          <p className="text-red-500 text-xs font-mono uppercase tracking-widest flex items-center justify-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5" /> GESTÃO DE ESCOLAS & INSTITUTOS DE MÚSICA
+          <p className="text-gray-400 text-sm flex items-center justify-center gap-1">
+            <ShieldCheck className="w-3.5 h-3.5" /> Gestão de escolas e institutos de música
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/50 rounded-none cyber-clip-btn text-red-300 text-xs font-bold leading-relaxed animate-in fade-in">
+          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/50 rounded-lg text-red-300 text-sm leading-relaxed animate-in fade-in">
             {error}
           </div>
         )}
@@ -169,7 +169,7 @@ export function SaaSOnboardingForm() {
                 type="text"
                 name="schoolName"
                 required
-                className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                 placeholder="Ex: Conservatório Mozart ou Escola Ritmo Livre"
               />
             </div>
@@ -180,7 +180,7 @@ export function SaaSOnboardingForm() {
               <label className="text-sm font-bold text-white/80 ml-1">
                 CPF ou CNPJ
               </label>
-              <span className="text-xs text-gray-400 font-mono">
+              <span className="text-xs text-gray-400">
                 (Pessoa Física ou Jurídica)
               </span>
             </div>
@@ -190,7 +190,7 @@ export function SaaSOnboardingForm() {
                 type="text"
                 value={document}
                 onChange={handleDocumentChange}
-                className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                 placeholder="000.000.000-00 ou 00.000.000/0001-00"
               />
             </div>
@@ -210,7 +210,7 @@ export function SaaSOnboardingForm() {
                   type="text"
                   name="adminName"
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                  className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                   placeholder="Ex: Carlos Silva"
                 />
               </div>
@@ -224,7 +224,7 @@ export function SaaSOnboardingForm() {
                   type="text"
                   value={phone}
                   onChange={handlePhoneChange}
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                  className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                   placeholder="(11) 90000-0000"
                 />
               </div>
@@ -240,7 +240,7 @@ export function SaaSOnboardingForm() {
                   type="email"
                   name="adminEmail"
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                  className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                   placeholder="gestor@escola.com"
                 />
               </div>
@@ -254,7 +254,7 @@ export function SaaSOnboardingForm() {
                   type="email"
                   name="confirmAdminEmail"
                   required
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                  className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                   placeholder="gestor@escola.com"
                 />
               </div>
@@ -271,7 +271,7 @@ export function SaaSOnboardingForm() {
                   name="adminPassword"
                   required
                   minLength={6}
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                  className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                   placeholder="Ex: Senha@123 (maiúscula, número, símbolo)"
                 />
               </div>
@@ -286,7 +286,7 @@ export function SaaSOnboardingForm() {
                   name="confirmAdminPassword"
                   required
                   minLength={6}
-                  className="w-full bg-black/40 border border-white/10 rounded-none py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-white/30"
+                  className="w-full min-h-11 bg-white/[0.04] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-red-500 transition-all placeholder:text-white/30"
                   placeholder="Repita sua senha"
                 />
               </div>
@@ -319,7 +319,7 @@ export function SaaSOnboardingForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center justify-center gap-2 cyber-clip-btn disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+            className="w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-semibold text-sm shadow-xl shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
           >
             {loading ? (
               <>
@@ -328,7 +328,7 @@ export function SaaSOnboardingForm() {
               </>
             ) : (
               <>
-                <span>CRIAR CONTA DA ESCOLA</span>
+                <span>Criar conta da escola</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
