@@ -5,12 +5,12 @@ import { Loader2, Mail, Lock, User, BookOpen, Phone, Calendar, FileText, ArrowLe
 import { createTeacherAction } from '../actions';
 import confetti from 'canvas-confetti';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { TempPasswordNotice } from '@/components/shared/TempPasswordNotice';
 
 export default function NovoProfessorPage() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [criado, setCriado] = useState<{ nome: string; email: string; senha: string } | null>(null);
 
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
@@ -39,6 +39,8 @@ export default function NovoProfessorPage() {
     
     const formData = new FormData(e.currentTarget);
     const res = await createTeacherAction(formData);
+    const nome = String(formData.get('name') || '');
+    const email = String(formData.get('email') || '');
     
     if (res.success) {
       confetti({
@@ -46,9 +48,7 @@ export default function NovoProfessorPage() {
         spread: 70,
         origin: { y: 0.6 }
       });
-      setTimeout(() => {
-        router.push('/escola/professores');
-      }, 1500);
+      setCriado({ nome, email, senha: res.tempPassword || '' });
     } else {
       setError(res.error || 'Erro desconhecido');
     }
@@ -69,6 +69,9 @@ export default function NovoProfessorPage() {
         </div>
       </div>
 
+      {criado ? (
+        <TempPasswordNotice nome={criado.nome} email={criado.email} senha={criado.senha} tipo="professor" voltarHref="/escola/professores" />
+      ) : (
       <div className="rounded-xl bg-white/[0.03] p-6 md:p-8">
 
         <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
@@ -165,9 +168,9 @@ export default function NovoProfessorPage() {
 
             <div className="space-y-2 md:col-span-2">
               <div className="p-4 bg-white/5 border border-white/10 rounded-2xl">
-                <p className="text-sm font-bold text-white mb-1">Senha de Acesso</p>
+                <p className="text-sm font-bold text-white mb-1">Senha de acesso</p>
                 <p className="text-xs text-gray-400">
-                  O professor receberá a senha temporária <span className="text-red-400 font-mono font-semibold">senha123</span> e será obrigado a trocá-la no primeiro acesso.
+                  O professor receberá uma senha temporária gerada automaticamente. Ela será mostrada uma vez, logo após o cadastro, e deverá ser trocada no primeiro acesso.
                 </p>
               </div>
             </div>
@@ -184,6 +187,7 @@ export default function NovoProfessorPage() {
           </div>
         </form>
       </div>
+      )}
     </div>
   );
 }

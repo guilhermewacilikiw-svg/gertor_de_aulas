@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { translateSupabaseError } from '@/lib/utils';
 import { checkSchoolLimit } from '@/lib/saas/limits';
+import { generateTempPassword } from '@/lib/security/temp-password';
 
 export async function createTeacherAction(formData: FormData) {
   const supabase = await createClient();
@@ -46,7 +47,7 @@ export async function createTeacherAction(formData: FormData) {
 
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
-  const password = 'senha123'; // Senha padrão
+  const password = generateTempPassword();
   const specialty = formData.get('specialty') as string;
 
   // New fields
@@ -98,5 +99,5 @@ export async function createTeacherAction(formData: FormData) {
 
   revalidatePath('/escola/professores');
   
-  return { success: true };
+  return { success: true, tempPassword: password };
 }

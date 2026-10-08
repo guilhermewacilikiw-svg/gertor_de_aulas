@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { translateSupabaseError } from '@/lib/utils';
 import { checkSchoolLimit } from '@/lib/saas/limits';
+import { generateTempPassword } from '@/lib/security/temp-password';
 
 export async function createStudentAction(formData: FormData) {
   const supabase = await createClient();
@@ -46,7 +47,7 @@ export async function createStudentAction(formData: FormData) {
 
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
-  const password = 'senha123'; // Senha padrão
+  const password = generateTempPassword();
   
   // New fields
   const cpfRaw = formData.get('cpf') as string;
@@ -96,7 +97,7 @@ export async function createStudentAction(formData: FormData) {
 
   revalidatePath('/escola/alunos');
   
-  return { success: true };
+  return { success: true, tempPassword: password };
 }
 
 export async function importStudentsAction(students: { name: string, email: string, password?: string }[]) {
@@ -128,15 +129,24 @@ export async function importStudentsAction(students: { name: string, email: stri
   }
 
   let successCount = 0;
-  let errors = [];
+  const errors: string[] = [];
+  const credentials: { email: string; password: string }[] = [];
 
   for (const student of students) {
     if (!student.name || !student.email) continue;
-    
+
+    const limitCheck = await checkSchoolLimit(membership.school_id, 'students');
+    if (!limitCheck.allowed) {
+      errors.push(limitCheck.error || 'Limite de alunos do plano atingido.');
+      break;
+    }
+
+    const password = student.password || generateTempPassword();
+
     const { data, error } = await supabase.rpc('admin_create_student', {
       p_name: student.name,
       p_email: student.email,
-      p_password: student.password || 'Mudar@123',
+      p_password: password,
       p_school_id: membership.school_id
     });
 
@@ -145,6 +155,7 @@ export async function importStudentsAction(students: { name: string, email: stri
       errors.push(`Erro ao importar ${student.email}: ${translateSupabaseError(msg)}`);
     } else {
       successCount++;
+      if (!student.password) credentials.push({ email: student.email, password });
     }
   }
 
@@ -153,6 +164,7 @@ export async function importStudentsAction(students: { name: string, email: stri
   return { 
     success: true, 
     successCount, 
-    errors 
+    errors,
+    credentials
   };
 }

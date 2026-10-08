@@ -204,7 +204,7 @@ export function ImportStudentsModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [results, setResults] = useState<{ successCount: number, errors: string[] } | null>(null);
+  const [results, setResults] = useState<{ successCount: number, errors: string[], credentials: { email: string, password: string }[] } | null>(null);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -235,7 +235,7 @@ export function ImportStudentsModal() {
         const res = await importStudentsAction(students);
         
         if (res.success) {
-          setResults({ successCount: res.successCount || 0, errors: res.errors || [] });
+          setResults({ successCount: res.successCount || 0, errors: res.errors || [], credentials: res.credentials || [] });
           if (res.successCount && res.successCount > 0) {
              confetti({ particleCount: 150, spread: 80 });
           }
@@ -299,6 +299,27 @@ export function ImportStudentsModal() {
                         {results.errors.map((e, i) => <li key={i}>- {e}</li>)}
                       </ul>
                    </div>
+                )}
+                {results.credentials.length > 0 && (
+                  <div className="p-4 rounded-xl border border-white/10 text-sm text-gray-300">
+                    <p>Cada aluno recebeu uma senha temporária própria. Baixe a lista agora: ela não será mostrada de novo.</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const linhas = results.credentials.map((c) => `${c.email},${c.password}`);
+                        const csv = ['email,senha_temporaria', ...linhas].join('\r\n');
+                        const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'senhas-temporarias.csv';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
+                      className="mt-3 w-full min-h-11 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium"
+                    >
+                      Baixar senhas (CSV)
+                    </button>
+                  </div>
                 )}
                 <button 
                   onClick={() => setIsOpen(false)}
