@@ -1,7 +1,5 @@
-import { Users, GraduationCap, Calendar, UserPlus, BookOpen, ChevronRight, Plus, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Users, GraduationCap, Calendar, BookOpen, ChevronRight, Plus } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
-import { PageHeader } from '@/components/shared/PageHeader';
-import { StatCard } from '@/components/shared/StatCard';
 import { redirect } from 'next/navigation';
 import { getAuthenticatedSchool } from '@/lib/auth';
 import Link from 'next/link';
@@ -42,304 +40,163 @@ export default async function EscolaDashboard() {
       .limit(4)
   ]);
 
+  const hora = Number(new Intl.DateTimeFormat('pt-BR', { hour: 'numeric', hour12: false, timeZone: 'America/Sao_Paulo' }).format(new Date()));
+  const saudacao = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
+
+  const indicadores = [
+    { titulo: 'Alunos ativos', valor: totalStudents || 0, icone: Users },
+    { titulo: 'Turmas', valor: totalClasses || 0, icone: BookOpen },
+    { titulo: 'Professores', valor: totalTeachers || 0, icone: GraduationCap },
+    { titulo: 'Aulas hoje', valor: totalLessonsToday || 0, icone: Calendar },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
-      
-      {/* Header Padronizado */}
-      <PageHeader
-        badgeIcon={<Sparkles className="w-4 h-4" />}
-        badgeText="Painel Operacional"
-        title="Dashboard"
-        subtitle={`Visão consolidada da gestão acadêmica, turmas, corpo docente e alunos da ${schoolName}.`}
-        action={
-          <div className="relative bg-[#0e0e14] border border-white/10 p-4 px-6 rounded-2xl flex flex-col items-center justify-center min-w-[140px] shadow-xl">
-            <span className="text-4xl font-black text-white drop-shadow-md">
-              {totalStudents || 0}
-            </span>
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Alunos Ativos</span>
-          </div>
-        }
-      />
-
-      {/* Grid de Indicadores Operacionais */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard 
-          title="Total de Alunos" 
-          value={totalStudents || 0} 
-          subtitle="Matrículas registradas" 
-          icon={<Users className="w-5 h-5" />} 
-        />
-        <StatCard 
-          title="Turmas Formadas" 
-          value={totalClasses || 0} 
-          subtitle="Classes em andamento" 
-          icon={<BookOpen className="w-5 h-5" />} 
-        />
-        <StatCard 
-          title="Professores" 
-          value={totalTeachers || 0} 
-          subtitle="Corpo docente ativo" 
-          icon={<GraduationCap className="w-5 h-5" />} 
-        />
-        <StatCard 
-          title="Aulas do Dia" 
-          value={totalLessonsToday || 0} 
-          subtitle="Agendadas no calendário" 
-          icon={<Calendar className="w-5 h-5" />} 
-        />
-      </div>
-
-      {/* Atalhos Rápidos de Escalabilidade (Quick Actions) */}
-      <div className="bg-[#0f0f15] border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div className="max-w-6xl mx-auto space-y-8 pb-20 animate-in fade-in duration-500">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-            <Plus className="w-4 h-4 text-red-500" />
-            Ações Rápidas de Gestão
-          </h3>
-          <p className="text-xs text-gray-400 mt-0.5">Cadastre novos registros rapidamente com um clique</p>
+          <h1 className="text-2xl font-semibold text-white">{saudacao}, {schoolName}</h1>
+          <p className="text-sm text-gray-400 mt-1">
+            {totalLessonsToday
+              ? `Você tem ${totalLessonsToday} ${totalLessonsToday === 1 ? 'aula agendada' : 'aulas agendadas'}.`
+              : 'Hoje não há aulas agendadas.'}
+          </p>
         </div>
-
-        <div className="flex items-center gap-3 flex-wrap w-full md:w-auto">
-          <Link
-            href="/escola/alunos/novo"
-            className="flex-1 md:flex-none px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-red-600/20 flex items-center justify-center gap-2 hover:scale-105"
-          >
-            <UserPlus className="w-3.5 h-3.5" />
-            + Aluno
-          </Link>
-          <Link
-            href="/escola/turmas/novo"
-            className="flex-1 md:flex-none px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
-          >
-            <Users className="w-3.5 h-3.5 text-red-500" />
-            + Turma
-          </Link>
-          <Link
-            href="/escola/professores/novo"
-            className="flex-1 md:flex-none px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
-          >
-            <GraduationCap className="w-3.5 h-3.5 text-red-500" />
-            + Professor
-          </Link>
-          <Link
-            href="/escola/cursos/novo"
-            className="flex-1 md:flex-none px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
-          >
-            <BookOpen className="w-3.5 h-3.5 text-red-500" />
-            + Curso
-          </Link>
-        </div>
+        <Link
+          href="/escola/alunos/novo"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 min-h-11 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          Novo aluno
+        </Link>
       </div>
 
-      {/* Grid Principal: Alunos Recentes (Escalável) & Ocupação de Turmas */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* TABELA DE ALUNOS MATRICULADOS ESCALÁVEL (8 Colunas) */}
-        <div className="lg:col-span-8 bg-[#0a0a0f] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between">
-          <div>
-            <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-black/40">
-              <div>
-                <h2 className="text-lg font-black uppercase text-white flex items-center gap-2.5">
-                  <Users className="w-5 h-5 text-red-500" />
-                  Alunos Matriculados
-                </h2>
-                <p className="text-xs text-gray-400 mt-1">
-                  Últimos alunos cadastrados na {schoolName}
-                </p>
-              </div>
-
-              <Link
-                href="/escola/alunos"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300 transition-all group"
-              >
-                <span>Ver todos os {totalStudents || 0} alunos</span>
-                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {indicadores.map(({ titulo, valor, icone: Icone }) => (
+          <div key={titulo} className="rounded-xl bg-white/[0.04] p-4">
+            <div className="flex items-center justify-between text-gray-400">
+              <span className="text-sm">{titulo}</span>
+              <Icone className="w-4 h-4" aria-hidden="true" />
             </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-gray-300 whitespace-nowrap">
-                <thead className="bg-black/30 text-[10px] uppercase tracking-wider text-gray-400 border-b border-white/5">
-                  <tr>
-                    <th className="p-4 px-6 font-black">Aluno</th>
-                    <th className="p-4 font-black">Turma / Curso</th>
-                    <th className="p-4 font-black">Data de Cadastro</th>
-                    <th className="p-4 font-black">Status</th>
-                    <th className="p-4 text-right pr-6 font-black">Ação</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {recentStudents && recentStudents.length > 0 ? (
-                    recentStudents.map((student: any) => {
-                      const studentName = student.name || 'Aluno Sem Nome';
-                      const studentInitial = studentName.charAt(0).toUpperCase();
-                      const enrollments = Array.isArray(student.enrollments) ? student.enrollments : (student.enrollments ? [student.enrollments] : []);
-                      const firstEnrollment: any = enrollments[0];
-                      const className = firstEnrollment?.classes?.name || firstEnrollment?.courses?.name || 'Sem turma';
-                      const formattedDate = student.created_at 
-                        ? new Date(student.created_at).toLocaleDateString('pt-BR') 
-                        : '--/--/----';
-
-                      return (
-                        <tr key={student.id} className="hover:bg-white/[0.03] transition-colors group">
-                          <td className="p-4 px-6">
-                            <Link href={`/escola/alunos/${student.id}`} className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-xl bg-red-600/20 border border-red-600/30 flex items-center justify-center text-red-500 text-xs font-black shrink-0 group-hover:scale-105 transition-transform uppercase">
-                                {studentInitial}
-                              </div>
-                              <div>
-                                <span className="font-bold text-white group-hover:text-red-500 transition-colors block">
-                                  {studentName}
-                                </span>
-                                <span className="text-xs text-gray-500 font-mono block">
-                                  {student.email || 'Sem e-mail informado'}
-                                </span>
-                              </div>
-                            </Link>
-                          </td>
-
-                          <td className="p-4">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">
-                              <BookOpen className="w-3 h-3 text-red-500" />
-                              {className}
-                            </span>
-                          </td>
-
-                          <td className="p-4 text-xs font-mono text-gray-400">
-                            {formattedDate}
-                          </td>
-
-                          <td className="p-4">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
-                              student.status === 'active' 
-                                ? 'bg-red-500/10 text-red-400 border-red-500/20' 
-                                : 'bg-white/5 text-gray-500 border-white/10'
-                            }`}>
-                              <span className={`w-1.5 h-1.5 rounded-full ${student.status === 'active' ? 'bg-red-500' : 'bg-gray-500'}`} />
-                              {student.status === 'active' ? 'Ativo' : 'Inativo'}
-                            </span>
-                          </td>
-
-                          <td className="p-4 text-right pr-6">
-                            <Link 
-                              href={`/escola/alunos/${student.id}`}
-                              className="inline-flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-red-400 transition-colors"
-                            >
-                              <span>Perfil</span>
-                              <ChevronRight className="w-3.5 h-3.5" />
-                            </Link>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <tr>
-                      <td colSpan={5} className="p-12 text-center text-gray-500">
-                        <Users className="w-10 h-10 text-gray-600 mx-auto mb-3 opacity-50" />
-                        <p className="font-bold text-white text-base mb-1">Nenhum aluno cadastrado ainda</p>
-                        <p className="text-xs text-gray-500 mb-4">Comece adicionando seu primeiro aluno para acompanhar no dashboard.</p>
-                        <Link
-                          href="/escola/alunos/novo"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
-                        >
-                          <UserPlus className="w-3.5 h-3.5" />
-                          Cadastrar Primeiro Aluno
-                        </Link>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <p className="text-3xl font-semibold text-white mt-2">{valor}</p>
           </div>
+        ))}
+      </div>
 
-          <div className="p-4 px-6 border-t border-white/5 bg-black/20 flex items-center justify-between text-xs text-gray-500">
-            <span>Exibindo os alunos mais recentes</span>
-            <Link href="/escola/alunos" className="text-red-500 font-bold hover:underline flex items-center gap-1">
-              Ver lista completa com busca e filtros &rarr;
+      <div className="flex flex-wrap gap-2 text-sm">
+        <span className="text-gray-400 self-center mr-1">Criar:</span>
+        {[
+          { href: '/escola/turmas/novo', rotulo: 'Turma' },
+          { href: '/escola/professores/novo', rotulo: 'Professor' },
+          { href: '/escola/cursos/novo', rotulo: 'Curso' },
+        ].map((a) => (
+          <Link
+            key={a.href}
+            href={a.href}
+            className="inline-flex items-center gap-1.5 px-3 min-h-11 rounded-lg border border-white/10 text-gray-200 hover:bg-white/5 transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5 text-red-500" aria-hidden="true" />
+            {a.rotulo}
+          </Link>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+        <section className="lg:col-span-3 min-w-0">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h2 className="text-base font-medium text-white">Alunos recentes</h2>
+            <Link href="/escola/alunos" className="text-sm text-gray-400 hover:text-white inline-flex items-center gap-1 min-h-11">
+              Ver todos ({totalStudents || 0})
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>
-        </div>
 
-        {/* PAINEL DE OCUPAÇÃO & VAGAS DE TURMAS (4 Colunas) */}
-        <div className="lg:col-span-4 bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
-              <h3 className="text-base font-black uppercase text-white flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-red-500" />
-                Vagas & Turmas
-              </h3>
-              <Link 
-                href="/escola/turmas" 
-                className="text-xs font-bold text-red-400 hover:text-red-300 transition-colors"
-              >
-                Ver todas &rarr;
+          {recentStudents && recentStudents.length > 0 ? (
+            <ul className="divide-y divide-white/5">
+              {recentStudents.map((student: any) => {
+                const nome = student.name || 'Aluno sem nome';
+                const matriculas = Array.isArray(student.enrollments) ? student.enrollments : (student.enrollments ? [student.enrollments] : []);
+                const primeira: any = matriculas[0];
+                const turma = primeira?.classes?.name || primeira?.courses?.name || 'Sem turma';
+                const ativo = student.status === 'active';
+                return (
+                  <li key={student.id}>
+                    <Link href={`/escola/alunos/${student.id}`} className="flex items-center gap-3 py-3 hover:bg-white/[0.03] -mx-2 px-2 rounded-lg transition-colors">
+                      <div className="w-9 h-9 rounded-full bg-red-600/20 text-red-400 flex items-center justify-center text-sm font-medium shrink-0">
+                        {nome.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-white truncate">{nome}</p>
+                        <p className="text-sm text-gray-400 truncate">{turma}</p>
+                      </div>
+                      <span className={`text-xs px-2 py-1 rounded-md ${ativo ? 'bg-emerald-500/15 text-emerald-300' : 'bg-white/5 text-gray-400'}`}>
+                        {ativo ? 'Ativo' : 'Inativo'}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <div className="py-12 text-center">
+              <p className="text-white font-medium">Cadastre seu primeiro aluno</p>
+              <p className="text-sm text-gray-400 mt-1 mb-4">Os alunos mais recentes aparecem aqui.</p>
+              <Link href="/escola/alunos/novo" className="inline-flex items-center gap-2 px-4 min-h-11 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-medium">
+                <Plus className="w-4 h-4" />
+                Novo aluno
               </Link>
             </div>
+          )}
+        </section>
 
-            <div className="space-y-4">
-              {topClasses && topClasses.length > 0 ? (
-                topClasses.map((cls: any) => {
-                  const enrolledCount = cls.enrollments?.length || 0;
-                  const capacity = cls.capacity || 30;
-                  const percent = Math.min(100, Math.round((enrolledCount / capacity) * 100));
+        <section className="lg:col-span-2 min-w-0">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h2 className="text-base font-medium text-white">Turmas e vagas</h2>
+            <Link href="/escola/turmas" className="text-sm text-gray-400 hover:text-white inline-flex items-center gap-1 min-h-11">
+              Ver todas
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </div>
 
-                  return (
-                    <Link
-                      href={`/escola/turmas/${cls.id}`}
-                      key={cls.id}
-                      className="block p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 transition-all group"
-                    >
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <span className="font-bold text-white text-sm group-hover:text-red-500 transition-colors line-clamp-1">
-                          {cls.name}
-                        </span>
-                        <span className="text-[10px] font-black uppercase tracking-wider text-red-400 bg-red-600/10 px-2 py-0.5 rounded-full border border-red-600/20 shrink-0">
-                          {percent}%
-                        </span>
+          {topClasses && topClasses.length > 0 ? (
+            <ul className="divide-y divide-white/5">
+              {topClasses.map((cls: any) => {
+                const matriculados = cls.enrollments?.length || 0;
+                const capacidade = cls.capacity || 30;
+                const percentual = Math.min(100, Math.round((matriculados / capacidade) * 100));
+                return (
+                  <li key={cls.id}>
+                    <Link href={`/escola/turmas/${cls.id}`} className="block py-3 hover:bg-white/[0.03] -mx-2 px-2 rounded-lg transition-colors">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-sm text-white truncate">{cls.name}</span>
+                        <span className="text-sm text-gray-400 shrink-0">{matriculados} / {capacidade}</span>
                       </div>
-
-                      <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                        <span className="truncate">{cls.courses?.name || 'Curso Livre'}</span>
-                        <span className="font-mono text-white font-bold">{enrolledCount} / {capacity}</span>
-                      </div>
-
-                      <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden border border-white/5">
-                        <div 
-                          className="bg-gradient-to-r from-red-600 to-red-500 h-full rounded-full transition-all duration-500"
-                          style={{ width: `${percent}%` }}
-                        />
+                      <div
+                        className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden"
+                        role="progressbar"
+                        aria-valuenow={percentual}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-label={`Ocupação da turma ${cls.name}`}
+                      >
+                        <div className="h-full rounded-full bg-red-500" style={{ width: `${percentual}%` }} />
                       </div>
                     </Link>
-                  );
-                })
-              ) : (
-                <div className="p-8 text-center text-gray-500 bg-white/[0.02] rounded-2xl border border-white/5">
-                  <p className="text-xs font-medium mb-3">Nenhuma turma cadastrada ainda.</p>
-                  <Link
-                    href="/escola/turmas/novo"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-red-500 hover:text-red-400"
-                  >
-                    + Criar Primeira Turma
-                  </Link>
-                </div>
-              )}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <div className="py-12 text-center">
+              <p className="text-white font-medium">Crie sua primeira turma</p>
+              <p className="text-sm text-gray-400 mt-1 mb-4">Acompanhe as vagas de cada turma aqui.</p>
+              <Link href="/escola/turmas/novo" className="inline-flex items-center gap-2 px-4 min-h-11 rounded-lg border border-white/10 text-white text-sm hover:bg-white/5">
+                <Plus className="w-4 h-4 text-red-500" />
+                Nova turma
+              </Link>
             </div>
-          </div>
-
-          <div className="mt-6 pt-4 border-t border-white/5">
-            <Link
-              href="/escola/turmas/novo"
-              className="w-full py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all hover:border-red-600/30"
-            >
-              <Plus className="w-4 h-4 text-red-500" />
-              Criar Nova Turma
-            </Link>
-          </div>
-        </div>
-
+          )}
+        </section>
       </div>
-
     </div>
   );
 }
