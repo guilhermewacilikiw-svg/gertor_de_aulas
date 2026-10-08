@@ -101,7 +101,7 @@ export function SaaSOnboardingForm() {
             <CheckCircle2 className="w-8 h-8 text-red-500 animate-pulse" />
           </div>
 
-          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[11px] font-bold uppercase tracking-widest mb-4">
+          <div className="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-xs font-bold uppercase tracking-widest mb-4">
             🎸 Quase lá! Backstage liberando...
           </div>
 
@@ -180,7 +180,7 @@ export function SaaSOnboardingForm() {
               <label className="text-sm font-bold text-white/80 ml-1">
                 CPF ou CNPJ
               </label>
-              <span className="text-[11px] text-gray-400 font-mono">
+              <span className="text-xs text-gray-400 font-mono">
                 (Pessoa Física ou Jurídica)
               </span>
             </div>
@@ -194,7 +194,7 @@ export function SaaSOnboardingForm() {
                 placeholder="000.000.000-00 ou 00.000.000/0001-00"
               />
             </div>
-            <p className="text-[11px] text-gray-400 pl-1">
+            <p className="text-xs text-gray-400 pl-1">
               Aceita tanto o CPF do gestor/fundador quanto o CNPJ da instituição.
             </p>
           </div>

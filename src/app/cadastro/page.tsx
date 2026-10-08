@@ -22,7 +22,7 @@ export default function CadastroPage() {
             </div>
             <div>
               <span className="font-bebas text-2xl text-white tracking-tight drop-shadow-md uppercase">Wakoda</span>
-              <span className="block text-[10px] font-mono text-red-500 uppercase tracking-widest font-bold">Gestor de Aulas de Música</span>
+              <span className="block text-xs font-mono text-red-500 uppercase tracking-widest font-bold">Gestor de Aulas de Música</span>
             </div>
           </Link>
           

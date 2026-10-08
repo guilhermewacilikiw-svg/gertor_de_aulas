@@ -73,7 +73,7 @@ export function LeadCaptureForm() {
       <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Seu Nome Completo</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500">Seu Nome Completo</label>
             <input
               type="text"
               required
@@ -85,7 +85,7 @@ export function LeadCaptureForm() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">E-mail Principal</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500">E-mail Principal</label>
             <input
               type="email"
               required
@@ -99,7 +99,7 @@ export function LeadCaptureForm() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">WhatsApp</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500">WhatsApp</label>
             <input
               type="tel"
               required
@@ -111,7 +111,7 @@ export function LeadCaptureForm() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Curso Desejado</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500">Curso Desejado</label>
             <select
               value={formData.courseInterest}
               onChange={(e) => setFormData(prev => ({ ...prev, courseInterest: e.target.value }))}
@@ -126,7 +126,7 @@ export function LeadCaptureForm() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Disponibilidade</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500">Disponibilidade</label>
             <select
               value={formData.preferredTime}
               onChange={(e) => setFormData(prev => ({ ...prev, preferredTime: e.target.value }))}

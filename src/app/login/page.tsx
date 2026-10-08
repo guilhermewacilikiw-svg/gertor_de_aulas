@@ -107,7 +107,7 @@ export default function LoginPage() {
         <div className="bg-black/80 border-t-4 border-red-500 py-8 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-10 relative">
           
           {/* Corner tech details */}
-          <div className="absolute top-0 right-0 p-2 border-b border-l border-white/10 bg-white/5 text-[10px] font-black font-mono text-gray-500 tracking-widest">
+          <div className="absolute top-0 right-0 p-2 border-b border-l border-white/10 bg-white/5 text-xs font-black font-mono text-gray-500 tracking-widest">
             SECURE_LOGIN
           </div>
 

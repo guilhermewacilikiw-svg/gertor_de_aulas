@@ -208,7 +208,7 @@ export default async function LandingPage() {
                <div className="relative grid grid-cols-3 gap-2 w-full">
                  {[1,2,3,4,5,6].map(i => (
                    <div key={i} className={`h-16 border border-white/5 flex flex-col justify-end p-2 ${i === 3 ? 'bg-red-500/10 border-red-500/30 shadow-[0_0_15px_rgba(192,232,122,0.2)]' : 'bg-black/50'}`}>
-                     {i === 3 && <div className="text-[10px] text-red-500 font-bold uppercase tracking-wider">Aula de Canto</div>}
+                     {i === 3 && <div className="text-xs text-red-500 font-bold uppercase tracking-wider">Aula de Canto</div>}
                    </div>
                  ))}
                </div>
