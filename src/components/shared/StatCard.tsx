@@ -15,40 +15,16 @@ export function StatCard({
   subtitle,
   icon,
   trend,
-  color = 'from-red-600/20 to-transparent'
 }: StatCardProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-[#0e0e14] border border-white/10 p-6 shadow-xl hover:border-red-600/40 transition-all duration-300 group">
-      {/* Background Gradient Accent */}
-      <div 
-        className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500`} 
-      />
-
-      <div className="relative z-10 flex items-start justify-between">
-        <div>
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">
-            {title}
-          </span>
-          <span className="text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-sm">
-            {value}
-          </span>
-          {subtitle && (
-            <p className="text-xs text-gray-500 mt-2 font-medium">
-              {subtitle}
-            </p>
-          )}
-        </div>
-
-        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 shadow-md">
-          {icon}
-        </div>
+    <div className="rounded-xl bg-white/[0.04] p-4">
+      <div className="flex items-center justify-between text-gray-400">
+        <span className="text-sm">{title}</span>
+        <span className="[&>svg]:w-4 [&>svg]:h-4" aria-hidden="true">{icon}</span>
       </div>
-
-      {trend && (
-        <div className="relative z-10 mt-4 pt-4 border-t border-white/5 flex items-center text-xs text-red-400 font-bold">
-          {trend}
-        </div>
-      )}
+      <p className="text-3xl font-semibold text-white mt-2">{value}</p>
+      {subtitle && <p className="text-sm text-gray-400 mt-1">{subtitle}</p>}
+      {trend && <p className="text-sm text-red-400 mt-2">{trend}</p>}
     </div>
   );
 }

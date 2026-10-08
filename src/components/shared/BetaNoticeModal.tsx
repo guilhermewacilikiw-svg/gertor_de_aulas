@@ -50,13 +50,13 @@ export function BetaNoticeModal() {
 
         <div className="p-6 sm:p-8">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/10 border border-red-500/30 text-red-400 text-xs font-black uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/10 border border-red-500/30 text-red-400 text-xs font-semibold mb-4">
             <Sparkles className="w-3.5 h-3.5 text-red-500 animate-pulse" />
             <span>Versão Beta &bull; Período Gratuito</span>
           </div>
 
           {/* Título */}
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3 uppercase">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-3">
             Aplicativo em Testes
           </h2>
 
@@ -97,7 +97,7 @@ export function BetaNoticeModal() {
           {/* Botão de Fechar / Continuar */}
           <button
             onClick={handleDismiss}
-            className="w-full py-3.5 px-6 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-red-600/25 hover:shadow-red-600/40"
+            className="w-full py-3.5 px-6 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-xs transition-all hover:shadow-red-600/40"
           >
             Entendi, Acessar Plataforma &rarr;
           </button>

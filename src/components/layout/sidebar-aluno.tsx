@@ -10,8 +10,8 @@ export function AlunoSidebar() {
             W
           </div>
           <div>
-            <h1 className="font-bold text-lg leading-tight">Wackoda</h1>
-            <span className="text-[10px] text-primary-foreground/70 uppercase tracking-wider">Experience</span>
+            <h1 className="font-bold text-lg leading-tight">Wakoda</h1>
+            <span className="text-xs text-primary-foreground/70">Experience</span>
           </div>
         </div>
       </div>
