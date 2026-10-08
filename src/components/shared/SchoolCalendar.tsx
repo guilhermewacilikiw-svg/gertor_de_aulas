@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Grid3X3, List, Users, Sparkles, PartyPopper } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Grid3X3, List, Users, PartyPopper } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { isBrazilianHoliday } from '@/lib/holidays';
 
@@ -73,6 +73,7 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
 
   const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
   const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const dayNames = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
 
   const getEventsForDate = (date: Date) => {
     const combined: CalendarEvent[] = [];
@@ -168,128 +169,151 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
     setSelectedSchedule(null);
   };
 
-  return (
-    <div className="flex flex-col lg:flex-row gap-6 animate-in fade-in duration-500">
-      
-      {/* MAIN CALENDAR AREA */}
-      <div className="flex-1 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col relative">
-        {/* Glow Effects */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+  const tituloMes = `${monthNames[month]} ${year}`;
+  const diasComAulas = [0, 1, 2, 3, 4, 5, 6].filter(d => schedules.some(s => s.dayOfWeek === d));
 
-        {/* Header */}
-        <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-red-500 p-0.5">
-               <div className="w-full h-full bg-[#12121A] rounded-[10px] flex items-center justify-center">
-                 <CalendarIcon className="w-5 h-5 text-white" />
-               </div>
-            </div>
-            <div>
-              <h2 className="text-2xl font-semibold text-white capitalize">
-                {viewMode === 'month' ? `${monthNames[month]} ${year}` : 'Grade Semanal Fixa'}
-              </h2>
-              <p className="text-sm text-gray-400 font-medium">
-                {viewMode === 'month' ? 'Agenda de Aulas e Eventos Pontuais' : 'Horários recorrentes das turmas'}
-              </p>
-            </div>
+  const detalhesEvento = (event: CalendarEvent) => {
+    if (event.type === 'holiday') {
+      return (
+        <li key={event.id} className="py-3">
+          <p className="text-xs text-yellow-300">Feriado nacional</p>
+          <p className="text-sm text-white mt-0.5 flex items-center gap-2">
+            <PartyPopper className="w-4 h-4 text-yellow-300 shrink-0" aria-hidden="true" />
+            {event.title}
+          </p>
+        </li>
+      );
+    }
+    return (
+      <li key={event.id} className="py-3 space-y-2">
+        <div>
+          <span className={cn(
+            "text-xs px-2 py-0.5 rounded-md",
+            event.type === 'lesson' ? "bg-red-600/15 text-red-300" : "bg-blue-500/15 text-blue-300"
+          )}>
+            {event.type === 'lesson' ? 'Aula regular' : 'Evento'}
+          </span>
+          <p className="text-sm text-white mt-2">{event.title}</p>
+          {event.subtitle && <p className="text-sm text-gray-400">{event.subtitle}</p>}
+        </div>
+        <div className="text-sm text-gray-400 space-y-1">
+          {(event.startTime || event.endTime) && (
+            <p className="flex items-center gap-2"><Clock className="w-4 h-4 shrink-0" aria-hidden="true" />{event.startTime}{event.endTime ? ` às ${event.endTime}` : ''}</p>
+          )}
+          {event.location && (
+            <p className="flex items-center gap-2"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{event.location}</p>
+          )}
+        </div>
+        {event.participants && event.participants.length > 0 && (
+          <div>
+            <p className="text-sm text-gray-400 flex items-center gap-2"><Users className="w-4 h-4" aria-hidden="true" />Alunos nesta aula ({event.participants.length})</p>
+            <ul className="mt-1 max-h-32 overflow-y-auto text-sm text-white space-y-0.5">
+              {event.participants.map((p, idx) => <li key={p.id || idx} className="truncate">{p.name}</li>)}
+            </ul>
           </div>
-          
-          <div className="flex items-center gap-3">
-            {/* View Mode Toggle */}
-            <div className="flex bg-[#12121A] rounded-xl border border-white/10 p-1 shadow-inner">
-              <button 
+        )}
+      </li>
+    );
+  };
+
+  return (
+    <div className="flex flex-col xl:flex-row gap-6 animate-in fade-in duration-500">
+
+      {/* ÁREA PRINCIPAL DO CALENDÁRIO */}
+      <div className="flex-1 min-w-0 rounded-xl border border-white/10 overflow-hidden flex flex-col">
+        <div className="p-4 sm:p-5 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-white">
+              {viewMode === 'month' ? tituloMes : 'Grade semanal'}
+            </h2>
+            <p className="text-sm text-gray-400">
+              {viewMode === 'month' ? 'Aulas e eventos do mês' : 'Horários que se repetem toda semana'}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="inline-flex p-1 rounded-lg bg-white/[0.04]" role="group" aria-label="Modo de visualização">
+              <button
                 onClick={() => setViewMode('week')}
-                className={cn("flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all", viewMode === 'week' ? "bg-white/10 text-white shadow-md" : "text-gray-500 hover:text-gray-300")}
+                aria-pressed={viewMode === 'week'}
+                className={cn("inline-flex items-center gap-2 px-3 min-h-9 rounded-md text-sm transition-colors", viewMode === 'week' ? "bg-white/10 text-white" : "text-gray-400 hover:text-white")}
               >
-                <Grid3X3 className="w-4 h-4" /> Semana
+                <Grid3X3 className="w-4 h-4" aria-hidden="true" /> Semana
               </button>
-              <button 
+              <button
                 onClick={() => setViewMode('month')}
-                className={cn("flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all", viewMode === 'month' ? "bg-white/10 text-white shadow-md" : "text-gray-500 hover:text-gray-300")}
+                aria-pressed={viewMode === 'month'}
+                className={cn("inline-flex items-center gap-2 px-3 min-h-9 rounded-md text-sm transition-colors", viewMode === 'month' ? "bg-white/10 text-white" : "text-gray-400 hover:text-white")}
               >
-                <List className="w-4 h-4" /> Mês
+                <List className="w-4 h-4" aria-hidden="true" /> Mês
               </button>
             </div>
 
             {viewMode === 'month' && (
-              <div className="flex items-center bg-[#12121A] rounded-xl border border-white/10 p-1">
-                <button onClick={today} className="hidden sm:block px-4 py-2 rounded-lg hover:bg-white/5 text-sm font-bold text-gray-300 transition-colors">Hoje</button>
-                <div className="w-px h-4 bg-white/10 mx-1 hidden sm:block"></div>
-                <button onClick={prevMonth} className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"><ChevronLeft className="w-5 h-5" /></button>
-                <button onClick={nextMonth} className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"><ChevronRight className="w-5 h-5" /></button>
+              <div className="inline-flex items-center gap-1">
+                <button onClick={today} className="px-3 min-h-11 rounded-lg text-sm text-gray-300 hover:bg-white/5 transition-colors">Hoje</button>
+                <button onClick={prevMonth} aria-label="Mês anterior" className="min-h-11 min-w-11 inline-flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"><ChevronLeft className="w-5 h-5" /></button>
+                <button onClick={nextMonth} aria-label="Próximo mês" className="min-h-11 min-w-11 inline-flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"><ChevronRight className="w-5 h-5" /></button>
               </div>
             )}
           </div>
         </div>
 
-        {/* CONTENT - MONTH VIEW */}
+        {/* VISÃO MENSAL */}
         {viewMode === 'month' && (
-          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0f]/50 overflow-y-auto styled-scrollbar">
-            <div className="grid grid-cols-7 border-b border-white/5 sticky top-0 bg-[#0a0a0f]/90 backdrop-blur-md z-20">
+          <div className="flex-1 flex flex-col overflow-y-auto">
+            <div className="grid grid-cols-7 border-b border-white/10 sticky top-0 bg-[#0a0a0f] z-20">
               {weekDays.map(day => (
-                <div key={day} className="py-4 text-center text-xs font-semibold text-red-600">
-                  {day}
-                </div>
+                <div key={day} className="py-3 text-center text-sm text-gray-400">{day}</div>
               ))}
             </div>
             <div className="grid grid-cols-7 flex-1 min-h-min">
               {days.map((date, i) => {
-                if (!date) return <div key={`empty-${i}`} className="min-h-[90px] md:min-h-[100px] border-r border-b border-white/5 bg-[#12121A]/30" />;
-                
+                if (!date) return <div key={`empty-${i}`} className="min-h-[72px] md:min-h-[100px] border-r border-b border-white/5" />;
+
                 const dayEvents = getEventsForDate(date);
-                
+
                 return (
                   <button
                     key={i}
                     onClick={() => handleSelectDate(date)}
+                    aria-label={`${date.getDate()} de ${monthNames[month]}, ${dayEvents.length} ${dayEvents.length === 1 ? 'item' : 'itens'}`}
                     className={cn(
-                      "min-h-[90px] md:min-h-[100px] border-r border-b border-white/5 p-2 flex flex-col items-start gap-1 transition-all hover:bg-white/5 group relative text-left",
-                      isSelected(date) && "bg-red-600/10 border-red-600/30 ring-1 ring-inset ring-red-600/50"
+                      "min-h-[72px] md:min-h-[100px] border-r border-b border-white/5 p-1.5 md:p-2 flex flex-col items-start gap-1 transition-colors hover:bg-white/[0.04] text-left",
+                      isSelected(date) && "bg-red-600/10"
                     )}
                   >
-                    <div className={cn(
-                      "w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mb-1 shrink-0 transition-all",
-                      isToday(date) ? "bg-gradient-to-r from-red-600 to-red-500 text-black shadow-[0_0_20px_rgba(192,232,122,0.4)]" : "text-gray-400 group-hover:text-white"
+                    <span className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-sm shrink-0",
+                      isToday(date) ? "bg-red-600 text-white font-medium" : "text-gray-300"
                     )}>
                       {date.getDate()}
-                    </div>
-                    
+                    </span>
+
                     <div className="w-full flex-1 overflow-hidden space-y-1 hidden sm:block">
                       {dayEvents.slice(0, 3).map((e, idx) => (
                         <div key={idx} className={cn(
-                          "text-xs px-1.5 py-0.5 rounded border truncate font-bold flex items-center gap-1",
-                          e.type === 'holiday' 
-                            ? "bg-amber-500/20 text-amber-300 border-amber-500/30" 
-                            : e.type === 'lesson' 
-                            ? "bg-red-600/15 text-red-300 border-red-500/30" 
-                            : "bg-blue-500/15 text-blue-300 border-blue-500/30"
+                          "text-xs px-1.5 py-0.5 rounded truncate flex items-center gap-1",
+                          e.type === 'holiday'
+                            ? "bg-yellow-500/15 text-yellow-300"
+                            : e.type === 'lesson'
+                            ? "bg-red-600/15 text-red-300"
+                            : "bg-blue-500/15 text-blue-300"
                         )}>
-                          {e.type === 'holiday' ? (
-                            <span className="truncate">🎉 {e.title}</span>
-                          ) : (
-                            <>
-                              {e.startTime && <span className="opacity-80 font-mono text-xs shrink-0">{e.startTime}</span>}
-                              <span className="truncate">{e.title}</span>
-                            </>
-                          )}
+                          {e.type !== 'holiday' && e.startTime && <span className="shrink-0">{e.startTime}</span>}
+                          <span className="truncate">{e.title}</span>
                         </div>
                       ))}
                       {dayEvents.length > 3 && (
-                        <div className="text-xs text-gray-400 font-bold pl-1">
-                          + {dayEvents.length - 3} mais
-                        </div>
+                        <div className="text-xs text-gray-400 pl-1">+ {dayEvents.length - 3} mais</div>
                       )}
                     </div>
 
                     <div className="sm:hidden flex flex-wrap gap-1 mt-auto pb-1">
                       {dayEvents.map((e, idx) => (
-                        <div 
-                          key={idx} 
-                          className={cn(
-                            "w-1.5 h-1.5 rounded-full", 
-                            e.type === 'holiday' ? "bg-amber-400" : e.type === 'lesson' ? "bg-red-500" : "bg-blue-500"
-                          )} 
+                        <span
+                          key={idx}
+                          className={cn("w-1.5 h-1.5 rounded-full", e.type === 'holiday' ? "bg-yellow-400" : e.type === 'lesson' ? "bg-red-500" : "bg-blue-400")}
                         />
                       ))}
                     </div>
@@ -300,280 +324,183 @@ export function SchoolCalendar({ events, schedules = [], role }: SchoolCalendarP
           </div>
         )}
 
-        {/* CONTENT - WEEK VIEW */}
+        {/* VISÃO SEMANAL */}
         {viewMode === 'week' && (
-          <div className="flex-1 flex flex-col relative z-10 bg-[#0a0a0f]/50 overflow-auto max-h-[800px] styled-scrollbar">
-            <div className="min-w-[800px]">
-              {/* Week Header */}
-              <div className="grid grid-cols-[60px_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b border-white/5 sticky top-0 bg-[#0a0a0f]/90 backdrop-blur-md z-30">
-                <div className="py-4 border-r border-white/5"></div>
-                {weekDays.map((day, i) => (
-                  <div key={day} className="py-4 text-center text-xs font-semibold text-red-600 border-r border-white/5">
-                    {day}
-                  </div>
-                ))}
-              </div>
+          <>
+            {/* Celular: lista por dia da semana */}
+            <div className="md:hidden">
+              {diasComAulas.length === 0 ? (
+                <p className="p-6 text-sm text-gray-400 text-center">Nenhum horário cadastrado ainda.</p>
+              ) : (
+                <ul className="divide-y divide-white/5">
+                  {diasComAulas.map(dayIndex => (
+                    <li key={dayIndex} className="p-4">
+                      <p className="text-sm text-gray-400 mb-2">{dayNames[dayIndex]}</p>
+                      <ul className="space-y-2">
+                        {schedules
+                          .filter(s => s.dayOfWeek === dayIndex)
+                          .sort((a, b) => a.startTime.localeCompare(b.startTime))
+                          .map(schedule => (
+                            <li key={schedule.id}>
+                              <button
+                                onClick={() => handleSelectSchedule(schedule)}
+                                aria-pressed={selectedSchedule?.id === schedule.id}
+                                className={cn(
+                                  "w-full text-left rounded-lg px-3 py-2 min-h-11 border transition-colors",
+                                  selectedSchedule?.id === schedule.id ? "border-red-500 bg-red-600/10" : "border-white/10 hover:bg-white/[0.04]"
+                                )}
+                              >
+                                <span className="text-sm text-white block truncate">{schedule.title}</span>
+                                <span className="text-sm text-gray-400 block truncate">
+                                  {schedule.startTime} às {schedule.endTime}{schedule.subtitle ? ` · ${schedule.subtitle}` : ''}
+                                </span>
+                              </button>
+                            </li>
+                          ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
-            {/* Timetable Grid */}
-            <div className="relative">
-              {/* Background horizontal lines for hours */}
-              {hours.map(hour => (
-                <div key={hour} className="grid grid-cols-[60px_1fr] border-b border-white/5 h-[60px]">
-                  <div className="text-xs font-bold text-gray-500 text-right pr-3 -translate-y-2">
-                    {hour.toString().padStart(2, '0')}:00
-                  </div>
-                  <div className="grid grid-cols-7 h-full">
-                    {[0,1,2,3,4,5,6].map(d => (
-                      <div key={d} className="border-r border-white/5 h-full opacity-30"></div>
-                    ))}
-                  </div>
+            {/* Tablet e computador: grade por horário */}
+            <div className="hidden md:block flex-1 overflow-auto max-h-[800px]">
+              <div className="min-w-[640px]">
+                <div className="grid grid-cols-[60px_1fr_1fr_1fr_1fr_1fr_1fr_1fr] border-b border-white/10 sticky top-0 bg-[#0a0a0f] z-30">
+                  <div className="py-3 border-r border-white/5"></div>
+                  {weekDays.map(day => (
+                    <div key={day} className="py-3 text-center text-sm text-gray-400 border-r border-white/5">{day}</div>
+                  ))}
                 </div>
-              ))}
 
-              {/* Schedules Overlay */}
-              <div className="absolute top-0 left-[60px] right-0 bottom-0 grid grid-cols-7 pointer-events-none">
-                {[0, 1, 2, 3, 4, 5, 6].map(dayIndex => {
-                  const daySchedules = schedules.filter(s => s.dayOfWeek === dayIndex);
-                  return (
-                    <div key={dayIndex} className="relative h-full border-r border-transparent">
-                      {daySchedules.map(schedule => {
-                        const style = getBlockStyle(schedule.startTime, schedule.endTime);
-                        return (
+                <div className="relative">
+                  {hours.map(hour => (
+                    <div key={hour} className="grid grid-cols-[60px_1fr] border-b border-white/5 h-[60px]">
+                      <div className="text-xs text-gray-400 text-right pr-3 -translate-y-2">
+                        {hour.toString().padStart(2, '0')}:00
+                      </div>
+                      <div className="grid grid-cols-7 h-full">
+                        {[0, 1, 2, 3, 4, 5, 6].map(d => (
+                          <div key={d} className="border-r border-white/5 h-full"></div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="absolute top-0 left-[60px] right-0 bottom-0 grid grid-cols-7 pointer-events-none">
+                    {[0, 1, 2, 3, 4, 5, 6].map(dayIndex => (
+                      <div key={dayIndex} className="relative h-full">
+                        {schedules.filter(s => s.dayOfWeek === dayIndex).map(schedule => (
                           <button
                             key={schedule.id}
                             onClick={() => handleSelectSchedule(schedule)}
-                            style={style}
+                            style={getBlockStyle(schedule.startTime, schedule.endTime)}
+                            aria-pressed={selectedSchedule?.id === schedule.id}
                             className={cn(
-                              "rounded-lg p-2 text-left pointer-events-auto transition-all overflow-hidden group border border-white/10",
-                              selectedSchedule?.id === schedule.id 
-                                ? "bg-gradient-to-br from-red-600 to-red-500 text-white z-20 scale-[1.02] shadow-[0_10px_30px_rgba(125,122,232,0.5)] border-white/30"
-                                : "bg-[#12121A]/80 backdrop-blur-md text-gray-300 hover:bg-red-600/20 hover:border-red-600/50 z-10"
+                              "rounded-md p-2 text-left pointer-events-auto overflow-hidden border transition-colors",
+                              selectedSchedule?.id === schedule.id
+                                ? "bg-red-600 border-red-500 text-white z-20"
+                                : "bg-[#1a1a22] border-white/10 text-gray-300 hover:border-red-500/60 z-10"
                             )}
                           >
-                            <div className="text-xs font-semibold mb-0.5 opacity-80">
-                              {schedule.startTime} - {schedule.endTime}
-                            </div>
-                            <div className={cn("text-xs font-bold leading-tight truncate", selectedSchedule?.id === schedule.id ? "text-white" : "text-red-400")}>
-                              {schedule.title}
-                            </div>
-                            <div className="text-xs truncate opacity-70">{schedule.subtitle}</div>
-                            
-                            {/* Alunos participantes do horário */}
+                            <span className="block text-xs opacity-80">{schedule.startTime} - {schedule.endTime}</span>
+                            <span className="block text-xs leading-tight truncate text-white">{schedule.title}</span>
+                            {schedule.subtitle && <span className="block text-xs truncate opacity-70">{schedule.subtitle}</span>}
                             {schedule.participants && schedule.participants.length > 0 && (
-                              <div className="mt-1 pt-1 border-t border-white/10 flex items-center gap-1 text-xs font-bold text-gray-300 truncate">
-                                <Users className="w-3 h-3 text-red-400 shrink-0" />
-                                <span className="truncate">
-                                  {schedule.participants.map(p => p.name).join(', ')}
-                                </span>
-                              </div>
+                              <span className="mt-1 flex items-center gap-1 text-xs truncate opacity-80">
+                                <Users className="w-3 h-3 shrink-0" aria-hidden="true" />
+                                <span className="truncate">{schedule.participants.map(p => p.name).join(', ')}</span>
+                              </span>
                             )}
                           </button>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* SIDE PANEL: DETAILS */}
-      <div className="w-full lg:w-96 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-xl flex flex-col overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] shrink-0 h-fit lg:h-auto lg:min-h-[600px] relative">
-         <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-red-500/10 rounded-full blur-[80px] pointer-events-none z-0"></div>
-
-        {/* Content based on view mode and selection */}
-        {viewMode === 'month' && selectedDate ? (
-          <div className="relative z-10 flex flex-col h-full">
-            <div className="p-6 border-b border-white/10 bg-white/5">
-              <h3 className="text-xl font-semibold text-white">
-                {selectedDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
-              </h3>
-              <p className="text-sm text-red-600 font-bold mt-1">{selectedEvents.length} eventos</p>
-            </div>
-
-            <div className="flex-1 p-6 overflow-y-auto space-y-4 styled-scrollbar">
-              {selectedEvents.length === 0 ? (
-                <div className="text-center py-12 text-gray-500">
-                  <CalendarIcon className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                  <p className="font-medium">Nenhum evento ou aula para este dia.</p>
-                </div>
-              ) : (
-                selectedEvents.map(event => {
-                  if (event.type === 'holiday') {
-                    return (
-                      <div key={event.id} className="bg-amber-950/40 backdrop-blur-md border border-amber-500/40 rounded-2xl p-4 animate-in fade-in duration-300">
-                        <div className="flex items-start gap-3">
-                          <div className="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-300 border border-amber-500/30 shrink-0">
-                            <PartyPopper className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <span className="text-xs font-semibold text-amber-400">Feriado Nacional</span>
-                            <h4 className="text-base font-semibold text-white mt-0.5">{event.title}</h4>
-                            <p className="text-xs text-amber-200/70 mt-0.5">Sem expediente / data comemorativa oficial</p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <div key={event.id} className="bg-[#12121A]/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 hover:border-white/20 transition-all hover:-translate-y-1 space-y-3">
-                      <div>
-                        <span className={cn(
-                          "text-xs font-semibold px-2 py-0.5 rounded-md",
-                          event.type === 'lesson' ? "bg-red-600/20 text-red-400 border border-red-500/30" : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                        )}>
-                          {event.type === 'lesson' ? 'Aula Regular' : 'Evento'}
-                        </span>
-                        <h4 className="text-base font-bold text-white pt-2">{event.title}</h4>
-                        {event.subtitle && <p className="text-xs text-gray-400 font-medium">{event.subtitle}</p>}
-                      </div>
-
-                      <div className="pt-3 border-t border-white/10 space-y-2 text-xs font-bold text-gray-400">
-                        {(event.startTime || event.endTime) && (
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-red-500" />
-                            <span>{event.startTime} {event.endTime ? `às ${event.endTime}` : ''}</span>
-                          </div>
-                        )}
-                        {event.location && (
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-red-400" />
-                            <span>{event.location}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Lista de Alunos Participantes da Aula */}
-                      {event.participants && event.participants.length > 0 && (
-                        <div className="pt-3 border-t border-white/10 space-y-2">
-                          <div className="flex items-center justify-between text-xs font-bold text-gray-300">
-                            <span className="flex items-center gap-1.5 text-red-400">
-                              <Users className="w-3.5 h-3.5" /> Alunos nesta aula:
-                            </span>
-                            <span className="text-xs text-gray-400 font-mono">
-                              {event.participants.length}
-                            </span>
-                          </div>
-                          <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1 styled-scrollbar">
-                            {event.participants.map((p, idx) => (
-                              <div key={p.id || idx} className="flex items-center gap-2 p-1.5 rounded-lg bg-white/5 text-xs text-white">
-                                <div className="w-5 h-5 rounded-full bg-red-600/30 flex items-center justify-center text-xs font-bold text-red-300 shrink-0">
-                                  {p.name.charAt(0)}
-                                </div>
-                                <span className="truncate font-medium">{p.name}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        ) : viewMode === 'week' && selectedSchedule ? (
-          <div className="relative z-10 flex flex-col h-full">
-            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-red-600/20 to-transparent">
-              <h3 className="text-xl font-semibold text-white leading-tight">
-                {selectedSchedule.title}
-              </h3>
-              <p className="text-sm text-red-500 font-bold mt-2">
-                {weekDays[selectedSchedule.dayOfWeek]} • {selectedSchedule.startTime} às {selectedSchedule.endTime}
-              </p>
-            </div>
-
-            <div className="flex-1 p-6 space-y-6">
-              <div className="bg-[#12121A]/80 rounded-2xl p-5 border border-white/5 space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                    <Clock className="w-5 h-5 text-red-500" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-500">Horário</p>
-                    <p className="text-sm font-bold text-white mt-1">{selectedSchedule.startTime} - {selectedSchedule.endTime}</p>
-                    <p className="text-xs text-gray-400">Toda {weekDays[selectedSchedule.dayOfWeek]}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-500">Local</p>
-                    <p className="text-sm font-bold text-white mt-1">{selectedSchedule.location}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                    <Users className="w-5 h-5 text-red-500" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold text-gray-500">Professor</p>
-                    <p className="text-sm font-bold text-white mt-1">{selectedSchedule.subtitle}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Lista de Alunos Participantes da Aula */}
-              <div className="bg-[#12121A]/80 rounded-2xl p-5 border border-white/5 space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-white/5">
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-red-400" />
-                    <span className="text-xs font-semibold text-white">Alunos Nesta Aula</span>
-                  </div>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-red-600/20 text-red-400 border border-red-500/30">
-                    {selectedSchedule.participants?.length || 0} {selectedSchedule.participants?.length === 1 ? 'aluno' : 'alunos'}
-                  </span>
-                </div>
-
-                {selectedSchedule.participants && selectedSchedule.participants.length > 0 ? (
-                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1 styled-scrollbar">
-                    {selectedSchedule.participants.map((p, pIdx) => (
-                      <div key={p.id || pIdx} className="p-2.5 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
-                        <div className="w-7 h-7 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-300 text-xs font-semibold shrink-0">
-                          {p.name.charAt(0)}
-                        </div>
-                        <div className="truncate">
-                          <p className="text-xs font-bold text-white truncate">{p.name}</p>
-                          {p.email && <p className="text-xs text-gray-500 truncate">{p.email}</p>}
-                        </div>
+                        ))}
                       </div>
                     ))}
                   </div>
-                ) : (
-                  <p className="text-xs text-gray-500 italic py-2 text-center">
-                    Nenhum aluno vinculado a este horário ainda.
-                  </p>
-                )}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center p-8 text-gray-500">
-            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/5 shadow-inner">
-              {viewMode === 'month' ? (
-                <CalendarIcon className="w-10 h-10 opacity-30 text-red-600" />
-              ) : (
-                <Grid3X3 className="w-10 h-10 opacity-30 text-red-500" />
-              )}
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Detalhes</h3>
-            <p className="text-sm font-medium">
-              {viewMode === 'month' 
-                ? 'Selecione um dia no calendário para ver os eventos.'
-                : 'Selecione uma turma na grade para ver os detalhes.'}
-            </p>
-          </div>
+          </>
         )}
       </div>
 
+      {/* PAINEL DE DETALHES */}
+      <aside className="w-full xl:w-96 shrink-0 rounded-xl border border-white/10 overflow-hidden h-fit xl:min-h-[400px]" aria-live="polite">
+        {viewMode === 'month' && selectedDate ? (
+          <div>
+            <div className="p-4 sm:p-5 border-b border-white/10">
+              <h3 className="text-base font-medium text-white first-letter:uppercase">
+                {selectedDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
+              </h3>
+              <p className="text-sm text-gray-400 mt-1">{selectedEvents.length} {selectedEvents.length === 1 ? 'item' : 'itens'}</p>
+            </div>
+            {selectedEvents.length === 0 ? (
+              <p className="p-6 text-sm text-gray-400 text-center">Nada marcado para este dia.</p>
+            ) : (
+              <ul className="px-4 sm:px-5 divide-y divide-white/5">
+                {selectedEvents.map(detalhesEvento)}
+              </ul>
+            )}
+          </div>
+        ) : viewMode === 'week' && selectedSchedule ? (
+          <div>
+            <div className="p-4 sm:p-5 border-b border-white/10">
+              <h3 className="text-base font-medium text-white">{selectedSchedule.title}</h3>
+              <p className="text-sm text-gray-400 mt-1">
+                {dayNames[selectedSchedule.dayOfWeek]}, {selectedSchedule.startTime} às {selectedSchedule.endTime}
+              </p>
+            </div>
+            <dl className="px-4 sm:px-5 divide-y divide-white/5 text-sm">
+              <div className="py-3 flex justify-between gap-4">
+                <dt className="text-gray-400 flex items-center gap-2"><Clock className="w-4 h-4" aria-hidden="true" />Horário</dt>
+                <dd className="text-white text-right">{selectedSchedule.startTime} - {selectedSchedule.endTime}<span className="block text-gray-400">Toda {dayNames[selectedSchedule.dayOfWeek].toLowerCase()}</span></dd>
+              </div>
+              {selectedSchedule.location && (
+                <div className="py-3 flex justify-between gap-4">
+                  <dt className="text-gray-400 flex items-center gap-2"><MapPin className="w-4 h-4" aria-hidden="true" />Local</dt>
+                  <dd className="text-white text-right">{selectedSchedule.location}</dd>
+                </div>
+              )}
+              {selectedSchedule.subtitle && (
+                <div className="py-3 flex justify-between gap-4">
+                  <dt className="text-gray-400 flex items-center gap-2"><Users className="w-4 h-4" aria-hidden="true" />Professor</dt>
+                  <dd className="text-white text-right">{selectedSchedule.subtitle}</dd>
+                </div>
+              )}
+            </dl>
+            <div className="p-4 sm:p-5 border-t border-white/10">
+              <p className="text-sm text-gray-400">
+                Alunos nesta aula ({selectedSchedule.participants?.length || 0})
+              </p>
+              {selectedSchedule.participants && selectedSchedule.participants.length > 0 ? (
+                <ul className="mt-2 max-h-48 overflow-y-auto space-y-2">
+                  {selectedSchedule.participants.map((p, pIdx) => (
+                    <li key={p.id || pIdx} className="flex items-center gap-3">
+                      <span className="w-7 h-7 rounded-full bg-red-600/20 text-red-300 flex items-center justify-center text-xs shrink-0">{p.name.charAt(0).toUpperCase()}</span>
+                      <span className="min-w-0">
+                        <span className="block text-sm text-white truncate">{p.name}</span>
+                        {p.email && <span className="block text-sm text-gray-400 truncate">{p.email}</span>}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-2 text-sm text-gray-400">Nenhum aluno vinculado a este horário ainda.</p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center p-8 text-gray-400 min-h-[200px]">
+            <CalendarIcon className="w-8 h-8 mb-3 opacity-50" aria-hidden="true" />
+            <p className="text-sm">
+              {viewMode === 'month'
+                ? 'Toque em um dia para ver as aulas e eventos.'
+                : 'Toque em uma turma para ver os detalhes.'}
+            </p>
+          </div>
+        )}
+      </aside>
     </div>
   );
 }
